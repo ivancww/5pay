@@ -1,0 +1,22 @@
+﻿{
+  "name": "被動收入與增值理財策略",
+  "short_name": "被動收入理財",
+  "description": "一個專注於被動收入、戶口增值與對抗通脹的理財計算工具。",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1e3a8a",
+  "icons": [
+    {
+      "src": "./icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
