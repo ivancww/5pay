@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.0)</title>
     
+    <!-- PWA 與 App Icon 關聯 -->
+    <link rel="manifest" href="./manifest.json">
+    <link rel="icon" type="image/png" href="./icon-192x192.png">
+    <link rel="apple-touch-icon" href="./icon-192x192.png">
+    <meta name="theme-color" content="#1e3a8a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AVA 引導系統">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
@@ -44,6 +53,8 @@
             --state-danger: #dc2626;
             --plan1-color: #2563eb;
             --plan2-color: #059669;
+            --plan3-color: #dc2626;
+            --plan4-color: #7c3aed;
             --pink-dashed: 1.5px dashed #f8bbd0;
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
             --shadow-md: 0 4px 16px -2px rgba(15, 23, 42, 0.06);
@@ -90,14 +101,6 @@
         @media (max-width: 620px) { .gap-comparison-grid { grid-template-columns: 1fr; } }
         .gap-box { background: #fff; border-radius: 10px; padding: 14px; border: 1px solid #dbeafe; }
         
-        .pool-visual-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0 26px 0; }
-        @media (max-width: 650px) { .pool-visual-container { grid-template-columns: 1fr; } }
-        .pool-visual-step { background: #ffffff; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 18px 14px; text-align: center; }
-        .pool-visual-step.highlight { border-color: var(--brand-accent); background: #f0f7ff; }
-        .pool-visual-icon { font-size: 2.2rem; margin-bottom: 8px; }
-        .pool-visual-title { font-size: 0.95rem; font-weight: 800; margin-bottom: 4px; }
-        .pool-visual-desc { font-size: 0.82rem; color: var(--text-sub); }
-
         .calc-jar-card { background: #ffffff; border: 1px solid var(--border-light); border-radius: 14px; padding: 18px; margin-bottom: 14px; }
         .calc-grid-5yr { display: grid; grid-template-columns: repeat(auto-fit, minmax(95px, 1fr)); gap: 8px; }
         .calc-input-group label { display: block; font-size: 0.72rem; color: var(--text-sub); font-weight: bold; text-align: center; margin-bottom: 2px; }
@@ -146,8 +149,13 @@
         .popup-menu-item { background: #f8fafc; border: 1px solid var(--border-light); border-radius: 10px; padding: 12px 14px; font-size: 0.92rem; font-weight: bold; cursor: pointer; transition: all 0.2s; }
         .popup-menu-item:hover { border-color: var(--brand-accent); background: var(--brand-soft); }
         
+        /* 控制台樣式 */
         .admin-dashboard-modal { background: #f8fafc; border-radius: 18px; width: 95%; max-width: 950px; height: 88vh; display: flex; flex-direction: column; overflow: hidden; }
-        .admin-header { background: var(--brand-primary); color: #fff; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; }
+        .admin-header { background: var(--brand-primary); color: #fff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; }
+        .role-switch-bar { display: flex; gap: 6px; background: rgba(255,255,255,0.15); padding: 4px; border-radius: 8px; }
+        .role-switch-btn { padding: 4px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; cursor: pointer; border: none; color: #fff; background: transparent; }
+        .role-switch-btn.active { background: #fff; color: var(--brand-primary); }
+        
         .admin-nav { display: flex; gap: 8px; background: #ffffff; padding: 10px 20px; border-bottom: 1px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; }
         .admin-nav-btn { padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; border: 1px solid #cbd5e1; background: #f8fafc; color: #475569; white-space: nowrap; }
         .admin-nav-btn.active { background: var(--brand-primary); color: white; border-color: var(--brand-primary); }
@@ -167,16 +175,17 @@
         .red-guide-text { color: #be123c; font-size: 0.84rem; line-height: 1.6; margin-bottom: 8px; }
         .red-guide-steps { color: #9f1239; font-size: 0.8rem; line-height: 1.6; font-weight: 600; border-top: 1px dashed #fecdd3; padding-top: 8px; }
         .fixed-anchor-card { background: #faf5ff; border: 1.5px dashed #c084fc; border-radius: 12px; padding: 14px 18px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
+        .user-priority-badge { background: #dcfce7; color: #15803d; padding: 3px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 800; display: inline-flex; align-items: center; gap: 4px; }
     </style>
 </head>
 <body>
     <header class="system-top-nav">
         <div class="brand-title-wrap">
-            <span class="brand-logo-text" id="top-logo-title" onclick="promptAdminLogin()" title="管理員登入">🌱 AVA PLANNER · v6.3.0</span>
+            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.0</span>
             <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="選擇客群情境">!</span>
             <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="核心分頁直達">*</span>
         </div>
-        <div class="user-settings-btn" onclick="openUserDashboard()" title="設定">⚙️</div>
+        <div class="user-settings-btn" onclick="openDashboardWithRole('user')" title="設定">⚙️</div>
     </header>
     
     <div class="progress-bar-container">
@@ -218,7 +227,13 @@
     <div id="admin-modal-mask" class="modal-mask">
         <div class="admin-dashboard-modal">
             <div class="admin-header">
-                <div id="admin-modal-title">⚙️ 控制台</div>
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <div id="admin-modal-title">⚙️ 控制台</div>
+                    <div class="role-switch-bar">
+                        <button class="role-switch-btn" id="role-btn-user" onclick="switchRoleTo('user')">👤 使用者</button>
+                        <button class="role-switch-btn active" id="role-btn-admin" onclick="switchRoleTo('admin')">🛠️ 管理者</button>
+                    </div>
+                </div>
                 <div style="cursor:pointer;" onclick="closeAdminDashboard()">✕</div>
             </div>
             
@@ -226,13 +241,13 @@
                 <div class="admin-nav-btn active" id="tab-flow-btn" onclick="switchAdminTab('flow')">頁面流程管理</div>
                 <div class="admin-nav-btn" id="tab-jars-btn" onclick="switchAdminTab('jars')">時光複利文字</div>
                 <div class="admin-nav-btn" id="tab-blueprint-btn" onclick="switchAdminTab('blueprint')">人生藍圖設定</div>
-                <div class="admin-nav-btn admin-only-tab" id="tab-mapping-btn" onclick="switchAdminTab('mapping')" style="display:none;">領取文字與代碼</div>
-                <div class="admin-nav-btn admin-only-tab" id="tab-system-btn" onclick="switchAdminTab('system')" style="display:none;">系統參數</div>
+                <div class="admin-nav-btn admin-only-tab" id="tab-mapping-btn" onclick="switchAdminTab('mapping')">領取文字與代碼</div>
+                <div class="admin-nav-btn admin-only-tab" id="tab-system-btn" onclick="switchAdminTab('system')">系統參數</div>
             </div>
             
             <div class="sync-loading-overlay" id="sync-loading-mask">
                 <div style="font-size:2.5rem; margin-bottom:10px;">⏳</div>
-                <div>正在自動升級版本並同步至 Google Sheet...</div>
+                <div id="sync-loading-text">正在同步至 Google Sheet...</div>
             </div>
             
             <div class="admin-body">
@@ -248,59 +263,62 @@
                         </div>
                     </div>
 
-                    <div style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:12px; margin-bottom:16px; display:flex; align-items:center; gap:8px;">
-                        <label style="font-size:0.85rem; font-weight:bold; color:var(--brand-primary);">切換編輯情境：</label>
-                        <select id="scenario-flow-selector" onchange="switchScenarioFlowEditor(this.value)" style="padding:6px 10px; font-weight:bold; border:1.5px solid var(--brand-accent); border-radius:6px; background:#fff;">
-                            <option value="no_savings">🌱 1. 未有儲蓄 / 主動查詢</option>
-                            <option value="self_invest">📈 2. 自己投資</option>
-                            <option value="flexible_return">🔓 3. 靈活性 / 回報</option>
-                        </select>
+                    <div style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:12px; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center;">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <label style="font-size:0.85rem; font-weight:bold; color:var(--brand-primary);">切換編輯情境：</label>
+                            <select id="scenario-flow-selector" onchange="switchScenarioFlowEditor(this.value)" style="padding:6px 10px; font-weight:bold; border:1.5px solid var(--brand-accent); border-radius:6px; background:#fff;">
+                                <option value="no_savings">🌱 1. 未有儲蓄 / 主動查詢</option>
+                                <option value="self_invest">📈 2. 自己投資</option>
+                                <option value="flexible_return">🔓 3. 靈活性 / 回報</option>
+                            </select>
+                        </div>
+                        <div id="user-custom-indicator" style="display:none;" class="user-priority-badge">🟢 使用者專屬本機模式 (不被雲端覆蓋)</div>
                     </div>
                     
                     <!-- 區域 A -->
                     <div class="zone-header-box" style="border-left:4px solid #2563eb;">
-                        <span>📍 區域 A：引導題目 (第 1 - n 頁 $\rightarrow$ 到固定分頁 A)</span>
+                        <span>📍 區域 A：引導題目 (第 1 - n 頁 $\rightarrow$ 固定分頁 A 前)</span>
                         <button class="step-ctrl-btn" style="background:#dbeafe; color:#1d4ed8;" onclick="addNewPageToZone('zone_a')">+ 新增區域 A 題目</button>
                     </div>
                     <div id="admin-cards-render-zone-a"></div>
 
-                    <!-- 固定分頁 A 錨點 -->
+                    <!-- 固定分頁 A -->
                     <div class="fixed-anchor-card">
                         <div>
                             <span style="font-weight:900; color:#7e22ce;">🔒 固定分頁 A：認知差距與真相對比 (核心 Anchor)</span>
-                            <div style="font-size:0.75rem; color:#6b21a8; margin-top:2px;">對應 Google Sheet「情境」分頁之 Gap 與現實數據</div>
+                            <div style="font-size:0.75rem; color:#6b21a8; margin-top:2px;">依據所選情境動態呈現 Gap 與現實真相</div>
                         </div>
                         <span style="background:#ede9fe; color:#6b21a8; padding:3px 8px; border-radius:6px; font-size:0.75rem; font-weight:bold;">固定分頁</span>
                     </div>
 
                     <!-- 區域 B -->
                     <div class="zone-header-box" style="border-left:4px solid #059669; margin-top:20px;">
-                        <span>📍 區域 B：過渡題目 (固定分頁 A 開始 - n 頁 $\rightarrow$ 到固定分頁 B)</span>
+                        <span>📍 區域 B：過渡題目 (固定分頁 A 開始 - n 頁 $\rightarrow$ 固定分頁 B 前)</span>
                         <button class="step-ctrl-btn" style="background:#d1fae5; color:#065f46;" onclick="addNewPageToZone('zone_b')">+ 新增區域 B 題目</button>
                     </div>
                     <div id="admin-cards-render-zone-b"></div>
 
-                    <!-- 固定分頁 B 錨點 -->
+                    <!-- 固定分頁 B -->
                     <div class="fixed-anchor-card">
                         <div>
                             <span style="font-weight:900; color:#7e22ce;">🔒 固定分頁 B：時光複利量化累積表 (核心 Anchor)</span>
-                            <div style="font-size:0.75rem; color:#6b21a8; margin-top:2px;">對應 Google Sheet「時光複利文字」與各領取方案倍數表</div>
+                            <div style="font-size:0.75rem; color:#6b21a8; margin-top:2px;">核心 5 年播種與終身被動收入試算</div>
                         </div>
                         <span style="background:#ede9fe; color:#6b21a8; padding:3px 8px; border-radius:6px; font-size:0.75rem; font-weight:bold;">固定分頁</span>
                     </div>
 
                     <!-- 區域 C -->
                     <div class="zone-header-box" style="border-left:4px solid #7c3aed; margin-top:20px;">
-                        <span>📍 區域 C：確認與評估 (固定分頁 B 開始 - n 頁 $\rightarrow$ 到固定分頁 C)</span>
+                        <span>📍 區域 C：確認與評估 (固定分頁 B 開始 - n 頁 $\rightarrow$ 固定分頁 C 前)</span>
                         <button class="step-ctrl-btn" style="background:#ede9fe; color:#5b21b6;" onclick="addNewPageToZone('zone_c')">+ 新增區域 C 題目</button>
                     </div>
                     <div id="admin-cards-render-zone-c"></div>
 
-                    <!-- 固定分頁 C 錨點 -->
+                    <!-- 固定分頁 C -->
                     <div class="fixed-anchor-card">
                         <div>
                             <span style="font-weight:900; color:#7e22ce;">🔒 固定分頁 C：人生藍圖總結與保費優惠 (核心 Anchor)</span>
-                            <div style="font-size:0.75rem; color:#6b21a8; margin-top:2px;">生活初衷筆記與度身訂造保費優惠試算</div>
+                            <div style="font-size:0.75rem; color:#6b21a8; margin-top:2px;">生活初衷彙整與專屬保費回贈試算</div>
                         </div>
                         <span style="background:#ede9fe; color:#6b21a8; padding:3px 8px; border-radius:6px; font-size:0.75rem; font-weight:bold;">固定分頁</span>
                     </div>
@@ -308,13 +326,24 @@
 
                 <!-- Tab 2: 時光複利文字 -->
                 <div id="admin-sec-jars" style="display:none;">
+                    <div class="admin-card-row" style="border:1.5px solid #93c5fd; background:#f0f7ff;">
+                        <h4 style="margin-top:0; color:var(--brand-primary);">📊 表格標題自訂</h4>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                            <div><label style="font-size:0.75rem; font-weight:bold; color:#64748b;">欄位 1：</label><input type="text" id="admin-th-year" class="pink-edit-input"></div>
+                            <div><label style="font-size:0.75rem; font-weight:bold; color:#64748b;">欄位 2：</label><input type="text" id="admin-th-reserve" class="pink-edit-input"></div>
+                            <div><label style="font-size:0.75rem; font-weight:bold; color:#64748b;">欄位 3：</label><input type="text" id="admin-th-income" class="pink-edit-input"></div>
+                            <div><label style="font-size:0.75rem; font-weight:bold; color:#64748b;">欄位 4：</label><input type="text" id="admin-th-accum" class="pink-edit-input"></div>
+                            <div><label style="font-size:0.75rem; font-weight:bold; color:#64748b;">欄位 5：</label><input type="text" id="admin-th-asset" class="pink-edit-input"></div>
+                            <div><label style="font-size:0.75rem; font-weight:bold; color:#64748b;">欄位 6：</label><input type="text" id="admin-th-interest" class="pink-edit-input"></div>
+                        </div>
+                    </div>
                     <div class="admin-card-row">
                         <h4 style="margin-top:0; color:var(--brand-primary);">🌱 一號水庫 (第 1 - 5 年)</h4>
                         <input type="text" id="admin-jt-title-1" class="pink-edit-input" placeholder="標題">
                         <input type="text" id="admin-jt-desc-1" class="pink-edit-input" placeholder="描述">
                     </div>
                     <div class="admin-card-row">
-                        <h4 style="margin-top:0; color:var(--plan1-color);">💧 二號水庫 (第 6 - 10 年)</h4>
+                        <h4 style="margin-top:0; color:var(--plan2-color);">💧 二號水庫 (第 6 - 10 年)</h4>
                         <input type="text" id="admin-jt-title-2" class="pink-edit-input" placeholder="標題">
                         <input type="text" id="admin-jt-desc-2" class="pink-edit-input" placeholder="描述">
                     </div>
@@ -333,16 +362,18 @@
                 <!-- Tab 3: 人生藍圖設定 -->
                 <div id="admin-sec-blueprint" style="display:none;">
                     <div class="admin-card-row">
+                        <h4 style="margin-top:0; color:var(--brand-primary);">🖼️ 藍圖右側圖解與替代方案</h4>
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">藍圖圖片網址：</label>
-                        <input type="text" id="admin-blueprint-img-url" class="pink-edit-input">
+                        <input type="text" id="admin-blueprint-img-url" class="pink-edit-input" value="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80">
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:10px; display:block;">替代方案總結說明：</label>
-                        <input type="text" id="admin-blueprint-summary-text" class="pink-edit-input">
+                        <input type="text" id="admin-blueprint-summary-text" class="pink-edit-input" value="完全不影響現有生活享受：只需將每月不知不覺流走的少許資金，分段注入專屬水庫，自然鎖定終身被動收入。">
                     </div>
                 </div>
 
                 <!-- Tab 4: 領取文字與代碼 -->
                 <div id="admin-sec-mapping" style="display:none;">
                     <div class="admin-card-row">
+                        <h4 style="margin-top:0; color:var(--brand-primary);">📑 分頁命名與對應代碼</h4>
                         <div id="admin-mappings-zone"></div>
                     </div>
                 </div>
@@ -351,7 +382,7 @@
                 <div id="admin-sec-system" style="display:none;">
                     <div class="admin-card-row">
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">管理員密碼：</label>
-                        <input type="text" id="admin-password-input" class="pink-edit-input">
+                        <input type="text" id="admin-password-input" class="pink-edit-input" value="903">
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">當前系統版本號：</label>
                         <input type="text" id="admin-version-input" class="pink-edit-input" readonly style="background:#f8fafc;">
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">GAS API 網址：</label>
@@ -361,12 +392,22 @@
             </div>
             
             <input type="file" id="firebase-file-input" accept="image/*" style="display:none;">
+            <input type="file" id="json-import-input" accept=".json" style="display:none;" onchange="handleJSONImport(this)">
+            
+            <!-- 底部動作按鈕列 -->
             <div style="background:#ffffff; padding:12px 20px; border-top:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
                 <button class="nav-btn prev" style="width:auto; padding:8px 20px;" onclick="closeAdminDashboard()">關閉</button>
-                <div style="display:flex; gap:10px;">
-                    <button class="nav-btn prev" id="btn-reset-user" style="width:auto; padding:8px 20px; background:#fff1f2; border-color:#fecdd3; color:#be123c;" onclick="resetToTeamDefault()">🔄 還原為團隊預設</button>
-                    <button class="nav-btn prev" style="width:auto; padding:8px 20px; background:#f0fdf4; border-color:#86efac; color:#166534;" onclick="saveToLocalStorageOnly()">💾 保存至本機</button>
-                    <button class="nav-btn next" id="btn-sync-gsheet" style="width:auto; padding:8px 20px; display:none;" onclick="syncAllToGoogleSheet()">☁️ 同步至 Google Sheet (新 Version)</button>
+                
+                <!-- 使用者動作按鈕 -->
+                <div id="user-action-buttons" style="display:none; gap:8px;">
+                    <button class="step-ctrl-btn" onclick="exportUserDataJSON()">📤 匯出本機設定</button>
+                    <button class="step-ctrl-btn" onclick="document.getElementById('json-import-input').click()">📥 匯入設定</button>
+                    <button class="nav-btn prev" style="width:auto; padding:8px 18px; background:#f0fdf4; border-color:#86efac; color:#166534;" onclick="saveToLocalStorageOnly()">💾 保存為使用者專屬數據</button>
+                </div>
+                
+                <!-- 管理者動作按鈕 -->
+                <div id="admin-action-buttons" style="display:flex; gap:8px;">
+                    <button class="nav-btn next" style="width:auto; padding:8px 20px;" onclick="syncAllToGoogleSheet()">☁️ 同步至 Google Sheet (新 Version)</button>
                 </div>
             </div>
         </div>
@@ -379,42 +420,16 @@
         let cloudAdminPassword = "903";
         let globalReturnMultipliers = {};
         let currentActiveScenario = "no_savings";
-        let isAdminRole = false;
+        let currentRole = "admin";
         let activeFullFlowSteps = [];
         let currentStepIndex = 0;
 
-        // 1. Google Sheet「情境」分頁（3 個情境）
         let scenariosDB = {
-            no_savings: {
-                scenario_name: "未有儲蓄/主動查詢",
-                intuitive_belief: "35 歲先開始都未遲，有多先儲蓄",
-                objective_reality: "目標會變，但時間一去不復返",
-                gap_title: "延遲啟動的代價",
-                gap_percentage: "71%",
-                gap_label: "71% 複利增值代價",
-                takeaway_summary: "差距不是錢，而是被浪費的時間複利。提早 5 年分段奠定，效果完全不同。"
-            },
-            self_invest: {
-                scenario_name: "自己投資",
-                intuitive_belief: "炒股買幣一年升幾十%，全部自己做最快",
-                objective_reality: "市場每 5-7 年必然震盪，缺乏防守底層易崩潰",
-                gap_title: "心理底氣與防守底層缺失",
-                gap_percentage: "50%",
-                gap_label: "50% 核心防守底",
-                takeaway_summary: "建立 50% 穩健底氣，令你在市場波動時更有從容選擇權。"
-            },
-            flexible_return: {
-                scenario_name: "靈活性/回報",
-                intuitive_belief: "儲蓄計劃供好多年怕綁死，嫌回報低",
-                objective_reality: "活期資金容易散失，真自由在於源源現金流",
-                gap_title: "假靈活 vs 真自由現金流",
-                gap_percentage: "45%",
-                gap_label: "45% 假靈活散失",
-                takeaway_summary: "專注 5 年播種，第 8 年換取一輩子的資金提取自由度。"
-            }
+            no_savings: { scenario_name: "未有儲蓄/主動查詢", intuitive_belief: "35 歲先開始都未遲，有多先儲蓄", objective_reality: "目標會變，但時間一去不復返", gap_title: "延遲啟動的代價", gap_percentage: "71%", gap_label: "71% 複利增值代價", takeaway_summary: "差距不是錢，而是被浪費的時間複利。提早 5 年分段奠定，效果完全不同。" },
+            self_invest: { scenario_name: "自己投資", intuitive_belief: "炒股買幣一年升幾十%，全部自己做最快", objective_reality: "市場每 5-7 年必然震盪，缺乏防守底層易崩潰", gap_title: "心理底氣與防守底層缺失", gap_percentage: "50%", gap_label: "50% 核心防守底", takeaway_summary: "建立 50% 穩健底氣，令你在市場波動時更有從容選擇權。" },
+            flexible_return: { scenario_name: "靈活性/回報", intuitive_belief: "儲蓄計劃供好多年怕綁死，嫌回報低", objective_reality: "活期資金容易散失，真自由在於源源現金流", gap_title: "假靈活 vs 真自由現金流", gap_percentage: "45%", gap_label: "45% 假靈活散失", takeaway_summary: "專注 5 年播種，第 8 年換取一輩子的資金提取自由度。" }
         };
 
-        // 2. Google Sheet「時光複利文字」分頁（3 個情境）
         let allJarTexts = {
             no_savings: {
                 scenario_name: "未有儲蓄/主動查詢",
@@ -442,7 +457,6 @@
             }
         };
 
-        // 3. Google Sheet「領取文字」分頁
         let sheetMappings = [
             { code: "withdraw7_from8", sheet_name: "8年領取", display_name: "第8年開始 取7% (標準推薦)", note: "5年供款，第8年起每年領取7%" },
             { code: "none", sheet_name: "自動滾存", display_name: "自動滾存不提取", note: "全期不提款，純滾存累積大樹" },
@@ -452,7 +466,6 @@
             { code: "withdraw29_from30", sheet_name: "30年領取", display_name: "第30年開始 取29%", note: "第30年起每年領取29%" }
         ];
 
-        // 4. Google Sheet「頁面流程」分頁
         let allScenarioDatabase = {
             no_savings: [
                 { id: "step_1", zone: "zone_a", step_num: 1, title: "「如果純粹講而家嘅生活狀態，你覺得自己屬於邊一種？」", subtitle: "沒有對與錯，純粹由你目前最真實、最自在的生活節奏開始探索：", image_url: "", options: [
@@ -597,10 +610,6 @@
 
         function buildAndRenderFlow() {
             let currentFlow = allScenarioDatabase[currentActiveScenario] || allScenarioDatabase['no_savings'];
-            if (!currentFlow || currentFlow.length === 0) {
-                currentFlow = allScenarioDatabase['no_savings'];
-            }
-
             const zoneA = currentFlow.filter(c => c.zone === 'zone_a');
             const zoneB = currentFlow.filter(c => c.zone === 'zone_b');
             const zoneC = currentFlow.filter(c => c.zone === 'zone_c');
@@ -747,6 +756,8 @@
                         </div>
                     `;
                 } else if (step.id === 'fixed-page-c') {
+                    const descText = localStorage.getItem('ava_blueprint_custom_desc') || "完全不影響現有生活享受：只需將每月不知不覺流走的少許資金，分段注入專屬水庫，自然鎖定終身被動收入。";
+                    const imgSrc = localStorage.getItem('ava_blueprint_custom_img') || "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80";
                     stepEl.innerHTML = `
                         <div class="content-card">
                             <h2 class="question-title">🌱 你的專屬生活藍圖筆記</h2>
@@ -760,9 +771,9 @@
                                 </div>
                                 <div class="blueprint-right-box">
                                     <h4 style="font-size:1rem; font-weight:800; color:var(--state-success); margin-bottom:10px;">💡 替代方案：無痛縮減落差</h4>
-                                    <img id="blueprint-uploaded-img" class="blueprint-img-uploaded-view" src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80">
-                                    <div style="background:#f0fdf4; border-radius:10px; padding:10px; font-size:0.85rem; color:#166534;">
-                                        <strong>完全不影響現有生活享受：</strong><br>只需將每月不知不覺流走的少許資金，分段注入專屬水庫，自然鎖定終身被動收入。
+                                    <img id="blueprint-uploaded-img" class="blueprint-img-uploaded-view" src="${imgSrc}">
+                                    <div id="disp-sub-14" style="background:#f0fdf4; border-radius:10px; padding:10px; font-size:0.85rem; color:#166534;">
+                                        <strong>完全不影響現有生活享受：</strong><br>${descText}
                                     </div>
                                 </div>
                             </div>
@@ -835,12 +846,9 @@
             document.getElementById('progress-fill').style.width = `${pct}%`;
         }
 
+        // 後台頁面管理渲染 (支援「選項模式」與「純步驟模式」切換)
         function renderAdminCards() {
-            let currentList = allScenarioDatabase[currentActiveScenario];
-            if (!currentList) {
-                currentList = allScenarioDatabase['no_savings'];
-                allScenarioDatabase[currentActiveScenario] = currentList;
-            }
+            let currentList = allScenarioDatabase[currentActiveScenario] || allScenarioDatabase['no_savings'];
 
             ['zone_a', 'zone_b', 'zone_c'].forEach(zKey => {
                 const zoneContainer = document.getElementById(`admin-cards-render-${zKey.replace('_', '-')}`);
@@ -850,12 +858,17 @@
 
                 zoneCards.forEach((card, idxInZone) => {
                     const globalIdx = currentList.findIndex(c => c.id === card.id);
+                    const isOptionMode = card.options && card.options.length > 0;
                     const el = document.createElement('div');
                     el.className = 'admin-card-row';
                     el.innerHTML = `
                         <div class="admin-card-head">
                             <div style="display:flex; align-items:center; gap:8px;">
-                                <span style="font-weight:bold; color:var(--brand-primary); font-size:0.95rem;">步驟 ${card.step_num || (globalIdx + 1)} (動態題)</span>
+                                <span style="font-weight:bold; color:var(--brand-primary); font-size:0.95rem;">步驟 ${card.step_num || (globalIdx + 1)}</span>
+                                <select onchange="toggleCardMode(${globalIdx}, this.value)" style="padding:2px 6px; font-size:0.75rem; border-radius:4px; border:1px solid #cbd5e1; font-weight:bold;">
+                                    <option value="option" ${isOptionMode ? 'selected' : ''}>🔘 選項模式</option>
+                                    <option value="step" ${!isOptionMode ? 'selected' : ''}>📝 純步驟/提示模式</option>
+                                </select>
                                 <button class="step-ctrl-btn" onclick="moveZoneCard('${card.id}', -1)" ${idxInZone === 0 ? 'disabled' : ''}>⬆ 上移</button>
                                 <button class="step-ctrl-btn" onclick="moveZoneCard('${card.id}', 1)" ${idxInZone === zoneCards.length - 1 ? 'disabled' : ''}>⬇ 下移</button>
                             </div>
@@ -876,7 +889,7 @@
                         </div>
                         <input type="text" id="card-img-url-${globalIdx}" class="pink-edit-input" value="${card.image_url || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].image_url = this.value">
                         
-                        <div class="admin-options-container">
+                        <div class="admin-options-container" style="${isOptionMode ? '' : 'display:none;'}">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                                 <span style="font-size:0.75rem; font-weight:bold; color:#475569;">選項清單：</span>
                                 <button class="step-ctrl-btn" onclick="addCardOption(${globalIdx})">+ 新增選項</button>
@@ -886,8 +899,8 @@
                     `;
                     zoneContainer.appendChild(el);
 
-                    const optZone = el.querySelector(`#opts-edit-zone-${globalIdx}`);
-                    if (card.options && card.options.length > 0) {
+                    if (isOptionMode) {
+                        const optZone = el.querySelector(`#opts-edit-zone-${globalIdx}`);
                         card.options.forEach((opt, optIdx) => {
                             const optRow = document.createElement('div');
                             optRow.className = 'option-row-edit';
@@ -901,6 +914,19 @@
                     }
                 });
             });
+        }
+
+        function toggleCardMode(globalIdx, mode) {
+            const card = allScenarioDatabase[currentActiveScenario][globalIdx];
+            if (mode === 'step') {
+                card.options = [];
+            } else {
+                if (!card.options || card.options.length === 0) {
+                    card.options = [{ headline: "新選項 1", subtext: "說明" }, { headline: "新選項 2", subtext: "說明" }];
+                }
+            }
+            renderAdminCards();
+            buildAndRenderFlow();
         }
 
         function addNewPageToZone(zoneKey) {
@@ -983,6 +1009,37 @@
             input.click();
         }
 
+        // 時光複利文字載入與保存
+        function loadJarTextsToEditor() {
+            const jt = allJarTexts[currentActiveScenario] || allJarTexts['no_savings'];
+            for (let j = 1; j <= 4; j++) {
+                const tEl = document.getElementById(`admin-jt-title-${j}`);
+                const dEl = document.getElementById(`admin-jt-desc-${j}`);
+                if (tEl) tEl.value = jt[`tree_title_${j}`] || "";
+                if (dEl) dEl.value = jt[`tree_desc_${j}`] || "";
+            }
+            document.getElementById('admin-th-year').value = jt.th_year || "年份 (歲數)";
+            document.getElementById('admin-th-reserve').value = jt.th_reserve || "累計儲備";
+            document.getElementById('admin-th-income').value = jt.th_income || "被動收入";
+            document.getElementById('admin-th-accum').value = jt.th_accum || "累積已領";
+            document.getElementById('admin-th-asset').value = jt.th_asset || "大樹收成";
+            document.getElementById('admin-th-interest').value = jt.th_interest || "年化百分比回報";
+        }
+
+        function saveJarTextsFromEditor() {
+            if (!allJarTexts[currentActiveScenario]) allJarTexts[currentActiveScenario] = {};
+            for (let j = 1; j <= 4; j++) {
+                allJarTexts[currentActiveScenario][`tree_title_${j}`] = document.getElementById(`admin-jt-title-${j}`).value;
+                allJarTexts[currentActiveScenario][`tree_desc_${j}`] = document.getElementById(`admin-jt-desc-${j}`).value;
+            }
+            allJarTexts[currentActiveScenario].th_year = document.getElementById('admin-th-year').value;
+            allJarTexts[currentActiveScenario].th_reserve = document.getElementById('admin-th-reserve').value;
+            allJarTexts[currentActiveScenario].th_income = document.getElementById('admin-th-income').value;
+            allJarTexts[currentActiveScenario].th_accum = document.getElementById('admin-th-accum').value;
+            allJarTexts[currentActiveScenario].th_asset = document.getElementById('admin-th-asset').value;
+            allJarTexts[currentActiveScenario].th_interest = document.getElementById('admin-th-interest').value;
+        }
+
         function renderMappingTable() {
             const zone = document.getElementById('admin-mappings-zone');
             if (!zone) return;
@@ -999,7 +1056,158 @@
             });
         }
 
+        // 身分切換邏輯 (使用者 / 管理者)
+        function switchRoleTo(role) {
+            if (role === 'admin') {
+                const pwd = prompt("請輸入管理者密碼進行身分驗證：");
+                if (pwd === cloudAdminPassword) {
+                    currentRole = 'admin';
+                    document.getElementById('role-btn-admin').classList.add('active');
+                    document.getElementById('role-btn-user').classList.remove('active');
+                    document.getElementById('admin-action-buttons').style.display = 'flex';
+                    document.getElementById('user-action-buttons').style.display = 'none';
+                    document.getElementById('user-custom-indicator').style.display = 'none';
+                    document.querySelectorAll('.admin-only-tab').forEach(el => el.style.display = 'block');
+                } else if (pwd !== null) {
+                    alert("❌ 密碼錯誤，無法切換為管理者！");
+                }
+            } else {
+                currentRole = 'user';
+                document.getElementById('role-btn-user').classList.add('active');
+                document.getElementById('role-btn-admin').classList.remove('active');
+                document.getElementById('admin-action-buttons').style.display = 'none';
+                document.getElementById('user-action-buttons').style.display = 'flex';
+                document.getElementById('user-custom-indicator').style.display = 'inline-flex';
+                document.querySelectorAll('.admin-only-tab').forEach(el => el.style.display = 'none');
+            }
+        }
+
+        function openDashboardWithRole(targetRole) {
+            if (targetRole === 'admin') {
+                const pwd = prompt("請輸入管理者密碼：");
+                if (pwd === cloudAdminPassword) {
+                    currentRole = 'admin';
+                    openAdminDashboardModal();
+                    switchRoleTo('admin');
+                } else if (pwd !== null) {
+                    alert("❌ 密碼錯誤！");
+                }
+            } else {
+                currentRole = 'user';
+                openAdminDashboardModal();
+                switchRoleTo('user');
+            }
+        }
+
+        function openAdminDashboardModal() {
+            document.getElementById('admin-password-input').value = cloudAdminPassword;
+            document.getElementById('admin-version-input').value = currentSystemVersion;
+            document.getElementById('admin-gas-url-input').value = GAS_API_URL;
+            document.getElementById('scenario-flow-selector').value = currentActiveScenario;
+            renderAdminCards();
+            loadJarTextsToEditor();
+            renderMappingTable();
+            switchAdminTab('flow');
+            document.getElementById('admin-modal-mask').style.display = 'flex';
+        }
+
+        function closeAdminDashboard() { document.getElementById('admin-modal-mask').style.display = 'none'; }
+        function openScenarioPopup() { document.getElementById('scenario-popup-mask').style.display = 'flex'; }
+        function closeScenarioPopup() { document.getElementById('scenario-popup-mask').style.display = 'none'; }
+        function openJumpPopup() { document.getElementById('jump-popup-mask').style.display = 'flex'; }
+        function closeJumpPopup() { document.getElementById('jump-popup-mask').style.display = 'none'; }
+
+        function applyScenarioPreset(key) {
+            currentActiveScenario = key;
+            buildAndRenderFlow();
+            closeScenarioPopup();
+            navigateStep(0);
+        }
+
+        function jumpDirectStep(stepId) {
+            closeJumpPopup();
+            const idx = activeFullFlowSteps.findIndex(s => s.id === stepId);
+            if (idx >= 0) navigateStep(idx);
+        }
+
+        function switchAdminTab(tabName) {
+            document.querySelectorAll('.admin-nav-btn').forEach(b => b.classList.remove('active'));
+            ['flow', 'jars', 'blueprint', 'mapping', 'system'].forEach(t => {
+                const el = document.getElementById(`admin-sec-${t}`);
+                if (el) el.style.display = (t === tabName) ? 'block' : 'none';
+            });
+            const activeBtn = document.getElementById(`tab-${tabName}-btn`);
+            if (activeBtn) activeBtn.classList.add('active');
+        }
+
+        function switchScenarioFlowEditor(key) {
+            saveJarTextsFromEditor();
+            currentActiveScenario = key;
+            renderAdminCards();
+            loadJarTextsToEditor();
+        }
+
+        // 使用者專屬存檔 (LocalStorage 優先保護)
+        function saveToLocalStorageOnly() {
+            saveJarTextsFromEditor();
+            const desc = document.getElementById('admin-blueprint-summary-text').value;
+            const img = document.getElementById('admin-blueprint-img-url').value;
+            
+            localStorage.setItem('ava_scenario_database', JSON.stringify(allScenarioDatabase));
+            localStorage.setItem('ava_jar_texts', JSON.stringify(allJarTexts));
+            localStorage.setItem('ava_blueprint_custom_desc', desc);
+            localStorage.setItem('ava_blueprint_custom_img', img);
+            localStorage.setItem('ava_user_has_customized', 'true');
+            
+            buildAndRenderFlow();
+            alert("✅ 已成功保存為「使用者專屬設定」！(此設定受到保護，管理者更新雲端時不會被覆蓋)");
+            closeAdminDashboard();
+        }
+
+        // 匯出 JSON
+        function exportUserDataJSON() {
+            saveJarTextsFromEditor();
+            const exportData = {
+                version: currentSystemVersion,
+                timestamp: new Date().toISOString(),
+                scenario_database: allScenarioDatabase,
+                jar_texts: allJarTexts,
+                blueprint_desc: document.getElementById('admin-blueprint-summary-text').value,
+                blueprint_img: document.getElementById('admin-blueprint-img-url').value
+            };
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `AVA_Planner_User_Backup_${Date.now()}.json`;
+            a.click();
+        }
+
+        // 匯入 JSON
+        function handleJSONImport(input) {
+            if (!input.files || input.files.length === 0) return;
+            const file = input.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (data.scenario_database) allScenarioDatabase = data.scenario_database;
+                    if (data.jar_texts) allJarTexts = data.jar_texts;
+                    if (data.blueprint_desc) localStorage.setItem('ava_blueprint_custom_desc', data.blueprint_desc);
+                    if (data.blueprint_img) localStorage.setItem('ava_blueprint_custom_img', data.blueprint_img);
+                    
+                    saveToLocalStorageOnly();
+                    alert("✅ 成功匯入專屬設定！");
+                } catch(err) {
+                    alert("❌ 匯入失敗，請確認檔案格式正確。");
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // 管理者同步至 Google Sheet
         async function syncAllToGoogleSheet() {
+            saveJarTextsFromEditor();
             const loadingMask = document.getElementById('sync-loading-mask');
             loadingMask.style.display = 'flex';
             
@@ -1044,10 +1252,11 @@
                 localStorage.setItem('ava_jar_texts', JSON.stringify(allJarTexts));
                 localStorage.setItem('ava_sheet_mappings', JSON.stringify(sheetMappings));
                 localStorage.setItem('ava_last_synced_version', newVersion);
+                localStorage.removeItem('ava_user_has_customized'); // 管理者同步重設標記
                 
                 buildAndRenderFlow();
                 loadingMask.style.display = 'none';
-                alert(`✅ 雲端同步完成！版本已自動升級為 ${newVersion}`);
+                alert(`✅ 雲端同步完成！版本已升級為 ${newVersion}`);
                 closeAdminDashboard();
             } catch (e) {
                 loadingMask.style.display = 'none';
@@ -1055,11 +1264,37 @@
             }
         }
 
-        async function fetchCloudDataFromGAS() {
+        // 啟動秒開機制：先輕量檢查 version，若有新版才拉取
+        async function fetchCloudDataWithFastCheck() {
             try {
-                const resp = await fetch(GAS_API_URL);
-                const json = await resp.json();
-                if (json.admin_password) cloudAdminPassword = String(json.admin_password);
+                const isUserCustom = localStorage.getItem('ava_user_has_customized') === 'true';
+                const localVersion = localStorage.getItem('ava_last_synced_version') || currentSystemVersion;
+
+                // 1. 先用極輕量請求檢查版本號 (秒開核心)
+                const checkResp = await fetch(`${GAS_API_URL}?check_version=true`);
+                const checkJson = await checkResp.json();
+                
+                if (checkJson.admin_password) cloudAdminPassword = String(checkJson.admin_password);
+                const cloudVer = checkJson.system_version || currentSystemVersion;
+
+                // 2. 如果版本一致且本機有資料，直接使用本機快取秒開
+                if (localVersion === cloudVer && localStorage.getItem('ava_scenario_database')) {
+                    applyVersionToUI(localVersion);
+                    buildAndRenderFlow();
+                    return;
+                }
+
+                // 3. 使用者有專屬自訂資料時，維持使用者資料優先
+                if (isUserCustom) {
+                    applyVersionToUI(localVersion);
+                    buildAndRenderFlow();
+                    return;
+                }
+
+                // 4. 版本不同且非使用者自訂時，進行完整拉取
+                const fullResp = await fetch(GAS_API_URL);
+                const json = await fullResp.json();
+                
                 if (json.system_version) applyVersionToUI(json.system_version);
                 if (json.multipliers) globalReturnMultipliers = json.multipliers;
                 if (json.scenarios) scenariosDB = json.scenarios;
@@ -1080,95 +1315,17 @@
                         });
                     });
                     allScenarioDatabase = cloudDB;
+                    localStorage.setItem('ava_scenario_database', JSON.stringify(cloudDB));
                 }
-                if (json.jar_texts) allJarTexts = json.jar_texts;
+                if (json.jar_texts) {
+                    allJarTexts = json.jar_texts;
+                    localStorage.setItem('ava_jar_texts', JSON.stringify(json.jar_texts));
+                }
+                localStorage.setItem('ava_last_synced_version', cloudVer);
                 buildAndRenderFlow();
             } catch (e) {
                 applyVersionToUI(currentSystemVersion);
                 buildAndRenderFlow();
-            }
-        }
-
-        function promptAdminLogin() {
-            const pwd = prompt("請輸入管理員密碼：");
-            if (pwd === cloudAdminPassword) {
-                isAdminRole = true;
-                openAdminDashboardModal("🛠️ 管理者控制台 (已連接 Google Sheet 雲端)");
-                document.querySelectorAll('.admin-only-tab').forEach(el => el.style.display = 'block');
-                document.getElementById('btn-sync-gsheet').style.display = 'block';
-                document.getElementById('btn-reset-user').style.display = 'none';
-            } else if (pwd !== null) {
-                alert("❌ 密碼錯誤！");
-            }
-        }
-
-        function openUserDashboard() {
-            isAdminRole = false;
-            openAdminDashboardModal("⚙️ 使用者設定 (本機)");
-            document.querySelectorAll('.admin-only-tab').forEach(el => el.style.display = 'none');
-            document.getElementById('btn-sync-gsheet').style.display = 'none';
-            document.getElementById('btn-reset-user').style.display = 'block';
-        }
-
-        function openAdminDashboardModal(title) {
-            document.getElementById('admin-modal-title').textContent = title;
-            document.getElementById('admin-password-input').value = cloudAdminPassword;
-            document.getElementById('admin-version-input').value = currentSystemVersion;
-            document.getElementById('admin-gas-url-input').value = GAS_API_URL;
-            document.getElementById('scenario-flow-selector').value = currentActiveScenario;
-            renderAdminCards();
-            renderMappingTable();
-            switchAdminTab('flow');
-            document.getElementById('admin-modal-mask').style.display = 'flex';
-        }
-
-        function closeAdminDashboard() { document.getElementById('admin-modal-mask').style.display = 'none'; }
-        function openScenarioPopup() { document.getElementById('scenario-popup-mask').style.display = 'flex'; }
-        function closeScenarioPopup() { document.getElementById('scenario-popup-mask').style.display = 'none'; }
-        function openJumpPopup() { document.getElementById('jump-popup-mask').style.display = 'flex'; }
-        function closeJumpPopup() { document.getElementById('jump-popup-mask').style.display = 'none'; }
-
-        function applyScenarioPreset(key) {
-            currentActiveScenario = key;
-            buildAndRenderFlow();
-            closeScenarioPopup();
-            navigateStep(0);
-        }
-
-        function jumpDirectStep(stepId) {
-            closeJumpPopup();
-            const idx = activeFullFlowSteps.findIndex(s => s.id === stepId);
-            if (idx >= 0) navigateStep(idx);
-        }
-
-        function switchAdminTab(tabName) {
-            document.querySelectorAll('.admin-nav-btn').forEach(b => b.classList.remove('active'));
-            ['flow', 'jars', 'blueprint', 'mapping', 'system'].forEach(t => {
-                const el = document.getElementById(`admin-sec-${t}`);
-                if (el) el.style.display = (t === tabName) ? 'block' : 'none';
-            });
-            const activeBtn = document.getElementById(`tab-${tabName}-btn`);
-            if (activeBtn) activeBtn.classList.add('active');
-        }
-
-        function switchScenarioFlowEditor(key) {
-            currentActiveScenario = key;
-            renderAdminCards();
-        }
-
-        function saveToLocalStorageOnly() {
-            localStorage.setItem('ava_scenario_database', JSON.stringify(allScenarioDatabase));
-            alert("✅ 已保存專屬設定至本機！");
-            buildAndRenderFlow();
-            closeAdminDashboard();
-        }
-
-        function resetToTeamDefault() {
-            if (confirm("確定清除本機資料並還原至雲端團隊預設？")) {
-                localStorage.clear();
-                fetchCloudDataFromGAS();
-                alert("✅ 已還原為團隊最新預設！");
-                closeAdminDashboard();
             }
         }
 
@@ -1203,7 +1360,8 @@
             const tbody = document.getElementById('results-table-body');
             if (!thead || !tbody) return;
 
-            thead.innerHTML = `<tr><th>年份 (歲數)</th><th>累計儲備</th>${colVisibility.annuity ? '<th>被動收入</th>' : ''}${colVisibility.accum ? '<th>累積已領</th>' : ''}${colVisibility.asset ? '<th>大樹收成</th>' : ''}</tr>`;
+            const jt = allJarTexts[currentActiveScenario] || allJarTexts['no_savings'];
+            thead.innerHTML = `<tr><th>${jt.th_year || '年份 (歲數)'}</th><th>${jt.th_reserve || '累計儲備'}</th>${colVisibility.annuity ? `<th>${jt.th_income || '被動收入'}</th>` : ''}${colVisibility.accum ? `<th>${jt.th_accum || '累積已領'}</th>` : ''}${colVisibility.asset ? `<th>${jt.th_asset || '大樹收成'}</th>` : ''}</tr>`;
             tbody.innerHTML = '';
 
             [8, 10, 15, 20, 25, 30].forEach(yr => {
@@ -1228,10 +1386,23 @@
         document.addEventListener('DOMContentLoaded', () => {
             const savedDb = localStorage.getItem('ava_scenario_database');
             if (savedDb) { try { allScenarioDatabase = JSON.parse(savedDb); } catch(e){} }
+            const savedJt = localStorage.getItem('ava_jar_texts');
+            if (savedJt) { try { allJarTexts = JSON.parse(savedJt); } catch(e){} }
             const savedVer = localStorage.getItem('ava_last_synced_version');
             if (savedVer) applyVersionToUI(savedVer);
-            fetchCloudDataFromGAS();
+            fetchCloudDataWithFastCheck();
         });
+    </script>
+    
+    <!-- PWA Service Worker 註冊 -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('✅ PWA Service Worker 註冊成功:', reg.scope))
+                    .catch(err => console.log('❌ PWA Service Worker 註冊失敗:', err));
+            });
+        }
     </script>
 </body>
 </html>
