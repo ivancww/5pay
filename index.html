@@ -44,8 +44,6 @@
             --state-danger: #dc2626;
             --plan1-color: #2563eb;
             --plan2-color: #059669;
-            --plan3-color: #dc2626;
-            --plan4-color: #7c3aed;
             --pink-dashed: 1.5px dashed #f8bbd0;
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
             --shadow-md: 0 4px 16px -2px rgba(15, 23, 42, 0.06);
@@ -56,6 +54,7 @@
         .brand-title-wrap { display: flex; align-items: center; gap: 8px; user-select: none; }
         .brand-logo-text { font-size: 1.02rem; font-weight: 800; color: var(--brand-primary); cursor: pointer; }
         .mini-quick-btn { background: #ffffff; border: 1px solid var(--border-light); border-radius: 50%; width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 900; cursor: pointer; transition: all 0.2s; box-shadow: var(--shadow-sm); }
+        .mini-quick-btn:hover { background: var(--brand-soft); border-color: var(--brand-accent); transform: scale(1.08); }
         .mini-quick-btn.scenario-btn { color: var(--brand-accent); border: var(--pink-dashed); }
         .mini-quick-btn.jump-btn { color: var(--state-purple); }
         .user-settings-btn { cursor: pointer; font-size: 1.25rem; }
@@ -88,6 +87,7 @@
         .gap-container { background: #eff6ff; border: 1.5px solid #bfdbfe; border-radius: 14px; padding: 20px; margin-bottom: 20px; }
         .gap-tag { background: #2563eb; color: #fff; display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 800; margin-bottom: 12px; }
         .gap-comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+        @media (max-width: 620px) { .gap-comparison-grid { grid-template-columns: 1fr; } }
         .gap-box { background: #fff; border-radius: 10px; padding: 14px; border: 1px solid #dbeafe; }
         
         .calc-jar-card { background: #ffffff; border: 1px solid var(--border-light); border-radius: 14px; padding: 18px; margin-bottom: 14px; }
@@ -102,8 +102,6 @@
         .dot-blue-bg { background: var(--brand-accent); }
         .dot-green-bg { background: var(--state-success); }
         .dot-purple-bg { background: var(--state-purple); }
-        .dot-red-bg { background: var(--state-danger); }
-        .mini-pink-btn { background: #fff; border: var(--pink-dashed) !important; border-radius: 4px; font-size: 0.75rem; padding: 1px 6px; cursor: pointer; color: var(--brand-accent); }
         
         .table-responsive { overflow-x: auto; margin-top: 6px; }
         table.clean-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; white-space: nowrap; }
@@ -115,10 +113,6 @@
         .promo-left-col { flex: 1.2; width: 100%; display: flex; flex-direction: column; gap: 12px; }
         .promo-right-col { flex: 1; width: 100%; }
         .promo-card { background: #fdfdfd; border: 1px solid var(--border-light); border-radius: 14px; padding: 1.2rem; }
-        .promo-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px dashed #eee; }
-        .promo-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        .promo-checkbox { width: 20px; height: 20px; accent-color: var(--brand-accent); margin-top: 2px; }
-        .promo-tag { background: #ffecb3; color: #d84315; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; display: inline-block; margin-top: 5px; }
         .promo-result-box { background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: white; padding: 1.8rem 1.4rem; border-radius: 16px; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 100%; }
         .promo-result-box .big-savings { font-size: 2.5rem; font-weight: 900; margin: 12px 0; }
         
@@ -140,8 +134,9 @@
         .modal-mask { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 2000; align-items: center; justify-content: center; }
         .modal-box { background: #fff; padding: 24px; border-radius: 16px; max-width: 440px; width: 90%; position: relative; }
         .close-btn { position: absolute; top: 12px; right: 16px; font-size: 1.4rem; cursor: pointer; color: var(--text-muted); }
-        .popup-menu-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
-        .popup-menu-item { background: #f8fafc; border: 1px solid var(--border-light); border-radius: 10px; padding: 10px 12px; font-size: 0.88rem; font-weight: bold; cursor: pointer; }
+        .popup-menu-list { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 14px; }
+        .popup-menu-item { background: #f8fafc; border: 1px solid var(--border-light); border-radius: 10px; padding: 12px 14px; font-size: 0.92rem; font-weight: bold; cursor: pointer; transition: all 0.2s; }
+        .popup-menu-item:hover { border-color: var(--brand-accent); background: var(--brand-soft); }
         
         .admin-dashboard-modal { background: #f8fafc; border-radius: 18px; width: 95%; max-width: 950px; height: 88vh; display: flex; flex-direction: column; overflow: hidden; }
         .admin-header { background: var(--brand-primary); color: #fff; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; }
@@ -163,11 +158,11 @@
 <body>
     <header class="system-top-nav">
         <div class="brand-title-wrap">
-            <span class="brand-logo-text" onclick="promptAdminLogin()" title="點擊輸入管理員密碼">🌱 AVA PLANNER</span>
-            <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="情境模式">!</span>
-            <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="模組跳轉">*</span>
+            <span class="brand-logo-text" onclick="promptAdminLogin()" title="管理員登入">🌱 AVA PLANNER</span>
+            <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="選擇客群情境">!</span>
+            <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="核心分頁直達">*</span>
         </div>
-        <div class="user-settings-btn" onclick="openUserDashboard()" title="使用者設定">⚙️</div>
+        <div class="user-settings-btn" onclick="openUserDashboard()" title="設定">⚙️</div>
     </header>
     
     <div class="progress-bar-container">
@@ -175,25 +170,18 @@
     </div>
     
     <div class="workspace-layout">
-        <main id="app-main-flow">
-            <!-- 前台動態流程頁面由 JS 自動產生 -->
-        </main>
+        <main id="app-main-flow"></main>
     </div>
 
-    <!-- 頂部 ! 情境對話彈窗 -->
+    <!-- 頂部 ! 3 種客群情境對話彈窗 -->
     <div id="scenario-popup-mask" class="modal-mask">
         <div class="modal-box">
             <span class="close-btn" onclick="closeScenarioPopup()">&times;</span>
-            <h3 style="color:var(--brand-primary); margin-top:0; font-size:1.1rem; text-align:center;">💡 選擇客群情境</h3>
+            <h3 style="color:var(--brand-primary); margin-top:0; font-size:1.15rem; text-align:center;">💡 選擇引導情境</h3>
             <div class="popup-menu-list">
-                <div class="popup-menu-item" onclick="applyScenarioPreset('unplanned')">🌱 未諗未來</div>
-                <div class="popup-menu-item" onclick="applyScenarioPreset('forced_save')">💰 想強制儲</div>
-                <div class="popup-menu-item" onclick="applyScenarioPreset('inflation')">📉 抗通脹</div>
-                <div class="popup-menu-item" onclick="applyScenarioPreset('retire')">🏖️ 退休</div>
-                <div class="popup-menu-item" onclick="applyScenarioPreset('edu')">🎓 教育基金</div>
-                <div class="popup-menu-item" onclick="applyScenarioPreset('self_invest')">📈 自己投資</div>
-                <div class="popup-menu-item" onclick="applyScenarioPreset('flexible')">🔓 怕綁死/重視靈活</div>
-                <div class="popup-menu-item" onclick="applyScenarioPreset('low_return')">📊 嫌回報低</div>
+                <div class="popup-menu-item" onclick="applyScenarioPreset('no_savings')">1. 🌱 未有儲蓄 / 主動查詢</div>
+                <div class="popup-menu-item" onclick="applyScenarioPreset('self_invest')">2. 📈 自己投資</div>
+                <div class="popup-menu-item" onclick="applyScenarioPreset('flexible_return')">3. 🔓 靈活性 / 回報</div>
             </div>
         </div>
     </div>
@@ -202,8 +190,8 @@
     <div id="jump-popup-mask" class="modal-mask">
         <div class="modal-box">
             <span class="close-btn" onclick="closeJumpPopup()">&times;</span>
-            <h3 style="color:var(--brand-primary); margin-top:0; font-size:1.1rem; text-align:center;">🚀 直達固定核心分頁</h3>
-            <div class="popup-menu-list" style="grid-template-columns:1fr;">
+            <h3 style="color:var(--brand-primary); margin-top:0; font-size:1.1rem; text-align:center;">🚀 直達核心分頁</h3>
+            <div class="popup-menu-list">
                 <div class="popup-menu-item" onclick="jumpDirectStep('fixed-page-a')">🔍 固定分頁 A：認知差距</div>
                 <div class="popup-menu-item" onclick="jumpDirectStep('fixed-page-b')">🌱 固定分頁 B：時光複利量化表</div>
                 <div class="popup-menu-item" onclick="jumpDirectStep('fixed-page-c')">📋 固定分頁 C：專屬生活藍圖</div>
@@ -212,7 +200,7 @@
         </div>
     </div>
 
-    <!-- 全能控制台 -->
+    <!-- 控制台 -->
     <div id="admin-modal-mask" class="modal-mask">
         <div class="admin-dashboard-modal">
             <div class="admin-header">
@@ -224,51 +212,40 @@
                 <div class="admin-nav-btn active" id="tab-flow-btn" onclick="switchAdminTab('flow')">三大區域流程管理</div>
                 <div class="admin-nav-btn" id="tab-jars-btn" onclick="switchAdminTab('jars')">時光複利文字</div>
                 <div class="admin-nav-btn" id="tab-blueprint-btn" onclick="switchAdminTab('blueprint')">人生藍圖設定</div>
-                <div class="admin-nav-btn admin-only-tab" id="tab-mapping-btn" onclick="switchAdminTab('mapping')" style="display:none;">領取文字與代碼</div>
                 <div class="admin-nav-btn admin-only-tab" id="tab-system-btn" onclick="switchAdminTab('system')" style="display:none;">系統參數</div>
             </div>
             
             <div class="sync-loading-overlay" id="sync-loading-mask">
                 <div style="font-size:2.5rem; margin-bottom:10px;">⏳</div>
-                <div>正在同步至 Google Sheet，請稍候...</div>
+                <div>正在自動升級版本並同步至 Google Sheet...</div>
             </div>
             
             <div class="admin-body">
-                <!-- Tab 1: 三大區域流程管理 -->
+                <!-- Tab 1: 三大區域頁面管理 -->
                 <div id="admin-sec-flow">
-                    <div style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:12px; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-                        <div style="display:flex; align-items:center; gap:8px;">
-                            <label style="font-size:0.85rem; font-weight:bold; color:var(--brand-primary);">編輯情境：</label>
-                            <select id="scenario-flow-selector" onchange="switchScenarioFlowEditor(this.value)" style="padding:6px 10px; font-weight:bold; border:1.5px solid var(--brand-accent); border-radius:6px; background:#fff;">
-                                <option value="unplanned">🌱 編輯：未諗未來</option>
-                                <option value="forced_save">💰 編輯：想強制儲</option>
-                                <option value="inflation">📉 編輯：抗通脹</option>
-                                <option value="retire">🏖️ 編輯：退休</option>
-                                <option value="edu">🎓 編輯：教育基金</option>
-                                <option value="self_invest">📈 編輯：自己投資</option>
-                                <option value="flexible">🔓 編輯：怕綁死/重視靈活</option>
-                                <option value="low_return">📊 編輯：嫌回報低</option>
-                            </select>
-                        </div>
+                    <div style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:12px; margin-bottom:16px; display:flex; align-items:center; gap:8px;">
+                        <label style="font-size:0.85rem; font-weight:bold; color:var(--brand-primary);">編輯情境：</label>
+                        <select id="scenario-flow-selector" onchange="switchScenarioFlowEditor(this.value)" style="padding:6px 10px; font-weight:bold; border:1.5px solid var(--brand-accent); border-radius:6px; background:#fff;">
+                            <option value="no_savings">🌱 1. 未有儲蓄 / 主動查詢</option>
+                            <option value="self_invest">📈 2. 自己投資</option>
+                            <option value="flexible_return">🔓 3. 靈活性 / 回報</option>
+                        </select>
                     </div>
                     
-                    <!-- 區域 A 管理 -->
                     <div class="zone-header-box" style="border-left:4px solid #2563eb;">
-                        <span>📍 區域 A (第 1 頁 - 固定分頁 A 前)</span>
+                        <span>📍 區域 A (第 1 - n 頁 $\rightarrow$ 固定分頁 A: 認知差距)</span>
                         <button class="step-ctrl-btn" style="background:#dbeafe; color:#1d4ed8;" onclick="addNewPageToZone('zone_a')">+ 新增區域 A 頁面</button>
                     </div>
                     <div id="admin-cards-render-zone-a"></div>
 
-                    <!-- 區域 B 管理 -->
                     <div class="zone-header-box" style="border-left:4px solid #059669; margin-top:20px;">
-                        <span>📍 區域 B (固定分頁 A 後 - 固定分頁 B 前)</span>
+                        <span>📍 區域 B (固定分頁 A 開始 - n 頁 $\rightarrow$ 固定分頁 B: 時光複利)</span>
                         <button class="step-ctrl-btn" style="background:#d1fae5; color:#065f46;" onclick="addNewPageToZone('zone_b')">+ 新增區域 B 頁面</button>
                     </div>
                     <div id="admin-cards-render-zone-b"></div>
 
-                    <!-- 區域 C 管理 -->
                     <div class="zone-header-box" style="border-left:4px solid #7c3aed; margin-top:20px;">
-                        <span>📍 區域 C (固定分頁 B 後 - 固定分頁 C 前)</span>
+                        <span>📍 區域 C (固定分頁 B 開始 - n 頁 $\rightarrow$ 固定分頁 C: 人生藍圖)</span>
                         <button class="step-ctrl-btn" style="background:#ede9fe; color:#5b21b6;" onclick="addNewPageToZone('zone_c')">+ 新增區域 C 頁面</button>
                     </div>
                     <div id="admin-cards-render-zone-c"></div>
@@ -277,64 +254,46 @@
                 <!-- Tab 2: 時光複利文字 -->
                 <div id="admin-sec-jars" style="display:none;">
                     <div class="admin-card-row">
-                        <h4 style="margin-top:0; color:var(--brand-primary);">🌱 一號水庫</h4>
+                        <h4 style="margin-top:0; color:var(--brand-primary);">🌱 一號水庫 (第 1 - 5 年)</h4>
                         <input type="text" id="admin-jt-title-1" class="pink-edit-input" placeholder="標題">
                         <input type="text" id="admin-jt-desc-1" class="pink-edit-input" placeholder="描述">
                     </div>
                     <div class="admin-card-row">
-                        <h4 style="margin-top:0; color:var(--plan2-color);">💧 二號水庫</h4>
+                        <h4 style="margin-top:0; color:var(--plan2-color);">💧 二號水庫 (第 6 - 10 年)</h4>
                         <input type="text" id="admin-jt-title-2" class="pink-edit-input" placeholder="標題">
                         <input type="text" id="admin-jt-desc-2" class="pink-edit-input" placeholder="描述">
-                    </div>
-                    <div class="admin-card-row">
-                        <h4 style="margin-top:0; color:var(--plan3-color);">🌿 三號水庫</h4>
-                        <input type="text" id="admin-jt-title-3" class="pink-edit-input" placeholder="標題">
-                        <input type="text" id="admin-jt-desc-3" class="pink-edit-input" placeholder="描述">
-                    </div>
-                    <div class="admin-card-row">
-                        <h4 style="margin-top:0; color:var(--plan4-color);">🌳 四號水庫</h4>
-                        <input type="text" id="admin-jt-title-4" class="pink-edit-input" placeholder="標題">
-                        <input type="text" id="admin-jt-desc-4" class="pink-edit-input" placeholder="描述">
                     </div>
                 </div>
 
                 <!-- Tab 3: 人生藍圖設定 -->
                 <div id="admin-sec-blueprint" style="display:none;">
                     <div class="admin-card-row">
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">圖片網址：</label>
+                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">藍圖圖片網址：</label>
                         <input type="text" id="admin-blueprint-img-url" class="pink-edit-input">
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:10px; display:block;">替代方案說明：</label>
+                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:10px; display:block;">替代方案總結說明：</label>
                         <input type="text" id="admin-blueprint-summary-text" class="pink-edit-input">
                     </div>
                 </div>
 
-                <!-- Tab 4: 領取文字與代碼 (管理員專用) -->
-                <div id="admin-sec-mapping" style="display:none;">
-                    <div class="admin-card-row">
-                        <div id="admin-mappings-zone"></div>
-                    </div>
-                </div>
-
-                <!-- Tab 5: 系統參數 -->
+                <!-- Tab 4: 系統參數 -->
                 <div id="admin-sec-system" style="display:none;">
                     <div class="admin-card-row">
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">管理員密碼：</label>
                         <input type="text" id="admin-password-input" class="pink-edit-input">
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">系統版本號：</label>
-                        <input type="text" id="admin-version-input" class="pink-edit-input">
+                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">當前系統版本號 (每次同步會自動累加)：</label>
+                        <input type="text" id="admin-version-input" class="pink-edit-input" readonly style="background:#f8fafc;">
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">GAS API 網址：</label>
                         <input type="text" id="admin-gas-url-input" class="pink-edit-input">
                     </div>
                 </div>
             </div>
             
-            <input type="file" id="firebase-file-input" accept="image/*" style="display:none;">
             <div style="background:#ffffff; padding:12px 20px; border-top:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
                 <button class="nav-btn prev" style="width:auto; padding:8px 20px;" onclick="closeAdminDashboard()">關閉</button>
                 <div style="display:flex; gap:10px;">
-                    <button class="nav-btn prev" id="btn-reset-user" style="width:auto; padding:8px 20px; background:#fff1f2; border-color:#fecdd3; color:#be123c;" onclick="resetToTeamDefault()">🔄 還原為團隊預設</button>
-                    <button class="nav-btn prev" style="width:auto; padding:8px 20px; background:#f0fdf4; border-color:#86efac; color:#166534;" onclick="saveToLocalStorageOnly()">💾 保存至本機</button>
-                    <button class="nav-btn next" id="btn-sync-gsheet" style="width:auto; padding:8px 20px; display:none;" onclick="syncAllToGoogleSheet()">☁️ 同步至 Google Sheet</button>
+                    <button class="nav-btn prev" id="btn-reset-user" style="width:auto; padding:8px 20px; background:#fff1f2; border-color:#fecdd3; color:#be123c;" onclick="resetToTeamDefault()">🔄 還原預設</button>
+                    <button class="nav-btn prev" style="width:auto; padding:8px 20px; background:#f0fdf4; border-color:#86efac; color:#166534;" onclick="saveToLocalStorageOnly()">💾 本機保存</button>
+                    <button class="nav-btn next" id="btn-sync-gsheet" style="width:auto; padding:8px 20px; display:none;" onclick="syncAllToGoogleSheet()">☁️ 同步至 Google Sheet (新 Version)</button>
                 </div>
             </div>
         </div>
@@ -346,70 +305,99 @@
         let GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwbKrrmiS5vx0Q5TvqqUCHBhU-VrS7WwwY0hj6BaNRwuzPtXXIZZxejPwhycCZhSCr-Rg/exec';
         let cloudAdminPassword = "903";
         let globalReturnMultipliers = {};
-        let currentActiveScenario = "unplanned";
+        let currentActiveScenario = "no_savings";
         let isAdminRole = false;
         let activeFullFlowSteps = [];
         let currentStepIndex = 0;
 
+        // 3 種核心情境
         let scenariosDB = {
-            unplanned: {
-                scenario_name: "未諗未來",
-                intuitive_belief: "35歲先開始都未遲",
-                objective_reality: "目標會變，但時間一去不復返",
+            no_savings: {
+                scenario_name: "未有儲蓄 / 主動查詢",
+                intuitive_belief: "收入扣除必要開支後，有多先儲蓄",
+                objective_reality: "目標會變，但時間複利一去不復返",
                 gap_title: "延遲啟動的代價",
                 gap_percentage: "71%",
-                gap_label: "複利增值代價",
-                takeaway_summary: "差距不是錢，而是被浪費的時間複利。提早 5 年分段奠定，效果完全不同。"
+                gap_label: "複利增值差距",
+                takeaway_summary: "差距不是錢，而是時間。及早分段小額建立，效益自然最大化。"
+            },
+            self_invest: {
+                scenario_name: "自己投資",
+                intuitive_belief: "全部資金自己炒股，回報最高最快",
+                objective_reality: "市場週期 5-7 年必有震盪，容易心理防線崩潰",
+                gap_title: "心理底氣與防守底層",
+                gap_percentage: "50%",
+                gap_label: "核心防守底",
+                takeaway_summary: "建立 50% 穩健底氣，令你在市場波動時更有從容選擇權。"
+            },
+            flexible_return: {
+                scenario_name: "靈活性 / 回報",
+                intuitive_belief: "儲蓄計劃一定會長期綁死資金",
+                objective_reality: "完成 5 年奠基後，第 8 年起即可換取一輩子的提取自由度",
+                gap_title: "假靈活 vs 真自由",
+                gap_percentage: "45%",
+                gap_label: "靈活散失代價",
+                takeaway_summary: "活期資金容易無意識流走，分段建立自動水庫才是真正的靈活。"
             }
         };
 
-        let sheetMappings = [
-            { code: "withdraw7_from8", sheet_name: "8年領取", display_name: "第8年開始 取7% (標準推薦)", note: "5年供款，第8年起每年領取7%" },
-            { code: "none", sheet_name: "自動滾存", display_name: "自動滾存不提取", note: "全期不提款，純滾存累積大樹" },
-            { code: "withdraw12_from15", sheet_name: "15年領取", display_name: "第15年開始 取12%", note: "第15年起每年領取12%" },
-            { code: "withdraw18_from20", sheet_name: "20年領取", display_name: "第20年開始 取18%", note: "第20年起每年領取18%" },
-            { code: "withdraw23_from25", sheet_name: "25年領取", display_name: "第25年開始 取23%", note: "第25年起每年領取23%" },
-            { code: "withdraw29_from30", sheet_name: "30年領取", display_name: "第30年開始 取29%", note: "第30年起每年領取29%" }
-        ];
-
         let allJarTexts = {
-            unplanned: {
-                scenario_name: "未諗未來",
+            no_savings: {
+                scenario_name: "未有儲蓄 / 主動查詢",
                 tree_title_1: "🌱 一號種子水庫 (第 1 - 5 年)", tree_desc_1: "播下一粒小種子，每天只需微小投入，5 年完成奠基。",
-                tree_title_2: "💧 二號灌溉水庫 (第 6 - 10 年)", tree_desc_2: "定期灌溉讓根基更深厚穩固。",
-                tree_title_3: "🌿 三號茁壯水庫 (第 11 - 15 年)", tree_desc_3: "水庫儲備倍增，抗風險能力大幅增強。",
-                tree_title_4: "🌳 四號大樹水庫 (第 16 - 20 年)", tree_desc_4: "大樹長成，產出源源不絕的流動被動收入。",
-                th_year: "年份 (歲數)", th_reserve: "累計儲備", th_income: "被動收入", th_accum: "累積已領", th_asset: "大樹收成", th_interest: "年化百分比回報"
+                tree_title_2: "💧 二號灌溉水庫 (第 6 - 10 年)", tree_desc_2: "定期灌溉讓根基更深厚穩固。"
+            },
+            self_invest: {
+                scenario_name: "自己投資",
+                tree_title_1: "🌱 防守底氣水庫 (第 1 - 5 年)", tree_desc_1: "建立核心防守底層，抵禦市場週期波動。",
+                tree_title_2: "💧 增值滾存水庫 (第 6 - 10 年)", tree_desc_2: "無懼牛熊市，穩健產出流動現金。"
+            },
+            flexible_return: {
+                scenario_name: "靈活性 / 回報",
+                tree_title_1: "🌱 靈活奠基水庫 (第 1 - 5 年)", tree_desc_1: "5 年完成，鎖定終身提取權利。",
+                tree_title_2: "💧 自由水龍頭 (第 6 - 10 年)", tree_desc_2: "隨時開啟水龍頭，享受源源不絕被動收入。"
             }
         };
 
         let allScenarioDatabase = {
-            unplanned: [
-                { id: "step_1", zone: "zone_a", step_num: 1, title: "「如果純粹講而家嘅生活狀態，你覺得自己屬於邊一種？」", subtitle: "沒有對與錯，純粹由你目前最真實、最自在的生活節奏開始探索：", image_url: "", options: [
-                    { headline: "🌅 先享受現在", subtext: "今天的生活同樣重要，未來的步調可以按自己節奏慢慢來。" },
-                    { headline: "🧭 我知道未來重要", subtext: "但市面太多複雜說法，還未找到真正適合自己、不吃力的方法。" }
+            no_savings: [
+                { id: "step_1", zone: "zone_a", step_num: 1, title: "「如果講而家嘅生活狀態，你覺得自己屬於邊一種？」", subtitle: "沒有對與錯，純粹由你目前最自在的節奏開始探索：", options: [
+                    { headline: "🌅 先享受現在", subtext: "今天的生活同樣重要，未來的步調可以慢慢來。" },
+                    { headline: "🧭 我知道未來重要", subtext: "但市面太多複雜說法，未找到真正適合自己、不吃力的方法。" }
                 ]},
-                { id: "step_2", zone: "zone_a", step_num: 2, title: "「如果將來有一樣嘢值得你花更多資源，最可能會係邊方面？」", subtitle: "即使未有具體安排，心目中亦可能有最在意的生活重心：", image_url: "", options: [
-                    { headline: "🏠 住屋與生活品質提升", subtext: "希望未來能住在更舒適的環境，享有更優質的日常生活。" },
-                    { headline: "✈️ 旅行與人生體驗", subtext: "趁有能力多去探索世界，豐富人生經歷。" }
+                { id: "step_2", zone: "zone_a", step_num: 2, title: "「如果將來有一樣嘢值得你花更多資源，最可能係邊方面？」", subtitle: "心目中可能已有最在意的生活重心：", options: [
+                    { headline: "🏠 住屋與生活品質提升", subtext: "希望未來住在更舒適的環境。" },
+                    { headline: "✈️ 旅行與人生體驗", subtext: "趁有能力多去探索世界，豐富人生。" }
                 ]},
-                { id: "step_7", zone: "zone_b", step_num: 7, title: "「如果話你知：『未有明確目標』，其實先係最好嘅開始方式？」", subtitle: "人生目標隨時會變，但「提早為自己累積選擇權」永遠不會錯。", image_url: "", options: [
-                    { headline: "🤔 點解未有目標都可以開始？想聽下背後原理", subtext: "想了解如何在不確定未來的情況下做好準備。" },
-                    { headline: "💡 真係可以完全唔影響現有生活咁做？", subtext: "想知道如何用最輕鬆、不吃力的節奏建立長期儲備。" }
+                { id: "step_7", zone: "zone_b", step_num: 7, title: "「如果話你知：『未有明確目標』，其實先係最好嘅開始方式？」", subtitle: "提早為自己累積選擇權永遠不會錯：", options: [
+                    { headline: "🤔 點解未有目標都可以開始？", subtext: "想了解背後的運作原理。" },
+                    { headline: "💡 真係可以完全唔影響現有生活？", subtext: "想知道如何用最輕鬆的節奏建立長期儲備。" }
                 ]},
-                { id: "step_13", zone: "zone_c", step_num: 13, title: "「適合先繼續，唔適合都完全冇問題。」", subtitle: "以你目前的步調，你覺得這種分段建立的方法適唔適合自己？", image_url: "", options: [
-                    { headline: "🟢 我覺得概念好舒服，可以認真考慮", subtext: "認同分段投入與被動收入提取的理念。" },
-                    { headline: "🟡 概念明白，想再睇下適合自己的具體預算", subtext: "希望能根據自己的實際收入量身微調。" }
+                { id: "step_13", zone: "zone_c", step_num: 13, title: "「適合先繼續，唔適合都完全冇問題。」", subtitle: "以你目前的步調，你覺得這種分段建立的方法適唔適合自己？", options: [
+                    { headline: "🟢 我覺得概念好舒服，可以認真考慮", subtext: "認同分段投入與被動收入提取理念。" },
+                    { headline: "🟡 概念明白，想睇下具體預算", subtext: "希望能量身微調。" }
                 ]}
             ]
         };
 
-        const colVisibility = { annuity: true, accum: true, asset: true, interest: false };
+        const colVisibility = { annuity: true, accum: true, asset: true };
         function formatNumber(v) { return new Intl.NumberFormat('en-US', {maximumFractionDigits: 0}).format(v || 0); }
         function parseFormattedNumber(s) { return parseFloat(String(s).replace(/,/g, '')) || 0; }
 
+        // 版本號自動遞增 (如 v6.2.0 -> v6.2.1)
+        function incrementVersion(verStr) {
+            const match = verStr.match(/v?(\d+)\.(\d+)\.(\d+)/);
+            if (match) {
+                const major = parseInt(match[1]);
+                const minor = parseInt(match[2]);
+                const patch = parseInt(match[3]) + 1;
+                return `v${major}.${minor}.${patch}`;
+            }
+            return verStr + ".1";
+        }
+
         function buildAndRenderFlow() {
-            const currentFlow = allScenarioDatabase[currentActiveScenario] || allScenarioDatabase['unplanned'] || [];
+            const currentFlow = allScenarioDatabase[currentActiveScenario] || allScenarioDatabase['no_savings'] || [];
             const zoneA = currentFlow.filter(c => c.zone === 'zone_a');
             const zoneB = currentFlow.filter(c => c.zone === 'zone_b');
             const zoneC = currentFlow.filter(c => c.zone === 'zone_c');
@@ -436,7 +424,7 @@
                     const c = step.data;
                     let optionsHtml = '';
                     if (c.options && c.options.length > 0) {
-                        optionsHtml = `<div class="options-group">` + c.options.map((opt, oIdx) => `
+                        optionsHtml = `<div class="options-group">` + c.options.map(opt => `
                             <div class="option-card-guided ${answers[c.id] === opt.headline ? 'selected' : ''}" onclick="selectDynamicOption('${c.id}', '${opt.headline.replace(/'/g, "\\'")}', ${index})">
                                 <div class="option-content">
                                     <div class="option-headline">${opt.headline}</div>
@@ -460,12 +448,12 @@
                         </div>
                     `;
                 } else if (step.id === 'fixed-page-a') {
-                    const sc = scenariosDB[currentActiveScenario] || scenariosDB['unplanned'];
+                    const sc = scenariosDB[currentActiveScenario] || scenariosDB['no_savings'];
                     stepEl.innerHTML = `
                         <div class="content-card">
                             <h2 class="question-title">🔍 認知差距與真相對比</h2>
                             <div class="gap-container">
-                                <div class="gap-tag">⚡ ${sc.gap_title || '延遲啟動的代價'}</div>
+                                <div class="gap-tag">⚡ ${sc.gap_title}</div>
                                 <h3 style="font-size:1.6rem; color:var(--brand-primary); margin-bottom:8px;">落差幅度：${sc.gap_percentage}</h3>
                                 <p style="font-size:0.9rem; color:var(--text-sub);">${sc.takeaway_summary}</p>
                                 <div class="gap-comparison-grid">
@@ -481,11 +469,12 @@
                             </div>
                             <div class="action-row">
                                 <button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 上一步</button>
-                                <button class="nav-btn next" onclick="navigateStep(${index + 1})">進入下一階段探索 →</button>
+                                <button class="nav-btn next" onclick="navigateStep(${index + 1})">進入下一階段 →</button>
                             </div>
                         </div>
                     `;
                 } else if (step.id === 'fixed-page-b') {
+                    const jt = allJarTexts[currentActiveScenario] || allJarTexts['no_savings'];
                     stepEl.innerHTML = `
                         <div class="content-card">
                             <h2 class="question-title">🌱 時光複利：小金額創造大效果</h2>
@@ -495,16 +484,14 @@
                                     <input type="number" id="start-age" value="30" onchange="calculateAndDisplay()" style="width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:8px; text-align:center; font-weight:bold;">
                                 </div>
                                 <div>
-                                    <label style="font-size:0.75rem; font-weight:bold; color:var(--brand-primary);">🌱 播種年期</label>
-                                    <select id="sow-term-select" onchange="updateSowTerm()" style="width:100%; padding:8px; border:1.5px solid var(--brand-accent); border-radius:8px; text-align:center; font-weight:bold; color:var(--brand-primary); background:#fff;">
-                                        <option value="5" selected>🌱 5 年播種期 (基礎奠基)</option>
-                                        <option value="10">💧 10 年播種期 (持續灌溉)</option>
-                                    </select>
+                                    <label style="font-size:0.75rem; font-weight:bold; color:var(--brand-primary);">🌱 播種期</label>
+                                    <input type="text" value="5 年播種期 (基礎奠基)" readonly style="width:100%; padding:8px; border:1.5px solid var(--brand-accent); border-radius:8px; text-align:center; font-weight:bold; background:#fff;">
                                 </div>
                             </div>
                             
                             <div class="calc-jar-card" id="group-plan1" style="border-top:3px solid var(--plan1-color);">
-                                <h4 id="disp-tree-title-1" style="color:var(--plan1-color); margin-bottom:4px; font-size:0.95rem;">🌱 一號種子水庫 (第 1 - 5 年)</h4>
+                                <h4 style="color:var(--plan1-color); margin-bottom:4px; font-size:0.95rem;">${jt.tree_title_1}</h4>
+                                <p style="font-size:0.8rem; color:var(--text-sub); margin-bottom:10px;">${jt.tree_desc_1}</p>
                                 <div class="calc-grid-5yr">
                                     <div class="calc-input-group"><label>第1年 (<span class="age-y1">30</span>歲)</label><input type="text" id="plan1-contribution" value="40,000"></div>
                                     <div class="calc-input-group"><label>第2年 (<span class="age-y2">31</span>歲)</label><input type="text" id="plan1-y2" value="40,000" readonly class="readonly"></div>
@@ -537,21 +524,21 @@
                             <h2 class="question-title">🌱 你的專屬生活藍圖筆記</h2>
                             <div class="blueprint-dual-grid">
                                 <div class="blueprint-left-box">
-                                    <h4 style="font-size:1.05rem; font-weight:800; margin-bottom:12px; color:#fff; border-bottom:1px solid rgba(255,255,255,0.15); padding-bottom:6px;">📋 你的生活初衷</h4>
-                                    <div class="blueprint-entry-item"><div class="blueprint-entry-label">探索偏好</div><div class="blueprint-entry-val" id="res-choice-1">${answers['step_1'] || '已鎖定'}</div></div>
-                                    <div class="blueprint-entry-item"><div class="blueprint-entry-label">核心方向</div><div class="blueprint-entry-val" id="res-choice-2">${answers['step_2'] || '已鎖定'}</div></div>
+                                    <h4 style="font-size:1.05rem; font-weight:800; margin-bottom:12px; color:#fff; border-bottom:1px solid rgba(255,255,255,0.15); padding-bottom:6px;">📋 生活初衷彙整</h4>
+                                    <div class="blueprint-entry-item"><div class="blueprint-entry-label">探索偏好</div><div class="blueprint-entry-val">${answers['step_1'] || '已完成記錄'}</div></div>
+                                    <div class="blueprint-entry-item"><div class="blueprint-entry-label">核心重心</div><div class="blueprint-entry-val">${answers['step_2'] || '已完成記錄'}</div></div>
                                 </div>
                                 <div class="blueprint-right-box">
                                     <h4 style="font-size:1rem; font-weight:800; color:var(--state-success); margin-bottom:10px;">💡 替代方案：無痛縮減落差</h4>
                                     <img id="blueprint-uploaded-img" class="blueprint-img-uploaded-view" src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80">
                                     <div style="background:#f0fdf4; border-radius:10px; padding:10px; font-size:0.85rem; color:#166534;">
-                                        <strong>完全不影響現有生活享受：</strong><br>每月不知不覺流走的少許資金，分段注入專屬水庫，自然鎖定終身被動收入。
+                                        <strong>完全不影響現有生活享受：</strong><br>將微少資金分段注入水庫，自然鎖定終身被動收入。
                                     </div>
                                 </div>
                             </div>
                             <div class="action-row">
                                 <button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 上一步</button>
-                                <button class="nav-btn next" onclick="navigateStep(${index + 1})">🎁 查看專屬保費優惠 →</button>
+                                <button class="nav-btn next" onclick="navigateStep(${index + 1})">🎁 查看保費優惠 →</button>
                             </div>
                         </div>
                     `;
@@ -559,7 +546,7 @@
                     stepEl.innerHTML = `
                         <div class="content-card">
                             <h2 class="question-title">🎁 專屬保費優惠計算</h2>
-                            <p class="question-hint">度身訂造最慳錢嘅投保策略！</p>
+                            <p class="question-hint">為你度身訂造最慳錢的方案！</p>
                             <div class="promo-split-container">
                                 <div class="promo-left-col">
                                     <div class="promo-card" style="background:#f8fafc;">
@@ -569,14 +556,14 @@
                                 </div>
                                 <div class="promo-right-col">
                                     <div class="promo-result-box">
-                                        <h4>總共慳咗達：</h4>
+                                        <h4>已為您慳下達：</h4>
                                         <div class="big-savings" id="promo-total-savings">$0</div>
                                     </div>
                                 </div>
                             </div>
                             <div class="action-row">
                                 <button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 返回藍圖</button>
-                                <button class="nav-btn next" onclick="alert('✅ 規劃全數完成！')">✅ 完成規劃</button>
+                                <button class="nav-btn next" onclick="alert('✅ 規劃全數完成！')">✅ 完成所有規劃</button>
                             </div>
                         </div>
                     `;
@@ -625,7 +612,7 @@
                 zoneContainer.innerHTML = '';
                 const zoneCards = currentList.filter(c => c.zone === zKey);
 
-                zoneCards.forEach((card, idx) => {
+                zoneCards.forEach(card => {
                     const globalIdx = currentList.findIndex(c => c.id === card.id);
                     const el = document.createElement('div');
                     el.className = 'admin-card-row';
@@ -653,9 +640,9 @@
                 zone: zoneKey,
                 step_num: allScenarioDatabase[currentActiveScenario].length + 1,
                 title: "新動態頁面標題",
-                subtitle: "請輸入探索引導副標題",
+                subtitle: "請輸入引導副標題說明",
                 image_url: "",
-                options: [{ headline: "選項 1", subtext: "說明文字" }]
+                options: [{ headline: "新選項 1", subtext: "說明文字" }]
             });
             renderAdminCards();
             buildAndRenderFlow();
@@ -688,7 +675,10 @@
             
             GAS_API_URL = document.getElementById('admin-gas-url-input').value || GAS_API_URL;
             cloudAdminPassword = document.getElementById('admin-password-input').value || cloudAdminPassword;
-            currentSystemVersion = document.getElementById('admin-version-input').value || currentSystemVersion;
+            
+            // 自動升級版本號
+            currentSystemVersion = incrementVersion(currentSystemVersion);
+            document.getElementById('admin-version-input').value = currentSystemVersion;
 
             try {
                 const allSheetRows = [];
@@ -716,22 +706,21 @@
                         cards: allSheetRows,
                         jar_texts: allJarTexts,
                         admin_password: cloudAdminPassword,
-                        system_version: currentSystemVersion,
-                        sheet_mappings: sheetMappings
+                        system_version: currentSystemVersion
                     })
                 });
 
                 localStorage.setItem('ava_scenario_database', JSON.stringify(allScenarioDatabase));
                 localStorage.setItem('ava_jar_texts', JSON.stringify(allJarTexts));
-                localStorage.setItem('ava_sheet_mappings', JSON.stringify(sheetMappings));
+                localStorage.setItem('ava_last_synced_version', currentSystemVersion);
                 
                 buildAndRenderFlow();
                 loadingMask.style.display = 'none';
-                alert(`✅ 雲端同步完成！跨裝置已實時更新！(Version: ${currentSystemVersion})`);
+                alert(`✅ 雲端同步完成！版本已自動升級為 ${currentSystemVersion}`);
                 closeAdminDashboard();
             } catch (e) {
                 loadingMask.style.display = 'none';
-                alert("❌ 上傳失敗，請檢查 GAS 權限。");
+                alert("❌ 上傳失敗，請檢查 GAS 連線設定。");
             }
         }
 
@@ -740,13 +729,13 @@
                 const resp = await fetch(GAS_API_URL);
                 const json = await resp.json();
                 if (json.admin_password) cloudAdminPassword = String(json.admin_password);
+                if (json.system_version) currentSystemVersion = json.system_version;
                 if (json.multipliers) globalReturnMultipliers = json.multipliers;
-                if (json.sheet_mappings) sheetMappings = json.sheet_mappings;
                 if (json.scenarios) scenariosDB = json.scenarios;
                 if (json.cards && json.cards.length > 0) {
                     const cloudDB = {};
                     json.cards.forEach(row => {
-                        const sId = row.scenario_id || "unplanned";
+                        const sId = row.scenario_id || "no_savings";
                         if (!cloudDB[sId]) cloudDB[sId] = [];
                         cloudDB[sId].push({
                             id: row.step_id,
@@ -763,7 +752,6 @@
                 if (json.jar_texts) allJarTexts = json.jar_texts;
                 buildAndRenderFlow();
             } catch (e) {
-                console.log("連線雲端失敗，以預設配置加載");
                 buildAndRenderFlow();
             }
         }
@@ -794,6 +782,7 @@
             document.getElementById('admin-password-input').value = cloudAdminPassword;
             document.getElementById('admin-version-input').value = currentSystemVersion;
             document.getElementById('admin-gas-url-input').value = GAS_API_URL;
+            document.getElementById('scenario-flow-selector').value = currentActiveScenario;
             renderAdminCards();
             switchAdminTab('flow');
             document.getElementById('admin-modal-mask').style.display = 'flex';
@@ -807,7 +796,7 @@
 
         function applyScenarioPreset(key) {
             currentActiveScenario = key;
-            if (!allScenarioDatabase[key]) allScenarioDatabase[key] = JSON.parse(JSON.stringify(allScenarioDatabase['unplanned'] || []));
+            if (!allScenarioDatabase[key]) allScenarioDatabase[key] = JSON.parse(JSON.stringify(allScenarioDatabase['no_savings'] || []));
             buildAndRenderFlow();
             closeScenarioPopup();
             navigateStep(0);
@@ -821,7 +810,7 @@
 
         function switchAdminTab(tabName) {
             document.querySelectorAll('.admin-nav-btn').forEach(b => b.classList.remove('active'));
-            ['flow', 'jars', 'blueprint', 'mapping', 'system'].forEach(t => {
+            ['flow', 'jars', 'blueprint', 'system'].forEach(t => {
                 const el = document.getElementById(`admin-sec-${t}`);
                 if (el) el.style.display = (t === tabName) ? 'block' : 'none';
             });
@@ -842,7 +831,7 @@
         }
 
         function resetToTeamDefault() {
-            if (confirm("確定清除自訂資料並還原至雲端官方預設？")) {
+            if (confirm("確定清除自訂資料並還原至雲端預設？")) {
                 localStorage.clear();
                 fetchCloudDataFromGAS();
                 alert("✅ 已還原為團隊預設！");
