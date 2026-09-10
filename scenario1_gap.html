@@ -1,556 +1,506 @@
 <!DOCTYPE html>
 <html lang="zh-HK">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>財務目標與通脹缺口對比分析</title>
-  <style>
-    :root {
-      --bg-page: #f8fafc;
-      --bg-card: #ffffff;
-      --border-color: #e2e8f0;
-      --border-focus: #3b82f6;
-      --text-main: #0f172a;
-      --text-muted: #64748b;
-      --color-asset: #0284c7;    /* 現有資產：穩健藍 */
-      --color-saving: #10b981;   /* 預計儲蓄：翡翠綠 */
-      --color-gap: #ef4444;      /* 資金缺口：警示紅 */
-      --color-track: #e2e8f0;    /* 圓形底軌 */
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    }
-
-    body {
-      background-color: var(--bg-page);
-      color: var(--text-main);
-      padding: 20px 16px;
-      display: flex;
-      justify-content: center;
-    }
-
-    .calculator-wrapper {
-      width: 100%;
-      max-width: 860px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    /* 頂部：自填資料區（僅保留 4 項核心數值） */
-    .input-section {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 16px 20px;
-    }
-
-    .section-title {
-      font-size: 15px;
-      font-weight: 700;
-      margin-bottom: 12px;
-      color: var(--text-main);
-    }
-
-    .input-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 12px;
-    }
-
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .input-group label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-muted);
-    }
-
-    .input-group input {
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 8px 10px;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-main);
-      background: #fff;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .input-group input:focus {
-      border-color: var(--border-focus);
-    }
-
-    /* 左右對比卡片 */
-    .comparison-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    @media (max-width: 680px) {
-      .comparison-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .comp-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid #f1f5f9;
-    }
-
-    .card-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text-main);
-    }
-
-    .badge-neutral {
-      font-size: 11px;
-      font-weight: 600;
-      padding: 4px 8px;
-      border-radius: 4px;
-      background: #f1f5f9;
-      color: #475569;
-    }
-
-    /* 右上角通脹率輸入元件 */
-    .rate-input-box {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      background: #fef2f2;
-      border: 1px solid #fee2e2;
-      padding: 2px 6px;
-      border-radius: 6px;
-    }
-
-    .rate-input-box label {
-      font-size: 11px;
-      font-weight: 600;
-      color: #dc2626;
-      white-space: nowrap;
-    }
-
-    .rate-input-box input {
-      width: 44px;
-      border: 1px solid #fca5a5;
-      background: #fff;
-      border-radius: 4px;
-      padding: 2px 4px;
-      font-size: 11px;
-      font-weight: 700;
-      color: #dc2626;
-      text-align: right;
-      outline: none;
-    }
-
-    .rate-input-box .unit {
-      font-size: 11px;
-      color: #dc2626;
-      font-weight: 600;
-    }
-
-    /* 圓環圖 */
-    .chart-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 10px 0 14px;
-    }
-
-    .donut-box {
-      position: relative;
-      width: 115px;
-      height: 115px;
-    }
-
-    .donut-svg {
-      width: 100%;
-      height: 100%;
-      transform: rotate(-90deg);
-      overflow: visible;
-    }
-
-    .circle-track {
-      fill: none;
-      stroke: var(--color-track);
-      stroke-width: 4;
-    }
-
-    .circle-seg {
-      fill: none;
-      stroke-width: 4; /* 與其他線段保持完全統一大細 */
-      transition: stroke-dasharray 0.35s ease, stroke-dashoffset 0.35s ease, transform 0.35s ease;
-      transform-origin: center center;
-    }
-
-    .seg-asset { stroke: var(--color-asset); }
-    .seg-save { stroke: var(--color-saving); }
-    .seg-gap { stroke: var(--color-gap); }
-
-    /* 分離式缺口效果：不加粗，透過微向外移位創造分離感 */
-    .seg-gap-separated {
-      stroke: var(--color-gap);
-      stroke-width: 4;
-      transform: scale(1.06); /* 統一大細並微幅向外分離 */
-    }
-
-    .donut-center-info {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      pointer-events: none;
-    }
-
-    .center-sub {
-      font-size: 10px;
-      color: var(--text-muted);
-    }
-
-    .center-val {
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    /* 圖表對應圖例 */
-    .chart-legend {
-      display: flex;
-      gap: 10px;
-      margin-top: 8px;
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      display: inline-block;
-    }
-
-    .dot-asset { background-color: var(--color-asset); }
-    .dot-save { background-color: var(--color-saving); }
-    .dot-gap { background-color: var(--color-gap); }
-
-    /* 數據清單 */
-    .data-list {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      font-size: 13px;
-    }
-
-    .data-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 4px 0;
-    }
-
-    .data-row .d-label {
-      color: var(--text-muted);
-    }
-
-    .data-row .d-val {
-      font-weight: 600;
-      color: var(--text-main);
-    }
-
-    .data-row.highlight {
-      background: #f8fafc;
-      padding: 6px 8px;
-      border-radius: 6px;
-    }
-
-    .data-row.highlight-warning {
-      background: #fff5f5;
-    }
-
-    .data-row.gap-box {
-      margin-top: 4px;
-      padding: 6px 8px;
-      background: #fff1f2;
-      border: 1px dashed #fca5a5;
-      border-radius: 6px;
-    }
-
-    .text-danger {
-      color: var(--color-gap) !important;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>財務目標與通脹缺口對比分析</title>
+  <style>
+    :root {
+      --bg-page: #f8fafc;
+      --bg-card: #ffffff;
+      --border-color: #e2e8f0;
+      --border-focus: #3b82f6;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --color-asset: #0284c7;    /* 現有資產：穩健藍 */
+      --color-saving: #10b981;   /* 預計儲蓄：翡翠綠 */
+      --color-gap: #ef4444;      /* 資金缺口：警示紅 */
+      --color-track: #e2e8f0;    /* 圓形底軌 */
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      padding: 20px 16px;
+      display: flex;
+      justify-content: center;
+    }
+    .calculator-wrapper {
+      width: 100%;
+      max-width: 860px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    /* 頂部：自填資料區（僅保留 4 項核心數值） */
+    .input-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px 20px;
+    }
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-main);
+    }
+    .input-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+    }
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .input-group label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+    .input-group input {
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      background: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .input-group input:focus {
+      border-color: var(--border-focus);
+    }
+    /* 左右對比卡片 */
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 680px) {
+      .comparison-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .comp-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .badge-neutral {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 4px;
+      background: #f1f5f9;
+      color: #475569;
+    }
+    /* 右上角通脹率輸入元件 */
+    .rate-input-box {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: #fef2f2;
+      border: 1px solid #fee2e2;
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+    .rate-input-box label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #dc2626;
+      white-space: nowrap;
+    }
+    .rate-input-box input {
+      width: 44px;
+      border: 1px solid #fca5a5;
+      background: #fff;
+      border-radius: 4px;
+      padding: 2px 4px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #dc2626;
+      text-align: right;
+      outline: none;
+    }
+    .rate-input-box .unit {
+      font-size: 11px;
+      color: #dc2626;
+      font-weight: 600;
+    }
+    /* 圓環圖 */
+    .chart-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 10px 0 14px;
+    }
+    .donut-box {
+      position: relative;
+      width: 115px;
+      height: 115px;
+    }
+    .donut-svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+      overflow: visible;
+    }
+    .circle-track {
+      fill: none;
+      stroke: var(--color-track);
+      stroke-width: 4;
+    }
+    .circle-seg {
+      fill: none;
+      stroke-width: 4; /* 與其他線段保持完全統一大細 */
+      transition: stroke-dasharray 0.35s ease, stroke-dashoffset 0.35s ease, transform 0.35s ease;
+      transform-origin: center center;
+    }
+    .seg-asset { stroke: var(--color-asset); }
+    .seg-save { stroke: var(--color-saving); }
+    .seg-gap { stroke: var(--color-gap); }
+    /* 分離式缺口效果：不加粗，透過微向外移位創造分離感 */
+    .seg-gap-separated {
+      stroke: var(--color-gap);
+      stroke-width: 4;
+      transform: scale(1.06); /* 統一大細並微幅向外分離 */
+    }
+    .donut-center-info {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      pointer-events: none;
+    }
+    .center-sub {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+    .center-val {
+      font-size: 14px;
+      font-weight: 700;
+    }
+    /* 圖表對應圖例 */
+    .chart-legend {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .dot-asset { background-color: var(--color-asset); }
+    .dot-save { background-color: var(--color-saving); }
+    .dot-gap { background-color: var(--color-gap); }
+    /* 數據清單 */
+    .data-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 13px;
+    }
+    .data-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 0;
+    }
+    .data-row .d-label {
+      color: var(--text-muted);
+    }
+    .data-row .d-val {
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    .data-row.highlight {
+      background: #f8fafc;
+      padding: 6px 8px;
+      border-radius: 6px;
+    }
+    .data-row.highlight-warning {
+      background: #fff5f5;
+    }
+    .data-row.gap-box {
+      margin-top: 4px;
+      padding: 6px 8px;
+      background: #fff1f2;
+      border: 1px dashed #fca5a5;
+      border-radius: 6px;
+    }
+    .text-danger {
+      color: var(--color-gap) !important;
+    }
+  </style>
 </head>
 <body>
-
 <div class="calculator-wrapper">
-  <!-- 頂部自填區 -->
-  <div class="input-section">
-    <div class="section-title">📋 您的財務目標與現況數據</div>
-    <div class="input-grid">
-      <div class="input-group">
-        <label>目標金額 (HK$)</label>
-        <input type="text" id="inTarget" value="10,000,000">
-      </div>
-      <div class="input-group">
-        <label>現有資產 (HK$)</label>
-        <input type="text" id="inCurrent" value="2,000,000">
-      </div>
-      <div class="input-group">
-        <label>每年預計儲蓄 (HK$)</label>
-        <input type="text" id="inAnnual" value="300,000">
-      </div>
-      <div class="input-group">
-        <label>預計年期 (年)</label>
-        <input type="number" id="inYears" value="20" min="1" max="50">
-      </div>
-    </div>
-  </div>
+  <!-- 頂部自填區 -->
+  <div class="input-section">
+    <div class="section-title">📋 您的財務目標與現況數據</div>
+    <div class="input-grid">
+      <div class="input-group">
+        <label>目標金額 (HK$)</label>
+        <input type="text" id="inTarget" value="10,000,000">
+      </div>
+      <div class="input-group">
+        <label>現有資產 (HK$)</label>
+        <input type="text" id="inCurrent" value="2,000,000">
+      </div>
+      <div class="input-group">
+        <label>每年預計儲蓄 (HK$)</label>
+        <input type="text" id="inAnnual" value="300,000">
+      </div>
+      <div class="input-group">
+        <label>預計年期 (年)</label>
+        <input type="number" id="inYears" value="20" min="1" max="50">
+      </div>
+    </div>
+  </div>
 
-  <!-- 左右對比視圖 -->
-  <div class="comparison-grid">
-    <!-- 左側：預期可能情境 -->
-    <div class="comp-card">
-      <div class="card-header">
-        <h3 class="card-title">預期可能情境</h3>
-        <span class="badge-neutral">靜態預期</span>
-      </div>
+  <!-- 左右對比視圖 -->
+  <div class="comparison-grid">
+    <!-- 左側：預期可能情境 -->
+    <div class="comp-card">
+      <div class="card-header">
+        <h3 class="card-title">預期可能情境</h3>
+        <span class="badge-neutral">靜態預期</span>
+      </div>
+      <div class="chart-container">
+        <div class="donut-box">
+          <svg viewBox="0 0 36 36" class="donut-svg">
+            <path class="circle-track" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+            <path id="leftSegAsset" class="circle-seg seg-asset" stroke-dasharray="20, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+            <path id="leftSegSave" class="circle-seg seg-save" stroke-dasharray="60, 100" stroke-dashoffset="-20" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+          </svg>
+          <div class="donut-center-info">
+            <span class="center-sub">預期達成</span>
+            <span class="center-val" id="leftPercent">80%</span>
+          </div>
+        </div>
+        <div class="chart-legend">
+          <span class="legend-item"><span class="dot dot-asset"></span>現有資產</span>
+          <span class="legend-item"><span class="dot dot-save"></span>預計儲蓄</span>
+        </div>
+      </div>
+      <div class="data-list">
+        <div class="data-row highlight">
+          <span class="d-label">目標金額</span>
+          <span class="d-val" id="outLeftTarget">HK$ 10,000,000</span>
+        </div>
+        <div class="data-row">
+          <span class="d-label"><span class="dot dot-asset"></span> 現有資產</span>
+          <span class="d-val" id="outLeftCurrent">HK$ 2,000,000</span>
+        </div>
+        <div class="data-row">
+          <span class="d-label"><span class="dot dot-save"></span> 每年儲蓄</span>
+          <span class="d-val" id="outLeftAnnual">HK$ 300,000</span>
+        </div>
+        <div class="data-row">
+          <span class="d-label">預計年期</span>
+          <span class="d-val" id="outLeftYears">20 年</span>
+        </div>
+      </div>
+    </div>
 
-      <div class="chart-container">
-        <div class="donut-box">
-          <svg viewBox="0 0 36 36" class="donut-svg">
-            <path class="circle-track" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-            <path id="leftSegAsset" class="circle-seg seg-asset" stroke-dasharray="20, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-            <path id="leftSegSave" class="circle-seg seg-save" stroke-dasharray="60, 100" stroke-dashoffset="-20" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-          </svg>
-          <div class="donut-center-info">
-            <span class="center-sub">預期達成</span>
-            <span class="center-val" id="leftPercent">80%</span>
-          </div>
-        </div>
-
-        <div class="chart-legend">
-          <span class="legend-item"><span class="dot dot-asset"></span>現有資產</span>
-          <span class="legend-item"><span class="dot dot-save"></span>預計儲蓄</span>
-        </div>
-      </div>
-
-      <div class="data-list">
-        <div class="data-row highlight">
-          <span class="d-label">目標金額</span>
-          <span class="d-val" id="outLeftTarget">HK$ 10,000,000</span>
-        </div>
-        <div class="data-row">
-          <span class="d-label"><span class="dot dot-asset"></span> 現有資產</span>
-          <span class="d-val" id="outLeftCurrent">HK$ 2,000,000</span>
-        </div>
-        <div class="data-row">
-          <span class="d-label"><span class="dot dot-save"></span> 每年儲蓄</span>
-          <span class="d-val" id="outLeftAnnual">HK$ 300,000</span>
-        </div>
-        <div class="data-row">
-          <span class="d-label">預計年期</span>
-          <span class="d-val" id="outLeftYears">20 年</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 右側：未來可能情境 -->
-    <div class="comp-card">
-      <div class="card-header">
-        <h3 class="card-title">未來可能情境</h3>
-        <!-- 右上角手動輸入通脹率 -->
-        <div class="rate-input-box">
-          <label>通脹率:</label>
-          <input type="number" id="inInflation" value="2.5" step="0.1" min="0">
-          <span class="unit">%/年</span>
-        </div>
-      </div>
-
-      <div class="chart-container">
-        <div class="donut-box">
-          <svg viewBox="0 0 36 36" class="donut-svg">
-            <path class="circle-track" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-            <!-- 今日資產 -->
-            <path id="rightSegAsset" class="circle-seg seg-asset" stroke-dasharray="12, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-            <!-- 累積儲蓄 -->
-            <path id="rightSegSave" class="circle-seg seg-save" stroke-dasharray="36, 100" stroke-dashoffset="-12" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-            <!-- 分離式呈現的資金缺口（線條粗細保持一致） -->
-            <path id="rightSegGap" class="circle-seg seg-gap-separated" stroke-dasharray="52, 100" stroke-dashoffset="-48" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-          </svg>
-          <div class="donut-center-info">
-            <span class="center-sub text-danger">潛在缺口</span>
-            <span class="center-val text-danger" id="rightPercent">52%</span>
-          </div>
-        </div>
-
-        <div class="chart-legend">
-          <span class="legend-item"><span class="dot dot-asset"></span>今日資產</span>
-          <span class="legend-item"><span class="dot dot-save"></span>預計儲蓄</span>
-          <span class="legend-item"><span class="dot dot-gap"></span>資金缺口</span>
-        </div>
-      </div>
-
-      <div class="data-list">
-        <div class="data-row highlight-warning">
-          <span class="d-label">通脹後實際需要</span>
-          <span class="d-val text-danger" id="outRightRealTarget">HK$ 16,386,164</span>
-        </div>
-        <div class="data-row">
-          <span class="d-label"><span class="dot dot-asset"></span> 今日資產</span>
-          <span class="d-val" id="outRightCurrent">HK$ 2,000,000</span>
-        </div>
-        <div class="data-row">
-          <span class="d-label"><span class="dot dot-save"></span> 每年儲蓄</span>
-          <span class="d-val" id="outRightAnnual">HK$ 300,000</span>
-        </div>
-        <div class="data-row">
-          <span class="d-label">預計年期</span>
-          <span class="d-val" id="outRightYears">20 年</span>
-        </div>
-        <div class="data-row gap-box">
-          <span class="d-label bold text-danger"><span class="dot dot-gap"></span> 預估資金缺口</span>
-          <span class="d-val text-danger" id="outRightGap">HK$ 8,386,164</span>
-        </div>
-      </div>
-    </div>
-  </div>
+    <!-- 右側：未來可能情境 -->
+    <div class="comp-card">
+      <div class="card-header">
+        <h3 class="card-title">未來可能情境</h3>
+        <!-- 右上角手動輸入通脹率 -->
+        <div class="rate-input-box">
+          <label>通脹率:</label>
+          <input type="number" id="inInflation" value="2.5" step="0.1" min="0">
+          <span class="unit">%/年</span>
+        </div>
+      </div>
+      <div class="chart-container">
+        <div class="donut-box">
+          <svg viewBox="0 0 36 36" class="donut-svg">
+            <path class="circle-track" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 31.831"/>
+            <!-- 今日資產 -->
+            <path id="rightSegAsset" class="circle-seg seg-asset" stroke-dasharray="12, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+            <!-- 累積儲蓄 -->
+            <path id="rightSegSave" class="circle-seg seg-save" stroke-dasharray="36, 100" stroke-dashoffset="-12" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+            <!-- 分離式呈現的資金缺口（線條粗細保持一致） -->
+            <path id="rightSegGap" class="circle-seg seg-gap-separated" stroke-dasharray="52, 100" stroke-dashoffset="-48" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+          </svg>
+          <div class="donut-center-info">
+            <span class="center-sub text-danger">潛在缺口</span>
+            <span class="center-val text-danger" id="rightPercent">52%</span>
+          </div>
+        </div>
+        <div class="chart-legend">
+          <span class="legend-item"><span class="dot dot-asset"></span>今日資產</span>
+          <span class="legend-item"><span class="dot dot-save"></span>預計儲蓄</span>
+          <span class="legend-item"><span class="dot dot-gap"></span>資金缺口</span>
+        </div>
+      </div>
+      <div class="data-list">
+        <div class="data-row highlight-warning">
+          <span class="d-label">通脹後實際需要</span>
+          <span class="d-val text-danger" id="outRightRealTarget">HK$ 16,386,164</span>
+        </div>
+        <div class="data-row">
+          <span class="d-label"><span class="dot dot-asset"></span> 今日資產</span>
+          <span class="d-val" id="outRightCurrent">HK$ 2,000,000</span>
+        </div>
+        <div class="data-row">
+          <span class="d-label"><span class="dot dot-save"></span> 每年儲蓄</span>
+          <span class="d-val" id="outRightAnnual">HK$ 300,000</span>
+        </div>
+        <div class="data-row">
+          <span class="d-label">預計年期</span>
+          <span class="d-val" id="outRightYears">20 年</span>
+        </div>
+        <div class="data-row gap-box">
+          <span class="d-label bold text-danger"><span class="dot dot-gap"></span> 預估資金缺口</span>
+          <span class="d-val text-danger" id="outRightGap">HK$ 8,386,164</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-  function formatMoney(num) {
-    return 'HK$ ' + Math.round(num).toLocaleString('en-US');
-  }
+  function formatMoney(num) {
+    return 'HK$ ' + Math.round(num).toLocaleString('en-US');
+  }
 
-  function parseMoney(str) {
-    return parseFloat(String(str).replace(/,/g, '')) || 0;
-  }
+  function parseMoney(str) {
+    return parseFloat(String(str).replace(/,/g, '')) || 0;
+  }
 
-  function formatInputField(input) {
-    const rawVal = input.value.replace(/,/g, '').replace(/[^\d.]/g, '');
-    if (!rawVal) {
-      input.value = '';
-      return;
-    }
-    const parts = rawVal.split('.');
-    parts[0] = Number(parts[0]).toLocaleString('en-US');
-    input.value = parts.join('.');
-  }
+  function formatInputField(input) {
+    const rawVal = input.value.replace(/,/g, '').replace(/[^\d.]/g, '');
+    if (!rawVal) {
+      input.value = '';
+      return;
+    }
+    const parts = rawVal.split('.');
+    parts[0] = Number(parts[0]).toLocaleString('en-US');
+    input.value = parts.join('.');
+  }
 
-  function calculateAndUpdate() {
-    const target = parseMoney(document.getElementById('inTarget').value);
-    const current = parseMoney(document.getElementById('inCurrent').value);
-    const annual = parseMoney(document.getElementById('inAnnual').value);
-    const years = parseFloat(document.getElementById('inYears').value) || 0;
-    const inflationRate = parseFloat(document.getElementById('inInflation').value) || 0;
-    const inflation = inflationRate / 100;
+  function calculateAndUpdate() {
+    const target = parseMoney(document.getElementById('inTarget').value);
+    const current = parseMoney(document.getElementById('inCurrent').value);
+    const annual = parseMoney(document.getElementById('inAnnual').value);
+    const years = parseFloat(document.getElementById('inYears').value) || 0;
+    const inflationRate = parseFloat(document.getElementById('inInflation').value) || 0;
+    const inflation = inflationRate / 100;
 
-    const totalSave = annual * years;
-    const totalAccumulated = current + totalSave;
+    const totalSave = annual * years;
+    const totalAccumulated = current + totalSave;
 
-    // 1. 左側：預期可能情境
-    document.getElementById('outLeftTarget').innerText = formatMoney(target);
-    document.getElementById('outLeftCurrent').innerText = formatMoney(current);
-    document.getElementById('outLeftAnnual').innerText = formatMoney(annual);
-    document.getElementById('outLeftYears').innerText = years + ' 年';
+    // 1. 左側：預期可能情境
+    document.getElementById('outLeftTarget').innerText = formatMoney(target);
+    document.getElementById('outLeftCurrent').innerText = formatMoney(current);
+    document.getElementById('outLeftAnnual').innerText = formatMoney(annual);
+    document.getElementById('outLeftYears').innerText = years + ' 年';
 
-    let leftAssetRatio = 0;
-    let leftSaveRatio = 0;
-    let leftTotalPercent = 0;
+    let leftAssetRatio = 0;
+    let leftSaveRatio = 0;
+    let leftTotalPercent = 0;
 
-    if (target > 0) {
-      leftAssetRatio = Math.min(100, Math.max(0, (current / target) * 100));
-      leftSaveRatio = Math.min(100 - leftAssetRatio, Math.max(0, (totalSave / target) * 100));
-      leftTotalPercent = Math.min(100, Math.round((totalAccumulated / target) * 100));
-    }
+    if (target > 0) {
+      leftAssetRatio = Math.min(100, Math.max(0, (current / target) * 100));
+      leftSaveRatio = Math.min(100 - leftAssetRatio, Math.max(0, (totalSave / target) * 100));
+      leftTotalPercent = Math.min(100, Math.round((totalAccumulated / target) * 100));
+    }
 
-    document.getElementById('leftSegAsset').setAttribute('stroke-dasharray', `${leftAssetRatio}, 100`);
-    document.getElementById('leftSegSave').setAttribute('stroke-dasharray', `${leftSaveRatio}, 100`);
-    document.getElementById('leftSegSave').setAttribute('stroke-dashoffset', `-${leftAssetRatio}`);
-    document.getElementById('leftPercent').innerText = leftTotalPercent + '%';
+    document.getElementById('leftSegAsset').setAttribute('stroke-dasharray', `${leftAssetRatio}, 100`);
+    document.getElementById('leftSegSave').setAttribute('stroke-dasharray', `${leftSaveRatio}, 100`);
+    document.getElementById('leftSegSave').setAttribute('stroke-dashoffset', `-${leftAssetRatio}`);
+    document.getElementById('leftPercent').innerText = leftTotalPercent + '%';
 
-    // 2. 右側：未來可能情境 (計入通脹與缺口)
-    const realTarget = target * Math.pow(1 + inflation, years);
-    const gapAmount = Math.max(0, realTarget - totalAccumulated);
+    // 2. 右側：未來可能情境 (計入通脹與缺口)
+    const realTarget = target * Math.pow(1 + inflation, years);
+    const gapAmount = Math.max(0, realTarget - totalAccumulated);
 
-    document.getElementById('outRightRealTarget').innerText = formatMoney(realTarget);
-    document.getElementById('outRightCurrent').innerText = formatMoney(current);
-    document.getElementById('outRightAnnual').innerText = formatMoney(annual);
-    document.getElementById('outRightYears').innerText = years + ' 年';
-    document.getElementById('outRightGap').innerText = formatMoney(gapAmount);
+    document.getElementById('outRightRealTarget').innerText = formatMoney(realTarget);
+    document.getElementById('outRightCurrent').innerText = formatMoney(current);
+    document.getElementById('outRightAnnual').innerText = formatMoney(annual);
+    document.getElementById('outRightYears').innerText = years + ' 年';
+    document.getElementById('outRightGap').innerText = formatMoney(gapAmount);
 
-    let rightAssetRatio = 0;
-    let rightSaveRatio = 0;
-    let rightGapRatio = 0;
+    let rightAssetRatio = 0;
+    let rightSaveRatio = 0;
+    let rightGapRatio = 0;
 
-    if (realTarget > 0) {
-      rightAssetRatio = Math.min(100, (current / realTarget) * 100);
-      rightSaveRatio = Math.min(100 - rightAssetRatio, (totalSave / realTarget) * 100);
-      rightGapRatio = Math.max(0, 100 - rightAssetRatio - rightSaveRatio);
-    }
+    if (realTarget > 0) {
+      rightAssetRatio = Math.min(100, (current / realTarget) * 100);
+      rightSaveRatio = Math.min(100 - rightAssetRatio, (totalSave / realTarget) * 100);
+      rightGapRatio = Math.max(0, 100 - rightAssetRatio - rightSaveRatio);
+    }
 
-    // 微小縫隙（0.8%）搭配 CSS scale 形成分離式效果，保持線條粗細一致
-    const gapGap = rightGapRatio > 0 ? 0.8 : 0;
-    const adjustedGap = Math.max(0, rightGapRatio - gapGap);
+    // 微小縫隙（0.8%）搭配 CSS scale 形成分離式效果，保持線條粗細一致
+    const gapGap = rightGapRatio > 0 ? 0.8 : 0;
+    const adjustedGap = Math.max(0, rightGapRatio - gapGap);
 
-    document.getElementById('rightSegAsset').setAttribute('stroke-dasharray', `${rightAssetRatio}, 100`);
-    document.getElementById('rightSegSave').setAttribute('stroke-dasharray', `${rightSaveRatio}, 100`);
-    document.getElementById('rightSegSave').setAttribute('stroke-dashoffset', `-${rightAssetRatio}`);
-    
-    document.getElementById('rightSegGap').setAttribute('stroke-dasharray', `${adjustedGap}, 100`);
-    document.getElementById('rightSegGap').setAttribute('stroke-dashoffset', `-${rightAssetRatio + rightSaveRatio + gapGap}`);
-    
-    document.getElementById('rightPercent').innerText = Math.round(rightGapRatio) + '%';
-  }
+    document.getElementById('rightSegAsset').setAttribute('stroke-dasharray', `${rightAssetRatio}, 100`);
+    document.getElementById('rightSegSave').setAttribute('stroke-dasharray', `${rightSaveRatio}, 100`);
+    document.getElementById('rightSegSave').setAttribute('stroke-dashoffset', `-${rightAssetRatio}`);
+    
+    document.getElementById('rightSegGap').setAttribute('stroke-dasharray', `${adjustedGap}, 100`);
+    document.getElementById('rightSegGap').setAttribute('stroke-dashoffset', `-${rightAssetRatio + rightSaveRatio + gapGap}`);
+    
+    document.getElementById('rightPercent').innerText = Math.round(rightGapRatio) + '%';
+  }
 
-  // 金額欄位自動千位格式化
-  ['inTarget', 'inCurrent', 'inAnnual'].forEach(id => {
-    const el = document.getElementById(id);
-    el.addEventListener('input', () => {
-      formatInputField(el);
-      calculateAndUpdate();
-    });
-  });
+  // 金額欄位自動千位格式化
+  ['inTarget', 'inCurrent', 'inAnnual'].forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener('input', () => {
+      formatInputField(el);
+      calculateAndUpdate();
+    });
+  });
 
-  // 年期與右上角通脹率輸入監聽
-  ['inYears', 'inInflation'].forEach(id => {
-    document.getElementById(id).addEventListener('input', calculateAndUpdate);
-  });
+  // 年期與右上角通脹率輸入監聽
+  ['inYears', 'inInflation'].forEach(id => {
+    document.getElementById(id).addEventListener('input', calculateAndUpdate);
+  });
 
-  // 初始運算
-  calculateAndUpdate();
+  // 初始運算
+  calculateAndUpdate();
 </script>
 </body>
 </html>
-
