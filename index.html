@@ -1,18 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AVA 專屬生活引導系統 · 探索未來選擇權 v6.1.0</title>
-    
-    <!-- PWA 與 App Icon 關聯 -->
-    <link rel="manifest" href="./manifest.json">
-    <link rel="icon" type="image/png" href="./icon-192x192.png">
-    <link rel="apple-touch-icon" href="./icon-192x192.png">
-    <meta name="theme-color" content="#1e3a8a">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="AVA 引導系統">
+    <title>AVA 專屬生活引導系統 · 探索未來選擇權</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,30 +36,26 @@
             --text-main: #0f172a;
             --text-sub: #475569;
             --text-muted: #94a3b8;
-            
             --brand-primary: #1e3a8a;
             --brand-accent: #2563eb;
             --brand-soft: #eff6ff;
             --state-success: #059669;
             --state-purple: #7c3aed;
             --state-danger: #dc2626;
-            
             --plan1-color: #2563eb;
             --plan2-color: #059669;
             --plan3-color: #dc2626;
             --plan4-color: #7c3aed;
-            
             --pink-dashed: 1.5px dashed #f8bbd0;
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
             --shadow-md: 0 4px 16px -2px rgba(15, 23, 42, 0.06);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Noto Sans TC', 'Plus Jakarta Sans', -apple-system, sans-serif; background-color: var(--bg-page); color: var(--text-main); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+        body { font-family: 'Noto Sans TC', 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-page); color: var(--text-main); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
         .system-top-nav { background: #ffffff; border-bottom: 1px solid var(--border-light); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
         .brand-title-wrap { display: flex; align-items: center; gap: 8px; user-select: none; }
         .brand-logo-text { font-size: 1.02rem; font-weight: 800; color: var(--brand-primary); cursor: pointer; }
         .mini-quick-btn { background: #ffffff; border: 1px solid var(--border-light); border-radius: 50%; width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 900; cursor: pointer; transition: all 0.2s; box-shadow: var(--shadow-sm); }
-        .mini-quick-btn:hover { background: var(--brand-soft); border-color: var(--brand-accent); transform: scale(1.08); }
         .mini-quick-btn.scenario-btn { color: var(--brand-accent); border: var(--pink-dashed); }
         .mini-quick-btn.jump-btn { color: var(--state-purple); }
         .user-settings-btn { cursor: pointer; font-size: 1.25rem; }
@@ -98,26 +85,10 @@
         .option-card-guided.selected .option-select-radio { border-color: var(--brand-accent); background: var(--brand-accent); }
         .option-card-guided.selected .option-select-radio::after { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #fff; }
         
-        .contrast-scene-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
-        @media (max-width: 620px) { .contrast-scene-grid { grid-template-columns: 1fr; } }
-        .scene-box { border-radius: 14px; padding: 18px; border: 1px solid var(--border-light); }
-        .scene-box.a { background: #fafafa; }
-        .scene-box.b { background: #f0fdf4; border-color: #bbf7d0; }
-        .scene-title { font-size: 0.95rem; font-weight: 800; margin-bottom: 6px; }
-        .scene-box.a .scene-title { color: var(--text-sub); }
-        .scene-box.b .scene-title { color: var(--state-success); }
-        .scene-headline { font-size: 0.95rem; font-weight: 700; margin-bottom: 10px; }
-        .scene-list { list-style: none; font-size: 0.85rem; color: var(--text-sub); }
-        .scene-list li { margin-bottom: 6px; position: relative; padding-left: 14px; }
-        .scene-list li::before { content: "•"; position: absolute; left: 0; font-weight: bold; }
-        
-        .pool-visual-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0 26px 0; }
-        @media (max-width: 650px) { .pool-visual-container { grid-template-columns: 1fr; } }
-        .pool-visual-step { background: #ffffff; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 18px 14px; text-align: center; }
-        .pool-visual-step.highlight { border-color: var(--brand-accent); background: #f0f7ff; }
-        .pool-visual-icon { font-size: 2.2rem; margin-bottom: 8px; }
-        .pool-visual-title { font-size: 0.95rem; font-weight: 800; margin-bottom: 4px; }
-        .pool-visual-desc { font-size: 0.82rem; color: var(--text-sub); }
+        .gap-container { background: #eff6ff; border: 1.5px solid #bfdbfe; border-radius: 14px; padding: 20px; margin-bottom: 20px; }
+        .gap-tag { background: #2563eb; color: #fff; display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 800; margin-bottom: 12px; }
+        .gap-comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+        .gap-box { background: #fff; border-radius: 10px; padding: 14px; border: 1px solid #dbeafe; }
         
         .calc-jar-card { background: #ffffff; border: 1px solid var(--border-light); border-radius: 14px; padding: 18px; margin-bottom: 14px; }
         .calc-grid-5yr { display: grid; grid-template-columns: repeat(auto-fit, minmax(95px, 1fr)); gap: 8px; }
@@ -172,8 +143,7 @@
         .popup-menu-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
         .popup-menu-item { background: #f8fafc; border: 1px solid var(--border-light); border-radius: 10px; padding: 10px 12px; font-size: 0.88rem; font-weight: bold; cursor: pointer; }
         
-        /* 控制台導航頁面 */
-        .admin-dashboard-modal { background: #f8fafc; border-radius: 18px; width: 95%; max-width: 900px; height: 88vh; display: flex; flex-direction: column; overflow: hidden; }
+        .admin-dashboard-modal { background: #f8fafc; border-radius: 18px; width: 95%; max-width: 950px; height: 88vh; display: flex; flex-direction: column; overflow: hidden; }
         .admin-header { background: var(--brand-primary); color: #fff; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; }
         .admin-nav { display: flex; gap: 8px; background: #ffffff; padding: 10px 20px; border-bottom: 1px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; }
         .admin-nav-btn { padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; border: 1px solid #cbd5e1; background: #f8fafc; color: #475569; white-space: nowrap; }
@@ -187,14 +157,15 @@
         .option-row-edit { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
         .del-opt-btn { background: #fee2e2; color: #dc2626; border: none; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-size: 0.75rem; }
         .sync-loading-overlay { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.9); z-index: 50; flex-direction: column; align-items: center; justify-content: center; font-weight: bold; color: var(--brand-primary); }
+        .zone-header-box { background: #f1f5f9; padding: 10px 14px; border-radius: 8px; font-weight: 800; font-size: 0.95rem; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
     </style>
 </head>
 <body>
     <header class="system-top-nav">
         <div class="brand-title-wrap">
             <span class="brand-logo-text" onclick="promptAdminLogin()" title="點擊輸入管理員密碼">🌱 AVA PLANNER</span>
-            <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="情境對話模式">!</span>
-            <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="直達流程模組">*</span>
+            <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="情境模式">!</span>
+            <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="模組跳轉">*</span>
         </div>
         <div class="user-settings-btn" onclick="openUserDashboard()" title="使用者設定">⚙️</div>
     </header>
@@ -204,458 +175,16 @@
     </div>
     
     <div class="workspace-layout">
-        <main>
-            <!-- 1-8 題 -->
-            <div class="step-page active" id="step-1">
-                <div class="content-card">
-                    <div>
-                        <h2 class="question-title" id="disp-title-1">「如果純粹講而家嘅生活狀態，你覺得自己屬於邊一種？」</h2>
-                        <p class="question-hint" id="disp-sub-1">沒有對與錯，純粹由你目前最真實、最自在的生活節奏開始探索：</p>
-                        <div class="options-group" id="disp-options-1"></div>
-                        <div class="page-bottom-img-zone"><img class="page-bottom-img" id="disp-img-1" style="display:none;" src="" alt=""></div>
-                    </div>
-                    <div class="action-row"><button class="nav-btn next" id="btn-next-1" disabled onclick="goToStep(2)">下一步 →</button></div>
-                </div>
-            </div>
-            <div class="step-page" id="step-2">
-                <div class="content-card">
-                    <div>
-                        <h2 class="question-title" id="disp-title-2">「如果將來有一樣嘢值得你花更多資源，最可能會係邊方面？」</h2>
-                        <p class="question-hint" id="disp-sub-2">即使未有具體安排，心目中亦可能有最在意的生活重心：</p>
-                        <div class="options-group" id="disp-options-2"></div>
-                        <div class="page-bottom-img-zone"><img class="page-bottom-img" id="disp-img-2" style="display:none;" src="" alt=""></div>
-                    </div>
-                    <div class="action-row"><button class="nav-btn prev" onclick="goToStep(1)">← 上一步</button><button class="nav-btn next" id="btn-next-2" disabled onclick="goToStep(3)">下一步 →</button></div>
-                </div>
-            </div>
-            <div class="step-page" id="step-3">
-                <div class="content-card">
-                    <div>
-                        <h2 class="question-title" id="disp-title-3">「點解呢個方向對你嚟講特別重要？」</h2>
-                        <p class="question-hint" id="disp-sub-3">探索背後真正驅動你、對你最具價值的初衷：</p>
-                        <div class="options-group" id="disp-options-3"></div>
-                        <div class="page-bottom-img-zone"><img class="page-bottom-img" id="disp-img-3" style="display:none;" src="" alt=""></div>
-                    </div>
-                    <div class="action-row"><button class="nav-btn prev" onclick="goToStep(2)">← 上一步</button><button class="nav-btn next" id="btn-next-3" disabled onclick="goToStep(4)">下一步 →</button></div>
-                </div>
-            </div>
-            <div class="step-page" id="step-4">
-                <div class="content-card">
-                    <div>
-                        <h2 class="question-title" id="disp-title-4">「假設 5–10 年後生活更自由，你最希望看見甚麼畫面？」</h2>
-                        <p class="question-hint" id="disp-sub-4">理財不是數字遊戲，而是為了實現具體的生活畫面：</p>
-                        <div class="options-group" id="disp-options-4"></div>
-                        <div class="page-bottom-img-zone"><img class="page-bottom-img" id="disp-img-4" style="display:none;" src="" alt=""></div>
-                    </div>
-                    <div class="action-row"><button class="nav-btn prev" onclick="goToStep(3)">← 上一步</button><button class="nav-btn next" id="btn-next-4" disabled onclick="goToStep(5)">下一步 →</button></div>
-                </div>
-            </div>
-            <div class="step-page" id="step-5">
-                <div class="content-card">
-                    <div>
-                        <h2 class="question-title" id="disp-title-5">「時間會繼續向前，你想用咩方式迎接未來？」</h2>
-                        <p class="question-hint" id="disp-sub-5">未來未必需要現在全盤計劃，但你可以決定到時自己擁有多少選擇權：</p>
-                        <div class="contrast-scene-grid">
-                            <div class="scene-box a">
-                                <div class="scene-title">🔴 未來 A</div>
-                                <div class="scene-headline">等需要出現，先開始準備</div>
-                                <ul class="scene-list">
-                                    <li>每一次人生階段轉變，都要由當時重新開始。</li>
-                                    <li>遇到好機會或突發狀況，容易受限於手頭資源。</li>
-                                </ul>
-                            </div>
-                            <div class="scene-box b">
-                                <div class="scene-title">🟢 未來 B</div>
-                                <div class="scene-headline">未知將來要咩，但慢慢建立選擇</div>
-                                <ul class="scene-list">
-                                    <li>機會來臨時，手頭已經有一筆穩健資源可運用。</li>
-                                    <li>人生轉變時無需由零開始，有自己的安全緩衝。</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="options-group" id="disp-options-5"></div>
-                        <div class="page-bottom-img-zone"><img class="page-bottom-img" id="disp-img-5" style="display:none;" src="" alt=""></div>
-                    </div>
-                    <div class="action-row"><button class="nav-btn prev" onclick="goToStep(4)">← 上一步</button><button class="nav-btn next" id="btn-next-5" disabled onclick="goToStep(6)">下一步 →</button></div>
-                </div>
-            </div>
-            <div class="step-page" id="step-6">
-                <div class="content-card">
-                    <div>
-                        <h2 class="question-title" id="disp-title-6">「如果想在未來擁有更多選擇，你覺得目前最容易卡住自己的是？」</h2>
-                        <p class="question-hint" id="disp-sub-6">每個人在生活中都會遇到不同節奏，看清狀況才能找到最舒服的起步點：</p>
-                        <div class="options-group" id="disp-options-6"></div>
-                        <div class="page-bottom-img-zone"><img class="page-bottom-img" id="disp-img-6" style="display:none;" src="" alt=""></div>
-                    </div>
-                    <div class="action-row"><button class="nav-btn prev" onclick="goToStep(5)">← 上一步</button><button class="nav-btn next" id="btn-next-6" disabled onclick="goToStep(7)">下一步 →</button></div>
-                </div>
-            </div>
-            <div class="step-page" id="step-7">
-                <div class="content-card">
-                    <div>
-                        <h2 class="question-title" id="disp-title-7">「如果話你知：『未有明確目標』，其實先係最好嘅開始方式？」</h2>
-                        <div style="background:#f8fafc; border-left:3px solid var(--brand-accent); padding:14px 16px; border-radius:0 10px 10px 0; font-size:0.92rem; color:var(--text-sub); margin-bottom:20px;">
-                            💡 <strong>多數人以為：</strong>一定要先諗好目標先開始。<br>但真相係：<strong>「提早為自己累積選擇權」永遠不會錯。</strong>
-                        </div>
-                        <div class="options-group" id="disp-options-7"></div>
-                        <div class="page-bottom-img-zone"><img class="page-bottom-img" id="disp-img-7" style="display:none;" src="" alt=""></div>
-                    </div>
-                    <div class="action-row"><button class="nav-btn prev" onclick="goToStep(6)">← 上一步</button><button class="nav-btn next" id="btn-next-7" disabled onclick="goToStep(8)">睇下點解 →</button></div>
-                </div>
-            </div>
-            <div class="step-page" id="step-8">
-                <div class="content-card">
-                    <div>
-                        <h2 class="question-title" id="disp-title-8">「不如先睇清楚運作原理，再決定值唔值得考慮？」</h2>
-                        <div style="background:#fffbeb; border-left:3px solid #f59e0b; padding:16px; border-radius:0 10px 10px 0; font-size:0.95rem; color:#92400e; margin-bottom:20px;">
-                            🌿 <strong>零壓力約定：</strong>了解不代表一定要做。最重要是看清這個模式對你有沒有價值。
-                        </div>
-                        <div class="options-group" id="disp-options-8"></div>
-                        <div class="page-bottom-img-zone"><img class="page-bottom-img" id="disp-img-8" style="display:none;" src="" alt=""></div>
-                    </div>
-                    <div class="action-row"><button class="nav-btn prev" onclick="goToStep(7)">← 上一步</button><button class="nav-btn next" id="btn-next-8" disabled onclick="goToStep(9)">下一步 →</button></div>
-                </div>
-            </div>
-            
-            <!-- 9️⃣ 建立選擇權 -->
-            <div class="step-page" id="step-9">
-                <div class="content-card">
-                    <div>
-                        <h2 class="question-title" id="disp-title-9">建立未來選擇權的專屬工具</h2>
-                        <p class="question-hint" id="disp-sub-9" style="font-size: 1rem; color: var(--text-sub); line-height: 1.8;">
-                            重點不是今天猜中未來，而是<strong>先為未來的自己分段建立一份底氣</strong>。
-                        </p>
-                        <div class="page-bottom-img-zone"><img class="page-bottom-img" id="disp-img-9" style="display:none;" src="" alt=""></div>
-                    </div>
-                    <div class="action-row"><button class="nav-btn prev" onclick="goToStep(8)">← 上一步</button><button class="nav-btn next" onclick="goToStep(10)">睇下運作概念 →</button></div>
-                </div>
-            </div>
-            
-            <!-- 🔟 人生資源池 -->
-            <div class="step-page" id="step-10">
-                <div class="content-card">
-                    <div>
-                        <h2 class="question-title" id="disp-title-10">💧 人生資源池：如何不影響生活下建立選擇？</h2>
-                        <p class="question-hint" id="disp-sub-10">不是犧牲眼前的享受，而是將原本不知不覺流走的小部分，導向未來的自動化水庫：</p>
-                        <div class="pool-visual-container">
-                            <div class="pool-visual-step">
-                                <div class="pool-visual-icon">☕</div>
-                                <div class="pool-visual-title" id="pool-title-1">1. 今日生活開支</div>
-                                <div class="pool-visual-desc" id="pool-desc-1">旅行、享受、家庭開銷照舊進行，完全不犧牲生活品質。</div>
-                            </div>
-                            <div class="pool-visual-step highlight">
-                                <div class="pool-visual-icon">⏳</div>
-                                <div class="pool-visual-title" id="pool-title-2">2. 分段小額入庫</div>
-                                <div class="pool-visual-desc" id="pool-desc-2">每月只需撥出微少份額，只需 5 年，就自動完成資產水庫建造。</div>
-                            </div>
-                            <div class="pool-visual-step">
-                                <div class="pool-visual-icon">🚿</div>
-                                <div class="pool-visual-title" id="pool-title-3">3. 未來水龍頭</div>
-                                <div class="pool-visual-desc" id="pool-desc-3">停止投入後，水庫交由時間滾存，隨時可開水龍頭提取源源長糧。</div>
-                            </div>
-                        </div>
-                        <div class="page-bottom-img-zone"><img class="page-bottom-img" id="disp-img-10" style="display:none;" src="" alt=""></div>
-                    </div>
-                    <div class="action-row"><button class="nav-btn prev" onclick="goToStep(9)">← 上一步</button><button class="nav-btn next" onclick="goToStep(11)">進入時光複利量化累積表 →</button></div>
-                </div>
-            </div>
-            
-            <!-- 11 時光複利 -->
-            <div class="step-page" id="step-11">
-                <div class="content-card">
-                    <div>
-                        <h2 class="question-title" id="disp-title-11">🌱 時光複利：小金額如何創造大效果？</h2>
-                        <p class="question-hint" id="disp-sub-11">即使今天未有特定目標，每個月只預留少少（如 $3,333/月），交畀時間，就能為你創造源源不絕的被動收入：</p>
-                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:16px;">
-                            <div>
-                                <label style="font-size:0.75rem; font-weight:bold; color:var(--text-sub);">開始歲數</label>
-                                <input type="number" id="start-age" value="30" onchange="calculateAndDisplay()" style="width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:8px; text-align:center; font-weight:bold;">
-                            </div>
-                            <div>
-                                <label style="font-size:0.75rem; font-weight:bold; color:var(--brand-primary);">🌱 播種年期</label>
-                                <select id="sow-term-select" onchange="updateSowTerm()" style="width:100%; padding:8px; border:1.5px solid var(--brand-accent); border-radius:8px; text-align:center; font-weight:bold; color:var(--brand-primary); background:#fff;">
-                                    <option value="5" selected>🌱 5 年播種期 (基礎奠基)</option>
-                                    <option value="10">💧 10 年播種期 (持續灌溉)</option>
-                                    <option value="15">🌿 15 年播種期 (茁壯大水庫)</option>
-                                    <option value="20">🌳 20 年播種期 (林蔭大豐收)</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <!-- 錦囊 1 -->
-                        <div class="calc-jar-card" id="group-plan1" style="border-top:3px solid var(--plan1-color);">
-                            <h4 id="disp-tree-title-1" style="color:var(--plan1-color); margin-bottom:4px; font-size:0.95rem;">🌱 一號種子水庫 (第 1 - 5 年)</h4>
-                            <p id="disp-tree-desc-1" style="font-size:0.8rem; color:var(--text-sub); margin-bottom:10px;">播下一粒小種子，每天只需微小投入，5 年完成奠基。</p>
-                            <div class="calc-grid-5yr">
-                                <div class="calc-input-group"><label>第1年 (<span class="age-y1">30</span>歲)</label><input type="text" id="plan1-contribution" value="40,000"></div>
-                                <div class="calc-input-group"><label>第2年 (<span class="age-y2">31</span>歲)</label><input type="text" id="plan1-y2" value="40,000" readonly class="readonly"></div>
-                                <div class="calc-input-group"><label>第3年 (<span class="age-y3">32</span>歲)</label><input type="text" id="plan1-y3" value="40,000" readonly class="readonly"></div>
-                                <div class="calc-input-group"><label>第4年 (<span class="age-y4">33</span>歲)</label><input type="text" id="plan1-y4" value="40,000" readonly class="readonly"></div>
-                                <div class="calc-input-group"><label>第5年 (<span class="age-y5">34</span>歲)</label><input type="text" id="plan1-y5" value="40,000" readonly class="readonly"></div>
-                            </div>
-                        </div>
-                        <!-- 錦囊 2 -->
-                        <div id="group-plan2" style="display:none;">
-                            <div class="calc-jar-card" style="border-top:3px solid var(--plan2-color);">
-                                <h4 id="disp-tree-title-2" style="color:var(--plan2-color); margin-bottom:4px; font-size:0.95rem;">💧 二號灌溉水庫 (第 6 - 10 年)</h4>
-                                <p id="disp-tree-desc-2" style="font-size:0.8rem; color:var(--text-sub); margin-bottom:10px;">定期灌溉讓根基更深厚穩固。</p>
-                                <div class="calc-grid-5yr">
-                                    <div class="calc-input-group"><label>第6年 (<span class="age-y6">35</span>歲)</label><input type="text" id="plan2-contribution" value="50,000"></div>
-                                    <div class="calc-input-group"><label>第7年 (<span class="age-y7">36</span>歲)</label><input type="text" id="plan2-y2" value="50,000" readonly class="readonly"></div>
-                                    <div class="calc-input-group"><label>第8年 (<span class="age-y8">37</span>歲)</label><input type="text" id="plan2-y3" value="50,000" readonly class="readonly"></div>
-                                    <div class="calc-input-group"><label>第9年 (<span class="age-y9">38</span>歲)</label><input type="text" id="plan2-y4" value="50,000" readonly class="readonly"></div>
-                                    <div class="calc-input-group"><label>第10年 (<span class="age-y10">39</span>歲)</label><input type="text" id="plan2-y5" value="50,000" readonly class="readonly"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- 錦囊 3 -->
-                        <div id="group-plan3" style="display:none;">
-                            <div class="calc-jar-card" style="border-top:3px solid var(--plan3-color);">
-                                <h4 id="disp-tree-title-3" style="color:var(--plan3-color); margin-bottom:4px; font-size:0.95rem;">🌿 三號茁壯水庫 (第 11 - 15 年)</h4>
-                                <p id="disp-tree-desc-3" style="font-size:0.8rem; color:var(--text-sub); margin-bottom:10px;">水庫儲備倍增，抗風險能力大幅增強。</p>
-                                <div class="calc-grid-5yr">
-                                    <div class="calc-input-group"><label>第11年 (<span class="age-y11">40</span>歲)</label><input type="text" id="plan3-contribution" value="60,000"></div>
-                                    <div class="calc-input-group"><label>第12年 (<span class="age-y12">41</span>歲)</label><input type="text" id="plan3-y2" value="60,000" readonly class="readonly"></div>
-                                    <div class="calc-input-group"><label>第13年 (<span class="age-y13">42</span>歲)</label><input type="text" id="plan3-y3" value="60,000" readonly class="readonly"></div>
-                                    <div class="calc-input-group"><label>第14年 (<span class="age-y14">43</span>歲)</label><input type="text" id="plan3-y4" value="60,000" readonly class="readonly"></div>
-                                    <div class="calc-input-group"><label>第15年 (<span class="age-y15">44</span>歲)</label><input type="text" id="plan3-y5" value="60,000" readonly class="readonly"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- 錦囊 4 -->
-                        <div id="group-plan4" style="display:none;">
-                            <div class="calc-jar-card" style="border-top:3px solid var(--plan4-color);">
-                                <h4 id="disp-tree-title-4" style="color:var(--plan4-color); margin-bottom:4px; font-size:0.95rem;">🌳 四號大樹水庫 (第 16 - 20 年)</h4>
-                                <p id="disp-tree-desc-4" style="font-size:0.8rem; color:var(--text-sub); margin-bottom:10px;">大樹長成，產出源源不絕的流動被動收入。</p>
-                                <div class="calc-grid-5yr">
-                                    <div class="calc-input-group"><label>第16年 (<span class="age-y16">45</span>歲)</label><input type="text" id="plan4-contribution" value="70,000"></div>
-                                    <div class="calc-input-group"><label>第17年 (<span class="age-y17">46</span>歲)</label><input type="text" id="plan4-y2" value="70,000" readonly class="readonly"></div>
-                                    <div class="calc-input-group"><label>第18年 (<span class="age-y18">47</span>歲)</label><input type="text" id="plan4-y3" value="70,000" readonly class="readonly"></div>
-                                    <div class="calc-input-group"><label>第19年 (<span class="age-y19">48</span>歲)</label><input type="text" id="plan4-y4" value="70,000" readonly class="readonly"></div>
-                                    <div class="calc-input-group"><label>第20年 (<span class="age-y20">49</span>歲)</label><input type="text" id="plan4-y5" value="70,000" readonly class="readonly"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- 圓點開關 -->
-                        <div class="dots-toggle-bar-pure">
-                            <div class="pure-color-dot dot-blue-bg" id="dot-btn-annuity" onclick="toggleColumn('annuity')" title="切換顯示/隱藏 被動收入"></div>
-                            <div class="pure-color-dot dot-green-bg" id="dot-btn-accum" onclick="toggleColumn('accum')" title="切換 累積已領"></div>
-                            <div class="pure-color-dot dot-purple-bg" id="dot-btn-asset" onclick="toggleColumn('asset')" title="切換 大樹收成"></div>
-                            <div class="pure-color-dot dot-red-bg dimmed" id="dot-btn-interest" onclick="toggleColumn('interest')" title="切換 年化百分比回報率"></div>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="clean-table" id="results-table">
-                                <thead id="results-table-head"></thead>
-                                <tbody id="results-table-body"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="action-row"><button class="nav-btn prev" onclick="goToStep(10)">← 上一步</button><button class="nav-btn next" onclick="goToStep(12)">下一步 →</button></div>
-                </div>
-            </div>
-            
-            <!-- 12 初衷連結 -->
-            <div class="step-page" id="step-12">
-                <div class="content-card">
-                    <div>
-                        <h2 class="question-title" id="disp-title-12">「其實，數字本身唔係最重要。」</h2>
-                        <div style="background:#f8fafc; border:1px solid var(--border-light); border-radius:12px; padding:18px; line-height:1.8; margin-bottom:20px;">
-                            <p style="font-size:0.95rem; color:var(--text-sub); margin-bottom:10px;">重新回扣你最在意的初衷：</p>
-                            <h4 style="color:var(--brand-primary); font-size:1.1rem; margin-bottom:8px;" id="connect-vision-display">✨ 保持生活質素，遇到變化不被動</h4>
-                            <p style="font-size:0.92rem; color:var(--text-sub);" id="disp-sub-12">
-                                這個資源池的核心目的，正是為你最初想要的這幅人生畫面提供源源不絕的底氣與支持。
-                            </p>
-                        </div>
-                        <div class="page-bottom-img-zone"><img class="page-bottom-img" id="disp-img-12" style="display:none;" src="" alt=""></div>
-                    </div>
-                    <div class="action-row"><button class="nav-btn prev" onclick="goToStep(11)">← 上一步</button><button class="nav-btn next" onclick="goToStep(13)">一齊判斷適唔適合 →</button></div>
-                </div>
-            </div>
-            
-            <!-- 13 共同評估 -->
-            <div class="step-page" id="step-13">
-                <div class="content-card">
-                    <div>
-                        <h2 class="question-title" id="disp-title-13">「適合先繼續，唔適合都完全冇問題。」</h2>
-                        <p class="question-hint" id="disp-sub-13">以你目前的步調，你覺得這種分段建立的方法適唔適合自己？</p>
-                        <div class="options-group" id="disp-options-13"></div>
-                        <div class="page-bottom-img-zone"><img class="page-bottom-img" id="disp-img-13" style="display:none;" src="" alt=""></div>
-                    </div>
-                    <div class="action-row"><button class="nav-btn prev" onclick="goToStep(12)">← 上一步</button><button class="nav-btn next" id="btn-next-13" disabled onclick="generateBlueprint()">✨ 查看專屬生活藍圖筆記 →</button></div>
-                </div>
-            </div>
-            
-            <!-- 14 人生藍圖總結 -->
-            <div class="step-page" id="step-blueprint">
-                <div class="content-card">
-                    <h2 class="question-title" id="disp-title-14" style="margin-bottom:16px;">🌱 你的專屬生活藍圖筆記</h2>
-                    <div class="blueprint-dual-grid">
-                        <div class="blueprint-left-box">
-                            <h4 style="font-size:1.05rem; font-weight:800; margin-bottom:12px; color:#fff; border-bottom:1px solid rgba(255,255,255,0.15); padding-bottom:6px;">
-                                📋 你的生活初衷
-                            </h4>
-                            <div class="blueprint-entry-item"><div class="blueprint-entry-label">01. 生活現狀</div><div class="blueprint-entry-val" id="res-1">-</div></div>
-                            <div class="blueprint-entry-item"><div class="blueprint-entry-label">02. 核心關注</div><div class="blueprint-entry-val" id="res-2">-</div></div>
-                            <div class="blueprint-entry-item"><div class="blueprint-entry-label">03. 渴望看見的人生畫面</div><div class="blueprint-entry-val" id="res-4">-</div></div>
-                            <div class="blueprint-entry-item"><div class="blueprint-entry-label">04. 原本擔心的落差 / 卡點</div><div class="blueprint-entry-val" style="color:#fde047;" id="res-6">-</div></div>
-                        </div>
-                        <div class="blueprint-right-box">
-                            <div>
-                                <h4 style="font-size:1rem; font-weight:800; color:var(--state-success); margin-bottom:10px;">💡 替代方案：無痛縮減落差</h4>
-                                <div id="blueprint-img-wrapper" style="text-align:center;">
-                                    <img id="blueprint-uploaded-img" class="blueprint-img-uploaded-view" src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80" alt="生活藍圖圖解">
-                                </div>
-                                <div id="disp-sub-14" style="background:#f0fdf4; border-radius:10px; padding:10px; font-size:0.85rem; color:#166534; line-height:1.5;">
-                                    <strong>完全不影響現有生活享受：</strong><br>只需將每月不知不決流走的少許資金，分段注入專屬水庫，自然鎖定終身被動收入。
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="action-row">
-                        <button class="nav-btn prev" onclick="goToStep(13)">← 返回修改</button>
-                        <button class="nav-btn next" onclick="goToStep('page-promo')">🎁 專屬保費優惠計算 →</button>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- 保費回贈計算 -->
-            <div class="step-page" id="page-promo">
-                <div class="content-card">
-                    <h2 class="question-title">🎁 專屬保費優惠計算</h2>
-                    <p class="question-hint">為您度身訂造最慳錢嘅投保策略，將每一分錢嘅效益極大化！</p>
-                    <div class="promo-split-container">
-                        <div class="promo-left-col">
-                            <div class="promo-card" style="background:#f8fafc;">
-                                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-                                    <div>
-                                        <label style="font-size:0.75rem; font-weight:bold; color:var(--text-sub);">首年 / 每年保費 ($)</label>
-                                        <input type="text" id="promo-annual-premium" value="100,000" style="width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:6px; font-weight:bold; text-align:center; color:var(--brand-accent);" oninput="calculatePromo()">
-                                    </div>
-                                    <div>
-                                        <label style="font-size:0.75rem; font-weight:bold; color:var(--text-sub);">供款年期 (年)</label>
-                                        <input type="number" id="promo-term" value="5" style="width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:6px; font-weight:bold; text-align:center;" oninput="calculatePromo()">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="promo-card">
-                                <div class="promo-row">
-                                    <input type="checkbox" id="promo1-check" class="promo-checkbox" checked onchange="calculatePromo()">
-                                    <div style="flex:1;">
-                                        <h4 style="margin:0 0 4px 0; color:var(--brand-accent); font-size:0.95rem;">優惠 1：首年保費大減價</h4>
-                                        <p style="font-size:0.85rem; color:var(--text-sub); margin:0;" id="promo1-desc-label">首年保費每滿 $5,000 即減 $500。</p>
-                                        <div class="promo-tag">已為您慳下：<span id="promo1-saved">$0</span></div>
-                                    </div>
-                                </div>
-                                <div class="promo-row">
-                                    <input type="checkbox" id="promo2-check" class="promo-checkbox" checked onchange="calculatePromo()">
-                                    <div style="flex:1;">
-                                        <h4 style="margin:0 0 4px 0; color:var(--brand-accent); font-size:0.95rem;">優惠 2：續保保費折扣</h4>
-                                        <div style="display:flex; align-items:center; gap:6px; margin-top:4px; font-size:0.85rem;">
-                                            <span>第 2 年續保即減</span>
-                                            <input type="number" id="promo2-base-pct" value="5" step="0.1" style="width:60px; padding:3px; text-align:center;" oninput="calculatePromo()"> %
-                                        </div>
-                                        <div class="promo-tag" style="margin-top:8px;">已為您慳下：<span id="promo2-saved">$0</span></div>
-                                    </div>
-                                </div>
-                                <div class="promo-row">
-                                    <input type="checkbox" id="promo3-check" class="promo-checkbox" checked onchange="calculatePromo()">
-                                    <div style="flex:1;">
-                                        <h4 style="margin:0 0 4px 0; color:var(--brand-accent); font-size:0.95rem;">優惠 3：預繳保費保證利率</h4>
-                                        <p style="font-size:0.85rem; color:var(--text-sub); margin:0;">一筆過預繳享保證年利率，滿期現金退回純利息！</p>
-                                        <div style="margin-top:6px; font-size:0.85rem;">
-                                            <span>保證年利率：</span>
-                                            <input type="number" id="promo3-rate" value="3.8" step="0.1" style="width:65px; padding:3px; text-align:center;" oninput="calculatePromo()"> %
-                                        </div>
-                                        <div id="promo3-desc" style="margin-top:8px; background:#eff6ff; padding:8px; border-radius:6px; font-size:0.8rem; color:#1e40af; line-height:1.4; display:none;"></div>
-                                        <div class="promo-tag" style="background:#d4edda; color:#155724; margin-top:8px;">保證預繳純利息：<span id="promo3-saved">$0</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="promo-right-col">
-                            <div class="promo-result-box">
-                                <h4 style="margin:0; font-size:0.95rem; opacity:0.85;">原本總保費：<span id="promo-original-total" style="text-decoration:line-through;">$0</span></h4>
-                                <div style="margin:12px 0;">
-                                    <span style="font-size:0.95rem;">💰 總共慳咗及賺取利息達：</span>
-                                    <div class="big-savings" id="promo-total-savings">$0</div>
-                                </div>
-                                <div style="background:rgba(0,0,0,0.15); padding:8px; border-radius:8px;">
-                                    <span style="font-size:0.9rem;">實際淨付出總額：<strong id="promo-actual-outlay" style="font-size:1.3rem;">$0</strong></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="action-row">
-                        <button class="nav-btn prev" onclick="goToStep('step-blueprint')">← 返回藍圖</button>
-                        <button class="nav-btn next" onclick="alert('✅ 專屬方案已全數規劃完成！')">✅ 完成所有規劃</button>
-                    </div>
-                </div>
-            </div>
+        <main id="app-main-flow">
+            <!-- 前台動態流程頁面由 JS 自動產生 -->
         </main>
     </div>
-
-
-    <!-- 提取策略設定彈窗 -->
-    <div id="strategy-modal" class="modal-mask">
-        <div class="modal-box">
-            <span class="close-btn" onclick="closeStrategyModal()">&times;</span>
-            <h3 style="color:var(--brand-primary); margin-top:0; text-align:center; font-size:1.15rem;">⚙️ 設定各錦囊被動收入提取策略</h3>
-            <div style="margin-bottom: 1rem;">
-                <label style="font-weight:bold; font-size:0.85rem; color:var(--plan1-color); display:block; margin-bottom:4px;">一號種子水庫 (第1-5年)</label>
-                <select id="plan1-strategy" onchange="calculateAndDisplay()" style="width:100%; padding:8px; border-radius:6px; border:1px solid #cbd5e1;">
-                    <option value="withdraw7_from8" selected>第8年開始 取7% (標準推薦)</option>
-                    <option value="none">自動滾存不提取</option>
-                    <option value="withdraw12_from15">第15年開始 取12%</option>
-                    <option value="withdraw18_from20">第20年開始 取18%</option>
-                    <option value="withdraw23_from25">第25年開始 取23%</option>
-                    <option value="withdraw29_from30">第30年開始 取29%</option>
-                </select>
-            </div>
-            <div id="modal-plan2-group" style="margin-bottom: 1rem; display:none;">
-                <label style="font-weight:bold; font-size:0.85rem; color:var(--plan2-color); display:block; margin-bottom:4px;">二號灌溉水庫 (第6-10年)</label>
-                <select id="plan2-strategy" onchange="calculateAndDisplay()" style="width:100%; padding:8px; border-radius:6px; border:1px solid #cbd5e1;">
-                    <option value="withdraw7_from8" selected>第8年開始 取7%</option>
-                    <option value="none">自動滾存不提取</option>
-                    <option value="withdraw12_from15">第15年開始 取12%</option>
-                    <option value="withdraw18_from20">第20年開始 取18%</option>
-                    <option value="withdraw23_from25">第25年開始 取23%</option>
-                    <option value="withdraw29_from30">第30年開始 取29%</option>
-                </select>
-            </div>
-            <div id="modal-plan3-group" style="margin-bottom: 1rem; display:none;">
-                <label style="font-weight:bold; font-size:0.85rem; color:var(--plan3-color); display:block; margin-bottom:4px;">三號茁壯水庫 (第11-15年)</label>
-                <select id="plan3-strategy" onchange="calculateAndDisplay()" style="width:100%; padding:8px; border-radius:6px; border:1px solid #cbd5e1;">
-                    <option value="withdraw7_from8" selected>第8年開始 取7%</option>
-                    <option value="none">自動滾存不提取</option>
-                    <option value="withdraw12_from15">第15年開始 取12%</option>
-                    <option value="withdraw18_from20">第20年開始 取18%</option>
-                    <option value="withdraw23_from25">第25年開始 取23%</option>
-                    <option value="withdraw29_from30">第30年開始 取29%</option>
-                </select>
-            </div>
-            <div id="modal-plan4-group" style="margin-bottom: 1.2rem; display:none;">
-                <label style="font-weight:bold; font-size:0.85rem; color:var(--plan4-color); display:block; margin-bottom:4px;">四號大樹水庫 (第16-20年)</label>
-                <select id="plan4-strategy" onchange="calculateAndDisplay()" style="width:100%; padding:8px; border-radius:6px; border:1px solid #cbd5e1;">
-                    <option value="withdraw7_from8" selected>第8年開始 取7%</option>
-                    <option value="none">自動滾存不提取</option>
-                    <option value="withdraw12_from15">第15年開始 取12%</option>
-                    <option value="withdraw18_from20">第20年開始 取18%</option>
-                    <option value="withdraw23_from25">第25年開始 取23%</option>
-                    <option value="withdraw29_from30">第30年開始 取29%</option>
-                </select>
-            </div>
-            <button class="nav-btn next" onclick="closeStrategyModal()" style="width: 100%;">✅ 確認設定</button>
-        </div>
-    </div>
-
 
     <!-- 頂部 ! 情境對話彈窗 -->
     <div id="scenario-popup-mask" class="modal-mask">
         <div class="modal-box">
             <span class="close-btn" onclick="closeScenarioPopup()">&times;</span>
-            <h3 style="color:var(--brand-primary); margin-top:0; font-size:1.1rem; text-align:center;">💡 選擇客群情境 (自動秒跳01題)</h3>
+            <h3 style="color:var(--brand-primary); margin-top:0; font-size:1.1rem; text-align:center;">💡 選擇客群情境</h3>
             <div class="popup-menu-list">
                 <div class="popup-menu-item" onclick="applyScenarioPreset('unplanned')">🌱 未諗未來</div>
                 <div class="popup-menu-item" onclick="applyScenarioPreset('forced_save')">💰 想強制儲</div>
@@ -669,24 +198,21 @@
         </div>
     </div>
 
-
     <!-- 頂部 * 直達跳轉彈窗 -->
     <div id="jump-popup-mask" class="modal-mask">
         <div class="modal-box">
             <span class="close-btn" onclick="closeJumpPopup()">&times;</span>
-            <h3 style="color:var(--brand-primary); margin-top:0; font-size:1.1rem; text-align:center;">🚀 直達流程模組</h3>
+            <h3 style="color:var(--brand-primary); margin-top:0; font-size:1.1rem; text-align:center;">🚀 直達固定核心分頁</h3>
             <div class="popup-menu-list" style="grid-template-columns:1fr;">
-                <div class="popup-menu-item" onclick="jumpDirectStep(5)">📍 直達 05 兩個未來對比</div>
-                <div class="popup-menu-item" onclick="jumpDirectStep(10)">💧 直達 10 人生資源池概念</div>
-                <div class="popup-menu-item" onclick="jumpDirectStep(11)">📊 直達 11 時光複利量化累積表</div>
-                <div class="popup-menu-item" onclick="jumpDirectStep('step-blueprint')">📋 直達 專屬生活藍圖筆記</div>
-                <div class="popup-menu-item" onclick="jumpDirectStep('page-promo')">🎁 直達 專屬保費優惠計算</div>
+                <div class="popup-menu-item" onclick="jumpDirectStep('fixed-page-a')">🔍 固定分頁 A：認知差距</div>
+                <div class="popup-menu-item" onclick="jumpDirectStep('fixed-page-b')">🌱 固定分頁 B：時光複利量化表</div>
+                <div class="popup-menu-item" onclick="jumpDirectStep('fixed-page-c')">📋 固定分頁 C：專屬生活藍圖</div>
+                <div class="popup-menu-item" onclick="jumpDirectStep('page-promo')">🎁 優惠計算：專屬保費折扣</div>
             </div>
         </div>
     </div>
 
-
-    <!-- 全能控制台 (導航式頂位分頁 + 完整編輯功能 + 使用者還原鍵) -->
+    <!-- 全能控制台 -->
     <div id="admin-modal-mask" class="modal-mask">
         <div class="admin-dashboard-modal">
             <div class="admin-header">
@@ -694,28 +220,25 @@
                 <div style="cursor:pointer;" onclick="closeAdminDashboard()">✕</div>
             </div>
             
-            <!-- 導航式頂位分頁 -->
             <div class="admin-nav" id="admin-tabs-nav-bar">
-                <div class="admin-nav-btn active" id="tab-flow-btn" onclick="switchAdminTab('flow')">頁面流程管理</div>
+                <div class="admin-nav-btn active" id="tab-flow-btn" onclick="switchAdminTab('flow')">三大區域流程管理</div>
                 <div class="admin-nav-btn" id="tab-jars-btn" onclick="switchAdminTab('jars')">時光複利文字</div>
                 <div class="admin-nav-btn" id="tab-blueprint-btn" onclick="switchAdminTab('blueprint')">人生藍圖設定</div>
-                <div class="admin-nav-btn admin-only-tab" id="tab-mapping-btn" onclick="switchAdminTab('mapping')" style="display:none;">分頁命名與對應代碼</div>
-                <div class="admin-nav-btn admin-only-tab" id="tab-system-btn" onclick="switchAdminTab('system')" style="display:none;">系統參數設定</div>
+                <div class="admin-nav-btn admin-only-tab" id="tab-mapping-btn" onclick="switchAdminTab('mapping')" style="display:none;">領取文字與代碼</div>
+                <div class="admin-nav-btn admin-only-tab" id="tab-system-btn" onclick="switchAdminTab('system')" style="display:none;">系統參數</div>
             </div>
-
-
+            
             <div class="sync-loading-overlay" id="sync-loading-mask">
                 <div style="font-size:2.5rem; margin-bottom:10px;">⏳</div>
                 <div>正在同步至 Google Sheet，請稍候...</div>
             </div>
-
-
+            
             <div class="admin-body">
-                <!-- Tab 1: 頁面流程管理 -->
+                <!-- Tab 1: 三大區域流程管理 -->
                 <div id="admin-sec-flow">
                     <div style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:12px; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
                         <div style="display:flex; align-items:center; gap:8px;">
-                            <label style="font-size:0.85rem; font-weight:bold; color:var(--brand-primary);">切換編輯情境：</label>
+                            <label style="font-size:0.85rem; font-weight:bold; color:var(--brand-primary);">編輯情境：</label>
                             <select id="scenario-flow-selector" onchange="switchScenarioFlowEditor(this.value)" style="padding:6px 10px; font-weight:bold; border:1.5px solid var(--brand-accent); border-radius:6px; background:#fff;">
                                 <option value="unplanned">🌱 編輯：未諗未來</option>
                                 <option value="forced_save">💰 編輯：想強制儲</option>
@@ -727,107 +250,80 @@
                                 <option value="low_return">📊 編輯：嫌回報低</option>
                             </select>
                         </div>
-                        <button class="step-ctrl-btn" style="background:#e0f2fe; color:#0369a1;" onclick="addNewPageCard()">+ 新增步驟頁面</button>
                     </div>
-                    <div id="admin-cards-render-zone"></div>
+                    
+                    <!-- 區域 A 管理 -->
+                    <div class="zone-header-box" style="border-left:4px solid #2563eb;">
+                        <span>📍 區域 A (第 1 頁 - 固定分頁 A 前)</span>
+                        <button class="step-ctrl-btn" style="background:#dbeafe; color:#1d4ed8;" onclick="addNewPageToZone('zone_a')">+ 新增區域 A 頁面</button>
+                    </div>
+                    <div id="admin-cards-render-zone-a"></div>
+
+                    <!-- 區域 B 管理 -->
+                    <div class="zone-header-box" style="border-left:4px solid #059669; margin-top:20px;">
+                        <span>📍 區域 B (固定分頁 A 後 - 固定分頁 B 前)</span>
+                        <button class="step-ctrl-btn" style="background:#d1fae5; color:#065f46;" onclick="addNewPageToZone('zone_b')">+ 新增區域 B 頁面</button>
+                    </div>
+                    <div id="admin-cards-render-zone-b"></div>
+
+                    <!-- 區域 C 管理 -->
+                    <div class="zone-header-box" style="border-left:4px solid #7c3aed; margin-top:20px;">
+                        <span>📍 區域 C (固定分頁 B 後 - 固定分頁 C 前)</span>
+                        <button class="step-ctrl-btn" style="background:#ede9fe; color:#5b21b6;" onclick="addNewPageToZone('zone_c')">+ 新增區域 C 頁面</button>
+                    </div>
+                    <div id="admin-cards-render-zone-c"></div>
                 </div>
 
-
-                <!-- Tab 2: 時光複利文字設定 -->
+                <!-- Tab 2: 時光複利文字 -->
                 <div id="admin-sec-jars" style="display:none;">
-                    <div style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:12px; margin-bottom:16px; display:flex; align-items:center; gap:8px;">
-                        <label style="font-size:0.85rem; font-weight:bold; color:var(--brand-primary);">編輯情境：</label>
-                        <select id="scenario-jar-selector" onchange="switchScenarioJarEditor(this.value)" style="padding:6px 10px; font-weight:bold; border:1.5px solid var(--brand-accent); border-radius:6px; background:#fff;">
-                            <option value="unplanned">🌱 未諗未來</option>
-                            <option value="forced_save">💰 想強制儲</option>
-                            <option value="inflation">📉 抗通脹</option>
-                            <option value="retire">🏖️ 退休</option>
-                            <option value="edu">🎓 教育基金</option>
-                            <option value="self_invest">📈 自己投資</option>
-                            <option value="flexible">🔓 怕綁死/重視靈活</option>
-                            <option value="low_return">📊 嫌回報低</option>
-                        </select>
-                    </div>
-                    <!-- 表格標題動態化區塊 -->
-                    <div class="admin-card-row" style="border:1.5px solid #93c5fd; background:#f0f7ff;">
-                        <h4 style="margin-top:0; color:var(--brand-primary);">📊 時光複利 - 表格標題自訂</h4>
-                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-                            <div><label style="font-size:0.75rem; font-weight:bold; color:#64748b;">欄位 1：</label><input type="text" id="admin-th-year" class="pink-edit-input"></div>
-                            <div><label style="font-size:0.75rem; font-weight:bold; color:#64748b;">欄位 2：</label><input type="text" id="admin-th-reserve" class="pink-edit-input"></div>
-                            <div><label style="font-size:0.75rem; font-weight:bold; color:#64748b;">欄位 3：</label><input type="text" id="admin-th-income" class="pink-edit-input"></div>
-                            <div><label style="font-size:0.75rem; font-weight:bold; color:#64748b;">欄位 4：</label><input type="text" id="admin-th-accum" class="pink-edit-input"></div>
-                            <div><label style="font-size:0.75rem; font-weight:bold; color:#64748b;">欄位 5：</label><input type="text" id="admin-th-asset" class="pink-edit-input"></div>
-                            <div><label style="font-size:0.75rem; font-weight:bold; color:#64748b;">欄位 6：</label><input type="text" id="admin-th-interest" class="pink-edit-input"></div>
-                        </div>
-                    </div>
-
-
                     <div class="admin-card-row">
-                        <h4 style="margin-top:0; color:var(--plan1-color);">🌱 一號水庫 (第 1 - 5 年)</h4>
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">標題 (tree_title_1)：</label>
-                        <input type="text" id="admin-jt-title-1" class="pink-edit-input">
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:6px; display:block;">描述說明 (tree_desc_1)：</label>
-                        <input type="text" id="admin-jt-desc-1" class="pink-edit-input">
+                        <h4 style="margin-top:0; color:var(--brand-primary);">🌱 一號水庫</h4>
+                        <input type="text" id="admin-jt-title-1" class="pink-edit-input" placeholder="標題">
+                        <input type="text" id="admin-jt-desc-1" class="pink-edit-input" placeholder="描述">
                     </div>
                     <div class="admin-card-row">
-                        <h4 style="margin-top:0; color:var(--plan2-color);">💧 二號水庫 (第 6 - 10 年)</h4>
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">標題 (tree_title_2)：</label>
-                        <input type="text" id="admin-jt-title-2" class="pink-edit-input">
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:6px; display:block;">描述說明 (tree_desc_2)：</label>
-                        <input type="text" id="admin-jt-desc-2" class="pink-edit-input">
+                        <h4 style="margin-top:0; color:var(--plan2-color);">💧 二號水庫</h4>
+                        <input type="text" id="admin-jt-title-2" class="pink-edit-input" placeholder="標題">
+                        <input type="text" id="admin-jt-desc-2" class="pink-edit-input" placeholder="描述">
                     </div>
                     <div class="admin-card-row">
-                        <h4 style="margin-top:0; color:var(--plan3-color);">🌿 三號水庫 (第 11 - 15 年)</h4>
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">標題 (tree_title_3)：</label>
-                        <input type="text" id="admin-jt-title-3" class="pink-edit-input">
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:6px; display:block;">描述說明 (tree_desc_3)：</label>
-                        <input type="text" id="admin-jt-desc-3" class="pink-edit-input">
+                        <h4 style="margin-top:0; color:var(--plan3-color);">🌿 三號水庫</h4>
+                        <input type="text" id="admin-jt-title-3" class="pink-edit-input" placeholder="標題">
+                        <input type="text" id="admin-jt-desc-3" class="pink-edit-input" placeholder="描述">
                     </div>
                     <div class="admin-card-row">
-                        <h4 style="margin-top:0; color:var(--plan4-color);">🌳 四號水庫 (第 16 - 20 年)</h4>
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">標題 (tree_title_4)：</label>
-                        <input type="text" id="admin-jt-title-4" class="pink-edit-input">
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:6px; display:block;">描述說明 (tree_desc_4)：</label>
-                        <input type="text" id="admin-jt-desc-4" class="pink-edit-input">
+                        <h4 style="margin-top:0; color:var(--plan4-color);">🌳 四號水庫</h4>
+                        <input type="text" id="admin-jt-title-4" class="pink-edit-input" placeholder="標題">
+                        <input type="text" id="admin-jt-desc-4" class="pink-edit-input" placeholder="描述">
                     </div>
                 </div>
-
 
                 <!-- Tab 3: 人生藍圖設定 -->
                 <div id="admin-sec-blueprint" style="display:none;">
                     <div class="admin-card-row">
-                        <h4 style="margin-top:0; color:var(--brand-primary);">🖼️ 藍圖右側圖解與替代方案</h4>
-                        <div style="margin:14px 0;">
-                            <button class="nav-btn next" style="padding:8px 16px; width:auto;" onclick="triggerBlueprintImageUpload()">📤 選擇並上載新圖片</button>
-                            <button class="del-opt-btn" style="padding:8px 16px;" onclick="deleteBlueprintImage()">🗑️ 刪除自訂圖片 (還原預設)</button>
-                        </div>
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">目前圖片網址：</label>
-                        <input type="text" id="admin-blueprint-img-url" class="pink-edit-input" value="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80" oninput="updateBlueprintImageSrc(this.value)">
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:10px; display:block;">替代方案總結說明：</label>
-                        <input type="text" id="admin-blueprint-summary-text" class="pink-edit-input" value="完全不影響現有生活享受：只需將每月不知不覺流走的少許資金，分段注入專屬水庫，自然鎖定終身被動收入。" oninput="updateBlueprintSummaryText(this.value)">
+                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">圖片網址：</label>
+                        <input type="text" id="admin-blueprint-img-url" class="pink-edit-input">
+                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:10px; display:block;">替代方案說明：</label>
+                        <input type="text" id="admin-blueprint-summary-text" class="pink-edit-input">
                     </div>
                 </div>
 
-
-                <!-- Tab 5: 分頁命名與對應代碼 (管理員專用) -->
+                <!-- Tab 4: 領取文字與代碼 (管理員專用) -->
                 <div id="admin-sec-mapping" style="display:none;">
                     <div class="admin-card-row">
-                        <h4 style="margin-top:0; color:var(--brand-primary);">📑 分頁命名與對應代碼 (提取方案)</h4>
                         <div id="admin-mappings-zone"></div>
                     </div>
                 </div>
 
-
-                <!-- Tab 6: 系統參數設定 (管理員專用) -->
+                <!-- Tab 5: 系統參數 -->
                 <div id="admin-sec-system" style="display:none;">
                     <div class="admin-card-row">
-                        <h4 style="margin-top:0; color:var(--brand-primary);">🌐 系統參數與 Google Apps Script 設定</h4>
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">管理員登入密碼 (admin_password)：</label>
-                        <input type="text" id="admin-password-input" class="pink-edit-input" value="">
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">系統版本號 (system_version)：</label>
-                        <input type="text" id="admin-version-input" class="pink-edit-input" value="v6.1.0">
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">Google Apps Script API 網址：</label>
-                        <input type="text" id="admin-gas-url-input" class="pink-edit-input" value="https://script.google.com/macros/s/AKfycbwbKrrmiS5vx0Q5TvqqUCHBhU-VrS7WwwY0hj6BaNRwuzPtXXIZZxejPwhycCZhSCr-Rg/exec">
+                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">管理員密碼：</label>
+                        <input type="text" id="admin-password-input" class="pink-edit-input">
+                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">系統版本號：</label>
+                        <input type="text" id="admin-version-input" class="pink-edit-input">
+                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">GAS API 網址：</label>
+                        <input type="text" id="admin-gas-url-input" class="pink-edit-input">
                     </div>
                 </div>
             </div>
@@ -844,16 +340,28 @@
         </div>
     </div>
 
-
     <script>
         const answers = {};
-        let currentSystemVersion = "v6.1.0";
+        let currentSystemVersion = "v6.2.0";
         let GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwbKrrmiS5vx0Q5TvqqUCHBhU-VrS7WwwY0hj6BaNRwuzPtXXIZZxejPwhycCZhSCr-Rg/exec';
-        let cloudAdminPassword = "";
+        let cloudAdminPassword = "903";
         let globalReturnMultipliers = {};
         let currentActiveScenario = "unplanned";
         let isAdminRole = false;
+        let activeFullFlowSteps = [];
+        let currentStepIndex = 0;
 
+        let scenariosDB = {
+            unplanned: {
+                scenario_name: "未諗未來",
+                intuitive_belief: "35歲先開始都未遲",
+                objective_reality: "目標會變，但時間一去不復返",
+                gap_title: "延遲啟動的代價",
+                gap_percentage: "71%",
+                gap_label: "複利增值代價",
+                takeaway_summary: "差距不是錢，而是被浪費的時間複利。提早 5 年分段奠定，效果完全不同。"
+            }
+        };
 
         let sheetMappings = [
             { code: "withdraw7_from8", sheet_name: "8年領取", display_name: "第8年開始 取7% (標準推薦)", note: "5年供款，第8年起每年領取7%" },
@@ -864,15 +372,6 @@
             { code: "withdraw29_from30", sheet_name: "30年領取", display_name: "第30年開始 取29%", note: "第30年起每年領取29%" }
         ];
 
-
-        const stepNameMap = {
-            1: "現況想法 1", 2: "了解需求 2", 3: "深層價值 3", 4: "未來畫面 4",
-            5: "兩個未來 5", 6: "發現差距 6", 7: "顛覆盲點 7", 8: "降低防衛 8",
-            9: "建立選擇權 9", 10: "人生資源池 10", 11: "時光複利 11",
-            12: "初衷連結 12", 13: "共同評估 13", 14: "人生藍圖總結 14"
-        };
-
-
         let allJarTexts = {
             unplanned: {
                 scenario_name: "未諗未來",
@@ -881,176 +380,395 @@
                 tree_title_3: "🌿 三號茁壯水庫 (第 11 - 15 年)", tree_desc_3: "水庫儲備倍增，抗風險能力大幅增強。",
                 tree_title_4: "🌳 四號大樹水庫 (第 16 - 20 年)", tree_desc_4: "大樹長成，產出源源不絕的流動被動收入。",
                 th_year: "年份 (歲數)", th_reserve: "累計儲備", th_income: "被動收入", th_accum: "累積已領", th_asset: "大樹收成", th_interest: "年化百分比回報"
-            },
-            retire: {
-                scenario_name: "退休規劃",
-                tree_title_1: "🌱 退休基礎水庫 (第 1 - 5 年)", tree_desc_1: "趁年輕及早建立退休底氣。",
-                tree_title_2: "💧 退休增值水庫 (第 6 - 10 年)", tree_desc_2: "穩健滾存，抗通脹侵蝕。",
-                tree_title_3: "🌿 退休自悠水庫 (第 11 - 15 年)", tree_desc_3: "鎖定源源長糧，享受被動現金流。",
-                tree_title_4: "🌳 傳承大樹水庫 (第 16 - 20 年)", tree_desc_4: "豐盛晚年，資產穩健傳承後代。",
-                th_year: "年份 (歲數)", th_reserve: "累計儲備", th_income: "被動收入", th_accum: "累積已領", th_asset: "大樹收成", th_interest: "年化百分比回報"
             }
         };
 
-
         let allScenarioDatabase = {
             unplanned: [
-                { id: "step_1", step_num: 1, title: "「如果純粹講而家嘅生活狀態，你覺得自己屬於邊一種？」", subtitle: "沒有對與錯，純粹由你目前最真實、最自在的生活節奏開始探索：", image_url: "", options: [
+                { id: "step_1", zone: "zone_a", step_num: 1, title: "「如果純粹講而家嘅生活狀態，你覺得自己屬於邊一種？」", subtitle: "沒有對與錯，純粹由你目前最真實、最自在的生活節奏開始探索：", image_url: "", options: [
                     { headline: "🌅 先享受現在", subtext: "今天的生活同樣重要，未來的步調可以按自己節奏慢慢來。" },
-                    { headline: "🧭 我知道未來重要", subtext: "但市面太多複雜說法，還未找到真正適合自己、不吃力的方法。" },
-                    { headline: "🌱 我相信慢慢建立", subtext: "不需要一步到位，希望由最舒服的程度開始，讓未來更有選擇。" },
-                    { headline: "⏳ 覺得時間仲好充裕", subtext: "暫時未有急切需要，但如果有一套無痛的方法，會想先了解原理。" }
+                    { headline: "🧭 我知道未來重要", subtext: "但市面太多複雜說法，還未找到真正適合自己、不吃力的方法。" }
                 ]},
-                { id: "step_2", step_num: 2, title: "「如果將來有一樣嘢值得你花更多資源，最可能會係邊方面？」", subtitle: "即使未有具體安排，心目中亦可能有最在意的生活重心：", image_url: "", options: [
+                { id: "step_2", zone: "zone_a", step_num: 2, title: "「如果將來有一樣嘢值得你花更多資源，最可能會係邊方面？」", subtitle: "即使未有具體安排，心目中亦可能有最在意的生活重心：", image_url: "", options: [
                     { headline: "🏠 住屋與生活品質提升", subtext: "希望未來能住在更舒適的環境，享有更優質的日常生活。" },
-                    { headline: "✈️ 旅行與人生體驗", subtext: "趁有能力多去探索世界，豐富人生經歷，不留遺憾。" },
-                    { headline: "👨‍👩‍👧 家庭與子女成長", subtext: "為下一代提供最好的教育資源，或給予父母最安心的照顧。" },
-                    { headline: "💼 事業轉型與個人發展", subtext: "擁有隨時進修、創業或轉換生活跑道的自由底氣。" },
-                    { headline: "🩺 頂級健康與備用安全網", subtext: "面對突發健康狀況時，能隨時享有最佳治療而不傷及既有資產。" }
+                    { headline: "✈️ 旅行與人生體驗", subtext: "趁有能力多去探索世界，豐富人生經歷。" }
                 ]},
-                { id: "step_3", step_num: 3, title: "「點解呢個方向對你嚟講特別重要？」", subtitle: "探索背後真正驅動你、對你最具價值的初衷：", image_url: "", options: [
-                    { headline: "✨ 不想被現實條件限制選擇", subtext: "希望在做決定時，是基於自己真心喜歡，而不是因為預算妥協。" },
-                    { headline: "🛡️ 想有一份踏實的掌控感", subtext: "生活中已有足夠的不確定性，希望在核心領域能擁有絕對的安心。" },
-                    { headline: "👨‍👩‍👧 想為愛的人撐起一片天", subtext: "盡到身為支柱的責任，讓家人能無憂無慮地追求自己的生活。" },
-                    { headline: "⏳ 覺得這是遲早要面對的人生階段", subtext: "與其將來臨急應對，不如趁現在心有餘力時先做好鋪墊。" }
+                { id: "step_7", zone: "zone_b", step_num: 7, title: "「如果話你知：『未有明確目標』，其實先係最好嘅開始方式？」", subtitle: "人生目標隨時會變，但「提早為自己累積選擇權」永遠不會錯。", image_url: "", options: [
+                    { headline: "🤔 點解未有目標都可以開始？想聽下背後原理", subtext: "想了解如何在不確定未來的情況下做好準備。" },
+                    { headline: "💡 真係可以完全唔影響現有生活咁做？", subtext: "想知道如何用最輕鬆、不吃力的節奏建立長期儲備。" }
                 ]},
-                { id: "step_4", step_num: 4, title: "「假設 5–10 年後生活更自由，你最希望看見甚麼畫面？」", subtitle: "理財不是數字遊戲，而是為了實現具體的生活畫面：", image_url: "", options: [
-                    { headline: "☕ 隨心生活的早晨", subtext: "想做的事不需要每天計住開支，生活過得從容自在。" },
-                    { headline: "🏡 生活質素全面升級", subtext: "住進心儀的環境，讓自己與家人的日常享受更上一層樓。" },
-                    { headline: "🌴 時間完全由自己掌控", subtext: "工作純粹出於熱愛與興趣，擁有隨時放下、去享受人生的自由。" },
-                    { headline: "🛡️ 面對任何風浪都處變不驚", subtext: "無論外在環境或健康有何變化，既有的生活標準永遠不受動搖。" }
-                ]},
-                { id: "step_5", step_num: 5, title: "「時間會繼續向前，你想用咩方式迎接未來？」", subtitle: "未來未必需要現在全盤計劃，但你可以決定到時自己擁有多少選擇權：", image_url: "", options: [
-                    { headline: "🌱 我希望未來有更多選擇權", subtext: "不想每一次人生轉變，都只能由零開始被動應對。" },
-                    { headline: "🌊 順其自然，但想了解兩者分別", subtext: "目前生活過得去，但想看看兩條軌跡在長遠上的實際差異。" }
-                ]},
-                { id: "step_6", step_num: 6, title: "「如果想在未來擁有更多選擇，你覺得目前最容易卡住自己的是？」", subtitle: "每個人在生活中都會遇到不同節奏，看清狀況才能找到最舒服的起步點：", image_url: "", options: [
-                    { headline: "🌊 每個月過得去，但很難留下", subtext: "收入不是沒有，只是生活開支與不同事情，慢慢就用掉了。" },
-                    { headline: "⏳ 時間看起來還很多，容易一拖再拖", subtext: "日常已經有很多事情要處理，不知不決將長遠安排往後放。" },
-                    { headline: "🧭 市面方法太繁雜，怕缺乏靈活性", subtext: "不想每天擔心市場波動，但又擔心長期計劃會綁死資金。" },
-                    { headline: "🌱 想開始，但希望由完全無痛的程度開始", subtext: "不想影響現有生活享受，希望找到一個完全沒壓力的起步方式。" }
-                ]},
-                { id: "step_7", step_num: 7, title: "「如果話你知：『未有明確目標』，其實先係最好嘅開始方式？」", subtitle: "人生目標隨時會變，但「提早為自己累積選擇權」永遠不會錯。", image_url: "", options: [
-                    { headline: "🤔 點解未有目標都可以開始？想聽下背後原理", subtext: "想了解如何在不確定未來的情況下，依然能做好準備。" },
-                    { headline: "💡 真係可以完全唔影響現有生活咁做？", subtext: "想知道如何用最輕鬆、不吃力的節奏建立長期儲備。" },
-                    { headline: "📊 想直接睇下具體點樣自動化運作", subtext: "跳過複雜名詞，直接看看實際的運作流程與效果。" }
-                ]},
-                { id: "step_8", step_num: 8, title: "「不如先睇清楚運作原理，再決定值唔值得考慮？」", subtitle: "零壓力約定：了解不代表一定要做。最重要是看清這個模式對你有沒有價值。", image_url: "", options: [
-                    { headline: "🔘 好，先睇下原理點樣運作", subtext: "抱持開放態度，純粹了解一套新的財務架構。" },
-                    { headline: "🔘 暫時唔急，純粹探索新思路", subtext: "給自己一個了解市場最新工具的機會。" }
-                ]},
-                { id: "step_9", step_num: 9, title: "建立未來選擇權的專屬工具", subtitle: "重點不是今天猜中未來，而是先為未來的自己分段建立一份底氣。", image_url: "", options: []},
-                { id: "step_10", step_num: 10, title: "💧 人生資源池：如何不影響生活下建立選擇？", subtitle: "不是犧牲眼前的享受，而是將原本不知不決流走的小部分，導向未來的自動化水庫：", image_url: "", options: [
-                    { headline: "1. 今日生活開支", subtext: "旅行、享受、家庭開銷照舊進行，完全不犧牲生活品質。" },
-                    { headline: "2. 分段小額入庫", subtext: "每月只需撥出微少份額，只需 5 年，就自動完成資產水庫建造。" },
-                    { headline: "3. 未來水龍頭", subtext: "停止投入後，水庫交由時間滾存，隨時可開水龍頭提取源源長糧。" }
-                ]},
-                { id: "step_11", step_num: 11, title: "🌱 時光複利：小金額如何創造大效果？", subtitle: "即使今天未有特定目標，每個月只預留少少（如 $3,333/月），交畀時間，就能為你創造源源不絕的被動收入：", image_url: "", options: []},
-                { id: "step_12", step_num: 12, title: "「其實，數字本身唔係最重要。」", subtitle: "這個資源池的核心目的，正是為你最初想要的這幅人生畫面提供源源不絕的底氣與支持。", image_url: "", options: []},
-                { id: "step_13", step_num: 13, title: "「適合先繼續，唔適合都完全冇問題。」", subtitle: "以你目前的步調，你覺得這種分段建立的方法適唔適合自己？", image_url: "", options: [
+                { id: "step_13", zone: "zone_c", step_num: 13, title: "「適合先繼續，唔適合都完全冇問題。」", subtitle: "以你目前的步調，你覺得這種分段建立的方法適唔適合自己？", image_url: "", options: [
                     { headline: "🟢 我覺得概念好舒服，可以認真考慮", subtext: "認同分段投入與被動收入提取的理念。" },
-                    { headline: "🟡 概念明白，想再睇下適合自己的具體預算", subtext: "希望能根據自己的實際收入量身微調。" },
-                    { headline: "🔵 想知道最合理的起步水平", subtext: "看看如何以最小的負擔達到預期效果。" },
-                    { headline: "⚪ 暫時未有迫切需要", subtext: "先保留這套思路，有需要時再做安排。" }
-                ]},
-                { id: "step_14", step_num: 14, title: "🌱 你的專屬生活藍圖筆記", subtitle: "完全不影響現有生活享受：只需將每月不知不決流走的少許資金，分段注入專屬水庫，自然鎖定終身被動收入。", image_url: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80", options: []}
+                    { headline: "🟡 概念明白，想再睇下適合自己的具體預算", subtext: "希望能根據自己的實際收入量身微調。" }
+                ]}
             ]
         };
-
 
         const colVisibility = { annuity: true, accum: true, asset: true, interest: false };
         function formatNumber(v) { return new Intl.NumberFormat('en-US', {maximumFractionDigits: 0}).format(v || 0); }
         function parseFormattedNumber(s) { return parseFloat(String(s).replace(/,/g, '')) || 0; }
 
+        function buildAndRenderFlow() {
+            const currentFlow = allScenarioDatabase[currentActiveScenario] || allScenarioDatabase['unplanned'] || [];
+            const zoneA = currentFlow.filter(c => c.zone === 'zone_a');
+            const zoneB = currentFlow.filter(c => c.zone === 'zone_b');
+            const zoneC = currentFlow.filter(c => c.zone === 'zone_c');
 
-        function renderFrontendCards() {
-            const currentFlow = allScenarioDatabase[currentActiveScenario] || allScenarioDatabase['unplanned'];
-            currentFlow.forEach(card => {
-                const titleEl = document.getElementById(`disp-title-${card.step_num}`);
-                const subEl = document.getElementById(`disp-sub-${card.step_num}`);
-                const optZone = document.getElementById(`disp-options-${card.step_num}`);
-                const imgEl = document.getElementById(`disp-img-${card.step_num}`);
-                
-                if (titleEl) titleEl.textContent = card.title;
-                if (subEl) subEl.textContent = card.subtitle;
-                if (imgEl) {
-                    if (card.image_url) { imgEl.src = card.image_url; imgEl.style.display = 'block'; }
-                    else { imgEl.style.display = 'none'; }
-                }
-                
-                if (card.step_num === 10 && card.options && card.options.length >= 3) {
-                    for (let i = 1; i <= 3; i++) {
-                        const t = document.getElementById(`pool-title-${i}`);
-                        const d = document.getElementById(`pool-desc-${i}`);
-                        if (t && card.options[i-1]) t.textContent = card.options[i-1].headline;
-                        if (d && card.options[i-1]) d.textContent = card.options[i-1].subtext;
-                    }
-                }
+            activeFullFlowSteps = [
+                ...zoneA.map(c => ({ type: 'dynamic', data: c })),
+                { type: 'fixed', id: 'fixed-page-a', name: '認知差距' },
+                ...zoneB.map(c => ({ type: 'dynamic', data: c })),
+                { type: 'fixed', id: 'fixed-page-b', name: '時光複利' },
+                ...zoneC.map(c => ({ type: 'dynamic', data: c })),
+                { type: 'fixed', id: 'fixed-page-c', name: '人生藍圖' },
+                { type: 'fixed', id: 'page-promo', name: '優惠計算' }
+            ];
 
+            const mainContainer = document.getElementById('app-main-flow');
+            mainContainer.innerHTML = '';
 
-                if (optZone && card.options && card.options.length > 0 && card.step_num !== 10) {
-                    optZone.innerHTML = '';
-                    card.options.forEach(opt => {
-                        const div = document.createElement('div');
-                        div.className = 'option-card-guided';
-                        div.onclick = function() { selectOption(card.step_num, opt.headline, opt.subtext, this); };
-                        div.innerHTML = `
-                            <div class="option-content">
-                                <div class="option-headline">${opt.headline}</div>
-                                <div class="option-subtext">${opt.subtext || ''}</div>
+            activeFullFlowSteps.forEach((step, index) => {
+                const stepEl = document.createElement('div');
+                stepEl.className = `step-page ${index === 0 ? 'active' : ''}`;
+                stepEl.id = `flow-step-${index}`;
+
+                if (step.type === 'dynamic') {
+                    const c = step.data;
+                    let optionsHtml = '';
+                    if (c.options && c.options.length > 0) {
+                        optionsHtml = `<div class="options-group">` + c.options.map((opt, oIdx) => `
+                            <div class="option-card-guided ${answers[c.id] === opt.headline ? 'selected' : ''}" onclick="selectDynamicOption('${c.id}', '${opt.headline.replace(/'/g, "\\'")}', ${index})">
+                                <div class="option-content">
+                                    <div class="option-headline">${opt.headline}</div>
+                                    <div class="option-subtext">${opt.subtext || ''}</div>
+                                </div>
+                                <div class="option-select-radio"></div>
                             </div>
-                            <div class="option-select-radio"></div>
-                        `;
-                        optZone.appendChild(div);
-                    });
+                        `).join('') + `</div>`;
+                    }
+
+                    stepEl.innerHTML = `
+                        <div class="content-card">
+                            <h2 class="question-title">${c.title}</h2>
+                            <p class="question-hint">${c.subtitle}</p>
+                            ${optionsHtml}
+                            ${c.image_url ? `<div class="page-bottom-img-zone"><img class="page-bottom-img" src="${c.image_url}"></div>` : ''}
+                            <div class="action-row">
+                                ${index > 0 ? `<button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 上一步</button>` : ''}
+                                <button class="nav-btn next" id="btn-next-${index}" ${c.options && c.options.length > 0 && !answers[c.id] ? 'disabled' : ''} onclick="navigateStep(${index + 1})">下一步 →</button>
+                            </div>
+                        </div>
+                    `;
+                } else if (step.id === 'fixed-page-a') {
+                    const sc = scenariosDB[currentActiveScenario] || scenariosDB['unplanned'];
+                    stepEl.innerHTML = `
+                        <div class="content-card">
+                            <h2 class="question-title">🔍 認知差距與真相對比</h2>
+                            <div class="gap-container">
+                                <div class="gap-tag">⚡ ${sc.gap_title || '延遲啟動的代價'}</div>
+                                <h3 style="font-size:1.6rem; color:var(--brand-primary); margin-bottom:8px;">落差幅度：${sc.gap_percentage}</h3>
+                                <p style="font-size:0.9rem; color:var(--text-sub);">${sc.takeaway_summary}</p>
+                                <div class="gap-comparison-grid">
+                                    <div class="gap-box">
+                                        <h4 style="color:#64748b; font-size:0.85rem; margin-bottom:4px;">多數人以為：</h4>
+                                        <p style="font-size:0.95rem; font-weight:700;">${sc.intuitive_belief}</p>
+                                    </div>
+                                    <div class="gap-box" style="border-color:#bbf7d0; background:#f0fdf4;">
+                                        <h4 style="color:#059669; font-size:0.85rem; margin-bottom:4px;">客觀現實真相：</h4>
+                                        <p style="font-size:0.95rem; font-weight:700; color:#166534;">${sc.objective_reality}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="action-row">
+                                <button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 上一步</button>
+                                <button class="nav-btn next" onclick="navigateStep(${index + 1})">進入下一階段探索 →</button>
+                            </div>
+                        </div>
+                    `;
+                } else if (step.id === 'fixed-page-b') {
+                    stepEl.innerHTML = `
+                        <div class="content-card">
+                            <h2 class="question-title">🌱 時光複利：小金額創造大效果</h2>
+                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:16px;">
+                                <div>
+                                    <label style="font-size:0.75rem; font-weight:bold; color:var(--text-sub);">開始歲數</label>
+                                    <input type="number" id="start-age" value="30" onchange="calculateAndDisplay()" style="width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:8px; text-align:center; font-weight:bold;">
+                                </div>
+                                <div>
+                                    <label style="font-size:0.75rem; font-weight:bold; color:var(--brand-primary);">🌱 播種年期</label>
+                                    <select id="sow-term-select" onchange="updateSowTerm()" style="width:100%; padding:8px; border:1.5px solid var(--brand-accent); border-radius:8px; text-align:center; font-weight:bold; color:var(--brand-primary); background:#fff;">
+                                        <option value="5" selected>🌱 5 年播種期 (基礎奠基)</option>
+                                        <option value="10">💧 10 年播種期 (持續灌溉)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="calc-jar-card" id="group-plan1" style="border-top:3px solid var(--plan1-color);">
+                                <h4 id="disp-tree-title-1" style="color:var(--plan1-color); margin-bottom:4px; font-size:0.95rem;">🌱 一號種子水庫 (第 1 - 5 年)</h4>
+                                <div class="calc-grid-5yr">
+                                    <div class="calc-input-group"><label>第1年 (<span class="age-y1">30</span>歲)</label><input type="text" id="plan1-contribution" value="40,000"></div>
+                                    <div class="calc-input-group"><label>第2年 (<span class="age-y2">31</span>歲)</label><input type="text" id="plan1-y2" value="40,000" readonly class="readonly"></div>
+                                    <div class="calc-input-group"><label>第3年 (<span class="age-y3">32</span>歲)</label><input type="text" id="plan1-y3" value="40,000" readonly class="readonly"></div>
+                                    <div class="calc-input-group"><label>第4年 (<span class="age-y4">33</span>歲)</label><input type="text" id="plan1-y4" value="40,000" readonly class="readonly"></div>
+                                    <div class="calc-input-group"><label>第5年 (<span class="age-y5">34</span>歲)</label><input type="text" id="plan1-y5" value="40,000" readonly class="readonly"></div>
+                                </div>
+                            </div>
+
+                            <div class="dots-toggle-bar-pure">
+                                <div class="pure-color-dot dot-blue-bg" id="dot-btn-annuity" onclick="toggleColumn('annuity')" title="被動收入"></div>
+                                <div class="pure-color-dot dot-green-bg" id="dot-btn-accum" onclick="toggleColumn('accum')" title="累積已領"></div>
+                                <div class="pure-color-dot dot-purple-bg" id="dot-btn-asset" onclick="toggleColumn('asset')" title="大樹收成"></div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="clean-table">
+                                    <thead id="results-table-head"></thead>
+                                    <tbody id="results-table-body"></tbody>
+                                </table>
+                            </div>
+                            <div class="action-row">
+                                <button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 上一步</button>
+                                <button class="nav-btn next" onclick="navigateStep(${index + 1})">進入第三階段 →</button>
+                            </div>
+                        </div>
+                    `;
+                } else if (step.id === 'fixed-page-c') {
+                    stepEl.innerHTML = `
+                        <div class="content-card">
+                            <h2 class="question-title">🌱 你的專屬生活藍圖筆記</h2>
+                            <div class="blueprint-dual-grid">
+                                <div class="blueprint-left-box">
+                                    <h4 style="font-size:1.05rem; font-weight:800; margin-bottom:12px; color:#fff; border-bottom:1px solid rgba(255,255,255,0.15); padding-bottom:6px;">📋 你的生活初衷</h4>
+                                    <div class="blueprint-entry-item"><div class="blueprint-entry-label">探索偏好</div><div class="blueprint-entry-val" id="res-choice-1">${answers['step_1'] || '已鎖定'}</div></div>
+                                    <div class="blueprint-entry-item"><div class="blueprint-entry-label">核心方向</div><div class="blueprint-entry-val" id="res-choice-2">${answers['step_2'] || '已鎖定'}</div></div>
+                                </div>
+                                <div class="blueprint-right-box">
+                                    <h4 style="font-size:1rem; font-weight:800; color:var(--state-success); margin-bottom:10px;">💡 替代方案：無痛縮減落差</h4>
+                                    <img id="blueprint-uploaded-img" class="blueprint-img-uploaded-view" src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80">
+                                    <div style="background:#f0fdf4; border-radius:10px; padding:10px; font-size:0.85rem; color:#166534;">
+                                        <strong>完全不影響現有生活享受：</strong><br>每月不知不覺流走的少許資金，分段注入專屬水庫，自然鎖定終身被動收入。
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="action-row">
+                                <button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 上一步</button>
+                                <button class="nav-btn next" onclick="navigateStep(${index + 1})">🎁 查看專屬保費優惠 →</button>
+                            </div>
+                        </div>
+                    `;
+                } else if (step.id === 'page-promo') {
+                    stepEl.innerHTML = `
+                        <div class="content-card">
+                            <h2 class="question-title">🎁 專屬保費優惠計算</h2>
+                            <p class="question-hint">度身訂造最慳錢嘅投保策略！</p>
+                            <div class="promo-split-container">
+                                <div class="promo-left-col">
+                                    <div class="promo-card" style="background:#f8fafc;">
+                                        <label style="font-size:0.75rem; font-weight:bold;">每年保費 ($)</label>
+                                        <input type="text" id="promo-annual-premium" value="100,000" style="width:100%; padding:8px; font-weight:bold; text-align:center;" oninput="calculatePromo()">
+                                    </div>
+                                </div>
+                                <div class="promo-right-col">
+                                    <div class="promo-result-box">
+                                        <h4>總共慳咗達：</h4>
+                                        <div class="big-savings" id="promo-total-savings">$0</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="action-row">
+                                <button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 返回藍圖</button>
+                                <button class="nav-btn next" onclick="alert('✅ 規劃全數完成！')">✅ 完成規劃</button>
+                            </div>
+                        </div>
+                    `;
                 }
+                mainContainer.appendChild(stepEl);
             });
 
+            setupJarAutoFill('plan1');
+            calculateAndDisplay();
+            updateProgressBar();
+        }
 
-            const jt = allJarTexts[currentActiveScenario] || allJarTexts['unplanned'];
-            if (jt) {
-                for (let j = 1; j <= 4; j++) {
-                    const tEl = document.getElementById(`disp-tree-title-${j}`);
-                    const dEl = document.getElementById(`disp-tree-desc-${j}`);
-                    if (tEl && jt[`tree_title_${j}`]) tEl.textContent = jt[`tree_title_${j}`];
-                    if (dEl && jt[`tree_desc_${j}`]) dEl.textContent = jt[`tree_desc_${j}`];
+        function navigateStep(index) {
+            if (index < 0 || index >= activeFullFlowSteps.length) return;
+            document.querySelectorAll('.step-page').forEach(p => p.classList.remove('active'));
+            const target = document.getElementById(`flow-step-${index}`);
+            if (target) target.classList.add('active');
+            currentStepIndex = index;
+            updateProgressBar();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (activeFullFlowSteps[index].id === 'fixed-page-b') calculateAndDisplay();
+            if (activeFullFlowSteps[index].id === 'page-promo') calculatePromo();
+        }
+
+        function selectDynamicOption(stepId, headline, index) {
+            answers[stepId] = headline;
+            const stepEl = document.getElementById(`flow-step-${index}`);
+            if (stepEl) {
+                stepEl.querySelectorAll('.option-card-guided').forEach(c => c.classList.remove('selected'));
+                event.currentTarget.classList.add('selected');
+                const btnNext = document.getElementById(`btn-next-${index}`);
+                if (btnNext) btnNext.disabled = false;
+            }
+        }
+
+        function updateProgressBar() {
+            const total = activeFullFlowSteps.length;
+            const pct = Math.round(((currentStepIndex + 1) / total) * 100);
+            document.getElementById('progress-fill').style.width = `${pct}%`;
+        }
+
+        function renderAdminCards() {
+            const currentList = allScenarioDatabase[currentActiveScenario] || [];
+            ['zone_a', 'zone_b', 'zone_c'].forEach(zKey => {
+                const zoneContainer = document.getElementById(`admin-cards-render-${zKey.replace('_', '-')}`);
+                zoneContainer.innerHTML = '';
+                const zoneCards = currentList.filter(c => c.zone === zKey);
+
+                zoneCards.forEach((card, idx) => {
+                    const globalIdx = currentList.findIndex(c => c.id === card.id);
+                    const el = document.createElement('div');
+                    el.className = 'admin-card-row';
+                    el.innerHTML = `
+                        <div class="admin-card-head">
+                            <strong>頁面：${card.title.substring(0, 15)}...</strong>
+                            <div>
+                                <button class="step-ctrl-btn" onclick="moveZoneCard('${card.id}', -1)">⬆</button>
+                                <button class="step-ctrl-btn" onclick="moveZoneCard('${card.id}', 1)">⬇</button>
+                                <button class="del-opt-btn" onclick="deleteCard('${card.id}')">🗑️ 刪除</button>
+                            </div>
+                        </div>
+                        <input type="text" class="pink-edit-input" value="${card.title}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].title = this.value" placeholder="標題">
+                        <input type="text" class="pink-edit-input" value="${card.subtitle}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].subtitle = this.value" placeholder="副標題">
+                    `;
+                    zoneContainer.appendChild(el);
+                });
+            });
+        }
+
+        function addNewPageToZone(zoneKey) {
+            if (!allScenarioDatabase[currentActiveScenario]) allScenarioDatabase[currentActiveScenario] = [];
+            allScenarioDatabase[currentActiveScenario].push({
+                id: `step_${Date.now()}`,
+                zone: zoneKey,
+                step_num: allScenarioDatabase[currentActiveScenario].length + 1,
+                title: "新動態頁面標題",
+                subtitle: "請輸入探索引導副標題",
+                image_url: "",
+                options: [{ headline: "選項 1", subtext: "說明文字" }]
+            });
+            renderAdminCards();
+            buildAndRenderFlow();
+        }
+
+        function deleteCard(cardId) {
+            if (confirm("確定刪除此頁面？")) {
+                allScenarioDatabase[currentActiveScenario] = allScenarioDatabase[currentActiveScenario].filter(c => c.id !== cardId);
+                renderAdminCards();
+                buildAndRenderFlow();
+            }
+        }
+
+        function moveZoneCard(cardId, dir) {
+            const list = allScenarioDatabase[currentActiveScenario];
+            const idx = list.findIndex(c => c.id === cardId);
+            if (idx < 0) return;
+            const targetIdx = idx + dir;
+            if (targetIdx < 0 || targetIdx >= list.length) return;
+            const temp = list[idx];
+            list[idx] = list[targetIdx];
+            list[targetIdx] = temp;
+            renderAdminCards();
+            buildAndRenderFlow();
+        }
+
+        async function syncAllToGoogleSheet() {
+            const loadingMask = document.getElementById('sync-loading-mask');
+            loadingMask.style.display = 'flex';
+            
+            GAS_API_URL = document.getElementById('admin-gas-url-input').value || GAS_API_URL;
+            cloudAdminPassword = document.getElementById('admin-password-input').value || cloudAdminPassword;
+            currentSystemVersion = document.getElementById('admin-version-input').value || currentSystemVersion;
+
+            try {
+                const allSheetRows = [];
+                Object.keys(allScenarioDatabase).forEach(scenKey => {
+                    allScenarioDatabase[scenKey].forEach((c, idx) => {
+                        allSheetRows.push({
+                            scenario_id: scenKey,
+                            zone: c.zone || "zone_a",
+                            step_id: c.id,
+                            step_num: idx + 1,
+                            title: c.title,
+                            subtitle: c.subtitle,
+                            image_url: c.image_url || "",
+                            options_json: JSON.stringify(c.options || []),
+                            order_index: idx + 1
+                        });
+                    });
+                });
+
+                await fetch(GAS_API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({
+                        action: "sync_all",
+                        cards: allSheetRows,
+                        jar_texts: allJarTexts,
+                        admin_password: cloudAdminPassword,
+                        system_version: currentSystemVersion,
+                        sheet_mappings: sheetMappings
+                    })
+                });
+
+                localStorage.setItem('ava_scenario_database', JSON.stringify(allScenarioDatabase));
+                localStorage.setItem('ava_jar_texts', JSON.stringify(allJarTexts));
+                localStorage.setItem('ava_sheet_mappings', JSON.stringify(sheetMappings));
+                
+                buildAndRenderFlow();
+                loadingMask.style.display = 'none';
+                alert(`✅ 雲端同步完成！跨裝置已實時更新！(Version: ${currentSystemVersion})`);
+                closeAdminDashboard();
+            } catch (e) {
+                loadingMask.style.display = 'none';
+                alert("❌ 上傳失敗，請檢查 GAS 權限。");
+            }
+        }
+
+        async function fetchCloudDataFromGAS() {
+            try {
+                const resp = await fetch(GAS_API_URL);
+                const json = await resp.json();
+                if (json.admin_password) cloudAdminPassword = String(json.admin_password);
+                if (json.multipliers) globalReturnMultipliers = json.multipliers;
+                if (json.sheet_mappings) sheetMappings = json.sheet_mappings;
+                if (json.scenarios) scenariosDB = json.scenarios;
+                if (json.cards && json.cards.length > 0) {
+                    const cloudDB = {};
+                    json.cards.forEach(row => {
+                        const sId = row.scenario_id || "unplanned";
+                        if (!cloudDB[sId]) cloudDB[sId] = [];
+                        cloudDB[sId].push({
+                            id: row.step_id,
+                            zone: row.zone || "zone_a",
+                            step_num: Number(row.step_num) || 1,
+                            title: row.title,
+                            subtitle: row.subtitle,
+                            image_url: row.image_url || "",
+                            options: typeof row.options_json === 'string' ? JSON.parse(row.options_json || '[]') : row.options_json
+                        });
+                    });
+                    allScenarioDatabase = cloudDB;
                 }
-                calculateAndDisplay();
+                if (json.jar_texts) allJarTexts = json.jar_texts;
+                buildAndRenderFlow();
+            } catch (e) {
+                console.log("連線雲端失敗，以預設配置加載");
+                buildAndRenderFlow();
             }
         }
-
-
-        function openScenarioPopup() { document.getElementById('scenario-popup-mask').style.display = 'flex'; }
-        function closeScenarioPopup() { document.getElementById('scenario-popup-mask').style.display = 'none'; }
-        function openJumpPopup() { document.getElementById('jump-popup-mask').style.display = 'flex'; }
-        function closeJumpPopup() { document.getElementById('jump-popup-mask').style.display = 'none'; }
-
-
-        function applyScenarioPreset(presetKey) {
-            currentActiveScenario = presetKey;
-            if (!allScenarioDatabase[presetKey]) {
-                allScenarioDatabase[presetKey] = JSON.parse(JSON.stringify(allScenarioDatabase['unplanned']));
-            }
-            if (!allJarTexts[presetKey]) {
-                allJarTexts[presetKey] = JSON.parse(JSON.stringify(allJarTexts['unplanned']));
-            }
-            renderFrontendCards();
-            closeScenarioPopup();
-            goToStep(1);
-        }
-
-
-        function jumpDirectStep(step) {
-            closeJumpPopup();
-            goToStep(step);
-        }
-
 
         function promptAdminLogin() {
-            if (!cloudAdminPassword) {
-                alert("⚠️ 系統正連線至 Google Sheet 取得最新管理員密碼，請稍候重試。");
-                return;
-            }
             const pwd = prompt("請輸入管理員密碼：");
             if (pwd === cloudAdminPassword) {
                 isAdminRole = true;
@@ -1059,38 +777,47 @@
                 document.getElementById('btn-sync-gsheet').style.display = 'block';
                 document.getElementById('btn-reset-user').style.display = 'none';
             } else if (pwd !== null) {
-                alert("❌ 密碼錯誤！請依 Google Sheet 系統參數設定為準。");
+                alert("❌ 密碼錯誤！");
             }
         }
 
-
         function openUserDashboard() {
             isAdminRole = false;
-            openAdminDashboardModal("⚙️ 使用者設定 (儲存至本機)");
+            openAdminDashboardModal("⚙️ 使用者設定 (本機)");
             document.querySelectorAll('.admin-only-tab').forEach(el => el.style.display = 'none');
             document.getElementById('btn-sync-gsheet').style.display = 'none';
             document.getElementById('btn-reset-user').style.display = 'block';
         }
 
-
-        function openAdminDashboardModal(titleText) {
-            document.getElementById('admin-modal-title').textContent = titleText;
-            document.getElementById('scenario-flow-selector').value = currentActiveScenario;
-            document.getElementById('scenario-jar-selector').value = currentActiveScenario;
-            
+        function openAdminDashboardModal(title) {
+            document.getElementById('admin-modal-title').textContent = title;
             document.getElementById('admin-password-input').value = cloudAdminPassword;
             document.getElementById('admin-version-input').value = currentSystemVersion;
             document.getElementById('admin-gas-url-input').value = GAS_API_URL;
-            
             renderAdminCards();
-            loadJarTextsToEditor();
-            renderMappingTable();
-            
             switchAdminTab('flow');
             document.getElementById('admin-modal-mask').style.display = 'flex';
         }
-        function closeAdminDashboard() { document.getElementById('admin-modal-mask').style.display = 'none'; }
 
+        function closeAdminDashboard() { document.getElementById('admin-modal-mask').style.display = 'none'; }
+        function openScenarioPopup() { document.getElementById('scenario-popup-mask').style.display = 'flex'; }
+        function closeScenarioPopup() { document.getElementById('scenario-popup-mask').style.display = 'none'; }
+        function openJumpPopup() { document.getElementById('jump-popup-mask').style.display = 'flex'; }
+        function closeJumpPopup() { document.getElementById('jump-popup-mask').style.display = 'none'; }
+
+        function applyScenarioPreset(key) {
+            currentActiveScenario = key;
+            if (!allScenarioDatabase[key]) allScenarioDatabase[key] = JSON.parse(JSON.stringify(allScenarioDatabase['unplanned'] || []));
+            buildAndRenderFlow();
+            closeScenarioPopup();
+            navigateStep(0);
+        }
+
+        function jumpDirectStep(stepId) {
+            closeJumpPopup();
+            const idx = activeFullFlowSteps.findIndex(s => s.id === stepId);
+            if (idx >= 0) navigateStep(idx);
+        }
 
         function switchAdminTab(tabName) {
             document.querySelectorAll('.admin-nav-btn').forEach(b => b.classList.remove('active'));
@@ -1102,400 +829,26 @@
             if (activeBtn) activeBtn.classList.add('active');
         }
 
-
-        function switchScenarioFlowEditor(scenarioKey) {
-            currentActiveScenario = scenarioKey;
-            if (!allScenarioDatabase[scenarioKey]) {
-                allScenarioDatabase[scenarioKey] = JSON.parse(JSON.stringify(allScenarioDatabase['unplanned']));
-            }
+        function switchScenarioFlowEditor(key) {
+            currentActiveScenario = key;
             renderAdminCards();
         }
-
-
-        function renderAdminCards() {
-            const zone = document.getElementById('admin-cards-render-zone');
-            zone.innerHTML = '';
-            const activeList = allScenarioDatabase[currentActiveScenario] || allScenarioDatabase['unplanned'];
-            activeList.forEach((card, idx) => {
-                const stepDisplayName = stepNameMap[card.step_num] || `步驟 ${card.step_num}`;
-                const cardEl = document.createElement('div');
-                cardEl.className = 'admin-card-row';
-                cardEl.innerHTML = `
-                    <div class="admin-card-head">
-                        <div>
-                            <span style="font-weight:bold; color:var(--brand-primary); font-size:0.95rem;">${stepDisplayName}</span>
-                            <button class="step-ctrl-btn" onclick="moveCardStep(${idx}, -1)" ${idx===0?'disabled':''}>⬆ 上移</button>
-                            <button class="step-ctrl-btn" onclick="moveCardStep(${idx}, 1)" ${idx===activeList.length-1?'disabled':''}>⬇ 下移</button>
-                        </div>
-                        <button class="del-opt-btn" onclick="deleteCardStep(${idx})">🗑️ 刪除頁面</button>
-                    </div>
-                    <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">主標題：</label>
-                    <input type="text" class="pink-edit-input" value="${card.title}" oninput="allScenarioDatabase['${currentActiveScenario}'][${idx}].title = this.value">
-                    <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">副標題說明：</label>
-                    <input type="text" class="pink-edit-input" value="${card.subtitle}" oninput="allScenarioDatabase['${currentActiveScenario}'][${idx}].subtitle = this.value">
-                    
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">圖片網址 (imageUrl)：</label>
-                        <div>
-                            <button class="step-ctrl-btn" onclick="triggerCardUpload(${idx})">📤 上載圖片</button>
-                            <button class="del-opt-btn" onclick="deleteCardImage(${idx})" style="padding:3px 6px;">🗑️ 刪除圖片</button>
-                        </div>
-                    </div>
-                    <input type="text" id="card-img-url-${idx}" class="pink-edit-input" value="${card.image_url || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${idx}].image_url = this.value">
-                    
-                    <div class="admin-options-container">
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                            <span style="font-size:0.75rem; font-weight:bold; color:#475569;">選項清單：</span>
-                            <button class="step-ctrl-btn" onclick="addCardOption(${idx})">+ 新增選項</button>
-                        </div>
-                        <div id="opts-edit-zone-${idx}"></div>
-                    </div>
-                `;
-                zone.appendChild(cardEl);
-
-
-                const optZone = cardEl.querySelector(`#opts-edit-zone-${idx}`);
-                if (card.options) {
-                    card.options.forEach((opt, optIdx) => {
-                        const optRow = document.createElement('div');
-                        optRow.className = 'option-row-edit';
-                        optRow.innerHTML = `
-                            <input type="text" class="pink-edit-input" style="margin:0; flex:1;" value="${opt.headline}" oninput="allScenarioDatabase['${currentActiveScenario}'][${idx}].options[${optIdx}].headline = this.value" placeholder="標題">
-                            <input type="text" class="pink-edit-input" style="margin:0; flex:1.5;" value="${opt.subtext || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${idx}].options[${optIdx}].subtext = this.value" placeholder="說明文字">
-                            <button class="del-opt-btn" onclick="deleteCardOption(${idx}, ${optIdx})">✕</button>
-                        `;
-                        optZone.appendChild(optRow);
-                    });
-                }
-            });
-        }
-
-
-        function moveCardStep(idx, direction) {
-            const list = allScenarioDatabase[currentActiveScenario];
-            const targetIdx = idx + direction;
-            if (targetIdx < 0 || targetIdx >= list.length) return;
-            const temp = list[idx];
-            list[idx] = list[targetIdx];
-            list[targetIdx] = temp;
-            renderAdminCards();
-        }
-
-
-        function deleteCardStep(idx) {
-            if (confirm("確定刪除此步驟頁面？")) {
-                allScenarioDatabase[currentActiveScenario].splice(idx, 1);
-                renderAdminCards();
-            }
-        }
-
-
-        function addNewPageCard() {
-            const list = allScenarioDatabase[currentActiveScenario];
-            const nextStep = list.length + 1;
-            list.push({ id: `step_${Date.now()}`, step_num: nextStep, title: "新步驟標題", subtitle: "新副標題說明", image_url: "", options: [{ headline: "新選項 1", subtext: "選項說明" }] });
-            renderAdminCards();
-        }
-
-
-        function addCardOption(cardIdx) {
-            const card = allScenarioDatabase[currentActiveScenario][cardIdx];
-            if (!card.options) card.options = [];
-            card.options.push({ headline: "新選項", subtext: "說明" });
-            renderAdminCards();
-        }
-
-
-        function deleteCardOption(cardIdx, optIdx) {
-            allScenarioDatabase[currentActiveScenario][cardIdx].options.splice(optIdx, 1);
-            renderAdminCards();
-        }
-
-
-        function deleteCardImage(idx) {
-            allScenarioDatabase[currentActiveScenario][idx].image_url = "";
-            document.getElementById(`card-img-url-${idx}`).value = "";
-            renderAdminCards();
-            renderFrontendCards();
-        }
-
-
-        function triggerCardUpload(idx) {
-            const input = document.getElementById('firebase-file-input');
-            input.onchange = async () => {
-                if (!input.files || input.files.length === 0) return;
-                const file = input.files[0];
-                const fileRef = window.storageRef(window.firebaseStorage, `journey_images/${Date.now()}_${file.name}`);
-                await window.uploadBytes(fileRef, file);
-                const url = await window.getDownloadURL(fileRef);
-                allScenarioDatabase[currentActiveScenario][idx].image_url = url;
-                document.getElementById(`card-img-url-${idx}`).value = url;
-                renderAdminCards();
-                renderFrontendCards();
-            };
-            input.click();
-        }
-
-
-        function switchScenarioJarEditor(scenarioKey) {
-            saveJarTextsFromEditor();
-            currentActiveScenario = scenarioKey;
-            loadJarTextsToEditor();
-        }
-
-
-        function loadJarTextsToEditor() {
-            const jt = allJarTexts[currentActiveScenario] || allJarTexts['unplanned'];
-            if (!jt) return;
-            for (let j = 1; j <= 4; j++) {
-                document.getElementById(`admin-jt-title-${j}`).value = jt[`tree_title_${j}`] || "";
-                document.getElementById(`admin-jt-desc-${j}`).value = jt[`tree_desc_${j}`] || "";
-            }
-            document.getElementById(`admin-th-year`).value = jt.th_year || "年份 (歲數)";
-            document.getElementById(`admin-th-reserve`).value = jt.th_reserve || "累計儲備";
-            document.getElementById(`admin-th-income`).value = jt.th_income || "被動收入";
-            document.getElementById(`admin-th-accum`).value = jt.th_accum || "累積已領";
-            document.getElementById(`admin-th-asset`).value = jt.th_asset || "大樹收成";
-            document.getElementById(`admin-th-interest`).value = jt.th_interest || "年化百分比回報";
-        }
-
-
-        function saveJarTextsFromEditor() {
-            const scId = document.getElementById('scenario-jar-selector').value || currentActiveScenario;
-            if (!allJarTexts[scId]) allJarTexts[scId] = { scenario_name: scId };
-            for (let j = 1; j <= 4; j++) {
-                allJarTexts[scId][`tree_title_${j}`] = document.getElementById(`admin-jt-title-${j}`).value;
-                allJarTexts[scId][`tree_desc_${j}`] = document.getElementById(`admin-jt-desc-${j}`).value;
-            }
-            allJarTexts[scId].th_year = document.getElementById(`admin-th-year`).value;
-            allJarTexts[scId].th_reserve = document.getElementById(`admin-th-reserve`).value;
-            allJarTexts[scId].th_income = document.getElementById(`admin-th-income`).value;
-            allJarTexts[scId].th_accum = document.getElementById(`admin-th-accum`).value;
-            allJarTexts[scId].th_asset = document.getElementById(`admin-th-asset`).value;
-            allJarTexts[scId].th_interest = document.getElementById(`admin-th-interest`).value;
-        }
-
-
-        function triggerBlueprintImageUpload() {
-            const input = document.getElementById('firebase-file-input');
-            input.onchange = async () => {
-                if (!input.files || input.files.length === 0) return;
-                const file = input.files[0];
-                const fileRef = window.storageRef(window.firebaseStorage, `blueprint_images/${Date.now()}_${file.name}`);
-                await window.uploadBytes(fileRef, file);
-                const url = await window.getDownloadURL(fileRef);
-                updateBlueprintImageSrc(url);
-                document.getElementById('admin-blueprint-img-url').value = url;
-            };
-            input.click();
-        }
-        function updateBlueprintImageSrc(url) {
-            const imgEl = document.getElementById('blueprint-uploaded-img');
-            if (imgEl) imgEl.src = url || "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80";
-            localStorage.setItem('ava_blueprint_custom_img', url);
-            localStorage.setItem('ava_user_has_customized', 'true');
-        }
-        function deleteBlueprintImage() {
-            updateBlueprintImageSrc("https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80");
-            document.getElementById('admin-blueprint-img-url').value = "";
-        }
-        function updateBlueprintSummaryText(text) {
-            const el = document.getElementById('disp-sub-14');
-            if (el) el.innerHTML = `<strong>完全不影響現有生活享受：</strong><br>${text}`;
-            localStorage.setItem('ava_blueprint_custom_desc', text);
-            localStorage.setItem('ava_user_has_customized', 'true');
-        }
-
-
-        function renderMappingTable() {
-            const zone = document.getElementById('admin-mappings-zone');
-            if (!zone) return;
-            zone.innerHTML = '';
-            sheetMappings.forEach((m, idx) => {
-                const row = document.createElement('div');
-                row.className = 'option-row-edit';
-                row.innerHTML = `
-                    <input type="text" class="pink-edit-input" style="flex:1;" value="${m.code}" readonly>
-                    <input type="text" class="pink-edit-input" style="flex:1;" value="${m.sheet_name}" oninput="sheetMappings[${idx}].sheet_name = this.value" placeholder="分頁名稱">
-                    <input type="text" class="pink-edit-input" style="flex:1.5;" value="${m.display_name}" oninput="sheetMappings[${idx}].display_name = this.value" placeholder="UI顯示名稱">
-                `;
-                zone.appendChild(row);
-            });
-        }
-
 
         function saveToLocalStorageOnly() {
-            saveJarTextsFromEditor();
             localStorage.setItem('ava_scenario_database', JSON.stringify(allScenarioDatabase));
-            localStorage.setItem('ava_jar_texts', JSON.stringify(allJarTexts));
-            localStorage.setItem('ava_sheet_mappings', JSON.stringify(sheetMappings));
-            localStorage.setItem('ava_user_has_customized', 'true');
-            renderFrontendCards();
-            alert("✅ 已成功保存專屬設定至本機！(受到保護，管理者更新時不會被覆蓋)");
+            alert("✅ 已成功保存至本機！");
+            buildAndRenderFlow();
             closeAdminDashboard();
         }
 
-
         function resetToTeamDefault() {
-            if (confirm("確定清除個人自訂資料，並還原至團隊官方最新預設版本？")) {
-                localStorage.removeItem('ava_scenario_database');
-                localStorage.removeItem('ava_jar_texts');
-                localStorage.removeItem('ava_sheet_mappings');
-                localStorage.removeItem('ava_blueprint_custom_img');
-                localStorage.removeItem('ava_blueprint_custom_desc');
-                localStorage.removeItem('ava_user_has_customized');
-                fetchCloudDataFromGAS(true);
-                alert("✅ 已成功還原為團隊最新官方預設！");
+            if (confirm("確定清除自訂資料並還原至雲端官方預設？")) {
+                localStorage.clear();
+                fetchCloudDataFromGAS();
+                alert("✅ 已還原為團隊預設！");
                 closeAdminDashboard();
             }
         }
-
-
-        async function syncAllToGoogleSheet() {
-            saveJarTextsFromEditor();
-            const loadingMask = document.getElementById('sync-loading-mask');
-            loadingMask.style.display = 'flex';
-            
-            GAS_API_URL = document.getElementById('admin-gas-url-input').value || GAS_API_URL;
-            cloudAdminPassword = document.getElementById('admin-password-input').value || cloudAdminPassword;
-            currentSystemVersion = document.getElementById('admin-version-input').value || currentSystemVersion;
-            
-            try {
-                const allSheetRows = [];
-                Object.keys(allScenarioDatabase).forEach(scenKey => {
-                    allScenarioDatabase[scenKey].forEach((c, idx) => {
-                        allSheetRows.push({
-                            scenario_id: scenKey, step_id: c.id, step_num: c.step_num, title: c.title,
-                            subtitle: c.subtitle, image_url: c.image_url || "",
-                            options_json: JSON.stringify(c.options || []), order_index: idx + 1
-                        });
-                    });
-                });
-
-
-                await fetch(GAS_API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({
-                        action: "sync_all", cards: allSheetRows, jar_texts: allJarTexts,
-                        admin_password: cloudAdminPassword, system_version: currentSystemVersion,
-                        sheet_mappings: sheetMappings
-                    })
-                });
-
-
-                localStorage.setItem('ava_scenario_database', JSON.stringify(allScenarioDatabase));
-                localStorage.setItem('ava_jar_texts', JSON.stringify(allJarTexts));
-                localStorage.setItem('ava_sheet_mappings', JSON.stringify(sheetMappings));
-                localStorage.setItem('ava_last_synced_version', currentSystemVersion);
-                
-                renderFrontendCards();
-                loadingMask.style.display = 'none';
-                alert(`✅ 上傳成功！已同步至 Google Sheet！(Version: ${currentSystemVersion})`);
-                closeAdminDashboard();
-            } catch (err) {
-                loadingMask.style.display = 'none';
-                alert("❌ 上傳失敗，請檢查網路連線或 GAS 權限。");
-            }
-        }
-
-
-        async function fetchCloudDataFromGAS(forceReset = false) {
-            try {
-                const response = await fetch(GAS_API_URL);
-                const json = await response.json();
-                
-                if (json && json.admin_password) cloudAdminPassword = String(json.admin_password);
-                if (json && json.multipliers) globalReturnMultipliers = json.multipliers;
-                if (json && json.sheet_mappings) sheetMappings = json.sheet_mappings;
-
-
-                const cloudVersion = json.system_version || "v6.1.0";
-                const localVersion = localStorage.getItem('ava_last_synced_version');
-                const userHasCustomized = localStorage.getItem('ava_user_has_customized') === 'true';
-
-
-                if (forceReset || (!userHasCustomized && (cloudVersion !== localVersion || !localVersion))) {
-                    if (json && json.cards && json.cards.length > 0) {
-                        const cloudDB = {};
-                        json.cards.forEach(row => {
-                            const sId = row.scenario_id || "unplanned";
-                            if (!cloudDB[sId]) cloudDB[sId] = [];
-                            cloudDB[sId].push({
-                                id: row.step_id, step_num: parseInt(row.step_num) || 1,
-                                title: row.title, subtitle: row.subtitle, image_url: row.image_url || "",
-                                options: typeof row.options_json === 'string' ? JSON.parse(row.options_json || '[]') : (row.options_json || [])
-                            });
-                        });
-                        allScenarioDatabase = cloudDB;
-                        localStorage.setItem('ava_scenario_database', JSON.stringify(cloudDB));
-                    }
-
-
-                    if (json && json.jar_texts) {
-                        allJarTexts = json.jar_texts;
-                        localStorage.setItem('ava_jar_texts', JSON.stringify(json.jar_texts));
-                    }
-
-
-                    localStorage.setItem('ava_last_synced_version', cloudVersion);
-                    currentSystemVersion = cloudVersion;
-                }
-                
-                renderFrontendCards();
-                calculateAndDisplay();
-                calculatePromo();
-            } catch(e) {
-                console.log("GAS 載入異常，維持本機資料配置");
-            }
-        }
-
-
-        function goToStep(step) {
-            document.querySelectorAll('.step-page').forEach(p => p.classList.remove('active'));
-            const targetId = (typeof step === 'string') ? step : `step-${step}`;
-            const targetEl = document.getElementById(targetId);
-            if (targetEl) targetEl.classList.add('active');
-            let stepNum = (typeof step === 'number') ? step : 14;
-            let progress = Math.round((stepNum / 14) * 100);
-            document.getElementById('progress-fill').style.width = `${progress}%`;
-            if (step === 11) calculateAndDisplay();
-            if (step === 'page-promo') calculatePromo();
-            if (step === 12 && answers['step_4']) { document.getElementById('connect-vision-display').textContent = answers['step_4']; }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-
-        function selectOption(step, headline, subtext, domEl) {
-            const pageEl = document.getElementById(`step-${step}`);
-            if (pageEl) pageEl.querySelectorAll('.option-card-guided').forEach(btn => btn.classList.remove('selected'));
-            if (domEl) domEl.classList.add('selected');
-            answers[`step_${step}`] = headline;
-            const nextBtn = document.getElementById(`btn-next-${step}`);
-            if (nextBtn) nextBtn.disabled = false;
-        }
-
-
-        function generateBlueprint() {
-            document.getElementById('res-1').textContent = answers['step_1'] || "-";
-            document.getElementById('res-2').textContent = answers['step_2'] || "-";
-            document.getElementById('res-4').textContent = answers['step_4'] || "-";
-            document.getElementById('res-6').textContent = answers['step_6'] || "-";
-            goToStep('step-blueprint');
-        }
-
-
-        function updateSowTerm() {
-            const term = parseInt(document.getElementById('sow-term-select').value) || 5;
-            document.getElementById('group-plan2').style.display = (term >= 10) ? 'block' : 'none';
-            document.getElementById('group-plan3').style.display = (term >= 15) ? 'block' : 'none';
-            document.getElementById('group-plan4').style.display = (term >= 20) ? 'block' : 'none';
-            document.getElementById('modal-plan2-group').style.display = (term >= 10) ? 'block' : 'none';
-            document.getElementById('modal-plan3-group').style.display = (term >= 15) ? 'block' : 'none';
-            document.getElementById('modal-plan4-group').style.display = (term >= 20) ? 'block' : 'none';
-            calculateAndDisplay();
-        }
-
 
         function setupJarAutoFill(jarPrefix) {
             const y1El = document.getElementById(`${jarPrefix}-contribution`);
@@ -1511,7 +864,6 @@
             });
         }
 
-
         function toggleColumn(colKey) {
             colVisibility[colKey] = !colVisibility[colKey];
             const btn = document.getElementById(`dot-btn-${colKey}`);
@@ -1519,206 +871,43 @@
             calculateAndDisplay();
         }
 
+        function calculateAndDisplay() {
+            const startAge = parseInt(document.getElementById('start-age')?.value) || 30;
+            for(let i=1; i<=5; i++) { document.querySelectorAll(`.age-y${i}`).forEach(el => el.textContent = startAge + i - 1); }
+            const p1Val = parseFormattedNumber(document.getElementById('plan1-contribution')?.value) || 40000;
+            const totalSow = p1Val * 5;
 
-        function openStrategyModal() { document.getElementById('strategy-modal').style.display = 'flex'; }
-        function closeStrategyModal() { document.getElementById('strategy-modal').style.display = 'none'; }
+            const thead = document.getElementById('results-table-head');
+            const tbody = document.getElementById('results-table-body');
+            if (!thead || !tbody) return;
 
+            thead.innerHTML = `<tr><th>年份 (歲數)</th><th>累計儲備</th>${colVisibility.annuity ? '<th>被動收入</th>' : ''}${colVisibility.accum ? '<th>累積已領</th>' : ''}${colVisibility.asset ? '<th>大樹收成</th>' : ''}</tr>`;
+            tbody.innerHTML = '';
 
-        function getMultiplierFromExcel(strategy, year) {
-            const mapObj = sheetMappings.find(m => m.code === strategy);
-            let sheetName = mapObj ? mapObj.sheet_name : '8年領取';
-            if (!globalReturnMultipliers[sheetName]) {
-                const fallback = { 8: 1.16, 10: 1.32, 15: 1.86, 20: 2.71, 25: 4.11, 30: 5.85 };
-                return fallback[year] || (year <= 5 ? year/5 : 1 + (year-5)*0.15);
-            }
-            let map = globalReturnMultipliers[sheetName];
-            if (map[year] !== undefined) return map[year];
-            const keys = Object.keys(map).map(Number).sort((a,b)=>a-b);
-            if(keys.length === 0) return 1;
-            if (year <= keys[0]) return year <= 5 ? year / 5 : 1.0 + (map[keys[0]] - 1.0) * ((year - 5) / (keys[0] - 5));
-            if (year >= keys[keys.length-1]) return map[keys[keys.length-1]];
-            let lower = keys[0], upper = keys[keys.length-1];
-            for(let i=0; i<keys.length-1; i++) { if(year >= keys[i] && year <= keys[i+1]) { lower = keys[i]; upper = keys[i+1]; break; } }
-            return map[lower] + ((year - lower) / (upper - lower)) * (map[upper] - map[lower]);
-        }
+            [8, 10, 15, 20, 25, 30].forEach(yr => {
+                const age = startAge + yr - 1;
+                const annuity = yr >= 8 ? totalSow * 0.07 : 0;
+                const accum = yr >= 8 ? annuity * (yr - 8 + 1) : 0;
+                const asset = totalSow * (1 + (yr - 5) * 0.15);
 
-
-        window.calculateAndDisplay = function() {
-            const startAge = parseInt(document.getElementById('start-age').value) || 30;
-            for(let i=1; i<=20; i++) { document.querySelectorAll(`.age-y${i}`).forEach(el => el.textContent = startAge + i - 1); }
-            const getJarTotal = (prefix) => {
-                let sum = 0;
-                for(let i=1; i<=5; i++) {
-                    let el = document.getElementById(i===1 ? `${prefix}-contribution` : `${prefix}-y${i}`);
-                    if(el) sum += parseFormattedNumber(el.value);
-                }
-                return sum;
-            };
-            const p1Total = getJarTotal('plan1'), p2Total = getJarTotal('plan2'), p3Total = getJarTotal('plan3'), p4Total = getJarTotal('plan4');
-
-
-            const planStrategies = [
-                document.getElementById('plan1-strategy').value, document.getElementById('plan2-strategy').value,
-                document.getElementById('plan3-strategy').value, document.getElementById('plan4-strategy').value
-            ];
-            const isEngineActive = [
-                true, document.getElementById('group-plan2').style.display !== 'none',
-                document.getElementById('group-plan3').style.display !== 'none', document.getElementById('group-plan4').style.display !== 'none'
-            ];
-
-
-            let maxYear = Math.max(30, 100 - startAge + 1);
-            const reportingYears = [];
-            for (let y = 8; y <= 25; y++) { if(y <= maxYear) reportingYears.push(y); }
-            for (let y = 30; y <= maxYear; y += 5) { if(y <= maxYear) reportingYears.push(y); }
-            if(!reportingYears.includes(maxYear)) reportingYears.push(maxYear);
-
-
-            const jt = allJarTexts[currentActiveScenario] || allJarTexts['unplanned'];
-            let th_year = jt.th_year || "年份 (歲數)";
-            let th_reserve = jt.th_reserve || "累計儲備";
-            let th_income = jt.th_income || "被動收入";
-            let th_accum = jt.th_accum || "累積已領";
-            let th_asset = jt.th_asset || "大樹收成";
-            let th_interest = jt.th_interest || "年化百分比回報";
-
-
-            let strategyBtn = `<button class="mini-pink-btn" style="margin-left:4px;" onclick="openStrategyModal()">！</button>`;
-            let headerHtml = `<tr><th>${th_year}</th><th>${th_reserve}</th>`;
-            if (colVisibility.annuity) headerHtml += `<th style="color:var(--brand-accent); font-weight:800;">${th_income}${strategyBtn}</th>`;
-            if (colVisibility.accum) headerHtml += `<th style="color:var(--state-success); font-weight:800;">${th_accum}</th>`;
-            if (colVisibility.asset) headerHtml += `<th style="color:var(--state-purple); font-weight:800;">${th_asset}</th>`;
-            if (colVisibility.interest) headerHtml += `<th style="color:var(--state-danger); font-weight:800;">${th_interest}</th>`;
-            headerHtml += `</tr>`;
-            document.getElementById('results-table-head').innerHTML = headerHtml;
-
-
-            const tableBody = document.getElementById('results-table-body');
-            tableBody.innerHTML = '';
-            const jarTotals = [p1Total, p2Total, p3Total, p4Total];
-
-
-            const calcAssets = (y) => {
-                if (y <= 0) return { rV: 0, rW: 0, rA: 0, rC: 0 };
-                let rV = 0, rW = 0, rA = 0, rC = 0;
-                [1, 6, 11, 16].forEach((sY, i) => {
-                    const pA = y - (sY - 1); 
-                    const tP = isEngineActive[i] ? jarTotals[i] : 0;
-                    const aC = tP / 5;
-                    const strategy = planStrategies[i];
-                    let cV = 0, cW = 0, cA = 0;
-                    if (pA > 0 && tP > 0) {
-                        rC += Math.min(pA, 5) * aC;
-                        let multiplier = getMultiplierFromExcel(strategy, pA);
-                        if (strategy === 'withdraw7_from8' && pA >= 8) { cA = tP * 0.07; cW = cA * (pA - 8 + 1); cV = tP * multiplier; }
-                        else if (strategy === 'withdraw12_from15' && pA >= 15) { cA = tP * 0.12; cW = cA * (pA - 15 + 1); cV = tP * multiplier; }
-                        else if (strategy === 'withdraw18_from20' && pA >= 20) { cA = tP * 0.18; cW = cA * (pA - 20 + 1); cV = tP * multiplier; }
-                        else if (strategy === 'withdraw23_from25' && pA >= 25) { cA = tP * 0.23; cW = cA * (pA - 25 + 1); cV = tP * multiplier; }
-                        else if (strategy === 'withdraw29_from30' && pA >= 30) { cA = tP * 0.29; cW = cA * (pA - 30 + 1); cV = tP * multiplier; }
-                        else { cV = tP * multiplier; }
-                        if(pA < 5 && strategy !== 'none') cV = Math.min(pA, 5) * aC;
-                    }
-                    rV += cV; rW += cW; rA += cA;
-                });
-                return { rV, rW, rA, rC };
-            };
-
-
-            let prevYear = 0, prevBalance = 0;
-            for (let year = 1; year <= maxYear; year++) {
-                let currentAge = startAge + year - 1;
-                let todayRes = calcAssets(year);
-                if (reportingYears.includes(year)) {
-                    let returnPercentStr = "-";
-                    if (prevYear !== 0 && prevBalance > 0) {
-                        let yearsDiff = year - prevYear;
-                        returnPercentStr = (((todayRes.rV - prevBalance) / prevBalance / yearsDiff) * 100).toFixed(1) + "%";
-                    }
-                    prevYear = year;
-                    prevBalance = todayRes.rV;
-                    let rowHtml = `<td>${year} (${currentAge}歲)</td><td>$${formatNumber(todayRes.rC)}</td>`;
-                    if (colVisibility.annuity) rowHtml += `<td style="color:var(--brand-accent); font-weight:800;">$${formatNumber(todayRes.rA)}</td>`;
-                    if (colVisibility.accum) rowHtml += `<td style="color:var(--state-success); font-weight:800;">$${formatNumber(todayRes.rW)}</td>`;
-                    if (colVisibility.asset) rowHtml += `<td style="color:var(--state-purple); font-weight:800;">$${formatNumber(todayRes.rV)}</td>`;
-                    if (colVisibility.interest) rowHtml += `<td style="color:var(--state-danger); font-weight:800;">${returnPercentStr}</td>`;
-                    
-                    const row = document.createElement('tr');
-                    row.innerHTML = rowHtml;
-                    tableBody.appendChild(row);
-                }
-            }
-        };
-
-
-        window.calculatePromo = function() {
-            const P = parseFormattedNumber(document.getElementById('promo-annual-premium').value) || 0;
-            const N = parseInt(document.getElementById('promo-term').value) || 5;
-            const usePromo1 = document.getElementById('promo1-check').checked;
-            const usePromo2 = document.getElementById('promo2-check').checked;
-            const baseDiscountPct = parseFloat(document.getElementById('promo2-base-pct').value) / 100 || 0;
-            const usePromo3 = document.getElementById('promo3-check').checked;
-            const rate = parseFloat(document.getElementById('promo3-rate').value) / 100 || 0.038;
-
-
-            let d1 = usePromo1 ? Math.floor(P / 5000) * 500 : 0;
-            let d2 = (usePromo2 && N >= 2) ? P * baseDiscountPct : 0;
-            let totalInterest = 0; let prepayAmount = 0;
-            if (usePromo3 && N > 1) {
-                prepayAmount = P * (N - 1);
-                let balance = prepayAmount;
-                for (let t = 2; t <= N; t++) {
-                    let interest = balance * rate;
-                    totalInterest += interest; 
-                    balance = balance + interest - P;
-                }
-            }
-            document.getElementById('promo-original-total').textContent = '$' + formatNumber(P * N);
-            document.getElementById('promo-total-savings').textContent = '$' + formatNumber(d1 + d2 + totalInterest);
-            document.getElementById('promo-actual-outlay').textContent = '$' + formatNumber((P * N) - (d1 + d2 + totalInterest));
-            document.getElementById('promo1-saved').textContent = '$' + formatNumber(d1);
-            document.getElementById('promo2-saved').textContent = '$' + formatNumber(d2);
-            document.getElementById('promo3-saved').textContent = '$' + formatNumber(totalInterest);
-
-
-            const descEl = document.getElementById('promo3-desc');
-            if (usePromo3 && N > 1) {
-                let initialPay = P + prepayAmount - d1;
-                let refundAmount = totalInterest + d2; 
-                descEl.innerHTML = `💡 <strong>預繳計算詳情：</strong><br>投保實繳：<strong>$${formatNumber(initialPay)}</strong>。滿期退回利息：<strong>$${formatNumber(refundAmount)}</strong>。`;
-                descEl.style.display = 'block';
-            } else {
-                descEl.style.display = 'none';
-            }
-        };
-
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const savedDb = localStorage.getItem('ava_scenario_database');
-            if (savedDb) { try { allScenarioDatabase = JSON.parse(savedDb); } catch(e){} }
-            const savedJt = localStorage.getItem('ava_jar_texts');
-            if (savedJt) { try { allJarTexts = JSON.parse(savedJt); } catch(e){} }
-            const savedMap = localStorage.getItem('ava_sheet_mappings');
-            if (savedMap) { try { sheetMappings = JSON.parse(savedMap); } catch(e){} }
-            const savedImg = localStorage.getItem('ava_blueprint_custom_img');
-            if (savedImg) updateBlueprintImageSrc(savedImg);
-            const savedDesc = localStorage.getItem('ava_blueprint_custom_desc');
-            if (savedDesc) updateBlueprintSummaryText(savedDesc);
-            
-            renderFrontendCards();
-            ['plan1', 'plan2', 'plan3', 'plan4'].forEach(setupJarAutoFill);
-            fetchCloudDataFromGAS();
-        });
-    </script>
-    
-    <!-- PWA Service Worker 註冊 -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('✅ PWA Service Worker 註冊成功:', reg.scope))
-                    .catch(err => console.log('❌ PWA Service Worker 註冊失敗:', err));
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>第${yr}年 (${age}歲)</td><td>$${formatNumber(totalSow)}</td>${colVisibility.annuity ? `<td style="color:var(--brand-accent); font-weight:800;">$${formatNumber(annuity)}</td>` : ''}${colVisibility.accum ? `<td style="color:var(--state-success); font-weight:800;">$${formatNumber(accum)}</td>` : ''}${colVisibility.asset ? `<td style="color:var(--state-purple); font-weight:800;">$${formatNumber(asset)}</td>` : ''}`;
+                tbody.appendChild(tr);
             });
         }
+
+        function calculatePromo() {
+            const P = parseFormattedNumber(document.getElementById('promo-annual-premium')?.value) || 100000;
+            const d1 = Math.floor(P / 5000) * 500;
+            const totalSavedEl = document.getElementById('promo-total-savings');
+            if (totalSavedEl) totalSavedEl.textContent = '$' + formatNumber(d1);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedDb = localStorage.getItem('ava_scenario_database');
+            if (savedDb) { try { allScenarioDatabase = JSON.parse(savedDb); } catch(e){} }
+            fetchCloudDataFromGAS();
+        });
     </script>
 </body>
 </html>
