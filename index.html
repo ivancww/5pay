@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.5)</title>
+    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.6)</title>
     
     <!-- PWA 與 App Icon 關聯 -->
     <link rel="manifest" href="./manifest.json">
@@ -96,7 +96,7 @@
         .gap-iframe { width: 100%; height: 520px; border: none; }
         
         .calc-jar-card { background: #ffffff; border: 1px solid var(--border-light); border-radius: 14px; padding: 18px; margin-bottom: 14px; }
-        .calc-grid-5yr { display: grid; grid-template-columns: repeat(auto-fit, minmax(95px, 1fr)); gap: 8px; }
+        .calc-grid-dynamic { display: grid; grid-template-columns: repeat(auto-fit, minmax(95px, 1fr)); gap: 8px; }
         .calc-input-group label { display: block; font-size: 0.72rem; color: var(--text-sub); font-weight: bold; text-align: center; margin-bottom: 2px; }
         .calc-input-group input { width: 100%; padding: 6px; border: var(--pink-dashed); border-radius: 6px; font-size: 0.9rem; font-weight: bold; text-align: center; background: #fff; }
         .calc-input-group input.readonly { background: #f8fafc; border: 1px solid #e2e8f0; color: var(--text-muted); }
@@ -130,7 +130,7 @@
         .popup-menu-item { background: #f8fafc; border: 1px solid var(--border-light); border-radius: 10px; padding: 12px 14px; font-size: 0.92rem; font-weight: bold; cursor: pointer; transition: all 0.2s; }
         .popup-menu-item:hover { border-color: var(--brand-accent); background: var(--brand-soft); }
         
-        /* 控制台 */
+        /* 控制台樣式 */
         .admin-dashboard-modal { background: #f8fafc; border-radius: 18px; width: 95%; max-width: 950px; height: 88vh; display: flex; flex-direction: column; overflow: hidden; }
         .admin-header { background: var(--brand-primary); color: #fff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; }
         .admin-nav { display: flex; gap: 8px; background: #ffffff; padding: 10px 20px; border-bottom: 1px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; }
@@ -145,7 +145,7 @@
 <body>
     <header class="system-top-nav">
         <div class="brand-title-wrap">
-            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.5</span>
+            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.6</span>
             <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="選擇客群情境">!</span>
             <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="核心分頁直達">*</span>
         </div>
@@ -201,7 +201,7 @@
         <div class="admin-dashboard-modal">
             <div class="admin-header">
                 <div style="display:flex; align-items:center; gap:12px;">
-                    <div id="admin-modal-title">⚙️ 控制台 (管理者雲端同步)</div>
+                    <div id="admin-modal-title">⚙️ 管理者控制台 (已連接 Google Sheet 雲端)</div>
                 </div>
                 <div style="cursor:pointer;" onclick="closeAdminDashboard()">✕</div>
             </div>
@@ -210,8 +210,8 @@
                 <div class="admin-nav-btn active" id="tab-flow-btn" onclick="switchAdminTab('flow')">頁面流程管理</div>
                 <div class="admin-nav-btn" id="tab-jars-btn" onclick="switchAdminTab('jars')">時光複利文字</div>
                 <div class="admin-nav-btn" id="tab-blueprint-btn" onclick="switchAdminTab('blueprint')">人生藍圖設定</div>
-                <div class="admin-nav-btn" id="tab-mapping-btn" onclick="switchAdminTab('mapping')">領取文字與代碼</div>
-                <div class="admin-nav-btn" id="tab-system-btn" onclick="switchAdminTab('system')">系統參數</div>
+                <div class="admin-nav-btn" id="tab-mapping-btn" onclick="switchAdminTab('mapping')">分頁命名與對應代碼</div>
+                <div class="admin-nav-btn" id="tab-system-btn" onclick="switchAdminTab('system')">系統參數設定</div>
             </div>
             
             <div class="sync-loading-overlay" id="sync-loading-mask">
@@ -220,6 +220,7 @@
             </div>
             
             <div class="admin-body">
+                <!-- Tab 1: 頁面流程管理 -->
                 <div id="admin-sec-flow">
                     <div style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:12px; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center;">
                         <div style="display:flex; align-items:center; gap:8px;">
@@ -236,11 +237,12 @@
                     <div id="admin-cards-render-zone-c"></div>
                 </div>
 
+                <!-- Tab 2: 時光複利文字 (完全還原圖 2 的下拉選單年期自訂與水庫文字) -->
                 <div id="admin-sec-jars" style="display:none;">
                     <div class="admin-card-row" style="border:1.5px solid #93c5fd; background:#f0f7ff;">
-                        <h4 style="margin-top:0; color:var(--brand-primary);">📊 表格標題與供款年期自訂</h4>
+                        <h4 style="margin-top:0; color:var(--brand-primary);">📊 標籤名稱自訂</h4>
                         <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-                            <div><label style="font-size:0.75rem; font-weight:bold; color:#64748b;">供款期標題/文字：</label><input type="text" id="admin-th-pay-period" class="pink-edit-input"></div>
+                            <div><label style="font-size:0.75rem; font-weight:bold; color:#64748b;">供款期標籤名稱：</label><input type="text" id="admin-th-pay-period" class="pink-edit-input" value="供款年期"></div>
                             <div><label style="font-size:0.75rem; font-weight:bold; color:#64748b;">欄位 1 (年份)：</label><input type="text" id="admin-th-year" class="pink-edit-input"></div>
                             <div><label style="font-size:0.75rem; font-weight:bold; color:#64748b;">欄位 2 (儲備)：</label><input type="text" id="admin-th-reserve" class="pink-edit-input"></div>
                             <div><label style="font-size:0.75rem; font-weight:bold; color:#64748b;">欄位 3 (被動)：</label><input type="text" id="admin-th-income" class="pink-edit-input"></div>
@@ -249,27 +251,55 @@
                             <div><label style="font-size:0.75rem; font-weight:bold; color:#64748b;">欄位 6 (回報率)：</label><input type="text" id="admin-th-interest" class="pink-edit-input"></div>
                         </div>
                     </div>
+
+                    <!-- 下拉選單年期文字自訂 (完全跟圖 2 做法) -->
+                    <div class="admin-card-row" style="border:1.5px solid #fed7aa; background:#fffaf5;">
+                        <h4 style="margin-top:0; color:#ea580c;">🔽 下拉選單年期文字自訂</h4>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                            <div>
+                                <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">5年選項文字：</label>
+                                <input type="text" id="admin-opt-5yr" class="pink-edit-input" value="5 年 (建立)">
+                            </div>
+                            <div>
+                                <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">10年選項文字：</label>
+                                <input type="text" id="admin-opt-10yr" class="pink-edit-input" value="10 年 (累積期)">
+                            </div>
+                            <div>
+                                <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">15年選項文字：</label>
+                                <input type="text" id="admin-opt-15yr" class="pink-edit-input" value="15 年 (高階)">
+                            </div>
+                            <div>
+                                <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">20年選項文字：</label>
+                                <input type="text" id="admin-opt-20yr" class="pink-edit-input" value="20 年 (頂級防護)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 儲備金庫標題與描述自訂 -->
                     <div class="admin-card-row">
-                        <h4 style="margin-top:0; color:var(--brand-primary);">🌱 一號水庫 (第 1 - 5 年)</h4>
-                        <input type="text" id="admin-jt-title-1" class="pink-edit-input" placeholder="標題">
-                        <input type="text" id="admin-jt-desc-1" class="pink-edit-input" placeholder="描述">
+                        <h4 style="margin-top:0; color:var(--brand-primary);">🌱 儲備金庫標題與描述自訂 (tree_title_1)</h4>
+                        <input type="text" id="admin-jt-title-1" class="pink-edit-input" placeholder="儲備金庫一 + 建立水庫">
+                        <input type="text" id="admin-jt-desc-1" class="pink-edit-input" placeholder="描述文字">
                     </div>
                 </div>
 
+                <!-- Tab 3: 人生藍圖設定 -->
                 <div id="admin-sec-blueprint" style="display:none;">
                     <div class="admin-card-row">
                         <h4 style="margin-top:0; color:var(--brand-primary);">🖼️ 藍圖替代方案說明</h4>
-                        <input type="text" id="admin-blueprint-summary-text" class="pink-edit-input" value="完全不影響現有生活享受：只需將每月不知不覺流走的少許資金，分段注入專屬水庫，自然鎖定終身被動收入。">
+                        <input type="text" id="admin-blueprint-summary-text" class="pink-edit-input" value="完全不影響現有生活享受：只需將每月不知不決流走的少許資金，分段注入專屬水庫，自然鎖定終身被動收入。">
                     </div>
                 </div>
 
+                <!-- Tab 4: 分頁命名與對應代碼 -->
                 <div id="admin-sec-mapping" style="display:none;">
                     <div class="admin-card-row">
-                        <h4 style="margin-top:0; color:var(--brand-primary);">📑 領取文字與代碼</h4>
+                        <h4 style="margin-top:0; color:var(--brand-primary);">📑 分頁命名與對應代碼</h4>
                         <div id="admin-mappings-zone"></div>
                     </div>
                 </div>
 
+                <!-- Tab 5: 系統參數設定 -->
                 <div id="admin-sec-system" style="display:none;">
                     <div class="admin-card-row">
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">管理員密碼：</label>
@@ -291,15 +321,16 @@
 
     <script>
         const answers = {};
-        let currentSystemVersion = "v6.3.5";
+        let currentSystemVersion = "v6.3.6";
         let GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwbKrrmiS5vx0Q5TvqqUCHBhU-VrS7WwwY0hj6BaNRwuzPtXXIZZxejPwhycCZhSCr-Rg/exec';
         let cloudAdminPassword = "903";
         let currentActiveScenario = "no_savings";
         let activeFullFlowSteps = [];
         let currentStepIndex = 0;
         let selectedWithdrawOption = "withdraw7_from8";
+        let selectedPayYears = 5; // 預設 5 年供款期
 
-        // 3 種情境對應之 GitHub 倉庫獨立檔案路徑 (方便以後直接稍改檔案)
+        // 3 種情境對應之 GitHub 倉庫獨立檔案路徑
         const scenarioGapFiles = {
             no_savings: "./scenario1_gap.html",
             self_invest: "./scenario2_gap.html",
@@ -309,26 +340,41 @@
         let allJarTexts = {
             no_savings: {
                 scenario_name: "未有儲蓄/主動查詢",
-                th_pay_period: "5 年播種期 (基礎奠基)",
-                tree_title_1: "🌱 一號種子水庫 (第 1 - 5 年)", tree_desc_1: "播下一粒小種子，每天只需微小投入，5 年完成奠基。",
+                pay_label: "供款年期",
+                opt_5yr: "5 年 (建立)",
+                opt_10yr: "10 年 (累積期)",
+                opt_15yr: "15 年 (高階)",
+                opt_20yr: "20 年 (頂級防護)",
+                tree_title_1: "🌱 一號種子水庫",
+                tree_desc_1: "播下一粒小種子，每天只需微小投入，完成奠基。",
                 th_year: "年份 (歲數)", th_reserve: "累計儲備", th_income: "被動收入", th_accum: "累積已領", th_asset: "大樹收成", th_interest: "年化百分比回報"
             },
             self_invest: {
                 scenario_name: "自己投資",
-                th_pay_period: "5 年核心防守期",
-                tree_title_1: "🌱 防守底氣水庫 (第 1 - 5 年)", tree_desc_1: "建立核心防守底層，抵禦市場週期波動。",
+                pay_label: "供款年期",
+                opt_5yr: "5 年 (防守底)",
+                opt_10yr: "10 年 (穩健期)",
+                opt_15yr: "15 年 (進階)",
+                opt_20yr: "20 年 (全方位防護)",
+                tree_title_1: "🌱 防守底氣水庫",
+                tree_desc_1: "建立核心防守底層，抵禦市場週期波動。",
                 th_year: "年份 (歲數)", th_reserve: "累計儲備", th_income: "被動收入", th_accum: "累積已領", th_asset: "大樹收成", th_interest: "年化百分比回報"
             },
             flexible_return: {
                 scenario_name: "靈活性/回報",
-                th_pay_period: "5 年靈活奠基期",
-                tree_title_1: "🌱 靈活奠基水庫 (第 1 - 5 年)", tree_desc_1: "5 年完成奠基，鎖定終身提取權利。",
+                pay_label: "供款年期",
+                opt_5yr: "5 年 (靈活奠基)",
+                opt_10yr: "10 年 (增值期)",
+                opt_15yr: "15 年 (自由提領)",
+                opt_20yr: "20 年 (終身被動現金)",
+                tree_title_1: "🌱 靈活奠基水庫",
+                tree_desc_1: "完成奠基，鎖定終身提取權利。",
                 th_year: "年份 (歲數)", th_reserve: "累計儲備", th_income: "被動收入", th_accum: "累積已領", th_asset: "大樹收成", th_interest: "年化百分比回報"
             }
         };
 
         let sheetMappings = [
-            { code: "withdraw7_from8", sheet_name: "8年領取", display_name: "🌱 第 8 年起 每年領取 7% (標準推薦)", note: "5年供款，第8年起每年領取7%" },
+            { code: "withdraw7_from8", sheet_name: "8年領取", display_name: "🌱 第 8 年起 每年領取 7% (標準推薦)", note: "第8年起每年領取7%" },
             { code: "none", sheet_name: "自動滾存", display_name: "🌳 自動滾存不提取 (大樹收成最大化)", note: "全期不提款，純滾存累積大樹" },
             { code: "withdraw12_from15", sheet_name: "15年領取", display_name: "🌿 第 15 年起 每年領取 12%", note: "第15年起每年領取12%" },
             { code: "withdraw18_from20", sheet_name: "20年領取", display_name: "🌾 第 20 年起 每年領取 18%", note: "第20年起每年領取18%" },
@@ -424,7 +470,6 @@
                         </div>
                     `;
                 } else if (step.id === 'fixed-page-a') {
-                    // 根據情境嵌入 GitHub 獨立 HTML 檔案
                     const targetFile = scenarioGapFiles[currentActiveScenario] || scenarioGapFiles.no_savings;
                     stepEl.innerHTML = `
                         <div class="content-card">
@@ -446,27 +491,28 @@
                             <h2 class="question-title">🌱 時光複利：小金額創造大效果</h2>
                             <p class="question-hint">即使今天未有特定目標，每個月只預留少少，交畀時間，就能為你創造源源不絕的被動收入：</p>
                             
+                            <!-- 圖 1 頂部：開始歲數 + 供款年期下拉選單 (圖 2 做法) -->
                             <div style="display:grid; grid-template-columns: 1fr 1.6fr; gap:12px; margin-bottom:16px;">
                                 <div>
                                     <label style="font-size:0.75rem; font-weight:bold; color:var(--text-sub);">開始歲數</label>
-                                    <input type="number" id="start-age" value="30" onchange="calculateAndDisplay()" style="width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:8px; text-align:center; font-weight:bold;">
+                                    <input type="number" id="start-age" value="30" onchange="renderDynamicJarGrid(); calculateAndDisplay();" style="width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:8px; text-align:center; font-weight:bold;">
                                 </div>
                                 <div>
-                                    <label style="font-size:0.75rem; font-weight:bold; color:var(--brand-primary);">🌱 播種期 (可後台修改)</label>
-                                    <input type="text" id="disp-pay-period" value="${jt.th_pay_period || '5 年播種期 (基礎奠基)'}" readonly style="width:100%; padding:8px; border:1.5px solid var(--brand-accent); border-radius:8px; text-align:center; font-weight:bold; background:#fff; color:var(--brand-primary);">
+                                    <label style="font-size:0.75rem; font-weight:bold; color:var(--brand-primary);">🌱 ${jt.pay_label || '供款年期'}</label>
+                                    <select id="pay-years-selector" onchange="onPayYearsChange(this.value)" style="width:100%; padding:8px; border:1.5px solid var(--brand-accent); border-radius:8px; font-weight:bold; background:#fff; color:var(--brand-primary);">
+                                        <option value="5" ${selectedPayYears === 5 ? 'selected' : ''}>${jt.opt_5yr || '5 年 (建立)'}</option>
+                                        <option value="10" ${selectedPayYears === 10 ? 'selected' : ''}>${jt.opt_10yr || '10 年 (累積期)'}</option>
+                                        <option value="15" ${selectedPayYears === 15 ? 'selected' : ''}>${jt.opt_15yr || '15 年 (高階)'}</option>
+                                        <option value="20" ${selectedPayYears === 20 ? 'selected' : ''}>${jt.opt_20yr || '20 年 (頂級防護)'}</option>
+                                    </select>
                                 </div>
                             </div>
                             
+                            <!-- 水庫區：與供款年期連動自動帶出 -->
                             <div class="calc-jar-card" id="group-plan1" style="border-top:3px solid var(--plan1-color);">
-                                <h4 style="color:var(--plan1-color); margin-bottom:4px; font-size:0.95rem;">${jt.tree_title_1}</h4>
+                                <h4 id="jar-title-display" style="color:var(--plan1-color); margin-bottom:4px; font-size:0.95rem;">${jt.tree_title_1} (第 1 - ${selectedPayYears} 年)</h4>
                                 <p style="font-size:0.8rem; color:var(--text-sub); margin-bottom:10px;">${jt.tree_desc_1}</p>
-                                <div class="calc-grid-5yr">
-                                    <div class="calc-input-group"><label>第1年 (<span class="age-y1">30</span>歲)</label><input type="text" id="plan1-contribution" value="40,000"></div>
-                                    <div class="calc-input-group"><label>第2年 (<span class="age-y2">31</span>歲)</label><input type="text" id="plan1-y2" value="40,000" readonly class="readonly"></div>
-                                    <div class="calc-input-group"><label>第3年 (<span class="age-y3">32</span>歲)</label><input type="text" id="plan1-y3" value="40,000" readonly class="readonly"></div>
-                                    <div class="calc-input-group"><label>第4年 (<span class="age-y4">33</span>歲)</label><input type="text" id="plan1-y4" value="40,000" readonly class="readonly"></div>
-                                    <div class="calc-input-group"><label>第5年 (<span class="age-y5">34</span>歲)</label><input type="text" id="plan1-y5" value="40,000" readonly class="readonly"></div>
-                                </div>
+                                <div class="calc-grid-dynamic" id="jar-inputs-grid"></div>
                             </div>
 
                             <div class="dots-toggle-bar-pure">
@@ -519,9 +565,50 @@
                 mainContainer.appendChild(stepEl);
             });
 
-            setupJarAutoFill('plan1');
+            renderDynamicJarGrid();
             calculateAndDisplay();
             updateProgressBar();
+        }
+
+        function onPayYearsChange(val) {
+            selectedPayYears = parseInt(val) || 5;
+            const jt = allJarTexts[currentActiveScenario] || allJarTexts['no_savings'];
+            const titleEl = document.getElementById('jar-title-display');
+            if (titleEl) titleEl.textContent = `${jt.tree_title_1} (第 1 - ${selectedPayYears} 年)`;
+            renderDynamicJarGrid();
+            calculateAndDisplay();
+        }
+
+        function renderDynamicJarGrid() {
+            const grid = document.getElementById('jar-inputs-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+            const startAge = parseInt(document.getElementById('start-age')?.value) || 30;
+            const defaultVal = "40,000";
+
+            for (let i = 1; i <= selectedPayYears; i++) {
+                const group = document.createElement('div');
+                group.className = 'calc-input-group';
+                const age = startAge + i - 1;
+                group.innerHTML = `
+                    <label>第${i}年 (${age}歲)</label>
+                    <input type="text" id="plan1-y${i}" value="${defaultVal}" ${i > 1 ? 'readonly class="readonly"' : ''}>
+                `;
+                grid.appendChild(group);
+            }
+
+            const y1El = document.getElementById('plan1-y1');
+            if (y1El) {
+                y1El.addEventListener('input', () => {
+                    const rawVal = parseFormattedNumber(y1El.value);
+                    y1El.value = formatNumber(rawVal);
+                    for (let i = 2; i <= selectedPayYears; i++) {
+                        const yEl = document.getElementById(`plan1-y${i}`);
+                        if (yEl) yEl.value = formatNumber(rawVal);
+                    }
+                    calculateAndDisplay();
+                });
+            }
         }
 
         function openWithdrawPopup() {
@@ -550,7 +637,10 @@
             currentStepIndex = index;
             updateProgressBar();
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            if (activeFullFlowSteps[index].id === 'fixed-page-b') calculateAndDisplay();
+            if (activeFullFlowSteps[index].id === 'fixed-page-b') {
+                renderDynamicJarGrid();
+                calculateAndDisplay();
+            }
         }
 
         function selectDynamicOption(stepId, headline, index) {
@@ -570,9 +660,8 @@
 
         function calculateAndDisplay() {
             const startAge = parseInt(document.getElementById('start-age')?.value) || 30;
-            for(let i=1; i<=5; i++) { document.querySelectorAll(`.age-y${i}`).forEach(el => el.textContent = startAge + i - 1); }
-            const p1Val = parseFormattedNumber(document.getElementById('plan1-contribution')?.value) || 40000;
-            const totalSow = p1Val * 5;
+            const p1Val = parseFormattedNumber(document.getElementById('plan1-y1')?.value) || 40000;
+            const totalSow = p1Val * selectedPayYears;
 
             const thead = document.getElementById('results-table-head');
             const tbody = document.getElementById('results-table-body');
@@ -592,14 +681,16 @@
 
             tbody.innerHTML = '';
             
-            // 累積表一直顯示到 100 歲 (8-25 每年，25 後每 5 年跳一次直至 100 歲)
+            // 累積表一直顯示到 100 歲
             const allYears = [];
             const maxYear = 100 - startAge + 1;
-            for (let y = 8; y <= Math.min(25, maxYear); y++) { allYears.push(y); }
-            for (let y = 30; y <= maxYear; y += 5) { allYears.push(y); }
+            const startDisplayYear = Math.max(8, selectedPayYears + 1);
+            
+            for (let y = startDisplayYear; y <= Math.min(25, maxYear); y++) { allYears.push(y); }
+            for (let y = 30; y <= maxYear; y += 5) { if (y > startDisplayYear) allYears.push(y); }
 
             let withdrawRate = 0.07;
-            let startWithdrawYear = 8;
+            let startWithdrawYear = startDisplayYear;
             let isRollingOnly = false;
 
             if (selectedWithdrawOption === "none") {
@@ -620,8 +711,8 @@
                 const annuity = (!isRollingOnly && yr >= startWithdrawYear) ? totalSow * withdrawRate : 0;
                 const accum = (!isRollingOnly && yr >= startWithdrawYear) ? annuity * (yr - startWithdrawYear + 1) : 0;
                 
-                let asset = isRollingOnly ? totalSow * Math.pow(1.065, yr - 5) : totalSow * (1 + (yr - 5) * 0.12);
-                let irr = yr >= startWithdrawYear ? 6.2 + (yr - startWithdrawYear) * 0.12 : 4.8 + (yr - 5) * 0.2;
+                let asset = isRollingOnly ? totalSow * Math.pow(1.065, yr - selectedPayYears) : totalSow * (1 + (yr - selectedPayYears) * 0.12);
+                let irr = yr >= startWithdrawYear ? 6.2 + (yr - startWithdrawYear) * 0.12 : 4.8 + (yr - selectedPayYears) * 0.2;
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
@@ -636,20 +727,6 @@
             });
         }
 
-        function setupJarAutoFill(jarPrefix) {
-            const y1El = document.getElementById(`${jarPrefix}-contribution`);
-            if(!y1El) return;
-            y1El.addEventListener('input', () => {
-                const rawVal = parseFormattedNumber(y1El.value);
-                y1El.value = formatNumber(rawVal);
-                for(let i=2; i<=5; i++) {
-                    const yEl = document.getElementById(`${jarPrefix}-y${i}`);
-                    if(yEl) yEl.value = formatNumber(rawVal);
-                }
-                calculateAndDisplay();
-            });
-        }
-
         function toggleColumn(colKey) {
             colVisibility[colKey] = !colVisibility[colKey];
             const btn = document.getElementById(`dot-btn-${colKey}`);
@@ -659,7 +736,11 @@
 
         function loadJarTextsToEditor() {
             const jt = allJarTexts[currentActiveScenario] || allJarTexts['no_savings'];
-            document.getElementById('admin-th-pay-period').value = jt.th_pay_period || "5 年播種期 (基礎奠基)";
+            document.getElementById('admin-th-pay-period').value = jt.pay_label || "供款年期";
+            document.getElementById('admin-opt-5yr').value = jt.opt_5yr || "5 年 (建立)";
+            document.getElementById('admin-opt-10yr').value = jt.opt_10yr || "10 年 (累積期)";
+            document.getElementById('admin-opt-15yr').value = jt.opt_15yr || "15 年 (高階)";
+            document.getElementById('admin-opt-20yr').value = jt.opt_20yr || "20 年 (頂級防護)";
             document.getElementById('admin-th-year').value = jt.th_year || "年份 (歲數)";
             document.getElementById('admin-th-reserve').value = jt.th_reserve || "累計儲備";
             document.getElementById('admin-th-income').value = jt.th_income || "被動收入";
@@ -672,7 +753,11 @@
 
         function saveJarTextsFromEditor() {
             if (!allJarTexts[currentActiveScenario]) allJarTexts[currentActiveScenario] = {};
-            allJarTexts[currentActiveScenario].th_pay_period = document.getElementById('admin-th-pay-period').value;
+            allJarTexts[currentActiveScenario].pay_label = document.getElementById('admin-th-pay-period').value;
+            allJarTexts[currentActiveScenario].opt_5yr = document.getElementById('admin-opt-5yr').value;
+            allJarTexts[currentActiveScenario].opt_10yr = document.getElementById('admin-opt-10yr').value;
+            allJarTexts[currentActiveScenario].opt_15yr = document.getElementById('admin-opt-15yr').value;
+            allJarTexts[currentActiveScenario].opt_20yr = document.getElementById('admin-opt-20yr').value;
             allJarTexts[currentActiveScenario].th_year = document.getElementById('admin-th-year').value;
             allJarTexts[currentActiveScenario].th_reserve = document.getElementById('admin-th-reserve').value;
             allJarTexts[currentActiveScenario].th_income = document.getElementById('admin-th-income').value;
@@ -683,7 +768,6 @@
             allJarTexts[currentActiveScenario].tree_desc_1 = document.getElementById('admin-jt-desc-1').value;
         }
 
-        // 管理者同步：直接上傳 Google Sheet，不污染 LocalStorage
         async function syncAllToGoogleSheet() {
             saveJarTextsFromEditor();
             const loadingMask = document.getElementById('sync-loading-mask');
@@ -716,7 +800,6 @@
             }
         }
 
-        // 啟動秒開機制：先比對版本號
         async function fetchCloudDataWithFastCheck() {
             try {
                 const checkResp = await fetch(`${GAS_API_URL}?check_version=true`);
@@ -727,7 +810,7 @@
 
                 if (currentSystemVersion === cloudVer) {
                     buildAndRenderFlow();
-                    return; // 版本一致秒開
+                    return;
                 }
 
                 const fullResp = await fetch(GAS_API_URL);
