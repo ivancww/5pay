@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.7)</title>
+    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.8)</title>
     
     <!-- PWA 與 App Icon 關聯 -->
     <link rel="manifest" href="./manifest.json">
@@ -92,8 +92,8 @@
         .option-card-guided.selected .option-select-radio { border-color: var(--brand-accent); background: var(--brand-accent); }
         .option-card-guided.selected .option-select-radio::after { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #fff; }
         
-        .gap-iframe-container { width: 100%; min-height: 520px; border: 1px solid var(--border-light); border-radius: 14px; overflow: hidden; background: #fff; }
-        .gap-iframe { width: 100%; height: 520px; border: none; }
+        .gap-iframe-container { width: 100%; min-height: 540px; border: 1px solid var(--border-light); border-radius: 14px; overflow: hidden; background: #fff; }
+        .gap-iframe { width: 100%; height: 540px; border: none; }
         
         .calc-jar-card { background: #ffffff; border: 1px solid var(--border-light); border-radius: 14px; padding: 18px; margin-bottom: 14px; }
         .calc-grid-dynamic { display: grid; grid-template-columns: repeat(auto-fit, minmax(95px, 1fr)); gap: 8px; }
@@ -129,6 +129,7 @@
         .popup-menu-list { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 14px; }
         .popup-menu-item { background: #f8fafc; border: 1px solid var(--border-light); border-radius: 10px; padding: 12px 14px; font-size: 0.92rem; font-weight: bold; cursor: pointer; transition: all 0.2s; }
         .popup-menu-item:hover { border-color: var(--brand-accent); background: var(--brand-soft); }
+        .popup-menu-subitem { padding-left: 28px; font-size: 0.85rem; color: var(--brand-primary); border-left: 3px solid var(--brand-accent); background: #fafcff; }
         
         /* 控制台樣式 */
         .admin-dashboard-modal { background: #f8fafc; border-radius: 18px; width: 95%; max-width: 950px; height: 88vh; display: flex; flex-direction: column; overflow: hidden; }
@@ -151,12 +152,17 @@
         .zone-header-box { background: #f1f5f9; padding: 10px 14px; border-radius: 8px; font-weight: 800; font-size: 0.95rem; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
         .fixed-anchor-card { background: #faf5ff; border: 1.5px dashed #c084fc; border-radius: 12px; padding: 14px 18px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
         .user-priority-badge { background: #dcfce7; color: #15803d; padding: 3px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 800; display: inline-flex; align-items: center; gap: 4px; }
+        
+        .red-guide-banner { background: #fff1f2; border: 1.5px solid #fecdd3; border-radius: 12px; padding: 14px 18px; margin-bottom: 18px; }
+        .red-guide-title { color: #e11d48; font-weight: 900; font-size: 0.92rem; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+        .red-guide-text { color: #be123c; font-size: 0.84rem; line-height: 1.6; margin-bottom: 8px; }
+        .red-guide-steps { color: #9f1239; font-size: 0.8rem; line-height: 1.6; font-weight: 600; border-top: 1px dashed #fecdd3; padding-top: 8px; }
     </style>
 </head>
 <body>
     <header class="system-top-nav">
         <div class="brand-title-wrap">
-            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.7</span>
+            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.8</span>
             <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="選擇客群情境">!</span>
             <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="核心分頁直達">*</span>
         </div>
@@ -184,13 +190,17 @@
         </div>
     </div>
 
-    <!-- 頂部 * 直達跳轉 -->
+    <!-- 圖 1 直達核心分頁彈窗 (已增設 3 個情境直達選項) -->
     <div id="jump-popup-mask" class="modal-mask">
         <div class="modal-box">
             <span class="close-btn" onclick="closeJumpPopup()">&times;</span>
             <h3 style="color:var(--brand-primary); margin-top:0; font-size:1.1rem; text-align:center;">🚀 直達核心分頁</h3>
             <div class="popup-menu-list">
-                <div class="popup-menu-item" onclick="jumpDirectStep('fixed-page-a')">🔍 固定分頁 A：認知差距</div>
+                <div class="popup-menu-item" onclick="jumpDirectStep('fixed-page-a')">🔍 固定分頁 A：認知差距 (當前情境)</div>
+                <div class="popup-menu-item popup-menu-subitem" onclick="jumpDirectScenarioGap('no_savings')">🌱 情境 1：未有儲蓄 / 主動查詢</div>
+                <div class="popup-menu-item popup-menu-subitem" onclick="jumpDirectScenarioGap('self_invest')">📈 情境 2：自己投資</div>
+                <div class="popup-menu-item popup-menu-subitem" onclick="jumpDirectScenarioGap('flexible_return')">🔓 情境 3：靈活性 / 回報</div>
+                
                 <div class="popup-menu-item" onclick="jumpDirectStep('fixed-page-b')">🌱 固定分頁 B：時光複利量化表</div>
                 <div class="popup-menu-item" onclick="jumpDirectStep('fixed-page-c')">📋 固定分頁 C：專屬生活藍圖</div>
                 <div class="popup-menu-item" onclick="jumpDirectStep('page-promo')">🎁 優惠計算：專屬保費折扣</div>
@@ -207,7 +217,7 @@
         </div>
     </div>
 
-    <!-- 控制台 (管理者與使用者雙模式) -->
+    <!-- 控制台 -->
     <div id="admin-modal-mask" class="modal-mask">
         <div class="admin-dashboard-modal">
             <div class="admin-header">
@@ -235,8 +245,18 @@
             </div>
             
             <div class="admin-body">
-                <!-- Tab 1: 頁面流程管理 -->
+                <!-- Tab 1: 頁面流程管理 (圖 3：完全還原頂部紅字指引、上下移、圖片上載/刪除、選項模式) -->
                 <div id="admin-sec-flow">
+                    <div class="red-guide-banner">
+                        <div class="red-guide-title">📌 最後濃縮成你真正可以記住嘅流程：</div>
+                        <div class="red-guide-text">
+                            1-3 點了解客人，4-6 點睇見未來，7-8 點勾起好奇/啟發及轉場，9-11 產品概念到運作，運作到具體化，12-14 重新連結及決定。
+                        </div>
+                        <div class="red-guide-steps">
+                            1️⃣ 進入客人世界 ｜ 2️⃣ 了解佢關心乜 ｜ 3️⃣ 找真正原因 ｜ 4️⃣ 創造人生畫面 ｜ 5️⃣ 看到兩個未來 ｜ 6️⃣ 自己發現距離 ｜ 7️⃣ 「咁可以點？」 ｜ 8️⃣ 「可能適合，亦可能唔適合。」 ⭐ ｜ 9️⃣ 產品＝填補佢 Gap 嘅工具 ｜ 🔟 複雜概念→簡單具體 ｜ 1️⃣1️⃣ 數字→證明效果 ｜ 1️⃣2️⃣ 重新連結返佢嘅目標 ｜ 1️⃣3️⃣ 一齊判斷適合唔適合 ｜ 1️⃣4️⃣ 客人自己決定
+                        </div>
+                    </div>
+
                     <div style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:12px; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center;">
                         <div style="display:flex; align-items:center; gap:8px;">
                             <label style="font-size:0.85rem; font-weight:bold; color:var(--brand-primary);">切換編輯情境：</label>
@@ -339,7 +359,10 @@
                 <!-- Tab 3: 人生藍圖設定 -->
                 <div id="admin-sec-blueprint" style="display:none;">
                     <div class="admin-card-row">
-                        <h4 style="margin-top:0; color:var(--brand-primary);">🖼️ 藍圖替代方案說明</h4>
+                        <h4 style="margin-top:0; color:var(--brand-primary);">🖼️ 藍圖右側圖解與替代方案</h4>
+                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">藍圖圖片網址：</label>
+                        <input type="text" id="admin-blueprint-img-url" class="pink-edit-input" value="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80">
+                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:10px; display:block;">替代方案總結說明：</label>
                         <input type="text" id="admin-blueprint-summary-text" class="pink-edit-input" value="完全不影響現有生活享受：只需將每月不知不決流走的少許資金，分段注入專屬水庫，自然鎖定終身被動收入。">
                     </div>
                 </div>
@@ -365,6 +388,7 @@
                 </div>
             </div>
             
+            <input type="file" id="firebase-file-input" accept="image/*" style="display:none;">
             <input type="file" id="json-import-input" accept=".json" style="display:none;" onchange="handleJSONImport(this)">
             
             <!-- 底部動作按鈕列 -->
@@ -386,7 +410,7 @@
 
     <script>
         const answers = {};
-        let currentSystemVersion = "v6.3.7";
+        let currentSystemVersion = "v6.3.8";
         let GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwbKrrmiS5vx0Q5TvqqUCHBhU-VrS7WwwY0hj6BaNRwuzPtXXIZZxejPwhycCZhSCr-Rg/exec';
         let cloudAdminPassword = "903";
         let currentActiveScenario = "no_savings";
@@ -405,35 +429,20 @@
         let allJarTexts = {
             no_savings: {
                 scenario_name: "未有儲蓄/主動查詢",
-                pay_label: "供款年期",
-                opt_5yr: "5 年 (建立)",
-                opt_10yr: "10 年 (累積期)",
-                opt_15yr: "15 年 (高階)",
-                opt_20yr: "20 年 (頂級防護)",
-                tree_title_1: "🌱 一號種子水庫",
-                tree_desc_1: "播下一粒小種子，每天只需微小投入，完成奠基。",
+                pay_label: "供款年期", opt_5yr: "5 年 (建立)", opt_10yr: "10 年 (累積期)", opt_15yr: "15 年 (高階)", opt_20yr: "20 年 (頂級防護)",
+                tree_title_1: "🌱 一號種子水庫", tree_desc_1: "播下一粒小種子，每天只需微小投入，完成奠基。",
                 th_year: "年份 (歲數)", th_reserve: "累計儲備", th_income: "被動收入", th_accum: "累積已領", th_asset: "大樹收成", th_interest: "年化百分比回報"
             },
             self_invest: {
                 scenario_name: "自己投資",
-                pay_label: "供款年期",
-                opt_5yr: "5 年 (防守底)",
-                opt_10yr: "10 年 (穩健期)",
-                opt_15yr: "15 年 (進階)",
-                opt_20yr: "20 年 (全方位防護)",
-                tree_title_1: "🌱 防守底氣水庫",
-                tree_desc_1: "建立核心防守底層，抵禦市場週期波動。",
+                pay_label: "供款年期", opt_5yr: "5 年 (防守底)", opt_10yr: "10 年 (穩健期)", opt_15yr: "15 年 (進階)", opt_20yr: "20 年 (全方位防護)",
+                tree_title_1: "🌱 防守底氣水庫", tree_desc_1: "建立核心防守底層，抵禦市場週期波動。",
                 th_year: "年份 (歲數)", th_reserve: "累計儲備", th_income: "被動收入", th_accum: "累積已領", th_asset: "大樹收成", th_interest: "年化百分比回報"
             },
             flexible_return: {
                 scenario_name: "靈活性/回報",
-                pay_label: "供款年期",
-                opt_5yr: "5 年 (靈活奠基)",
-                opt_10yr: "10 年 (增值期)",
-                opt_15yr: "15 年 (自由提領)",
-                opt_20yr: "20 年 (終身被動現金)",
-                tree_title_1: "🌱 靈活奠基水庫",
-                tree_desc_1: "完成奠基，鎖定終身提取權利。",
+                pay_label: "供款年期", opt_5yr: "5 年 (靈活奠基)", opt_10yr: "10 年 (增值期)", opt_15yr: "15 年 (自由提領)", opt_20yr: "20 年 (終身被動現金)",
+                tree_title_1: "🌱 靈活奠基水庫", tree_desc_1: "完成奠基，鎖定終身提取權利。",
                 th_year: "年份 (歲數)", th_reserve: "累計儲備", th_income: "被動收入", th_accum: "累積已領", th_asset: "大樹收成", th_interest: "年化百分比回報"
             }
         };
@@ -449,20 +458,20 @@
 
         let allScenarioDatabase = {
             no_savings: [
-                { id: "step_1", zone: "zone_a", step_num: 1, title: "「如果純粹講而家嘅生活狀態，你覺得自己屬於邊一種？」", subtitle: "沒有對與錯，純粹由你目前最真實的生活節奏開始探索：", options: [{ headline: "🌅 先享受現在", subtext: "今天的生活同樣重要。" }, { headline: "🧭 我知道未來重要", subtext: "但市面太多複雜說法。" }] },
-                { id: "step_2", zone: "zone_a", step_num: 2, title: "「如果將來有一樣嘢值得你花更多資源，最可能會係邊方面？」", subtitle: "心目中最在意的生活重心：", options: [{ headline: "🏠 住屋與生活品質提升" }, { headline: "✈️ 旅行與人生體驗" }] },
-                { id: "step_3", zone: "zone_b", step_num: 3, title: "「點解呢個方向對你嚟講特別重要？」", subtitle: "探索背後真正驅動你、對你最具價值的初衷：", options: [{ headline: "✨ 不想被現實條件限制選擇" }, { headline: "🛡️ 想有一份踏實的掌控感" }] },
-                { id: "step_4", zone: "zone_c", step_num: 4, title: "「適合先繼續，唔適合都完全冇問題。」", subtitle: "以你目前的步調，你覺得這種分段建立的方法適唔適合自己？", options: [{ headline: "🟢 我覺得概念好舒服，可以認真考慮" }, { headline: "🟡 概念明白，想再睇下適合自己的具體預算" }] }
+                { id: "step_1", zone: "zone_a", step_num: 1, title: "「如果純粹講而家嘅生活狀態，你覺得自己屬於邊一種？」", subtitle: "沒有對與錯，純粹由你目前最真實的生活節奏開始探索：", image_url: "", options: [{ headline: "🌅 先享受現在", subtext: "今天的生活同樣重要。" }, { headline: "🧭 我知道未來重要", subtext: "但市面太多複雜說法。" }] },
+                { id: "step_2", zone: "zone_a", step_num: 2, title: "「如果將來有一樣嘢值得你花更多資源，最可能會係邊方面？」", subtitle: "心目中最在意的生活重心：", image_url: "", options: [{ headline: "🏠 住屋與生活品質提升" }, { headline: "✈️ 旅行與人生體驗" }] },
+                { id: "step_3", zone: "zone_b", step_num: 3, title: "「點解呢個方向對你嚟講特別重要？」", subtitle: "探索背後真正驅動你、對你最具價值的初衷：", image_url: "", options: [{ headline: "✨ 不想被現實條件限制選擇" }, { headline: "🛡️ 想有一份踏實的掌控感" }] },
+                { id: "step_4", zone: "zone_c", step_num: 4, title: "「適合先繼續，唔適合都完全冇問題。」", subtitle: "以你目前的步調，你覺得這種分段建立的方法適唔適合自己？", image_url: "", options: [{ headline: "🟢 我覺得概念好舒服，可以認真考慮" }, { headline: "🟡 概念明白，想再睇下適合自己的具體預算" }] }
             ],
             self_invest: [
-                { id: "step_1", zone: "zone_a", step_num: 1, title: "「講到投資同儲蓄，你目前最重視邊樣？」", subtitle: "探索最舒服的步調：", options: [{ headline: "📈 追求高增長" }, { headline: "🛡️ 穩健防守底氣" }] },
-                { id: "step_2", zone: "zone_b", step_num: 2, title: "「點解連專業投資者，都要分開『進攻』同『防守』？」", subtitle: "核心防守層的作用：", options: [{ headline: "🛡️ 想了解 50% 核心防守底的概念" }, { headline: "💧 想直接睇具體點樣提供穩定現金流" }] },
-                { id: "step_3", zone: "zone_c", step_num: 3, title: "「以你目前嘅投資配置，你覺得建立呢個防守底層適唔適合自己？」", subtitle: "評估個人需求：", options: [{ headline: "🟢 好適合，想有一筆完全穩健的現金流底氣" }, { headline: "🟡 想再微調適合自己嘅投入比例" }] }
+                { id: "step_1", zone: "zone_a", step_num: 1, title: "「講到投資同儲蓄，你目前最重視邊樣？」", subtitle: "探索最舒服的步調：", image_url: "", options: [{ headline: "📈 追求高增長" }, { headline: "🛡️ 穩健防守底氣" }] },
+                { id: "step_2", zone: "zone_b", step_num: 2, title: "「點解連專業投資者，都要分開『進攻』同『防守』？」", subtitle: "核心防守層的作用：", image_url: "", options: [{ headline: "🛡️ 想了解 50% 核心防守底的概念" }, { headline: "💧 想直接睇具體點樣提供穩定現金流" }] },
+                { id: "step_3", zone: "zone_c", step_num: 3, title: "「以你目前嘅投資配置，你覺得建立呢個防守底層適唔適合自己？」", subtitle: "評估個人需求：", image_url: "", options: [{ headline: "🟢 好適合，想有一筆完全穩健的現金流底氣" }, { headline: "🟡 想再微調適合自己嘅投入比例" }] }
             ],
             flexible_return: [
-                { id: "step_1", zone: "zone_a", step_num: 1, title: "「講到理財計劃，你最關心甚麼？」", subtitle: "探索靈活性：", options: [{ headline: "🔓 資金靈活性" }, { headline: "📊 長期穩定回報" }] },
-                { id: "step_2", zone: "zone_b", step_num: 2, title: "「如果話你知：只需專注 5 年，第 8 年起就換取一世提取自由？」", subtitle: "解開靈活性迷思：", options: [{ headline: "💡 點樣做到 5 年完成、第 8 年自由攞錢？" }, { headline: "📊 想直接睇複利同提取數據" }] },
-                { id: "step_3", zone: "zone_c", step_num: 3, title: "「只需 5 年就能換取終身被動現金流，你覺得適唔適合自己？」", subtitle: "評估可行性：", options: [{ headline: "🟢 非常適合，5 年期好有信心完成" }, { headline: "🟡 想計算一下最合適自己的每月預算" }] }
+                { id: "step_1", zone: "zone_a", step_num: 1, title: "「講到理財計劃，你最關心甚麼？」", subtitle: "探索靈活性：", image_url: "", options: [{ headline: "🔓 資金靈活性" }, { headline: "📊 長期穩定回報" }] },
+                { id: "step_2", zone: "zone_b", step_num: 2, title: "「如果話你知：只需專注 5 年，第 8 年起就換取一世提取自由？」", subtitle: "解開靈活性迷思：", image_url: "", options: [{ headline: "💡 點樣做到 5 年完成、第 8 年自由攞錢？" }, { headline: "📊 想直接睇複利同提取數據" }] },
+                { id: "step_3", zone: "zone_c", step_num: 3, title: "「只需 5 年就能換取終身被動現金流，你覺得適唔適合自己？」", subtitle: "評估可行性：", image_url: "", options: [{ headline: "🟢 非常適合，5 年期好有信心完成" }, { headline: "🟡 想計算一下最合適自己的每月預算" }] }
             ]
         };
 
@@ -484,9 +493,7 @@
 
         function incrementVersion(verStr) {
             const match = verStr.match(/v?(\d+)\.(\d+)\.(\d+)/);
-            if (match) {
-                return `v${match[1]}.${match[2]}.${parseInt(match[3]) + 1}`;
-            }
+            if (match) return `v${match[1]}.${match[2]}.${parseInt(match[3]) + 1}`;
             return verStr + ".1";
         }
 
@@ -534,6 +541,7 @@
                             <h2 class="question-title">${c.title}</h2>
                             <p class="question-hint">${c.subtitle}</p>
                             ${optionsHtml}
+                            ${c.image_url ? `<div style="text-align:center; margin-top:16px;"><img src="${c.image_url}" style="max-width:90%; max-height:220px; border-radius:10px; border:1px solid var(--border-light);"></div>` : ''}
                             <div class="action-row">
                                 ${index > 0 ? `<button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 上一步</button>` : ''}
                                 <button class="nav-btn next" id="btn-next-${index}" onclick="navigateStep(${index + 1})">下一步 →</button>
@@ -802,7 +810,7 @@
             calculateAndDisplay();
         }
 
-        // 後台頁面管理題目卡片渲染
+        // 圖 3 後台頁面管理題目卡片渲染（完整還原上下移、圖片上載/刪除、選項增刪模式）
         function renderAdminCards() {
             let currentList = allScenarioDatabase[currentActiveScenario] || allScenarioDatabase['no_savings'];
             ['zone_a', 'zone_b', 'zone_c'].forEach(zKey => {
@@ -817,24 +825,110 @@
                     const el = document.createElement('div');
                     el.className = 'admin-card-row';
                     el.innerHTML = `
-                        <div class="admin-card-head" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <div class="admin-card-head" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
                             <div style="display:flex; align-items:center; gap:8px;">
                                 <span style="font-weight:bold; color:var(--brand-primary); font-size:0.95rem;">步驟 ${card.step_num || (globalIdx + 1)}</span>
                                 <select onchange="toggleCardMode(${globalIdx}, this.value)" style="padding:2px 6px; font-size:0.75rem; border-radius:4px; border:1px solid #cbd5e1; font-weight:bold;">
                                     <option value="option" ${isOptionMode ? 'selected' : ''}>🔘 選項模式</option>
                                     <option value="step" ${!isOptionMode ? 'selected' : ''}>📝 純步驟模式</option>
                                 </select>
+                                <button class="step-ctrl-btn" onclick="moveZoneCard('${card.id}', -1)" ${idxInZone === 0 ? 'disabled' : ''}>⬆ 上移</button>
+                                <button class="step-ctrl-btn" onclick="moveZoneCard('${card.id}', 1)" ${idxInZone === zoneCards.length - 1 ? 'disabled' : ''}>⬇ 下移</button>
                             </div>
                             <button class="del-opt-btn" onclick="deleteCard('${card.id}')">🗑️ 刪除此題</button>
                         </div>
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">主標題 (問題內容)：</label>
                         <input type="text" class="pink-edit-input" value="${card.title || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].title = this.value">
+                        
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">副標題說明：</label>
                         <input type="text" class="pink-edit-input" value="${card.subtitle || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].subtitle = this.value">
+                        
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+                            <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">圖片網址 (imageUrl)：</label>
+                            <div>
+                                <button class="step-ctrl-btn" onclick="triggerCardUpload(${globalIdx})">📤 上載圖片</button>
+                                <button class="del-opt-btn" onclick="deleteCardImage(${globalIdx})" style="padding:3px 6px;">🗑️ 刪除圖片</button>
+                            </div>
+                        </div>
+                        <input type="text" id="card-img-url-${globalIdx}" class="pink-edit-input" value="${card.image_url || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].image_url = this.value">
+                        
+                        <div class="admin-options-container" style="${isOptionMode ? '' : 'display:none;'}">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                                <span style="font-size:0.75rem; font-weight:bold; color:#475569;">選項清單：</span>
+                                <button class="step-ctrl-btn" onclick="addCardOption(${globalIdx})">+ 新增選項</button>
+                            </div>
+                            <div id="opts-edit-zone-${globalIdx}"></div>
+                        </div>
                     `;
                     zoneContainer.appendChild(el);
+
+                    if (isOptionMode) {
+                        const optZone = el.querySelector(`#opts-edit-zone-${globalIdx}`);
+                        card.options.forEach((opt, optIdx) => {
+                            const optRow = document.createElement('div');
+                            optRow.className = 'option-row-edit';
+                            optRow.innerHTML = `
+                                <input type="text" class="pink-edit-input" style="margin:0; flex:1;" value="${opt.headline || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].options[${optIdx}].headline = this.value" placeholder="標題">
+                                <input type="text" class="pink-edit-input" style="margin:0; flex:1.5;" value="${opt.subtext || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].options[${optIdx}].subtext = this.value" placeholder="說明文字">
+                                <button class="del-opt-btn" onclick="deleteCardOption(${globalIdx}, ${optIdx})">✕</button>
+                            `;
+                            optZone.appendChild(optRow);
+                        });
+                    }
                 });
             });
+        }
+
+        function moveZoneCard(cardId, dir) {
+            const list = allScenarioDatabase[currentActiveScenario];
+            const idx = list.findIndex(c => c.id === cardId);
+            if (idx < 0) return;
+            const currentZone = list[idx].zone || 'zone_a';
+            const targetIdx = idx + dir;
+            if (targetIdx < 0 || targetIdx >= list.length) return;
+            if ((list[targetIdx].zone || 'zone_a') !== currentZone) return;
+            const temp = list[idx];
+            list[idx] = list[targetIdx];
+            list[targetIdx] = temp;
+            renderAdminCards();
+            buildAndRenderFlow();
+        }
+
+        function triggerCardUpload(globalIdx) {
+            const input = document.getElementById('firebase-file-input');
+            input.onchange = async () => {
+                if (!input.files || input.files.length === 0) return;
+                const file = input.files[0];
+                const fileRef = window.storageRef(window.firebaseStorage, `journey_images/${Date.now()}_${file.name}`);
+                await window.uploadBytes(fileRef, file);
+                const url = await window.getDownloadURL(fileRef);
+                allScenarioDatabase[currentActiveScenario][globalIdx].image_url = url;
+                renderAdminCards();
+                buildAndRenderFlow();
+            };
+            input.click();
+        }
+
+        function deleteCardImage(globalIdx) {
+            allScenarioDatabase[currentActiveScenario][globalIdx].image_url = "";
+            const input = document.getElementById(`card-img-url-${globalIdx}`);
+            if (input) input.value = "";
+            renderAdminCards();
+            buildAndRenderFlow();
+        }
+
+        function addCardOption(globalIdx) {
+            const card = allScenarioDatabase[currentActiveScenario][globalIdx];
+            if (!card.options) card.options = [];
+            card.options.push({ headline: "新選項", subtext: "選項說明" });
+            renderAdminCards();
+            buildAndRenderFlow();
+        }
+
+        function deleteCardOption(globalIdx, optIdx) {
+            allScenarioDatabase[currentActiveScenario][globalIdx].options.splice(optIdx, 1);
+            renderAdminCards();
+            buildAndRenderFlow();
         }
 
         function addNewPageToZone(zoneKey) {
@@ -845,6 +939,7 @@
                 step_num: allScenarioDatabase[currentActiveScenario].length + 1,
                 title: "新引導題目內容",
                 subtitle: "請輸入輔助說明文字",
+                image_url: "",
                 options: [{ headline: "新選項 1", subtext: "說明" }, { headline: "新選項 2", subtext: "說明" }]
             });
             renderAdminCards();
@@ -944,11 +1039,8 @@
 
         function openDashboardWithRole(targetRole) {
             openAdminDashboardModal();
-            if (targetRole === 'admin') {
-                switchRoleTo('admin');
-            } else {
-                switchRoleTo('user');
-            }
+            if (targetRole === 'admin') switchRoleTo('admin');
+            else switchRoleTo('user');
         }
 
         function openAdminDashboardModal() {
@@ -979,6 +1071,14 @@
         function jumpDirectStep(stepId) {
             closeJumpPopup();
             const idx = activeFullFlowSteps.findIndex(s => s.id === stepId);
+            if (idx >= 0) navigateStep(idx);
+        }
+
+        function jumpDirectScenarioGap(scenKey) {
+            closeJumpPopup();
+            currentActiveScenario = scenKey;
+            buildAndRenderFlow();
+            const idx = activeFullFlowSteps.findIndex(s => s.id === 'fixed-page-a');
             if (idx >= 0) navigateStep(idx);
         }
 
