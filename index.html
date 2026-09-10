@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.1)</title>
+    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.2)</title>
     
     <!-- PWA 與 App Icon 關聯 -->
     <link rel="manifest" href="./manifest.json">
@@ -73,7 +73,7 @@
         .progress-bar-container { width: 100%; height: 3px; background: #e2e8f0; position: sticky; top: 51px; z-index: 99; }
         .progress-bar-fill { height: 100%; background: var(--brand-accent); width: 7%; transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
         
-        .workspace-layout { max-width: 860px; width: 100%; margin: 24px auto; padding: 0 16px; flex: 1; }
+        .workspace-layout { max-width: 900px; width: 100%; margin: 24px auto; padding: 0 16px; flex: 1; }
         .step-page { display: none; }
         .step-page.active { display: block; animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
@@ -113,6 +113,7 @@
         .dot-blue-bg { background: var(--brand-accent); }
         .dot-green-bg { background: var(--state-success); }
         .dot-purple-bg { background: var(--state-purple); }
+        .dot-red-bg { background: var(--state-danger); }
         
         .table-responsive { overflow-x: auto; margin-top: 6px; }
         table.clean-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; white-space: nowrap; }
@@ -127,20 +128,22 @@
         .promo-result-box { background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: white; padding: 1.8rem 1.4rem; border-radius: 16px; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 100%; }
         .promo-result-box .big-savings { font-size: 2.5rem; font-weight: 900; margin: 12px 0; }
         
-        .blueprint-dual-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; margin-bottom: 20px; }
-        @media (max-width: 720px) { .blueprint-dual-grid { grid-template-columns: 1fr; } }
-        .blueprint-left-box { background: linear-gradient(135deg, #1e3a8a, #0f172a); color: #fff; border-radius: 14px; padding: 22px; }
+        /* 人生藍圖兩欄排版 & 最大化圖片自適應 */
+        .blueprint-dual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; align-items: stretch; }
+        @media (max-width: 768px) { .blueprint-dual-grid { grid-template-columns: 1fr; } }
+        .blueprint-left-box { background: linear-gradient(135deg, #1e3a8a, #0f172a); color: #fff; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; justify-content: space-between; }
         .blueprint-right-box { background: #ffffff; border: 1.5px solid #bbf7d0; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; }
         .blueprint-entry-item { margin-bottom: 12px; }
-        .blueprint-entry-label { font-size: 0.72rem; color: #93c5fd; text-transform: uppercase; font-weight: 700; margin-bottom: 2px; }
-        .blueprint-entry-val { font-size: 0.92rem; font-weight: 700; }
-        .blueprint-img-uploaded-view { width: 100%; max-height: 180px; object-fit: contain; border-radius: 10px; border: 1px solid var(--border-light); margin-bottom: 12px; }
+        .blueprint-entry-label { font-size: 0.75rem; color: #93c5fd; text-transform: uppercase; font-weight: 700; margin-bottom: 2px; }
+        .blueprint-entry-val { font-size: 0.95rem; font-weight: 700; }
+        
+        .blueprint-img-wrapper { width: 100%; flex: 1; display: flex; align-items: center; justify-content: center; min-height: 220px; margin-bottom: 12px; background: #f8fafc; border-radius: 10px; overflow: hidden; border: 1px solid var(--border-light); }
+        .blueprint-img-uploaded-view { width: 100%; height: 100%; max-height: none; object-fit: contain; border-radius: 8px; }
         
         .action-row { display: flex; gap: 12px; margin-top: 24px; }
         .nav-btn { flex: 1; padding: 12px 18px; border-radius: 10px; font-weight: 700; font-size: 0.95rem; cursor: pointer; border: none; transition: 0.2s; text-align: center; }
         .nav-btn.prev { background: #ffffff; border: 1px solid var(--border-light); color: var(--text-sub); }
         .nav-btn.next { background: var(--brand-primary); color: #ffffff; }
-        .nav-btn.next:disabled { opacity: 0.35; cursor: not-allowed; }
         
         .modal-mask { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 2000; align-items: center; justify-content: center; }
         .modal-box { background: #fff; padding: 24px; border-radius: 16px; max-width: 440px; width: 90%; position: relative; }
@@ -181,7 +184,7 @@
 <body>
     <header class="system-top-nav">
         <div class="brand-title-wrap">
-            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.0</span>
+            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.2</span>
             <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="選擇客群情境">!</span>
             <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="核心分頁直達">*</span>
         </div>
@@ -230,8 +233,8 @@
                 <div style="display:flex; align-items:center; gap:12px;">
                     <div id="admin-modal-title">⚙️ 控制台</div>
                     <div class="role-switch-bar">
-                        <button class="role-switch-btn" id="role-btn-user" onclick="switchRoleTo('user')">👤 使用者</button>
-                        <button class="role-switch-btn active" id="role-btn-admin" onclick="switchRoleTo('admin')">🛠️ 管理者</button>
+                        <button class="role-switch-btn active" id="role-btn-user" onclick="switchRoleTo('user')">👤 使用者</button>
+                        <button class="role-switch-btn" id="role-btn-admin" onclick="switchRoleTo('admin')">🛠️ 管理者</button>
                     </div>
                 </div>
                 <div style="cursor:pointer;" onclick="closeAdminDashboard()">✕</div>
@@ -241,8 +244,8 @@
                 <div class="admin-nav-btn active" id="tab-flow-btn" onclick="switchAdminTab('flow')">頁面流程管理</div>
                 <div class="admin-nav-btn" id="tab-jars-btn" onclick="switchAdminTab('jars')">時光複利文字</div>
                 <div class="admin-nav-btn" id="tab-blueprint-btn" onclick="switchAdminTab('blueprint')">人生藍圖設定</div>
-                <div class="admin-nav-btn admin-only-tab" id="tab-mapping-btn" onclick="switchAdminTab('mapping')">領取文字與代碼</div>
-                <div class="admin-nav-btn admin-only-tab" id="tab-system-btn" onclick="switchAdminTab('system')">系統參數</div>
+                <div class="admin-nav-btn admin-only-tab" id="tab-mapping-btn" style="display:none;" onclick="switchAdminTab('mapping')">領取文字與代碼</div>
+                <div class="admin-nav-btn admin-only-tab" id="tab-system-btn" style="display:none;" onclick="switchAdminTab('system')">系統參數</div>
             </div>
             
             <div class="sync-loading-overlay" id="sync-loading-mask">
@@ -262,7 +265,6 @@
                             1️⃣ 進入客人世界 ｜ 2️⃣ 了解佢關心乜 ｜ 3️⃣ 找真正原因 ｜ 4️⃣ 創造人生畫面 ｜ 5️⃣ 看到兩個未來 ｜ 6️⃣ 自己發現距離 ｜ 7️⃣ 「咁可以點？」 ｜ 8️⃣ 「可能適合，亦可能唔適合。」 ⭐ ｜ 9️⃣ 產品＝填補佢 Gap 嘅工具 ｜ 🔟 複雜概念→簡單具體 ｜ 1️⃣1️⃣ 數字→證明效果 ｜ 1️⃣2️⃣ 重新連結返佢嘅目標 ｜ 1️⃣3️⃣ 一齊判斷適合唔適合 ｜ 1️⃣4️⃣ 客人自己決定
                         </div>
                     </div>
-
                     <div style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:12px; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center;">
                         <div style="display:flex; align-items:center; gap:8px;">
                             <label style="font-size:0.85rem; font-weight:bold; color:var(--brand-primary);">切換編輯情境：</label>
@@ -272,12 +274,12 @@
                                 <option value="flexible_return">🔓 3. 靈活性 / 回報</option>
                             </select>
                         </div>
-                        <div id="user-custom-indicator" style="display:none;" class="user-priority-badge">🟢 使用者專屬本機模式 (不被雲端覆蓋)</div>
+                        <div id="user-custom-indicator" class="user-priority-badge">🟢 使用者專屬本機模式</div>
                     </div>
                     
                     <!-- 區域 A -->
                     <div class="zone-header-box" style="border-left:4px solid #2563eb;">
-                        <span>📍 區域 A：引導題目 (第 1 - n 頁 $\rightarrow$ 固定分頁 A 前)</span>
+                        <span>📍 區域 A：引導題目 (第 1 - n 頁 → 固定分頁 A 前)</span>
                         <button class="step-ctrl-btn" style="background:#dbeafe; color:#1d4ed8;" onclick="addNewPageToZone('zone_a')">+ 新增區域 A 題目</button>
                     </div>
                     <div id="admin-cards-render-zone-a"></div>
@@ -293,7 +295,7 @@
 
                     <!-- 區域 B -->
                     <div class="zone-header-box" style="border-left:4px solid #059669; margin-top:20px;">
-                        <span>📍 區域 B：過渡題目 (固定分頁 A 開始 - n 頁 $\rightarrow$ 固定分頁 B 前)</span>
+                        <span>📍 區域 B：過渡題目 (固定分頁 A 開始 - n 頁 → 固定分頁 B 前)</span>
                         <button class="step-ctrl-btn" style="background:#d1fae5; color:#065f46;" onclick="addNewPageToZone('zone_b')">+ 新增區域 B 題目</button>
                     </div>
                     <div id="admin-cards-render-zone-b"></div>
@@ -309,7 +311,7 @@
 
                     <!-- 區域 C -->
                     <div class="zone-header-box" style="border-left:4px solid #7c3aed; margin-top:20px;">
-                        <span>📍 區域 C：確認與評估 (固定分頁 B 開始 - n 頁 $\rightarrow$ 固定分頁 C 前)</span>
+                        <span>📍 區域 C：確認與評估 (固定分頁 B 開始 - n 頁 → 固定分頁 C 前)</span>
                         <button class="step-ctrl-btn" style="background:#ede9fe; color:#5b21b6;" onclick="addNewPageToZone('zone_c')">+ 新增區域 C 題目</button>
                     </div>
                     <div id="admin-cards-render-zone-c"></div>
@@ -363,7 +365,13 @@
                 <div id="admin-sec-blueprint" style="display:none;">
                     <div class="admin-card-row">
                         <h4 style="margin-top:0; color:var(--brand-primary);">🖼️ 藍圖右側圖解與替代方案</h4>
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">藍圖圖片網址：</label>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+                            <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">藍圖圖片：</label>
+                            <div style="display:flex; gap:6px;">
+                                <button class="step-ctrl-btn" onclick="triggerBlueprintUpload()">📤 上載藍圖圖片</button>
+                                <button class="del-opt-btn" onclick="deleteBlueprintImage()">🗑️ 刪除圖片</button>
+                            </div>
+                        </div>
                         <input type="text" id="admin-blueprint-img-url" class="pink-edit-input" value="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80">
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:10px; display:block;">替代方案總結說明：</label>
                         <input type="text" id="admin-blueprint-summary-text" class="pink-edit-input" value="完全不影響現有生活享受：只需將每月不知不覺流走的少許資金，分段注入專屬水庫，自然鎖定終身被動收入。">
@@ -392,6 +400,7 @@
             </div>
             
             <input type="file" id="firebase-file-input" accept="image/*" style="display:none;">
+            <input type="file" id="blueprint-file-input" accept="image/*" style="display:none;">
             <input type="file" id="json-import-input" accept=".json" style="display:none;" onchange="handleJSONImport(this)">
             
             <!-- 底部動作按鈕列 -->
@@ -399,14 +408,14 @@
                 <button class="nav-btn prev" style="width:auto; padding:8px 20px;" onclick="closeAdminDashboard()">關閉</button>
                 
                 <!-- 使用者動作按鈕 -->
-                <div id="user-action-buttons" style="display:none; gap:8px;">
-                    <button class="step-ctrl-btn" onclick="exportUserDataJSON()">📤 匯出本機設定</button>
-                    <button class="step-ctrl-btn" onclick="document.getElementById('json-import-input').click()">📥 匯入設定</button>
+                <div id="user-action-buttons" style="display:flex; gap:8px;">
+                    <button class="step-ctrl-btn" onclick="exportUserDataJSON()">📤 匯出設定 (備份)</button>
+                    <button class="step-ctrl-btn" onclick="document.getElementById('json-import-input').click()">📥 匯入設定 (還原)</button>
                     <button class="nav-btn prev" style="width:auto; padding:8px 18px; background:#f0fdf4; border-color:#86efac; color:#166534;" onclick="saveToLocalStorageOnly()">💾 保存為使用者專屬數據</button>
                 </div>
                 
                 <!-- 管理者動作按鈕 -->
-                <div id="admin-action-buttons" style="display:flex; gap:8px;">
+                <div id="admin-action-buttons" style="display:none; gap:8px;">
                     <button class="nav-btn next" style="width:auto; padding:8px 20px;" onclick="syncAllToGoogleSheet()">☁️ 同步至 Google Sheet (新 Version)</button>
                 </div>
             </div>
@@ -415,12 +424,12 @@
 
     <script>
         const answers = {};
-        let currentSystemVersion = "v6.3.0";
+        let currentSystemVersion = "v6.3.2";
         let GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwbKrrmiS5vx0Q5TvqqUCHBhU-VrS7WwwY0hj6BaNRwuzPtXXIZZxejPwhycCZhSCr-Rg/exec';
         let cloudAdminPassword = "903";
         let globalReturnMultipliers = {};
         let currentActiveScenario = "no_savings";
-        let currentRole = "admin";
+        let currentRole = "user"; // 預設為使用者先
         let activeFullFlowSteps = [];
         let currentStepIndex = 0;
 
@@ -582,7 +591,8 @@
             ]
         };
 
-        const colVisibility = { annuity: true, accum: true, asset: true };
+        const colVisibility = { annuity: true, accum: true, asset: true, interest: true };
+
         function formatNumber(v) { return new Intl.NumberFormat('en-US', {maximumFractionDigits: 0}).format(v || 0); }
         function parseFormattedNumber(s) { return parseFloat(String(s).replace(/,/g, '')) || 0; }
 
@@ -650,21 +660,20 @@
                     let specialStepContent = '';
                     if (c.step_num === 10) {
                         specialStepContent = `
-                            <div class="pool-visual-container">
-                                <div class="pool-visual-step">
-                                    <div class="pool-visual-icon">☕</div>
-                                    <div class="pool-visual-title">${c.options[0]?.headline || '1. 今日生活開支'}</div>
-                                    <div class="pool-visual-desc">${c.options[0]?.subtext || '旅行、享受、家庭開銷照舊進行，完全不犧牲生活品質。'}</div>
-                                </div>
-                                <div class="pool-visual-step highlight">
-                                    <div class="pool-visual-icon">⏳</div>
-                                    <div class="pool-visual-title">${c.options[1]?.headline || '2. 分段小額入庫'}</div>
-                                    <div class="pool-visual-desc">${c.options[1]?.subtext || '每月只需撥出微少份額，只需 5 年，就自動完成資產水庫建造。'}</div>
-                                </div>
-                                <div class="pool-visual-step">
-                                    <div class="pool-visual-icon">🚿</div>
-                                    <div class="pool-visual-title">${c.options[2]?.headline || '3. 未來水龍頭'}</div>
-                                    <div class="pool-visual-desc">${c.options[2]?.subtext || '停止投入後，水庫交由時間滾存，隨時可開水龍頭提取源源長糧。'}</div>
+                            <div class="gap-container" style="background:#f8fafc; border:1px solid #cbd5e1; margin-bottom:18px;">
+                                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px;">
+                                    <div class="gap-box">
+                                        <h4 style="color:var(--brand-primary); font-weight:bold;">1. 今日生活開支</h4>
+                                        <p style="font-size:0.85rem; color:var(--text-sub);">${c.options[0]?.subtext || '旅行、享受、家庭開銷照舊進行，完全不犧牲生活品質。'}</p>
+                                    </div>
+                                    <div class="gap-box" style="border:1.5px solid var(--brand-accent); background:var(--brand-soft);">
+                                        <h4 style="color:var(--brand-accent); font-weight:bold;">2. 分段小額入庫</h4>
+                                        <p style="font-size:0.85rem; color:var(--text-sub);">${c.options[1]?.subtext || '每月只需撥出微少份額，只需 5 年，就自動完成資產水庫建造。'}</p>
+                                    </div>
+                                    <div class="gap-box">
+                                        <h4 style="color:var(--state-success); font-weight:bold;">3. 未來水龍頭</h4>
+                                        <p style="font-size:0.85rem; color:var(--text-sub);">${c.options[2]?.subtext || '停止投入後，水庫交由時間滾存，隨時可開水龍頭提取源源長糧。'}</p>
+                                    </div>
                                 </div>
                             </div>
                         `;
@@ -679,7 +688,7 @@
                             ${c.image_url ? `<div class="page-bottom-img-zone"><img class="page-bottom-img" src="${c.image_url}"></div>` : ''}
                             <div class="action-row">
                                 ${index > 0 ? `<button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 上一步</button>` : ''}
-                                <button class="nav-btn next" id="btn-next-${index}" ${c.options && c.options.length > 0 && !answers[c.id] && c.step_num !== 10 ? 'disabled' : ''} onclick="navigateStep(${index + 1})">下一步 →</button>
+                                <button class="nav-btn next" id="btn-next-${index}" onclick="navigateStep(${index + 1})">下一步 →</button>
                             </div>
                         </div>
                     `;
@@ -737,11 +746,11 @@
                                     <div class="calc-input-group"><label>第5年 (<span class="age-y5">34</span>歲)</label><input type="text" id="plan1-y5" value="40,000" readonly class="readonly"></div>
                                 </div>
                             </div>
-
                             <div class="dots-toggle-bar-pure">
                                 <div class="pure-color-dot dot-blue-bg" id="dot-btn-annuity" onclick="toggleColumn('annuity')" title="被動收入"></div>
                                 <div class="pure-color-dot dot-green-bg" id="dot-btn-accum" onclick="toggleColumn('accum')" title="累積已領"></div>
                                 <div class="pure-color-dot dot-purple-bg" id="dot-btn-asset" onclick="toggleColumn('asset')" title="大樹收成"></div>
+                                <div class="pure-color-dot dot-red-bg" id="dot-btn-interest" onclick="toggleColumn('interest')" title="年化百分比回報"></div>
                             </div>
                             <div class="table-responsive">
                                 <table class="clean-table">
@@ -763,16 +772,21 @@
                             <h2 class="question-title">🌱 你的專屬生活藍圖筆記</h2>
                             <div class="blueprint-dual-grid">
                                 <div class="blueprint-left-box">
-                                    <h4 style="font-size:1.05rem; font-weight:800; margin-bottom:12px; color:#fff; border-bottom:1px solid rgba(255,255,255,0.15); padding-bottom:6px;">📋 生活初衷彙整</h4>
-                                    <div class="blueprint-entry-item"><div class="blueprint-entry-label">01. 生活現狀</div><div class="blueprint-entry-val">${answers['step_1'] || '先享受現在'}</div></div>
-                                    <div class="blueprint-entry-item"><div class="blueprint-entry-label">02. 核心關注</div><div class="blueprint-entry-val">${answers['step_2'] || '旅行與人生體驗'}</div></div>
-                                    <div class="blueprint-entry-item"><div class="blueprint-entry-label">03. 渴望畫面</div><div class="blueprint-entry-val">${answers['step_4'] || '時間完全由自己掌控'}</div></div>
-                                    <div class="blueprint-entry-item"><div class="blueprint-entry-label">04. 原本擔心的卡點</div><div class="blueprint-entry-val" style="color:#fde047;">${answers['step_6'] || '怕缺乏靈活性'}</div></div>
+                                    <div>
+                                        <h4 style="font-size:1.05rem; font-weight:800; margin-bottom:14px; color:#fff; border-bottom:1px solid rgba(255,255,255,0.15); padding-bottom:6px;">📋 生活初衷彙整</h4>
+                                        <div class="blueprint-entry-item"><div class="blueprint-entry-label">01. 生活現狀</div><div class="blueprint-entry-val">${answers['step_1'] || '先享受現在'}</div></div>
+                                        <div class="blueprint-entry-item"><div class="blueprint-entry-label">02. 核心關注</div><div class="blueprint-entry-val">${answers['step_2'] || '旅行與人生體驗'}</div></div>
+                                        <div class="blueprint-entry-item"><div class="blueprint-entry-label">03. 渴望畫面</div><div class="blueprint-entry-val">${answers['step_4'] || '時間完全由自己掌控'}</div></div>
+                                        <div class="blueprint-entry-item"><div class="blueprint-entry-label">04. 原本擔心的卡點</div><div class="blueprint-entry-val" style="color:#fde047;">${answers['step_6'] || '怕缺乏靈活性'}</div></div>
+                                    </div>
+                                    <div style="font-size:0.75rem; color:#93c5fd; border-top:1px solid rgba(255,255,255,0.1); padding-top:8px;">💫 透過專屬水庫，自然達成理想生活選擇權</div>
                                 </div>
                                 <div class="blueprint-right-box">
-                                    <h4 style="font-size:1rem; font-weight:800; color:var(--state-success); margin-bottom:10px;">💡 替代方案：無痛縮減落差</h4>
-                                    <img id="blueprint-uploaded-img" class="blueprint-img-uploaded-view" src="${imgSrc}">
-                                    <div id="disp-sub-14" style="background:#f0fdf4; border-radius:10px; padding:10px; font-size:0.85rem; color:#166534;">
+                                    <h4 style="font-size:1rem; font-weight:800; color:var(--state-success); margin-bottom:8px;">💡 替代方案：無痛縮減落差</h4>
+                                    <div class="blueprint-img-wrapper">
+                                        <img id="blueprint-uploaded-img" class="blueprint-img-uploaded-view" src="${imgSrc}">
+                                    </div>
+                                    <div id="disp-sub-14" style="background:#f0fdf4; border-radius:10px; padding:12px; font-size:0.85rem; color:#166534; line-height:1.5;">
                                         <strong>完全不影響現有生活享受：</strong><br>${descText}
                                     </div>
                                 </div>
@@ -787,18 +801,23 @@
                     stepEl.innerHTML = `
                         <div class="content-card">
                             <h2 class="question-title">🎁 專屬保費優惠計算</h2>
-                            <p class="question-hint">為你度身訂造最慳錢的投保策略！</p>
+                            <p class="question-hint">為你度身訂造最慳錢的投保策略！即時計算最新保費回贈及折扣優惠：</p>
                             <div class="promo-split-container">
                                 <div class="promo-left-col">
                                     <div class="promo-card" style="background:#f8fafc;">
-                                        <label style="font-size:0.75rem; font-weight:bold;">每年保費 ($)</label>
-                                        <input type="text" id="promo-annual-premium" value="100,000" style="width:100%; padding:8px; font-weight:bold; text-align:center;" oninput="calculatePromo()">
+                                        <label style="font-size:0.75rem; font-weight:bold; color:var(--text-sub);">每年名義保費 ($)</label>
+                                        <input type="text" id="promo-annual-premium" value="100,000" style="width:100%; padding:10px; font-size:1.1rem; font-weight:bold; text-align:center; border:1.5px solid var(--brand-accent); border-radius:8px; margin-top:4px;" oninput="calculatePromo()">
+                                        <div style="margin-top:14px; font-size:0.8rem; color:var(--text-sub); line-height:1.6;">
+                                            <div>🔹 首年保費折扣：<strong id="promo-rate-text" style="color:var(--state-success);">10%</strong></div>
+                                            <div>🔹 預繳首年保費額外優惠：<strong id="promo-prepay-text" style="color:var(--brand-primary);">$2,000</strong></div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="promo-right-col">
                                     <div class="promo-result-box">
-                                        <h4>已為您慳下達：</h4>
-                                        <div class="big-savings" id="promo-total-savings">$0</div>
+                                        <h4 style="font-size:1rem; opacity:0.9;">總計已為您慳下達：</h4>
+                                        <div class="big-savings" id="promo-total-savings">$12,000</div>
+                                        <div style="font-size:0.8rem; opacity:0.85;">折後首年實付保費：<span id="promo-actual-pay" style="font-weight:bold;">$88,000</span></div>
                                     </div>
                                 </div>
                             </div>
@@ -835,8 +854,6 @@
             if (stepEl) {
                 stepEl.querySelectorAll('.option-card-guided').forEach(c => c.classList.remove('selected'));
                 event.currentTarget.classList.add('selected');
-                const btnNext = document.getElementById(`btn-next-${index}`);
-                if (btnNext) btnNext.disabled = false;
             }
         }
 
@@ -846,16 +863,13 @@
             document.getElementById('progress-fill').style.width = `${pct}%`;
         }
 
-        // 後台頁面管理渲染 (支援「選項模式」與「純步驟模式」切換)
         function renderAdminCards() {
             let currentList = allScenarioDatabase[currentActiveScenario] || allScenarioDatabase['no_savings'];
-
             ['zone_a', 'zone_b', 'zone_c'].forEach(zKey => {
                 const zoneContainer = document.getElementById(`admin-cards-render-${zKey.replace('_', '-')}`);
                 if (!zoneContainer) return;
                 zoneContainer.innerHTML = '';
                 const zoneCards = currentList.filter(c => c.zone === zKey);
-
                 zoneCards.forEach((card, idxInZone) => {
                     const globalIdx = currentList.findIndex(c => c.id === card.id);
                     const isOptionMode = card.options && card.options.length > 0;
@@ -898,7 +912,6 @@
                         </div>
                     `;
                     zoneContainer.appendChild(el);
-
                     if (isOptionMode) {
                         const optZone = el.querySelector(`#opts-edit-zone-${globalIdx}`);
                         card.options.forEach((opt, optIdx) => {
@@ -964,7 +977,6 @@
             const targetIdx = idx + dir;
             if (targetIdx < 0 || targetIdx >= list.length) return;
             if (list[targetIdx].zone !== currentZone) return;
-
             const temp = list[idx];
             list[idx] = list[targetIdx];
             list[targetIdx] = temp;
@@ -1009,7 +1021,27 @@
             input.click();
         }
 
-        // 時光複利文字載入與保存
+        function triggerBlueprintUpload() {
+            const input = document.getElementById('blueprint-file-input');
+            input.onchange = async () => {
+                if (!input.files || input.files.length === 0) return;
+                const file = input.files[0];
+                const fileRef = window.storageRef(window.firebaseStorage, `blueprint_images/${Date.now()}_${file.name}`);
+                await window.uploadBytes(fileRef, file);
+                const url = await window.getDownloadURL(fileRef);
+                document.getElementById('admin-blueprint-img-url').value = url;
+                localStorage.setItem('ava_blueprint_custom_img', url);
+                buildAndRenderFlow();
+            };
+            input.click();
+        }
+
+        function deleteBlueprintImage() {
+            document.getElementById('admin-blueprint-img-url').value = "";
+            localStorage.setItem('ava_blueprint_custom_img', "");
+            buildAndRenderFlow();
+        }
+
         function loadJarTextsToEditor() {
             const jt = allJarTexts[currentActiveScenario] || allJarTexts['no_savings'];
             for (let j = 1; j <= 4; j++) {
@@ -1056,7 +1088,6 @@
             });
         }
 
-        // 身分切換邏輯 (使用者 / 管理者)
         function switchRoleTo(role) {
             if (role === 'admin') {
                 const pwd = prompt("請輸入管理者密碼進行身分驗證：");
@@ -1083,18 +1114,19 @@
         }
 
         function openDashboardWithRole(targetRole) {
+            currentRole = targetRole;
+            openAdminDashboardModal();
             if (targetRole === 'admin') {
                 const pwd = prompt("請輸入管理者密碼：");
                 if (pwd === cloudAdminPassword) {
-                    currentRole = 'admin';
-                    openAdminDashboardModal();
                     switchRoleTo('admin');
                 } else if (pwd !== null) {
-                    alert("❌ 密碼錯誤！");
+                    alert("❌ 密碼錯誤！進入使用者模式。");
+                    switchRoleTo('user');
+                } else {
+                    switchRoleTo('user');
                 }
             } else {
-                currentRole = 'user';
-                openAdminDashboardModal();
                 switchRoleTo('user');
             }
         }
@@ -1147,7 +1179,6 @@
             loadJarTextsToEditor();
         }
 
-        // 使用者專屬存檔 (LocalStorage 優先保護)
         function saveToLocalStorageOnly() {
             saveJarTextsFromEditor();
             const desc = document.getElementById('admin-blueprint-summary-text').value;
@@ -1160,11 +1191,10 @@
             localStorage.setItem('ava_user_has_customized', 'true');
             
             buildAndRenderFlow();
-            alert("✅ 已成功保存為「使用者專屬設定」！(此設定受到保護，管理者更新雲端時不會被覆蓋)");
+            alert("✅ 已成功保存為「使用者專屬設定」！(此設定受保護，不會被管理者覆蓋)");
             closeAdminDashboard();
         }
 
-        // 匯出 JSON
         function exportUserDataJSON() {
             saveJarTextsFromEditor();
             const exportData = {
@@ -1183,7 +1213,6 @@
             a.click();
         }
 
-        // 匯入 JSON
         function handleJSONImport(input) {
             if (!input.files || input.files.length === 0) return;
             const file = input.files[0];
@@ -1205,7 +1234,6 @@
             reader.readAsText(file);
         }
 
-        // 管理者同步至 Google Sheet
         async function syncAllToGoogleSheet() {
             saveJarTextsFromEditor();
             const loadingMask = document.getElementById('sync-loading-mask');
@@ -1216,7 +1244,6 @@
             
             const newVersion = incrementVersion(currentSystemVersion);
             applyVersionToUI(newVersion);
-
             try {
                 const allSheetRows = [];
                 Object.keys(allScenarioDatabase).forEach(scenKey => {
@@ -1234,7 +1261,6 @@
                         });
                     });
                 });
-
                 await fetch(GAS_API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -1247,12 +1273,11 @@
                         sheet_mappings: sheetMappings
                     })
                 });
-
                 localStorage.setItem('ava_scenario_database', JSON.stringify(allScenarioDatabase));
                 localStorage.setItem('ava_jar_texts', JSON.stringify(allJarTexts));
                 localStorage.setItem('ava_sheet_mappings', JSON.stringify(sheetMappings));
                 localStorage.setItem('ava_last_synced_version', newVersion);
-                localStorage.removeItem('ava_user_has_customized'); // 管理者同步重設標記
+                localStorage.removeItem('ava_user_has_customized');
                 
                 buildAndRenderFlow();
                 loadingMask.style.display = 'none';
@@ -1264,34 +1289,28 @@
             }
         }
 
-        // 啟動秒開機制：先輕量檢查 version，若有新版才拉取
         async function fetchCloudDataWithFastCheck() {
             try {
                 const isUserCustom = localStorage.getItem('ava_user_has_customized') === 'true';
                 const localVersion = localStorage.getItem('ava_last_synced_version') || currentSystemVersion;
 
-                // 1. 先用極輕量請求檢查版本號 (秒開核心)
                 const checkResp = await fetch(`${GAS_API_URL}?check_version=true`);
                 const checkJson = await checkResp.json();
                 
                 if (checkJson.admin_password) cloudAdminPassword = String(checkJson.admin_password);
                 const cloudVer = checkJson.system_version || currentSystemVersion;
 
-                // 2. 如果版本一致且本機有資料，直接使用本機快取秒開
                 if (localVersion === cloudVer && localStorage.getItem('ava_scenario_database')) {
                     applyVersionToUI(localVersion);
                     buildAndRenderFlow();
                     return;
                 }
-
-                // 3. 使用者有專屬自訂資料時，維持使用者資料優先
                 if (isUserCustom) {
                     applyVersionToUI(localVersion);
                     buildAndRenderFlow();
                     return;
                 }
 
-                // 4. 版本不同且非使用者自訂時，進行完整拉取
                 const fullResp = await fetch(GAS_API_URL);
                 const json = await fullResp.json();
                 
@@ -1361,26 +1380,81 @@
             if (!thead || !tbody) return;
 
             const jt = allJarTexts[currentActiveScenario] || allJarTexts['no_savings'];
-            thead.innerHTML = `<tr><th>${jt.th_year || '年份 (歲數)'}</th><th>${jt.th_reserve || '累計儲備'}</th>${colVisibility.annuity ? `<th>${jt.th_income || '被動收入'}</th>` : ''}${colVisibility.accum ? `<th>${jt.th_accum || '累積已領'}</th>` : ''}${colVisibility.asset ? `<th>${jt.th_asset || '大樹收成'}</th>` : ''}</tr>`;
-            tbody.innerHTML = '';
+            thead.innerHTML = `
+                <tr>
+                    <th style="text-align:left;">${jt.th_year || '年份 (歲數)'}</th>
+                    <th>${jt.th_reserve || '累計儲備'}</th>
+                    ${colVisibility.annuity ? `<th>${jt.th_income || '被動收入'}</th>` : ''}
+                    ${colVisibility.accum ? `<th>${jt.th_accum || '累積已領'}</th>` : ''}
+                    ${colVisibility.asset ? `<th>${jt.th_asset || '大樹收成'}</th>` : ''}
+                    ${colVisibility.interest ? `<th>${jt.th_interest || '年化百分比回報'}</th>` : ''}
+                </tr>
+            `;
 
-            [8, 10, 15, 20, 25, 30].forEach(yr => {
+            tbody.innerHTML = '';
+            const allYears = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30];
+            
+            allYears.forEach(yr => {
                 const age = startAge + yr - 1;
+                const reserve = yr <= 5 ? p1Val * yr : totalSow;
                 const annuity = yr >= 8 ? totalSow * 0.07 : 0;
                 const accum = yr >= 8 ? annuity * (yr - 8 + 1) : 0;
-                const asset = totalSow * (1 + (yr - 5) * 0.15);
+                const asset = yr <= 5 ? reserve * 0.95 : totalSow * (1 + (yr - 5) * 0.12);
+                
+                let irr = 0;
+                if (yr >= 8) {
+                    irr = 6.2 + (yr - 8) * 0.15;
+                } else if (yr > 5) {
+                    irr = 4.5 + (yr - 5) * 0.4;
+                } else {
+                    irr = 2.0;
+                }
 
                 const tr = document.createElement('tr');
-                tr.innerHTML = `<td>第${yr}年 (${age}歲)</td><td>$${formatNumber(totalSow)}</td>${colVisibility.annuity ? `<td style="color:var(--brand-accent); font-weight:800;">$${formatNumber(annuity)}</td>` : ''}${colVisibility.accum ? `<td style="color:var(--state-success); font-weight:800;">$${formatNumber(accum)}</td>` : ''}${colVisibility.asset ? `<td style="color:var(--state-purple); font-weight:800;">$${formatNumber(asset)}</td>` : ''}`;
+                tr.innerHTML = `
+                    <td style="text-align:left; font-weight:bold;">第 ${yr} 年 (${age} 歲)</td>
+                    <td>$${formatNumber(reserve)}</td>
+                    ${colVisibility.annuity ? `<td style="color:var(--brand-accent); font-weight:800;">${annuity > 0 ? '$' + formatNumber(annuity) : '-'}</td>` : ''}
+                    ${colVisibility.accum ? `<td style="color:var(--state-success); font-weight:800;">${accum > 0 ? '$' + formatNumber(accum) : '-'}</td>` : ''}
+                    ${colVisibility.asset ? `<td style="color:var(--state-purple); font-weight:800;">$${formatNumber(asset)}</td>` : ''}
+                    ${colVisibility.interest ? `<td style="color:var(--state-danger); font-weight:800;">${irr.toFixed(1)}%</td>` : ''}
+                `;
                 tbody.appendChild(tr);
             });
         }
 
         function calculatePromo() {
             const P = parseFormattedNumber(document.getElementById('promo-annual-premium')?.value) || 100000;
-            const d1 = Math.floor(P / 5000) * 500;
+            let discountRate = 0.08;
+            let prepayBonus = 1000;
+
+            if (P >= 150000) {
+                discountRate = 0.12;
+                prepayBonus = 3000;
+            } else if (P >= 100000) {
+                discountRate = 0.10;
+                prepayBonus = 2000;
+            } else if (P >= 50000) {
+                discountRate = 0.08;
+                prepayBonus = 1000;
+            } else {
+                discountRate = 0.05;
+                prepayBonus = 500;
+            }
+
+            const discountAmount = P * discountRate;
+            const totalSaved = discountAmount + prepayBonus;
+            const actualPay = P - totalSaved;
+
+            const rateTextEl = document.getElementById('promo-rate-text');
+            const prepayTextEl = document.getElementById('promo-prepay-text');
             const totalSavedEl = document.getElementById('promo-total-savings');
-            if (totalSavedEl) totalSavedEl.textContent = '$' + formatNumber(d1);
+            const actualPayEl = document.getElementById('promo-actual-pay');
+
+            if (rateTextEl) rateTextEl.textContent = (discountRate * 100).toFixed(0) + '%';
+            if (prepayTextEl) prepayTextEl.textContent = '$' + formatNumber(prepayBonus);
+            if (totalSavedEl) totalSavedEl.textContent = '$' + formatNumber(totalSaved);
+            if (actualPayEl) actualPayEl.textContent = '$' + formatNumber(actualPay);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
