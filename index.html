@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.2)</title>
+    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.3)</title>
     
-    <!-- PWA 與 App Icon 關聯 -->
+    <!-- PWA 與 App Icon 關聯 (包含 192x192 及 512x512) -->
     <link rel="manifest" href="./manifest.json">
-    <link rel="icon" type="image/png" href="./icon-192x192.png">
-    <link rel="apple-touch-icon" href="./icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="./icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="./icon-512x512.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="./icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="./icon-512x512.png">
     <meta name="theme-color" content="#1e3a8a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -184,7 +186,7 @@
 <body>
     <header class="system-top-nav">
         <div class="brand-title-wrap">
-            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.2</span>
+            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.3</span>
             <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="選擇客群情境">!</span>
             <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="核心分頁直達">*</span>
         </div>
@@ -233,8 +235,8 @@
                 <div style="display:flex; align-items:center; gap:12px;">
                     <div id="admin-modal-title">⚙️ 控制台</div>
                     <div class="role-switch-bar">
-                        <button class="role-switch-btn active" id="role-btn-user" onclick="switchRoleTo('user')">👤 使用者</button>
-                        <button class="role-switch-btn" id="role-btn-admin" onclick="switchRoleTo('admin')">🛠️ 管理者</button>
+                        <button class="role-switch-btn" id="role-btn-user" onclick="switchRoleTo('user')">👤 使用者</button>
+                        <button class="role-switch-btn active" id="role-btn-admin" onclick="switchRoleTo('admin')">🛠️ 管理者</button>
                     </div>
                 </div>
                 <div style="cursor:pointer;" onclick="closeAdminDashboard()">✕</div>
@@ -244,8 +246,8 @@
                 <div class="admin-nav-btn active" id="tab-flow-btn" onclick="switchAdminTab('flow')">頁面流程管理</div>
                 <div class="admin-nav-btn" id="tab-jars-btn" onclick="switchAdminTab('jars')">時光複利文字</div>
                 <div class="admin-nav-btn" id="tab-blueprint-btn" onclick="switchAdminTab('blueprint')">人生藍圖設定</div>
-                <div class="admin-nav-btn admin-only-tab" id="tab-mapping-btn" style="display:none;" onclick="switchAdminTab('mapping')">領取文字與代碼</div>
-                <div class="admin-nav-btn admin-only-tab" id="tab-system-btn" style="display:none;" onclick="switchAdminTab('system')">系統參數</div>
+                <div class="admin-nav-btn admin-only-tab" id="tab-mapping-btn" onclick="switchAdminTab('mapping')">領取文字與代碼</div>
+                <div class="admin-nav-btn admin-only-tab" id="tab-system-btn" onclick="switchAdminTab('system')">系統參數</div>
             </div>
             
             <div class="sync-loading-overlay" id="sync-loading-mask">
@@ -274,7 +276,7 @@
                                 <option value="flexible_return">🔓 3. 靈活性 / 回報</option>
                             </select>
                         </div>
-                        <div id="user-custom-indicator" class="user-priority-badge">🟢 使用者專屬本機模式</div>
+                        <div id="user-custom-indicator" style="display:none;" class="user-priority-badge">🟢 使用者專屬本機模式</div>
                     </div>
                     
                     <!-- 區域 A -->
@@ -374,7 +376,7 @@
                         </div>
                         <input type="text" id="admin-blueprint-img-url" class="pink-edit-input" value="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80">
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:10px; display:block;">替代方案總結說明：</label>
-                        <input type="text" id="admin-blueprint-summary-text" class="pink-edit-input" value="完全不影響現有生活享受：只需將每月不知不覺流走的少許資金，分段注入專屬水庫，自然鎖定終身被動收入。">
+                        <input type="text" id="admin-blueprint-summary-text" class="pink-edit-input" value="完全不影響現有生活享受：只需將每月不知不決流走的少許資金，分段注入專屬水庫，自然鎖定終身被動收入。">
                     </div>
                 </div>
 
@@ -407,15 +409,15 @@
             <div style="background:#ffffff; padding:12px 20px; border-top:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
                 <button class="nav-btn prev" style="width:auto; padding:8px 20px;" onclick="closeAdminDashboard()">關閉</button>
                 
-                <!-- 使用者動作按鈕 -->
-                <div id="user-action-buttons" style="display:flex; gap:8px;">
+                <!-- 使用者動作按鈕 (使用者模式才顯示) -->
+                <div id="user-action-buttons" style="display:none; gap:8px;">
                     <button class="step-ctrl-btn" onclick="exportUserDataJSON()">📤 匯出設定 (備份)</button>
                     <button class="step-ctrl-btn" onclick="document.getElementById('json-import-input').click()">📥 匯入設定 (還原)</button>
                     <button class="nav-btn prev" style="width:auto; padding:8px 18px; background:#f0fdf4; border-color:#86efac; color:#166534;" onclick="saveToLocalStorageOnly()">💾 保存為使用者專屬數據</button>
                 </div>
                 
-                <!-- 管理者動作按鈕 -->
-                <div id="admin-action-buttons" style="display:none; gap:8px;">
+                <!-- 管理者動作按鈕 (預設顯示) -->
+                <div id="admin-action-buttons" style="display:flex; gap:8px;">
                     <button class="nav-btn next" style="width:auto; padding:8px 20px;" onclick="syncAllToGoogleSheet()">☁️ 同步至 Google Sheet (新 Version)</button>
                 </div>
             </div>
@@ -424,12 +426,12 @@
 
     <script>
         const answers = {};
-        let currentSystemVersion = "v6.3.2";
+        let currentSystemVersion = "v6.3.3";
         let GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwbKrrmiS5vx0Q5TvqqUCHBhU-VrS7WwwY0hj6BaNRwuzPtXXIZZxejPwhycCZhSCr-Rg/exec';
         let cloudAdminPassword = "903";
         let globalReturnMultipliers = {};
         let currentActiveScenario = "no_savings";
-        let currentRole = "user"; // 預設為使用者先
+        let currentRole = "admin"; // 預設為管理者先
         let activeFullFlowSteps = [];
         let currentStepIndex = 0;
 
@@ -703,11 +705,7 @@
                                 <p style="font-size:0.9rem; color:var(--text-sub);">${sc.takeaway_summary}</p>
                                 <div class="gap-comparison-grid">
                                     <div class="gap-box">
-                                        <h4 style="color:#64748b; font-size:0.85rem; margin-bottom:4px;">多數人以為：</h4>
-                                        <p style="font-size:0.95rem; font-weight:700;">${sc.intuitive_belief}</p>
-                                    </div>
-                                    <div class="gap-box" style="border-color:#bbf7d0; background:#f0fdf4;">
-                                        <h4 style="color:#059669; font-size:0.85rem; margin-bottom:4px;">客觀現實真相：</h4>
+                                        <h4 style="color:#64748b; font-size:0.85rem; margin-bottom:4px;">客觀現實真相：</h4>
                                         <p style="font-size:0.95rem; font-weight:700; color:#166534;">${sc.objective_reality}</p>
                                     </div>
                                 </div>
@@ -1114,20 +1112,23 @@
         }
 
         function openDashboardWithRole(targetRole) {
-            currentRole = targetRole;
             openAdminDashboardModal();
             if (targetRole === 'admin') {
-                const pwd = prompt("請輸入管理者密碼：");
-                if (pwd === cloudAdminPassword) {
-                    switchRoleTo('admin');
-                } else if (pwd !== null) {
-                    alert("❌ 密碼錯誤！進入使用者模式。");
-                    switchRoleTo('user');
-                } else {
-                    switchRoleTo('user');
-                }
+                currentRole = 'admin';
+                document.getElementById('role-btn-admin').classList.add('active');
+                document.getElementById('role-btn-user').classList.remove('active');
+                document.getElementById('admin-action-buttons').style.display = 'flex';
+                document.getElementById('user-action-buttons').style.display = 'none';
+                document.getElementById('user-custom-indicator').style.display = 'none';
+                document.querySelectorAll('.admin-only-tab').forEach(el => el.style.display = 'block');
             } else {
-                switchRoleTo('user');
+                currentRole = 'user';
+                document.getElementById('role-btn-user').classList.add('active');
+                document.getElementById('role-btn-admin').classList.remove('active');
+                document.getElementById('admin-action-buttons').style.display = 'none';
+                document.getElementById('user-action-buttons').style.display = 'flex';
+                document.getElementById('user-custom-indicator').style.display = 'inline-flex';
+                document.querySelectorAll('.admin-only-tab').forEach(el => el.style.display = 'none');
             }
         }
 
