@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.2.0)</title>
+    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.0)</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,6 +43,7 @@
             --state-purple: #7c3aed;
             --state-danger: #dc2626;
             --plan1-color: #2563eb;
+            --plan2-color: #059669;
             --pink-dashed: 1.5px dashed #f8bbd0;
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
             --shadow-md: 0 4px 16px -2px rgba(15, 23, 42, 0.06);
@@ -89,6 +90,14 @@
         @media (max-width: 620px) { .gap-comparison-grid { grid-template-columns: 1fr; } }
         .gap-box { background: #fff; border-radius: 10px; padding: 14px; border: 1px solid #dbeafe; }
         
+        .pool-visual-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0 26px 0; }
+        @media (max-width: 650px) { .pool-visual-container { grid-template-columns: 1fr; } }
+        .pool-visual-step { background: #ffffff; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 18px 14px; text-align: center; }
+        .pool-visual-step.highlight { border-color: var(--brand-accent); background: #f0f7ff; }
+        .pool-visual-icon { font-size: 2.2rem; margin-bottom: 8px; }
+        .pool-visual-title { font-size: 0.95rem; font-weight: 800; margin-bottom: 4px; }
+        .pool-visual-desc { font-size: 0.82rem; color: var(--text-sub); }
+
         .calc-jar-card { background: #ffffff; border: 1px solid var(--border-light); border-radius: 14px; padding: 18px; margin-bottom: 14px; }
         .calc-grid-5yr { display: grid; grid-template-columns: repeat(auto-fit, minmax(95px, 1fr)); gap: 8px; }
         .calc-input-group label { display: block; font-size: 0.72rem; color: var(--text-sub); font-weight: bold; text-align: center; margin-bottom: 2px; }
@@ -137,7 +146,6 @@
         .popup-menu-item { background: #f8fafc; border: 1px solid var(--border-light); border-radius: 10px; padding: 12px 14px; font-size: 0.92rem; font-weight: bold; cursor: pointer; transition: all 0.2s; }
         .popup-menu-item:hover { border-color: var(--brand-accent); background: var(--brand-soft); }
         
-        /* 控制台樣式 */
         .admin-dashboard-modal { background: #f8fafc; border-radius: 18px; width: 95%; max-width: 950px; height: 88vh; display: flex; flex-direction: column; overflow: hidden; }
         .admin-header { background: var(--brand-primary); color: #fff; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; }
         .admin-nav { display: flex; gap: 8px; background: #ffffff; padding: 10px 20px; border-bottom: 1px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; }
@@ -154,20 +162,17 @@
         .sync-loading-overlay { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.9); z-index: 50; flex-direction: column; align-items: center; justify-content: center; font-weight: bold; color: var(--brand-primary); }
         .zone-header-box { background: #f1f5f9; padding: 10px 14px; border-radius: 8px; font-weight: 800; font-size: 0.95rem; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
         
-        /* 頂部紅色引導提示橫幅 */
         .red-guide-banner { background: #fff1f2; border: 1.5px solid #fecdd3; border-radius: 12px; padding: 14px 18px; margin-bottom: 18px; }
         .red-guide-title { color: #e11d48; font-weight: 900; font-size: 0.92rem; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
         .red-guide-text { color: #be123c; font-size: 0.84rem; line-height: 1.6; margin-bottom: 8px; }
         .red-guide-steps { color: #9f1239; font-size: 0.8rem; line-height: 1.6; font-weight: 600; border-top: 1px dashed #fecdd3; padding-top: 8px; }
-
-        /* 固定頁面在後台的標識卡片 */
         .fixed-anchor-card { background: #faf5ff; border: 1.5px dashed #c084fc; border-radius: 12px; padding: 14px 18px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
     </style>
 </head>
 <body>
     <header class="system-top-nav">
         <div class="brand-title-wrap">
-            <span class="brand-logo-text" id="top-logo-title" onclick="promptAdminLogin()" title="管理員登入">🌱 AVA PLANNER · v6.2.0</span>
+            <span class="brand-logo-text" id="top-logo-title" onclick="promptAdminLogin()" title="管理員登入">🌱 AVA PLANNER · v6.3.0</span>
             <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="選擇客群情境">!</span>
             <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="核心分頁直達">*</span>
         </div>
@@ -209,7 +214,7 @@
         </div>
     </div>
 
-    <!-- 全能控制台 -->
+    <!-- 控制台 -->
     <div id="admin-modal-mask" class="modal-mask">
         <div class="admin-dashboard-modal">
             <div class="admin-header">
@@ -221,6 +226,7 @@
                 <div class="admin-nav-btn active" id="tab-flow-btn" onclick="switchAdminTab('flow')">頁面流程管理</div>
                 <div class="admin-nav-btn" id="tab-jars-btn" onclick="switchAdminTab('jars')">時光複利文字</div>
                 <div class="admin-nav-btn" id="tab-blueprint-btn" onclick="switchAdminTab('blueprint')">人生藍圖設定</div>
+                <div class="admin-nav-btn admin-only-tab" id="tab-mapping-btn" onclick="switchAdminTab('mapping')" style="display:none;">領取文字與代碼</div>
                 <div class="admin-nav-btn admin-only-tab" id="tab-system-btn" onclick="switchAdminTab('system')" style="display:none;">系統參數</div>
             </div>
             
@@ -232,7 +238,6 @@
             <div class="admin-body">
                 <!-- Tab 1: 頁面流程管理 -->
                 <div id="admin-sec-flow">
-                    <!-- 頂位紅色文字指引橫幅 -->
                     <div class="red-guide-banner">
                         <div class="red-guide-title">📌 最後濃縮成你真正可以記住嘅流程：</div>
                         <div class="red-guide-text">
@@ -254,44 +259,44 @@
                     
                     <!-- 區域 A -->
                     <div class="zone-header-box" style="border-left:4px solid #2563eb;">
-                        <span>📍 區域 A：引導題目 (第 1 頁 $\rightarrow$ 固定分頁 A 前)</span>
+                        <span>📍 區域 A：引導題目 (第 1 - n 頁 $\rightarrow$ 到固定分頁 A)</span>
                         <button class="step-ctrl-btn" style="background:#dbeafe; color:#1d4ed8;" onclick="addNewPageToZone('zone_a')">+ 新增區域 A 題目</button>
                     </div>
                     <div id="admin-cards-render-zone-a"></div>
 
-                    <!-- 固定分頁 A 錨點標識 -->
+                    <!-- 固定分頁 A 錨點 -->
                     <div class="fixed-anchor-card">
                         <div>
                             <span style="font-weight:900; color:#7e22ce;">🔒 固定分頁 A：認知差距與真相對比 (核心 Anchor)</span>
-                            <div style="font-size:0.75rem; color:#6b21a8; margin-top:2px;">此為固定核心頁面，內容根據所選情境自動載入</div>
+                            <div style="font-size:0.75rem; color:#6b21a8; margin-top:2px;">對應 Google Sheet「情境」分頁之 Gap 與現實數據</div>
                         </div>
                         <span style="background:#ede9fe; color:#6b21a8; padding:3px 8px; border-radius:6px; font-size:0.75rem; font-weight:bold;">固定分頁</span>
                     </div>
 
                     <!-- 區域 B -->
                     <div class="zone-header-box" style="border-left:4px solid #059669; margin-top:20px;">
-                        <span>📍 區域 B：過渡題目 (固定分頁 A 開始 $\rightarrow$ 固定分頁 B 前)</span>
+                        <span>📍 區域 B：過渡題目 (固定分頁 A 開始 - n 頁 $\rightarrow$ 到固定分頁 B)</span>
                         <button class="step-ctrl-btn" style="background:#d1fae5; color:#065f46;" onclick="addNewPageToZone('zone_b')">+ 新增區域 B 題目</button>
                     </div>
                     <div id="admin-cards-render-zone-b"></div>
 
-                    <!-- 固定分頁 B 錨點標識 -->
+                    <!-- 固定分頁 B 錨點 -->
                     <div class="fixed-anchor-card">
                         <div>
                             <span style="font-weight:900; color:#7e22ce;">🔒 固定分頁 B：時光複利量化累積表 (核心 Anchor)</span>
-                            <div style="font-size:0.75rem; color:#6b21a8; margin-top:2px;">此為固定核心計算表，動態連動 Google Sheet 倍數</div>
+                            <div style="font-size:0.75rem; color:#6b21a8; margin-top:2px;">對應 Google Sheet「時光複利文字」與各領取方案倍數表</div>
                         </div>
                         <span style="background:#ede9fe; color:#6b21a8; padding:3px 8px; border-radius:6px; font-size:0.75rem; font-weight:bold;">固定分頁</span>
                     </div>
 
                     <!-- 區域 C -->
                     <div class="zone-header-box" style="border-left:4px solid #7c3aed; margin-top:20px;">
-                        <span>📍 區域 C：確認與評估 (固定分頁 B 開始 $\rightarrow$ 固定分頁 C 前)</span>
+                        <span>📍 區域 C：確認與評估 (固定分頁 B 開始 - n 頁 $\rightarrow$ 到固定分頁 C)</span>
                         <button class="step-ctrl-btn" style="background:#ede9fe; color:#5b21b6;" onclick="addNewPageToZone('zone_c')">+ 新增區域 C 題目</button>
                     </div>
                     <div id="admin-cards-render-zone-c"></div>
 
-                    <!-- 固定分頁 C 錨點標識 -->
+                    <!-- 固定分頁 C 錨點 -->
                     <div class="fixed-anchor-card">
                         <div>
                             <span style="font-weight:900; color:#7e22ce;">🔒 固定分頁 C：人生藍圖總結與保費優惠 (核心 Anchor)</span>
@@ -313,6 +318,16 @@
                         <input type="text" id="admin-jt-title-2" class="pink-edit-input" placeholder="標題">
                         <input type="text" id="admin-jt-desc-2" class="pink-edit-input" placeholder="描述">
                     </div>
+                    <div class="admin-card-row">
+                        <h4 style="margin-top:0; color:var(--plan3-color);">🌿 三號水庫 (第 11 - 15 年)</h4>
+                        <input type="text" id="admin-jt-title-3" class="pink-edit-input" placeholder="標題">
+                        <input type="text" id="admin-jt-desc-3" class="pink-edit-input" placeholder="描述">
+                    </div>
+                    <div class="admin-card-row">
+                        <h4 style="margin-top:0; color:var(--plan4-color);">🌳 四號水庫 (第 16 - 20 年)</h4>
+                        <input type="text" id="admin-jt-title-4" class="pink-edit-input" placeholder="標題">
+                        <input type="text" id="admin-jt-desc-4" class="pink-edit-input" placeholder="描述">
+                    </div>
                 </div>
 
                 <!-- Tab 3: 人生藍圖設定 -->
@@ -325,7 +340,14 @@
                     </div>
                 </div>
 
-                <!-- Tab 4: 系統參數 -->
+                <!-- Tab 4: 領取文字與代碼 -->
+                <div id="admin-sec-mapping" style="display:none;">
+                    <div class="admin-card-row">
+                        <div id="admin-mappings-zone"></div>
+                    </div>
+                </div>
+
+                <!-- Tab 5: 系統參數 -->
                 <div id="admin-sec-system" style="display:none;">
                     <div class="admin-card-row">
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">管理員密碼：</label>
@@ -352,7 +374,7 @@
 
     <script>
         const answers = {};
-        let currentSystemVersion = "v6.2.0";
+        let currentSystemVersion = "v6.3.0";
         let GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwbKrrmiS5vx0Q5TvqqUCHBhU-VrS7WwwY0hj6BaNRwuzPtXXIZZxejPwhycCZhSCr-Rg/exec';
         let cloudAdminPassword = "903";
         let globalReturnMultipliers = {};
@@ -361,71 +383,188 @@
         let activeFullFlowSteps = [];
         let currentStepIndex = 0;
 
+        // 1. Google Sheet「情境」分頁（3 個情境）
         let scenariosDB = {
             no_savings: {
-                scenario_name: "未有儲蓄 / 主動查詢",
-                intuitive_belief: "收入扣除必要開支後，有多先儲蓄",
-                objective_reality: "目標會變，但時間複利一去不復返",
+                scenario_name: "未有儲蓄/主動查詢",
+                intuitive_belief: "35 歲先開始都未遲，有多先儲蓄",
+                objective_reality: "目標會變，但時間一去不復返",
                 gap_title: "延遲啟動的代價",
                 gap_percentage: "71%",
-                gap_label: "複利增值差距",
-                takeaway_summary: "差距不是錢，而是時間。及早分段小額建立，效益自然最大化。"
+                gap_label: "71% 複利增值代價",
+                takeaway_summary: "差距不是錢，而是被浪費的時間複利。提早 5 年分段奠定，效果完全不同。"
             },
             self_invest: {
                 scenario_name: "自己投資",
-                intuitive_belief: "全部資金自己炒股，回報最高最快",
-                objective_reality: "市場週期 5-7 年必有震盪，容易心理防線崩潰",
-                gap_title: "心理底氣與防守底層",
+                intuitive_belief: "炒股買幣一年升幾十%，全部自己做最快",
+                objective_reality: "市場每 5-7 年必然震盪，缺乏防守底層易崩潰",
+                gap_title: "心理底氣與防守底層缺失",
                 gap_percentage: "50%",
-                gap_label: "核心防守底",
+                gap_label: "50% 核心防守底",
                 takeaway_summary: "建立 50% 穩健底氣，令你在市場波動時更有從容選擇權。"
             },
             flexible_return: {
-                scenario_name: "靈活性 / 回報",
-                intuitive_belief: "儲蓄計劃一定會長期綁死資金",
-                objective_reality: "完成 5 年奠基後，第 8 年起即可換取一輩子的提取自由度",
-                gap_title: "假靈活 vs 真自由",
+                scenario_name: "靈活性/回報",
+                intuitive_belief: "儲蓄計劃供好多年怕綁死，嫌回報低",
+                objective_reality: "活期資金容易散失，真自由在於源源現金流",
+                gap_title: "假靈活 vs 真自由現金流",
                 gap_percentage: "45%",
-                gap_label: "靈活散失代價",
-                takeaway_summary: "活期資金容易無意識流走，分段建立自動水庫才是真正的靈活。"
+                gap_label: "45% 假靈活散失",
+                takeaway_summary: "專注 5 年播種，第 8 年換取一輩子的資金提取自由度。"
             }
         };
 
+        // 2. Google Sheet「時光複利文字」分頁（3 個情境）
         let allJarTexts = {
             no_savings: {
-                scenario_name: "未有儲蓄 / 主動查詢",
+                scenario_name: "未有儲蓄/主動查詢",
                 tree_title_1: "🌱 一號種子水庫 (第 1 - 5 年)", tree_desc_1: "播下一粒小種子，每天只需微小投入，5 年完成奠基。",
-                tree_title_2: "💧 二號灌溉水庫 (第 6 - 10 年)", tree_desc_2: "定期灌溉讓根基更深厚穩固。"
+                tree_title_2: "💧 二號灌溉水庫 (第 6 - 10 年)", tree_desc_2: "定期灌溉讓根基更深厚穩固。",
+                tree_title_3: "🌿 三號茁壯水庫 (第 11 - 15 年)", tree_desc_3: "水庫儲備倍增，抗風險能力大幅增強。",
+                tree_title_4: "🌳 四號大樹水庫 (第 16 - 20 年)", tree_desc_4: "大樹長成，產出源源不絕的流動被動收入。",
+                th_year: "年份 (歲數)", th_reserve: "累計儲備", th_income: "被動收入", th_accum: "累積已領", th_asset: "大樹收成", th_interest: "年化百分比回報"
             },
             self_invest: {
                 scenario_name: "自己投資",
                 tree_title_1: "🌱 防守底氣水庫 (第 1 - 5 年)", tree_desc_1: "建立核心防守底層，抵禦市場週期波動。",
-                tree_title_2: "💧 增值滾存水庫 (第 6 - 10 年)", tree_desc_2: "無懼牛熊市，穩健產出流動現金。"
+                tree_title_2: "💧 增值滾存水庫 (第 6 - 10 年)", tree_desc_2: "無懼牛熊市，穩健產出流動現金。",
+                tree_title_3: "🌿 擴張收成水庫 (第 11 - 15 年)", tree_desc_3: "攻守兼備，資產加速增長。",
+                tree_title_4: "🌳 傳承大樹水庫 (第 16 - 20 年)", tree_desc_4: "豐盛收成，穩健傳承後代。",
+                th_year: "年份 (歲數)", th_reserve: "累計儲備", th_income: "被動收入", th_accum: "累積已領", th_asset: "大樹收成", th_interest: "年化百分比回報"
             },
             flexible_return: {
-                scenario_name: "靈活性 / 回報",
-                tree_title_1: "🌱 靈活奠基水庫 (第 1 - 5 年)", tree_desc_1: "5 年完成，鎖定終身提取權利。",
-                tree_title_2: "💧 自由水龍頭 (第 6 - 10 年)", tree_desc_2: "隨時開啟水龍頭，享受源源不絕被動收入。"
+                scenario_name: "靈活性/回報",
+                tree_title_1: "🌱 靈活奠基水庫 (第 1 - 5 年)", tree_desc_1: "5 年完成奠基，鎖定終身提取權利。",
+                tree_title_2: "💧 自由水龍頭 (第 6 - 10 年)", tree_desc_2: "隨時開啟水龍頭，享受源源不絕被動收入。",
+                tree_title_3: "🌿 複利加速水庫 (第 11 - 15 年)", tree_desc_3: "提取同時本金繼續滾存增長。",
+                tree_title_4: "🌳 終身自由水庫 (第 16 - 20 年)", tree_desc_4: "真正資金自由，源源長糧。",
+                th_year: "年份 (歲數)", th_reserve: "累計儲備", th_income: "被動收入", th_accum: "累積已領", th_asset: "大樹收成", th_interest: "年化百分比回報"
             }
         };
 
+        // 3. Google Sheet「領取文字」分頁
+        let sheetMappings = [
+            { code: "withdraw7_from8", sheet_name: "8年領取", display_name: "第8年開始 取7% (標準推薦)", note: "5年供款，第8年起每年領取7%" },
+            { code: "none", sheet_name: "自動滾存", display_name: "自動滾存不提取", note: "全期不提款，純滾存累積大樹" },
+            { code: "withdraw12_from15", sheet_name: "15年領取", display_name: "第15年開始 取12%", note: "第15年起每年領取12%" },
+            { code: "withdraw18_from20", sheet_name: "20年領取", display_name: "第20年開始 取18%", note: "第20年起每年領取18%" },
+            { code: "withdraw23_from25", sheet_name: "25年領取", display_name: "第25年開始 取23%", note: "第25年起每年領取23%" },
+            { code: "withdraw29_from30", sheet_name: "30年領取", display_name: "第30年開始 取29%", note: "第30年起每年領取29%" }
+        ];
+
+        // 4. Google Sheet「頁面流程」分頁
         let allScenarioDatabase = {
             no_savings: [
                 { id: "step_1", zone: "zone_a", step_num: 1, title: "「如果純粹講而家嘅生活狀態，你覺得自己屬於邊一種？」", subtitle: "沒有對與錯，純粹由你目前最真實、最自在的生活節奏開始探索：", image_url: "", options: [
                     { headline: "🌅 先享受現在", subtext: "今天的生活同樣重要，未來的步調可以按自己節奏慢慢來。" },
-                    { headline: "🧭 我知道未來重要", subtext: "但市面太多複雜說法，還未找到真正適合自己、不吃力的方法。" }
+                    { headline: "🧭 我知道未來重要", subtext: "但市面太多複雜說法，還未找到真正適合自己、不吃力的方法。" },
+                    { headline: "🌱 我相信慢慢建立", subtext: "不需要一步到位，希望由最舒服的程度開始，讓未來更有選擇。" },
+                    { headline: "⏳ 覺得時間仲好充裕", subtext: "暫時未有急切需要，但如果有一套無痛的方法，會想先了解原理。" }
                 ]},
                 { id: "step_2", zone: "zone_a", step_num: 2, title: "「如果將來有一樣嘢值得你花更多資源，最可能會係邊方面？」", subtitle: "即使未有具體安排，心目中亦可能有最在意的生活重心：", image_url: "", options: [
                     { headline: "🏠 住屋與生活品質提升", subtext: "希望未來能住在更舒適的環境，享有更優質的日常生活。" },
-                    { headline: "✈️ 旅行與人生體驗", subtext: "趁有能力多去探索世界，豐富人生經歷。" }
+                    { headline: "✈️ 旅行與人生體驗", subtext: "趁有能力多去探索世界，豐富人生經歷，不留遺憾。" },
+                    { headline: "👨‍👩‍👧 家庭與子女成長", subtext: "為下一代提供最好的教育資源，或給予父母最安心的照顧。" },
+                    { headline: "💼 事業轉型與個人發展", subtext: "擁有隨時進修、創業或轉換生活跑道的自由底氣。" },
+                    { headline: "🩺 頂級健康與備用安全網", subtext: "面對突發狀況時，能隨時享有最佳治療而不傷及既有資產。" }
+                ]},
+                { id: "step_3", zone: "zone_a", step_num: 3, title: "「點解呢個方向對你嚟講特別重要？」", subtitle: "探索背後真正驅動你、對你最具價值的初衷：", image_url: "", options: [
+                    { headline: "✨ 不想被現實條件限制選擇", subtext: "希望在做決定時是基於自己真心喜歡，而不是因為預算妥協。" },
+                    { headline: "🛡️ 想有一份踏實的掌控感", subtext: "生活中已有足夠的不確定性，希望在核心領域能擁有絕對的安心。" },
+                    { headline: "👨‍👩‍👧 想為愛的人撐起一片天", subtext: "盡到身為支柱的責任，讓家人能無憂無慮地追求自己的生活。" },
+                    { headline: "⏳ 覺得這是遲早要面對的人生階段", subtext: "與其將來臨急應對，不如趁現在心有餘力時先做好鋪墊。" }
+                ]},
+                { id: "step_4", zone: "zone_a", step_num: 4, title: "「假設 5–10 年後生活更自由，你最希望看見甚麼畫面？」", subtitle: "理財不是數字遊戲，而是為了實現具體的生活畫面：", image_url: "", options: [
+                    { headline: "☕ 隨心生活的早晨", subtext: "想做的事不需要每天計住開支，生活過得從容自在。" },
+                    { headline: "🏡 生活質素全面升級", subtext: "住進心儀的環境，讓自己與家人的日常享受更上一層樓。" },
+                    { headline: "🌴 時間完全由自己掌控", subtext: "工作純粹出於熱愛與興趣，擁有隨時放下、去享受人生的自由。" },
+                    { headline: "🛡️ 面對任何風浪都處變不驚", subtext: "無論外在環境或健康有何變化，既有的生活標準永遠不受動搖。" }
+                ]},
+                { id: "step_5", zone: "zone_a", step_num: 5, title: "「時間會繼續向前，你想用咩方式迎接未來？」", subtitle: "未來未必需要現在全盤計劃，但你可以決定到時自己擁有多少選擇權：", image_url: "", options: [
+                    { headline: "🌱 我希望未來有更多選擇權", subtext: "不想每一次人生轉變，都只能由零開始被動應對。" },
+                    { headline: "🌊 順其自然，但想了解兩者分別", subtext: "目前生活過得去，但想看看兩條軌跡在長遠上的實際差異。" }
+                ]},
+                { id: "step_6", zone: "zone_a", step_num: 6, title: "「如果想在未來擁有更多選擇，你覺得目前最容易卡住自己的是？」", subtitle: "每個人在生活中都會遇到不同節奏，看清狀況才能找到最舒服的起步點：", image_url: "", options: [
+                    { headline: "🌊 每個月過得去，但很難留下", subtext: "收入不是沒有，只是生活開支與不同事情，慢慢就用掉了。" },
+                    { headline: "⏳ 時間看起來還很多，容易一拖再拖", subtext: "日常已經有很多事情要處理，不知不決將長遠安排往後放。" },
+                    { headline: "🧭 市面方法太繁雜，怕缺乏靈活性", subtext: "不想每天擔心市場波動，但又擔心長期計劃會綁死資金。" },
+                    { headline: "🌱 想開始，但希望由完全無痛的程度開始", subtext: "不想影響現有生活享受，希望找到一個完全沒壓力的起步方式。" }
                 ]},
                 { id: "step_7", zone: "zone_b", step_num: 7, title: "「如果話你知：『未有明確目標』，其實先係最好嘅開始方式？」", subtitle: "人生目標隨時會變，但「提早為自己累積選擇權」永遠不會錯。", image_url: "", options: [
-                    { headline: "🤔 點解未有目標都可以開始？", subtext: "想了解如何在不確定未來的情況下做好準備。" },
-                    { headline: "💡 真係可以完全唔影響現有生活？", subtext: "想知道如何用最輕鬆、不吃力的節奏建立長期儲備。" }
+                    { headline: "🤔 點解未有目標都可以開始？想聽下背後原理", subtext: "想了解如何在不確定未來的情況下，依然能做好準備。" },
+                    { headline: "💡 真係可以完全唔影響現有生活咁做？", subtext: "想知道如何用最輕鬆、不吃力的節奏建立長期儲備。" },
+                    { headline: "📊 想直接睇下具體點樣自動化運作", subtext: "跳過複雜名詞，直接看看實際的運作流程與效果。" }
                 ]},
+                { id: "step_8", zone: "zone_b", step_num: 8, title: "「不如先睇清楚運作原理，再決定值唔值得考慮？」", subtitle: "零壓力約定：了解不代表一定要做。最重要是看清這個模式對你有沒有價值。", image_url: "", options: [
+                    { headline: "🔘 好，先睇下原理點樣運作", subtext: "抱持開放態度，純粹了解一套新的財務架構。" },
+                    { headline: "🔘 暫時唔急，純粹探索新思路", subtext: "給自己一個了解市場最新工具的機會。" }
+                ]},
+                { id: "step_9", zone: "zone_b", step_num: 9, title: "建立未來選擇權的專屬工具", subtitle: "重點不是今天猜中未來，而是先為未來的自己分段建立一份底氣。", image_url: "", options: []},
+                { id: "step_10", zone: "zone_b", step_num: 10, title: "💧 人生資源池：如何不影響生活下建立選擇？", subtitle: "不是犧牲眼前的享受，而是將原本不知不決流走的小部分，導向未來的自動化水庫：", image_url: "", options: [
+                    { headline: "1. 今日生活開支", subtext: "旅行、享受、家庭開銷照舊進行，完全不犧牲生活品質。" },
+                    { headline: "2. 分段小額入庫", subtext: "每月只需撥出微少份額，只需 5 年，就自動完成資產水庫建造。" },
+                    { headline: "3. 未來水龍頭", subtext: "停止投入後，水庫交由時間滾存，隨時可開水龍頭提取源源長糧。" }
+                ]},
+                { id: "step_12", zone: "zone_c", step_num: 12, title: "「其實，數字本身唔係最重要。」", subtitle: "這個資源池的核心目的，正是為你最初想要的這幅人生畫面提供源源不絕的底氣與支持。", image_url: "", options: []},
                 { id: "step_13", zone: "zone_c", step_num: 13, title: "「適合先繼續，唔適合都完全冇問題。」", subtitle: "以你目前的步調，你覺得這種分段建立的方法適唔適合自己？", image_url: "", options: [
                     { headline: "🟢 我覺得概念好舒服，可以認真考慮", subtext: "認同分段投入與被動收入提取的理念。" },
-                    { headline: "🟡 概念明白，想再睇下適合自己的具體預算", subtext: "希望能根據自己的實際收入量身微調。" }
+                    { headline: "🟡 概念明白，想再睇下適合自己的具體預算", subtext: "希望能根據自己的實際收入量身微調。" },
+                    { headline: "🔵 想知道最合理的起步水平", subtext: "看看如何以最小的負擔達到預期效果。" },
+                    { headline: "⚪ 暫時未有迫切需要", subtext: "先保留這套思路，有需要時再做安排。" }
+                ]}
+            ],
+            self_invest: [
+                { id: "step_1", zone: "zone_a", step_num: 1, title: "「如果純粹講而家嘅投資或生活狀態，你覺得自己屬於邊一種？」", subtitle: "純粹由你目前最真實的投資節奏開始探索：", image_url: "", options: [
+                    { headline: "📈 主力自己投資", subtext: "平時有炒股、基金或加密貨幣，追求較高增長。" },
+                    { headline: "⚖️ 攻守兼備但未有系統", subtext: "有做投資但亦想有一筆完全不受波動影響的底氣。" }
+                ]},
+                { id: "step_2", zone: "zone_a", step_num: 2, title: "「如果將來有一樣嘢值得你花更多資源，最可能會係邊方面？」", subtitle: "心目中最在意的生活重心：", image_url: "", options: [
+                    { headline: "🏠 資產配置升級與生活享受", subtext: "讓資產穩健增長，同時提升生活質素。" },
+                    { headline: "🛡️ 建立無懼風浪的防守底層", subtext: "不管市場如何波動，都有源源現金流。" }
+                ]},
+                { id: "step_6", zone: "zone_a", step_num: 6, title: "「喺自己投資嘅過程入面，你覺得目前最容易遇到嘅情況係？」", subtitle: "看清盲點才能找到最舒服的配置：", image_url: "", options: [
+                    { headline: "🌊 市場波動大，心理壓力較重", subtext: "升跌市影響心情，想有部分資產完全鎖定回報。" },
+                    { headline: "⏳ 資金容易隨手用咗或再次投入", subtext: "賺咗錢很難真正鎖定落袋為安。" }
+                ]},
+                { id: "step_7", zone: "zone_b", step_num: 7, title: "「點解連專業投資者，都要分開『進攻』同『防守』？」", subtitle: "核心防守層的作用：", image_url: "", options: [
+                    { headline: "🛡️ 想了解 50% 核心防守底的概念", subtext: "看看如何用穩健底氣支撐高風險投資。" },
+                    { headline: "💧 想直接睇具體點樣提供穩定現金流", subtext: "看看被動現金流如何運作。" }
+                ]},
+                { id: "step_10", zone: "zone_b", step_num: 10, title: "💧 人生資源池：如何為投資組合建立防守底層？", subtitle: "將小部分資金鎖定至自動化水庫：", image_url: "", options: [
+                    { headline: "1. 股票/高風險投資", subtext: "繼續追求高增長，完全不影響操盤。" },
+                    { headline: "2. 5 年鎖定防守底", subtext: "分段注入，5 年完成資產水庫建造。" },
+                    { headline: "3. 終身源源現金流", subtext: "不管牛熊市，每年自動產出被動現金流。" }
+                ]},
+                { id: "step_13", zone: "zone_c", step_num: 13, title: "「以你目前嘅投資配置，你覺得建立呢個防守底層適唔適合自己？」", subtitle: "評估個人需求：", image_url: "", options: [
+                    { headline: "🟢 好適合，想有一筆完全穩健的現金流底氣", subtext: "認同攻守分流的理念。" },
+                    { headline: "🟡 想再微調適合自己嘅投入比例", subtext: "看看如何配合現有投資組合。" }
+                ]}
+            ],
+            flexible_return: [
+                { id: "step_1", zone: "zone_a", step_num: 1, title: "「講到儲蓄同理財，你目前最在意嘅係甚麼？」", subtitle: "探索最自在的理財方式：", image_url: "", options: [
+                    { headline: "🔓 靈活性最緊要，怕綁死資金", subtext: "不想長時間不能動用資金，重視靈活性。" },
+                    { headline: "📊 嫌傳統儲蓄回報低", subtext: "希望回報跑贏通脹，同時保有提取自由。" }
+                ]},
+                { id: "step_2", zone: "zone_a", step_num: 2, title: "「如果有一套方法既能保持靈活，又有穩定被動收入，你最希望用喺邊？」", subtitle: "未來的生活畫面：", image_url: "", options: [
+                    { headline: "🌴 隨時享受人生的自由現金流", subtext: "第 8 年開始每年有錢攞，隨心運用。" },
+                    { headline: "🛡️ 應對突發需要的安全緩衝", subtext: "手頭隨時有流動資金支援。" }
+                ]},
+                { id: "step_6", zone: "zone_a", step_num: 6, title: "「市面上嘅計劃，最令你卻步嘅係邊一點？」", subtitle: "看清痛點：", image_url: "", options: [
+                    { headline: "🔒 供款期太長，怕失去彈性", subtext: "不想供 10 年 20 年，希望短年期完成。" },
+                    { headline: "📉 早期提款損失大", subtext: "希望能在合理時間內開始自由提取。" }
+                ]},
+                { id: "step_7", zone: "zone_b", step_num: 7, title: "「如果話你知：只需專注 5 年，第 8 年起就換取一世提取自由？」", subtitle: "解開靈活性迷思：", image_url: "", options: [
+                    { headline: "💡 點樣做到 5 年完成、第 8 年自由攞錢？", subtext: "想了解具體的提取機制。" },
+                    { headline: "📊 想直接睇複利同提取數據", subtext: "看看實際數字與回報效果。" }
+                ]},
+                { id: "step_10", zone: "zone_b", step_num: 10, title: "💧 人生資源池：短年期如何創造終身靈活性？", subtitle: "分段小額奠基：", image_url: "", options: [
+                    { headline: "1. 專注 5 年播種", subtext: "只需 5 年極短時間完成供款，完全無負擔。" },
+                    { headline: "2. 時間自動複利", subtext: "第 6-7 年交由時間滾存，水庫持續壯大。" },
+                    { headline: "3. 第 8 年起自由提取", subtext: "每年提取 7%，本金依然繼續滾存增長。" }
+                ]},
+                { id: "step_13", zone: "zone_c", step_num: 13, title: "「只需 5 年就能換取終身被動現金流，你覺得適唔適合自己？」", subtitle: "評估可行性：", image_url: "", options: [
+                    { headline: "🟢 非常適合，5 年期好有信心完成", subtext: "認同短年期與高靈活度的模式。" },
+                    { headline: "🟡 想計算一下最合適自己的每月預算", subtext: "量身微調最輕鬆的金額。" }
                 ]}
             ]
         };
@@ -457,7 +596,11 @@
         }
 
         function buildAndRenderFlow() {
-            const currentFlow = allScenarioDatabase[currentActiveScenario] || allScenarioDatabase['no_savings'] || [];
+            let currentFlow = allScenarioDatabase[currentActiveScenario] || allScenarioDatabase['no_savings'];
+            if (!currentFlow || currentFlow.length === 0) {
+                currentFlow = allScenarioDatabase['no_savings'];
+            }
+
             const zoneA = currentFlow.filter(c => c.zone === 'zone_a');
             const zoneB = currentFlow.filter(c => c.zone === 'zone_b');
             const zoneC = currentFlow.filter(c => c.zone === 'zone_c');
@@ -483,7 +626,7 @@
                 if (step.type === 'dynamic') {
                     const c = step.data;
                     let optionsHtml = '';
-                    if (c.options && c.options.length > 0) {
+                    if (c.options && c.options.length > 0 && c.step_num !== 10) {
                         optionsHtml = `<div class="options-group">` + c.options.map(opt => `
                             <div class="option-card-guided ${answers[c.id] === opt.headline ? 'selected' : ''}" onclick="selectDynamicOption('${c.id}', '${opt.headline.replace(/'/g, "\\'")}', ${index})">
                                 <div class="option-content">
@@ -495,15 +638,39 @@
                         `).join('') + `</div>`;
                     }
 
+                    let specialStepContent = '';
+                    if (c.step_num === 10) {
+                        specialStepContent = `
+                            <div class="pool-visual-container">
+                                <div class="pool-visual-step">
+                                    <div class="pool-visual-icon">☕</div>
+                                    <div class="pool-visual-title">${c.options[0]?.headline || '1. 今日生活開支'}</div>
+                                    <div class="pool-visual-desc">${c.options[0]?.subtext || '旅行、享受、家庭開銷照舊進行，完全不犧牲生活品質。'}</div>
+                                </div>
+                                <div class="pool-visual-step highlight">
+                                    <div class="pool-visual-icon">⏳</div>
+                                    <div class="pool-visual-title">${c.options[1]?.headline || '2. 分段小額入庫'}</div>
+                                    <div class="pool-visual-desc">${c.options[1]?.subtext || '每月只需撥出微少份額，只需 5 年，就自動完成資產水庫建造。'}</div>
+                                </div>
+                                <div class="pool-visual-step">
+                                    <div class="pool-visual-icon">🚿</div>
+                                    <div class="pool-visual-title">${c.options[2]?.headline || '3. 未來水龍頭'}</div>
+                                    <div class="pool-visual-desc">${c.options[2]?.subtext || '停止投入後，水庫交由時間滾存，隨時可開水龍頭提取源源長糧。'}</div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
                     stepEl.innerHTML = `
                         <div class="content-card">
                             <h2 class="question-title">${c.title}</h2>
                             <p class="question-hint">${c.subtitle}</p>
+                            ${specialStepContent}
                             ${optionsHtml}
                             ${c.image_url ? `<div class="page-bottom-img-zone"><img class="page-bottom-img" src="${c.image_url}"></div>` : ''}
                             <div class="action-row">
                                 ${index > 0 ? `<button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 上一步</button>` : ''}
-                                <button class="nav-btn next" id="btn-next-${index}" ${c.options && c.options.length > 0 && !answers[c.id] ? 'disabled' : ''} onclick="navigateStep(${index + 1})">下一步 →</button>
+                                <button class="nav-btn next" id="btn-next-${index}" ${c.options && c.options.length > 0 && !answers[c.id] && c.step_num !== 10 ? 'disabled' : ''} onclick="navigateStep(${index + 1})">下一步 →</button>
                             </div>
                         </div>
                     `;
@@ -514,7 +681,7 @@
                             <h2 class="question-title">🔍 認知差距與真相對比</h2>
                             <div class="gap-container">
                                 <div class="gap-tag">⚡ ${sc.gap_title}</div>
-                                <h3 style="font-size:1.6rem; color:var(--brand-primary); margin-bottom:8px;">落差幅度：${sc.gap_percentage}</h3>
+                                <h3 style="font-size:1.6rem; color:var(--brand-primary); margin-bottom:8px;">落差幅度：${sc.gap_percentage} (${sc.gap_label})</h3>
                                 <p style="font-size:0.9rem; color:var(--text-sub);">${sc.takeaway_summary}</p>
                                 <div class="gap-comparison-grid">
                                     <div class="gap-box">
@@ -529,7 +696,7 @@
                             </div>
                             <div class="action-row">
                                 <button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 上一步</button>
-                                <button class="nav-btn next" onclick="navigateStep(${index + 1})">進入下一階段 →</button>
+                                <button class="nav-btn next" onclick="navigateStep(${index + 1})">進入過渡探索階段 →</button>
                             </div>
                         </div>
                     `;
@@ -538,6 +705,7 @@
                     stepEl.innerHTML = `
                         <div class="content-card">
                             <h2 class="question-title">🌱 時光複利：小金額創造大效果</h2>
+                            <p class="question-hint">即使今天未有特定目標，每個月只預留少少，交畀時間，就能為你創造源源不絕的被動收入：</p>
                             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:16px;">
                                 <div>
                                     <label style="font-size:0.75rem; font-weight:bold; color:var(--text-sub);">開始歲數</label>
@@ -574,7 +742,7 @@
                             </div>
                             <div class="action-row">
                                 <button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 上一步</button>
-                                <button class="nav-btn next" onclick="navigateStep(${index + 1})">進入第三階段 →</button>
+                                <button class="nav-btn next" onclick="navigateStep(${index + 1})">進入第三階段評估 →</button>
                             </div>
                         </div>
                     `;
@@ -585,20 +753,22 @@
                             <div class="blueprint-dual-grid">
                                 <div class="blueprint-left-box">
                                     <h4 style="font-size:1.05rem; font-weight:800; margin-bottom:12px; color:#fff; border-bottom:1px solid rgba(255,255,255,0.15); padding-bottom:6px;">📋 生活初衷彙整</h4>
-                                    <div class="blueprint-entry-item"><div class="blueprint-entry-label">探索偏好</div><div class="blueprint-entry-val">${answers['step_1'] || '已完成記錄'}</div></div>
-                                    <div class="blueprint-entry-item"><div class="blueprint-entry-label">核心重心</div><div class="blueprint-entry-val">${answers['step_2'] || '已完成記錄'}</div></div>
+                                    <div class="blueprint-entry-item"><div class="blueprint-entry-label">01. 生活現狀</div><div class="blueprint-entry-val">${answers['step_1'] || '先享受現在'}</div></div>
+                                    <div class="blueprint-entry-item"><div class="blueprint-entry-label">02. 核心關注</div><div class="blueprint-entry-val">${answers['step_2'] || '旅行與人生體驗'}</div></div>
+                                    <div class="blueprint-entry-item"><div class="blueprint-entry-label">03. 渴望畫面</div><div class="blueprint-entry-val">${answers['step_4'] || '時間完全由自己掌控'}</div></div>
+                                    <div class="blueprint-entry-item"><div class="blueprint-entry-label">04. 原本擔心的卡點</div><div class="blueprint-entry-val" style="color:#fde047;">${answers['step_6'] || '怕缺乏靈活性'}</div></div>
                                 </div>
                                 <div class="blueprint-right-box">
                                     <h4 style="font-size:1rem; font-weight:800; color:var(--state-success); margin-bottom:10px;">💡 替代方案：無痛縮減落差</h4>
                                     <img id="blueprint-uploaded-img" class="blueprint-img-uploaded-view" src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80">
                                     <div style="background:#f0fdf4; border-radius:10px; padding:10px; font-size:0.85rem; color:#166534;">
-                                        <strong>完全不影響現有生活享受：</strong><br>將微少資金分段注入水庫，自然鎖定終身被動收入。
+                                        <strong>完全不影響現有生活享受：</strong><br>只需將每月不知不覺流走的少許資金，分段注入專屬水庫，自然鎖定終身被動收入。
                                     </div>
                                 </div>
                             </div>
                             <div class="action-row">
                                 <button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 上一步</button>
-                                <button class="nav-btn next" onclick="navigateStep(${index + 1})">🎁 查看保費優惠 →</button>
+                                <button class="nav-btn next" onclick="navigateStep(${index + 1})">🎁 查看專屬保費優惠 →</button>
                             </div>
                         </div>
                     `;
@@ -606,7 +776,7 @@
                     stepEl.innerHTML = `
                         <div class="content-card">
                             <h2 class="question-title">🎁 專屬保費優惠計算</h2>
-                            <p class="question-hint">為你度身訂造最慳錢的方案！</p>
+                            <p class="question-hint">為你度身訂造最慳錢的投保策略！</p>
                             <div class="promo-split-container">
                                 <div class="promo-left-col">
                                     <div class="promo-card" style="background:#f8fafc;">
@@ -665,9 +835,13 @@
             document.getElementById('progress-fill').style.width = `${pct}%`;
         }
 
-        // 後台卡片渲染（完整包含：上移/下移、圖片上傳/刪除、選項自訂增刪）
         function renderAdminCards() {
-            const currentList = allScenarioDatabase[currentActiveScenario] || [];
+            let currentList = allScenarioDatabase[currentActiveScenario];
+            if (!currentList) {
+                currentList = allScenarioDatabase['no_savings'];
+                allScenarioDatabase[currentActiveScenario] = currentList;
+            }
+
             ['zone_a', 'zone_b', 'zone_c'].forEach(zKey => {
                 const zoneContainer = document.getElementById(`admin-cards-render-${zKey.replace('_', '-')}`);
                 if (!zoneContainer) return;
@@ -712,7 +886,6 @@
                     `;
                     zoneContainer.appendChild(el);
 
-                    // 渲染選項列表
                     const optZone = el.querySelector(`#opts-edit-zone-${globalIdx}`);
                     if (card.options && card.options.length > 0) {
                         card.options.forEach((opt, optIdx) => {
@@ -764,7 +937,7 @@
             const currentZone = list[idx].zone;
             const targetIdx = idx + dir;
             if (targetIdx < 0 || targetIdx >= list.length) return;
-            if (list[targetIdx].zone !== currentZone) return; // 限制在同一分區內上下移動
+            if (list[targetIdx].zone !== currentZone) return;
 
             const temp = list[idx];
             list[idx] = list[targetIdx];
@@ -810,6 +983,22 @@
             input.click();
         }
 
+        function renderMappingTable() {
+            const zone = document.getElementById('admin-mappings-zone');
+            if (!zone) return;
+            zone.innerHTML = '';
+            sheetMappings.forEach((m, idx) => {
+                const row = document.createElement('div');
+                row.className = 'option-row-edit';
+                row.innerHTML = `
+                    <input type="text" class="pink-edit-input" style="flex:1;" value="${m.code}" readonly>
+                    <input type="text" class="pink-edit-input" style="flex:1;" value="${m.sheet_name}" oninput="sheetMappings[${idx}].sheet_name = this.value" placeholder="分頁名稱">
+                    <input type="text" class="pink-edit-input" style="flex:1.5;" value="${m.display_name}" oninput="sheetMappings[${idx}].display_name = this.value" placeholder="UI顯示名稱">
+                `;
+                zone.appendChild(row);
+            });
+        }
+
         async function syncAllToGoogleSheet() {
             const loadingMask = document.getElementById('sync-loading-mask');
             loadingMask.style.display = 'flex';
@@ -846,12 +1035,14 @@
                         cards: allSheetRows,
                         jar_texts: allJarTexts,
                         admin_password: cloudAdminPassword,
-                        system_version: newVersion
+                        system_version: newVersion,
+                        sheet_mappings: sheetMappings
                     })
                 });
 
                 localStorage.setItem('ava_scenario_database', JSON.stringify(allScenarioDatabase));
                 localStorage.setItem('ava_jar_texts', JSON.stringify(allJarTexts));
+                localStorage.setItem('ava_sheet_mappings', JSON.stringify(sheetMappings));
                 localStorage.setItem('ava_last_synced_version', newVersion);
                 
                 buildAndRenderFlow();
@@ -872,6 +1063,7 @@
                 if (json.system_version) applyVersionToUI(json.system_version);
                 if (json.multipliers) globalReturnMultipliers = json.multipliers;
                 if (json.scenarios) scenariosDB = json.scenarios;
+                if (json.sheet_mappings) sheetMappings = json.sheet_mappings;
                 if (json.cards && json.cards.length > 0) {
                     const cloudDB = {};
                     json.cards.forEach(row => {
@@ -925,6 +1117,7 @@
             document.getElementById('admin-gas-url-input').value = GAS_API_URL;
             document.getElementById('scenario-flow-selector').value = currentActiveScenario;
             renderAdminCards();
+            renderMappingTable();
             switchAdminTab('flow');
             document.getElementById('admin-modal-mask').style.display = 'flex';
         }
@@ -937,7 +1130,6 @@
 
         function applyScenarioPreset(key) {
             currentActiveScenario = key;
-            if (!allScenarioDatabase[key]) allScenarioDatabase[key] = JSON.parse(JSON.stringify(allScenarioDatabase['no_savings'] || []));
             buildAndRenderFlow();
             closeScenarioPopup();
             navigateStep(0);
@@ -951,7 +1143,7 @@
 
         function switchAdminTab(tabName) {
             document.querySelectorAll('.admin-nav-btn').forEach(b => b.classList.remove('active'));
-            ['flow', 'jars', 'blueprint', 'system'].forEach(t => {
+            ['flow', 'jars', 'blueprint', 'mapping', 'system'].forEach(t => {
                 const el = document.getElementById(`admin-sec-${t}`);
                 if (el) el.style.display = (t === tabName) ? 'block' : 'none';
             });
