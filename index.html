@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.10)</title>
+    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.11)</title>
     
+    <!-- PWA 與 App Icon 關聯 -->
     <link rel="manifest" href="./manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="./icon-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="./icon-512x512.png">
@@ -19,6 +20,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
     
+    <!-- Firebase SDK (Modular) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
@@ -129,6 +131,7 @@
         .popup-menu-item:hover { border-color: var(--brand-accent); background: var(--brand-soft); }
         .popup-menu-subitem { padding-left: 28px; font-size: 0.85rem; color: var(--brand-primary); border-left: 3px solid var(--brand-accent); background: #fafcff; }
         
+        /* 控制台樣式 */
         .admin-dashboard-modal { background: #f8fafc; border-radius: 18px; width: 95%; max-width: 950px; height: 88vh; display: flex; flex-direction: column; overflow: hidden; }
         .admin-header { background: var(--brand-primary); color: #fff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; }
         .role-switch-bar { display: flex; gap: 6px; background: rgba(255,255,255,0.15); padding: 4px; border-radius: 8px; }
@@ -159,7 +162,7 @@
 <body>
     <header class="system-top-nav">
         <div class="brand-title-wrap">
-            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.10</span>
+            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.11</span>
             <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="選擇客群情境">!</span>
             <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="核心分頁直達">*</span>
         </div>
@@ -214,7 +217,7 @@
         </div>
     </div>
 
-    <!-- 控制台 -->
+    <!-- 控制台 (管理者與使用者雙模式) -->
     <div id="admin-modal-mask" class="modal-mask">
         <div class="admin-dashboard-modal">
             <div class="admin-header">
@@ -238,7 +241,7 @@
             
             <div class="sync-loading-overlay" id="sync-loading-mask">
                 <div style="font-size:2.5rem; margin-bottom:10px;">⏳</div>
-                <div id="sync-loading-text">正在同步至 Google Sheet...</div>
+                <div id="sync-loading-text">正在處理中...</div>
             </div>
             
             <div class="admin-body">
@@ -266,7 +269,7 @@
                         <div id="user-custom-indicator" style="display:none;" class="user-priority-badge">🟢 使用者專屬本機模式</div>
                     </div>
 
-                    <!-- 認知差距主題與副主題自訂 -->
+                    <!-- 認知差距主題與副主題自訂 (直接對應 Google Sheet 情境頁) -->
                     <div class="admin-card-row" style="border:1.5px solid #c084fc; background:#faf5ff;">
                         <h4 style="margin-top:0; color:#7e22ce;">🔍 當前情境認知差距標題設定 (對應 Google Sheet 情境頁)</h4>
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">認知差距主題 (gap_title)：</label>
@@ -401,12 +404,15 @@
             <div style="background:#ffffff; padding:12px 20px; border-top:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
                 <button class="nav-btn prev" style="width:auto; padding:8px 20px;" onclick="closeAdminDashboard()">關閉</button>
                 
+                <!-- 使用者模式：還原為團隊預設、匯出/匯入、保存至本機 -->
                 <div id="user-action-buttons" style="display:none; gap:8px;">
-                    <button class="step-ctrl-btn" onclick="exportUserDataJSON()">📤 匯出設定 (備份)</button>
-                    <button class="step-ctrl-btn" onclick="document.getElementById('json-import-input').click()">📥 匯入設定 (還原)</button>
-                    <button class="nav-btn prev" style="width:auto; padding:8px 18px; background:#f0fdf4; border-color:#86efac; color:#166534;" onclick="saveToLocalStorageOnly()">💾 保存為使用者專屬數據</button>
+                    <button class="nav-btn prev" style="width:auto; padding:8px 14px; background:#eff6ff; border-color:#93c5fd; color:#1d4ed8;" onclick="resetToTeamDefault()">🔄 還原為團隊預設</button>
+                    <button class="step-ctrl-btn" onclick="exportUserDataJSON()">📤 匯出設定</button>
+                    <button class="step-ctrl-btn" onclick="document.getElementById('json-import-input').click()">📥 匯入設定</button>
+                    <button class="nav-btn prev" style="width:auto; padding:8px 18px; background:#f0fdf4; border-color:#86efac; color:#166534;" onclick="saveToLocalStorageOnly()">💾 保存至本機 (優先)</button>
                 </div>
                 
+                <!-- 管理者模式：同步至 Google Sheet -->
                 <div id="admin-action-buttons" style="display:flex; gap:8px;">
                     <button class="nav-btn next" style="width:auto; padding:8px 20px;" onclick="syncAllToGoogleSheet()">☁️ 同步至 Google Sheet (新 Version)</button>
                 </div>
@@ -416,7 +422,7 @@
 
     <script>
         const answers = {};
-        let currentSystemVersion = "v6.3.10";
+        let currentSystemVersion = "v6.3.11";
         let GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwbKrrmiS5vx0Q5TvqqUCHBhU-VrS7WwwY0hj6BaNRwuzPtXXIZZxejPwhycCZhSCr-Rg/exec';
         let cloudAdminPassword = "903";
         let currentActiveScenario = "no_savings";
@@ -1137,6 +1143,65 @@
             loadJarTextsToEditor();
         }
 
+        // 使用者專屬：一鍵還原為團隊預設
+        async function resetToTeamDefault() {
+            if (!confirm("確定要清除本機修改，還原為團隊雲端預設設定？")) return;
+            
+            const loadingMask = document.getElementById('sync-loading-mask');
+            if (loadingMask) {
+                document.getElementById('sync-loading-text').textContent = "正在從雲端還原預設資料...";
+                loadingMask.style.display = 'flex';
+            }
+
+            localStorage.removeItem('ava_user_has_customized');
+            localStorage.removeItem('ava_scenario_database');
+            localStorage.removeItem('ava_jar_texts');
+            localStorage.removeItem('ava_scenarios_db');
+            localStorage.removeItem('ava_blueprint_summary');
+            localStorage.removeItem('ava_blueprint_img');
+
+            try {
+                const fullResp = await fetch(GAS_API_URL);
+                const json = await fullResp.json();
+                
+                if (json.system_version) applyVersionToUI(json.system_version);
+                if (json.jar_texts) allJarTexts = json.jar_texts;
+                if (json.scenarios) scenariosDB = json.scenarios;
+                if (json.sheet_mappings) sheetMappings = json.sheet_mappings;
+                if (json.blueprint_summary_text) blueprintSummaryText = json.blueprint_summary_text;
+                if (json.blueprint_img_url) blueprintImgUrl = json.blueprint_img_url;
+
+                if (json.cards && json.cards.length > 0) {
+                    const cloudDB = {};
+                    json.cards.forEach(row => {
+                        const sId = row.scenario_id || "no_savings";
+                        if (!cloudDB[sId]) cloudDB[sId] = [];
+                        cloudDB[sId].push({
+                            id: row.step_id,
+                            zone: row.zone || "zone_a",
+                            step_num: Number(row.step_num) || 1,
+                            title: row.title,
+                            subtitle: row.subtitle,
+                            image_url: row.image_url || "",
+                            options: typeof row.options_json === 'string' ? JSON.parse(row.options_json || '[]') : row.options_json
+                        });
+                    });
+                    allScenarioDatabase = cloudDB;
+                }
+
+                renderAdminCards();
+                loadJarTextsToEditor();
+                buildAndRenderFlow();
+                
+                if (loadingMask) loadingMask.style.display = 'none';
+                alert("✅ 已成功還原為團隊雲端預設！");
+            } catch (err) {
+                if (loadingMask) loadingMask.style.display = 'none';
+                alert("❌ 還原失敗，請檢查網路連線或 GAS 權限。");
+            }
+        }
+
+        // 使用者專屬：保存至本機 (鎖定 LocalStorage 最高優先)[span_4](start_span)[span_4](end_span)[span_5](start_span)[span_5](end_span)
         function saveToLocalStorageOnly() {
             saveJarTextsFromEditor();
             localStorage.setItem('ava_scenario_database', JSON.stringify(allScenarioDatabase));
@@ -1146,7 +1211,7 @@
             localStorage.setItem('ava_blueprint_img', blueprintImgUrl);
             localStorage.setItem('ava_user_has_customized', 'true');
             buildAndRenderFlow();
-            alert("✅ 已成功保存為使用者專屬數據！");
+            alert("✅ 已成功保存至本機！(日後開啟均以本機設定為優先，不會被團隊雲端覆蓋)");
             closeAdminDashboard();
         }
 
@@ -1190,6 +1255,7 @@
             reader.readAsText(file);
         }
 
+        // 管理者專屬：同步至 Google Sheet
         async function syncAllToGoogleSheet() {
             saveJarTextsFromEditor();
             const loadingMask = document.getElementById('sync-loading-mask');
