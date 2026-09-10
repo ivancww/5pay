@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.0)</title>
+    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.2.0)</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,7 +43,6 @@
             --state-purple: #7c3aed;
             --state-danger: #dc2626;
             --plan1-color: #2563eb;
-            --plan2-color: #059669;
             --pink-dashed: 1.5px dashed #f8bbd0;
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
             --shadow-md: 0 4px 16px -2px rgba(15, 23, 42, 0.06);
@@ -138,18 +137,31 @@
         .popup-menu-item { background: #f8fafc; border: 1px solid var(--border-light); border-radius: 10px; padding: 12px 14px; font-size: 0.92rem; font-weight: bold; cursor: pointer; transition: all 0.2s; }
         .popup-menu-item:hover { border-color: var(--brand-accent); background: var(--brand-soft); }
         
+        /* 控制台樣式 */
         .admin-dashboard-modal { background: #f8fafc; border-radius: 18px; width: 95%; max-width: 950px; height: 88vh; display: flex; flex-direction: column; overflow: hidden; }
         .admin-header { background: var(--brand-primary); color: #fff; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; }
         .admin-nav { display: flex; gap: 8px; background: #ffffff; padding: 10px 20px; border-bottom: 1px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; }
         .admin-nav-btn { padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; border: 1px solid #cbd5e1; background: #f8fafc; color: #475569; white-space: nowrap; }
         .admin-nav-btn.active { background: var(--brand-primary); color: white; border-color: var(--brand-primary); }
         .admin-body { flex: 1; overflow-y: auto; padding: 20px; }
-        .admin-card-row { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 18px; margin-bottom: 16px; }
+        .admin-card-row { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 18px; margin-bottom: 16px; position: relative; }
         .admin-card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .step-ctrl-btn { padding: 4px 10px; border: 1px solid #cbd5e1; background: #f8fafc; border-radius: 6px; font-size: 0.75rem; cursor: pointer; font-weight: bold; }
         .pink-edit-input { width: 100%; padding: 8px 12px; border: var(--pink-dashed); border-radius: 6px; font-size: 0.9rem; margin-top: 4px; background: #fff; }
+        .admin-options-container { margin-top: 10px; background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px dashed #e2e8f0; }
+        .option-row-edit { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+        .del-opt-btn { background: #fee2e2; color: #dc2626; border: none; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-size: 0.75rem; font-weight: bold; }
         .sync-loading-overlay { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.9); z-index: 50; flex-direction: column; align-items: center; justify-content: center; font-weight: bold; color: var(--brand-primary); }
         .zone-header-box { background: #f1f5f9; padding: 10px 14px; border-radius: 8px; font-weight: 800; font-size: 0.95rem; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        
+        /* 頂部紅色引導提示橫幅 */
+        .red-guide-banner { background: #fff1f2; border: 1.5px solid #fecdd3; border-radius: 12px; padding: 14px 18px; margin-bottom: 18px; }
+        .red-guide-title { color: #e11d48; font-weight: 900; font-size: 0.92rem; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+        .red-guide-text { color: #be123c; font-size: 0.84rem; line-height: 1.6; margin-bottom: 8px; }
+        .red-guide-steps { color: #9f1239; font-size: 0.8rem; line-height: 1.6; font-weight: 600; border-top: 1px dashed #fecdd3; padding-top: 8px; }
+
+        /* 固定頁面在後台的標識卡片 */
+        .fixed-anchor-card { background: #faf5ff; border: 1.5px dashed #c084fc; border-radius: 12px; padding: 14px 18px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
     </style>
 </head>
 <body>
@@ -197,7 +209,7 @@
         </div>
     </div>
 
-    <!-- 控制台 -->
+    <!-- 全能控制台 -->
     <div id="admin-modal-mask" class="modal-mask">
         <div class="admin-dashboard-modal">
             <div class="admin-header">
@@ -206,7 +218,7 @@
             </div>
             
             <div class="admin-nav" id="admin-tabs-nav-bar">
-                <div class="admin-nav-btn active" id="tab-flow-btn" onclick="switchAdminTab('flow')">三大區域流程管理</div>
+                <div class="admin-nav-btn active" id="tab-flow-btn" onclick="switchAdminTab('flow')">頁面流程管理</div>
                 <div class="admin-nav-btn" id="tab-jars-btn" onclick="switchAdminTab('jars')">時光複利文字</div>
                 <div class="admin-nav-btn" id="tab-blueprint-btn" onclick="switchAdminTab('blueprint')">人生藍圖設定</div>
                 <div class="admin-nav-btn admin-only-tab" id="tab-system-btn" onclick="switchAdminTab('system')" style="display:none;">系統參數</div>
@@ -218,10 +230,21 @@
             </div>
             
             <div class="admin-body">
-                <!-- Tab 1: 三大區域頁面管理 -->
+                <!-- Tab 1: 頁面流程管理 -->
                 <div id="admin-sec-flow">
+                    <!-- 頂位紅色文字指引橫幅 -->
+                    <div class="red-guide-banner">
+                        <div class="red-guide-title">📌 最後濃縮成你真正可以記住嘅流程：</div>
+                        <div class="red-guide-text">
+                            1-3 點了解客人，4-6 點睇見未來，7-8 點勾起好奇/啟發及轉場，9-11 產品概念到運作，運作到具體化，12-14 重新連結及決定。
+                        </div>
+                        <div class="red-guide-steps">
+                            1️⃣ 進入客人世界 ｜ 2️⃣ 了解佢關心乜 ｜ 3️⃣ 找真正原因 ｜ 4️⃣ 創造人生畫面 ｜ 5️⃣ 看到兩個未來 ｜ 6️⃣ 自己發現距離 ｜ 7️⃣ 「咁可以點？」 ｜ 8️⃣ 「可能適合，亦可能唔適合。」 ⭐ ｜ 9️⃣ 產品＝填補佢 Gap 嘅工具 ｜ 🔟 複雜概念→簡單具體 ｜ 1️⃣1️⃣ 數字→證明效果 ｜ 1️⃣2️⃣ 重新連結返佢嘅目標 ｜ 1️⃣3️⃣ 一齊判斷適合唔適合 ｜ 1️⃣4️⃣ 客人自己決定
+                        </div>
+                    </div>
+
                     <div style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:12px; margin-bottom:16px; display:flex; align-items:center; gap:8px;">
-                        <label style="font-size:0.85rem; font-weight:bold; color:var(--brand-primary);">編輯情境：</label>
+                        <label style="font-size:0.85rem; font-weight:bold; color:var(--brand-primary);">切換編輯情境：</label>
                         <select id="scenario-flow-selector" onchange="switchScenarioFlowEditor(this.value)" style="padding:6px 10px; font-weight:bold; border:1.5px solid var(--brand-accent); border-radius:6px; background:#fff;">
                             <option value="no_savings">🌱 1. 未有儲蓄 / 主動查詢</option>
                             <option value="self_invest">📈 2. 自己投資</option>
@@ -229,23 +252,53 @@
                         </select>
                     </div>
                     
+                    <!-- 區域 A -->
                     <div class="zone-header-box" style="border-left:4px solid #2563eb;">
-                        <span>📍 區域 A (第 1 - n 頁 $\rightarrow$ 固定分頁 A: 認知差距)</span>
-                        <button class="step-ctrl-btn" style="background:#dbeafe; color:#1d4ed8;" onclick="addNewPageToZone('zone_a')">+ 新增區域 A 頁面</button>
+                        <span>📍 區域 A：引導題目 (第 1 頁 $\rightarrow$ 固定分頁 A 前)</span>
+                        <button class="step-ctrl-btn" style="background:#dbeafe; color:#1d4ed8;" onclick="addNewPageToZone('zone_a')">+ 新增區域 A 題目</button>
                     </div>
                     <div id="admin-cards-render-zone-a"></div>
 
+                    <!-- 固定分頁 A 錨點標識 -->
+                    <div class="fixed-anchor-card">
+                        <div>
+                            <span style="font-weight:900; color:#7e22ce;">🔒 固定分頁 A：認知差距與真相對比 (核心 Anchor)</span>
+                            <div style="font-size:0.75rem; color:#6b21a8; margin-top:2px;">此為固定核心頁面，內容根據所選情境自動載入</div>
+                        </div>
+                        <span style="background:#ede9fe; color:#6b21a8; padding:3px 8px; border-radius:6px; font-size:0.75rem; font-weight:bold;">固定分頁</span>
+                    </div>
+
+                    <!-- 區域 B -->
                     <div class="zone-header-box" style="border-left:4px solid #059669; margin-top:20px;">
-                        <span>📍 區域 B (固定分頁 A 開始 - n 頁 $\rightarrow$ 固定分頁 B: 時光複利)</span>
-                        <button class="step-ctrl-btn" style="background:#d1fae5; color:#065f46;" onclick="addNewPageToZone('zone_b')">+ 新增區域 B 頁面</button>
+                        <span>📍 區域 B：過渡題目 (固定分頁 A 開始 $\rightarrow$ 固定分頁 B 前)</span>
+                        <button class="step-ctrl-btn" style="background:#d1fae5; color:#065f46;" onclick="addNewPageToZone('zone_b')">+ 新增區域 B 題目</button>
                     </div>
                     <div id="admin-cards-render-zone-b"></div>
 
+                    <!-- 固定分頁 B 錨點標識 -->
+                    <div class="fixed-anchor-card">
+                        <div>
+                            <span style="font-weight:900; color:#7e22ce;">🔒 固定分頁 B：時光複利量化累積表 (核心 Anchor)</span>
+                            <div style="font-size:0.75rem; color:#6b21a8; margin-top:2px;">此為固定核心計算表，動態連動 Google Sheet 倍數</div>
+                        </div>
+                        <span style="background:#ede9fe; color:#6b21a8; padding:3px 8px; border-radius:6px; font-size:0.75rem; font-weight:bold;">固定分頁</span>
+                    </div>
+
+                    <!-- 區域 C -->
                     <div class="zone-header-box" style="border-left:4px solid #7c3aed; margin-top:20px;">
-                        <span>📍 區域 C (固定分頁 B 開始 - n 頁 $\rightarrow$ 固定分頁 C: 人生藍圖)</span>
-                        <button class="step-ctrl-btn" style="background:#ede9fe; color:#5b21b6;" onclick="addNewPageToZone('zone_c')">+ 新增區域 C 頁面</button>
+                        <span>📍 區域 C：確認與評估 (固定分頁 B 開始 $\rightarrow$ 固定分頁 C 前)</span>
+                        <button class="step-ctrl-btn" style="background:#ede9fe; color:#5b21b6;" onclick="addNewPageToZone('zone_c')">+ 新增區域 C 題目</button>
                     </div>
                     <div id="admin-cards-render-zone-c"></div>
+
+                    <!-- 固定分頁 C 錨點標識 -->
+                    <div class="fixed-anchor-card">
+                        <div>
+                            <span style="font-weight:900; color:#7e22ce;">🔒 固定分頁 C：人生藍圖總結與保費優惠 (核心 Anchor)</span>
+                            <div style="font-size:0.75rem; color:#6b21a8; margin-top:2px;">生活初衷筆記與度身訂造保費優惠試算</div>
+                        </div>
+                        <span style="background:#ede9fe; color:#6b21a8; padding:3px 8px; border-radius:6px; font-size:0.75rem; font-weight:bold;">固定分頁</span>
+                    </div>
                 </div>
 
                 <!-- Tab 2: 時光複利文字 -->
@@ -256,7 +309,7 @@
                         <input type="text" id="admin-jt-desc-1" class="pink-edit-input" placeholder="描述">
                     </div>
                     <div class="admin-card-row">
-                        <h4 style="margin-top:0; color:var(--plan2-color);">💧 二號水庫 (第 6 - 10 年)</h4>
+                        <h4 style="margin-top:0; color:var(--plan1-color);">💧 二號水庫 (第 6 - 10 年)</h4>
                         <input type="text" id="admin-jt-title-2" class="pink-edit-input" placeholder="標題">
                         <input type="text" id="admin-jt-desc-2" class="pink-edit-input" placeholder="描述">
                     </div>
@@ -277,7 +330,7 @@
                     <div class="admin-card-row">
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">管理員密碼：</label>
                         <input type="text" id="admin-password-input" class="pink-edit-input">
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">當前系統版本號 (每次同步會自動累加)：</label>
+                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">當前系統版本號：</label>
                         <input type="text" id="admin-version-input" class="pink-edit-input" readonly style="background:#f8fafc;">
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">GAS API 網址：</label>
                         <input type="text" id="admin-gas-url-input" class="pink-edit-input">
@@ -285,12 +338,13 @@
                 </div>
             </div>
             
+            <input type="file" id="firebase-file-input" accept="image/*" style="display:none;">
             <div style="background:#ffffff; padding:12px 20px; border-top:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
                 <button class="nav-btn prev" style="width:auto; padding:8px 20px;" onclick="closeAdminDashboard()">關閉</button>
                 <div style="display:flex; gap:10px;">
-                    <button class="nav-btn prev" id="btn-reset-user" style="width:auto; padding:8px 20px; background:#fff1f2; border-color:#fecdd3; color:#be123c;" onclick="resetToTeamDefault()">🔄 還原預設</button>
-                    <button class="nav-btn prev" style="width:auto; padding:8px 20px; background:#f0fdf4; border-color:#86efac; color:#166534;" onclick="saveToLocalStorageOnly()">💾 本機保存</button>
-                    <button class="nav-btn next" id="btn-sync-gsheet" style="width:auto; padding:8px 20px; display:none;" onclick="syncAllToGoogleSheet()">☁️ 同步至 Google Sheet (自動升級版號)</button>
+                    <button class="nav-btn prev" id="btn-reset-user" style="width:auto; padding:8px 20px; background:#fff1f2; border-color:#fecdd3; color:#be123c;" onclick="resetToTeamDefault()">🔄 還原為團隊預設</button>
+                    <button class="nav-btn prev" style="width:auto; padding:8px 20px; background:#f0fdf4; border-color:#86efac; color:#166534;" onclick="saveToLocalStorageOnly()">💾 保存至本機</button>
+                    <button class="nav-btn next" id="btn-sync-gsheet" style="width:auto; padding:8px 20px; display:none;" onclick="syncAllToGoogleSheet()">☁️ 同步至 Google Sheet (新 Version)</button>
                 </div>
             </div>
         </div>
@@ -357,21 +411,21 @@
 
         let allScenarioDatabase = {
             no_savings: [
-                { id: "step_1", zone: "zone_a", step_num: 1, title: "「如果講而家嘅生活狀態，你覺得自己屬於邊一種？」", subtitle: "沒有對與錯，純粹由你目前最自在的節奏開始探索：", options: [
-                    { headline: "🌅 先享受現在", subtext: "今天的生活同樣重要，未來的步調可以慢慢來。" },
-                    { headline: "🧭 我知道未來重要", subtext: "但市面太多複雜說法，未找到真正適合自己、不吃力的方法。" }
+                { id: "step_1", zone: "zone_a", step_num: 1, title: "「如果純粹講而家嘅生活狀態，你覺得自己屬於邊一種？」", subtitle: "沒有對與錯，純粹由你目前最真實、最自在的生活節奏開始探索：", image_url: "", options: [
+                    { headline: "🌅 先享受現在", subtext: "今天的生活同樣重要，未來的步調可以按自己節奏慢慢來。" },
+                    { headline: "🧭 我知道未來重要", subtext: "但市面太多複雜說法，還未找到真正適合自己、不吃力的方法。" }
                 ]},
-                { id: "step_2", zone: "zone_a", step_num: 2, title: "「如果將來有一樣嘢值得你花更多資源，最可能係邊方面？」", subtitle: "心目中可能已有最在意的生活重心：", options: [
-                    { headline: "🏠 住屋與生活品質提升", subtext: "希望未來住在更舒適的環境。" },
-                    { headline: "✈️ 旅行與人生體驗", subtext: "趁有能力多去探索世界，豐富人生。" }
+                { id: "step_2", zone: "zone_a", step_num: 2, title: "「如果將來有一樣嘢值得你花更多資源，最可能會係邊方面？」", subtitle: "即使未有具體安排，心目中亦可能有最在意的生活重心：", image_url: "", options: [
+                    { headline: "🏠 住屋與生活品質提升", subtext: "希望未來能住在更舒適的環境，享有更優質的日常生活。" },
+                    { headline: "✈️ 旅行與人生體驗", subtext: "趁有能力多去探索世界，豐富人生經歷。" }
                 ]},
-                { id: "step_7", zone: "zone_b", step_num: 7, title: "「如果話你知：『未有明確目標』，其實先係最好嘅開始方式？」", subtitle: "提早為自己累積選擇權永遠不會錯：", options: [
-                    { headline: "🤔 點解未有目標都可以開始？", subtext: "想了解背後的運作原理。" },
-                    { headline: "💡 真係可以完全唔影響現有生活？", subtext: "想知道如何用最輕鬆的節奏建立長期儲備。" }
+                { id: "step_7", zone: "zone_b", step_num: 7, title: "「如果話你知：『未有明確目標』，其實先係最好嘅開始方式？」", subtitle: "人生目標隨時會變，但「提早為自己累積選擇權」永遠不會錯。", image_url: "", options: [
+                    { headline: "🤔 點解未有目標都可以開始？", subtext: "想了解如何在不確定未來的情況下做好準備。" },
+                    { headline: "💡 真係可以完全唔影響現有生活？", subtext: "想知道如何用最輕鬆、不吃力的節奏建立長期儲備。" }
                 ]},
-                { id: "step_13", zone: "zone_c", step_num: 13, title: "「適合先繼續，唔適合都完全冇問題。」", subtitle: "以你目前的步調，你覺得這種分段建立的方法適唔適合自己？", options: [
-                    { headline: "🟢 我覺得概念好舒服，可以認真考慮", subtext: "認同分段投入與被動收入提取理念。" },
-                    { headline: "🟡 概念明白，想睇下具體預算", subtext: "希望能量身微調。" }
+                { id: "step_13", zone: "zone_c", step_num: 13, title: "「適合先繼續，唔適合都完全冇問題。」", subtitle: "以你目前的步調，你覺得這種分段建立的方法適唔適合自己？", image_url: "", options: [
+                    { headline: "🟢 我覺得概念好舒服，可以認真考慮", subtext: "認同分段投入與被動收入提取的理念。" },
+                    { headline: "🟡 概念明白，想再睇下適合自己的具體預算", subtext: "希望能根據自己的實際收入量身微調。" }
                 ]}
             ]
         };
@@ -380,7 +434,6 @@
         function formatNumber(v) { return new Intl.NumberFormat('en-US', {maximumFractionDigits: 0}).format(v || 0); }
         function parseFormattedNumber(s) { return parseFloat(String(s).replace(/,/g, '')) || 0; }
 
-        // 同步並更新 DOM 與 title 中的版本號
         function applyVersionToUI(ver) {
             currentSystemVersion = ver;
             document.title = `AVA 專屬生活引導系統 · 探索未來選擇權 (${ver})`;
@@ -392,7 +445,6 @@
             if (verInput) verInput.value = ver;
         }
 
-        // 版本號自動遞增 (v6.2.0 -> v6.2.1)
         function incrementVersion(verStr) {
             const match = verStr.match(/v?(\d+)\.(\d+)\.(\d+)/);
             if (match) {
@@ -613,51 +665,92 @@
             document.getElementById('progress-fill').style.width = `${pct}%`;
         }
 
+        // 後台卡片渲染（完整包含：上移/下移、圖片上傳/刪除、選項自訂增刪）
         function renderAdminCards() {
             const currentList = allScenarioDatabase[currentActiveScenario] || [];
             ['zone_a', 'zone_b', 'zone_c'].forEach(zKey => {
                 const zoneContainer = document.getElementById(`admin-cards-render-${zKey.replace('_', '-')}`);
+                if (!zoneContainer) return;
                 zoneContainer.innerHTML = '';
                 const zoneCards = currentList.filter(c => c.zone === zKey);
 
-                zoneCards.forEach(card => {
+                zoneCards.forEach((card, idxInZone) => {
                     const globalIdx = currentList.findIndex(c => c.id === card.id);
                     const el = document.createElement('div');
                     el.className = 'admin-card-row';
                     el.innerHTML = `
                         <div class="admin-card-head">
-                            <strong>頁面：${card.title.substring(0, 15)}...</strong>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <span style="font-weight:bold; color:var(--brand-primary); font-size:0.95rem;">步驟 ${card.step_num || (globalIdx + 1)} (動態題)</span>
+                                <button class="step-ctrl-btn" onclick="moveZoneCard('${card.id}', -1)" ${idxInZone === 0 ? 'disabled' : ''}>⬆ 上移</button>
+                                <button class="step-ctrl-btn" onclick="moveZoneCard('${card.id}', 1)" ${idxInZone === zoneCards.length - 1 ? 'disabled' : ''}>⬇ 下移</button>
+                            </div>
+                            <button class="del-opt-btn" onclick="deleteCard('${card.id}')">🗑️ 刪除此題</button>
+                        </div>
+                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">主標題 (問題內容)：</label>
+                        <input type="text" class="pink-edit-input" value="${card.title || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].title = this.value">
+                        
+                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">副標題說明：</label>
+                        <input type="text" class="pink-edit-input" value="${card.subtitle || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].subtitle = this.value">
+                        
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+                            <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">圖片網址 (imageUrl)：</label>
                             <div>
-                                <button class="step-ctrl-btn" onclick="moveZoneCard('${card.id}', -1)">⬆</button>
-                                <button class="step-ctrl-btn" onclick="moveZoneCard('${card.id}', 1)">⬇</button>
-                                <button class="del-opt-btn" onclick="deleteCard('${card.id}')">🗑️ 刪除</button>
+                                <button class="step-ctrl-btn" onclick="triggerCardUpload(${globalIdx})">📤 上載圖片</button>
+                                <button class="del-opt-btn" onclick="deleteCardImage(${globalIdx})" style="padding:3px 6px;">🗑️ 刪除圖片</button>
                             </div>
                         </div>
-                        <input type="text" class="pink-edit-input" value="${card.title}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].title = this.value" placeholder="標題">
-                        <input type="text" class="pink-edit-input" value="${card.subtitle}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].subtitle = this.value" placeholder="副標題">
+                        <input type="text" id="card-img-url-${globalIdx}" class="pink-edit-input" value="${card.image_url || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].image_url = this.value">
+                        
+                        <div class="admin-options-container">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                                <span style="font-size:0.75rem; font-weight:bold; color:#475569;">選項清單：</span>
+                                <button class="step-ctrl-btn" onclick="addCardOption(${globalIdx})">+ 新增選項</button>
+                            </div>
+                            <div id="opts-edit-zone-${globalIdx}"></div>
+                        </div>
                     `;
                     zoneContainer.appendChild(el);
+
+                    // 渲染選項列表
+                    const optZone = el.querySelector(`#opts-edit-zone-${globalIdx}`);
+                    if (card.options && card.options.length > 0) {
+                        card.options.forEach((opt, optIdx) => {
+                            const optRow = document.createElement('div');
+                            optRow.className = 'option-row-edit';
+                            optRow.innerHTML = `
+                                <input type="text" class="pink-edit-input" style="margin:0; flex:1;" value="${opt.headline || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].options[${optIdx}].headline = this.value" placeholder="標題">
+                                <input type="text" class="pink-edit-input" style="margin:0; flex:1.5;" value="${opt.subtext || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].options[${optIdx}].subtext = this.value" placeholder="說明文字">
+                                <button class="del-opt-btn" onclick="deleteCardOption(${globalIdx}, ${optIdx})">✕</button>
+                            `;
+                            optZone.appendChild(optRow);
+                        });
+                    }
                 });
             });
         }
 
         function addNewPageToZone(zoneKey) {
             if (!allScenarioDatabase[currentActiveScenario]) allScenarioDatabase[currentActiveScenario] = [];
-            allScenarioDatabase[currentActiveScenario].push({
+            const list = allScenarioDatabase[currentActiveScenario];
+            list.push({
                 id: `step_${Date.now()}`,
                 zone: zoneKey,
-                step_num: allScenarioDatabase[currentActiveScenario].length + 1,
-                title: "新動態頁面標題",
-                subtitle: "請輸入引導副標題說明",
+                step_num: list.length + 1,
+                title: "新引導問題內容",
+                subtitle: "請輸入問題輔助說明",
                 image_url: "",
-                options: [{ headline: "新選項 1", subtext: "說明文字" }]
+                options: [
+                    { headline: "選項 1", subtext: "說明文字 1" },
+                    { headline: "選項 2", subtext: "說明文字 2" }
+                ]
             });
             renderAdminCards();
             buildAndRenderFlow();
         }
 
         function deleteCard(cardId) {
-            if (confirm("確定刪除此頁面？")) {
+            if (confirm("確定刪除此題目頁面？")) {
                 allScenarioDatabase[currentActiveScenario] = allScenarioDatabase[currentActiveScenario].filter(c => c.id !== cardId);
                 renderAdminCards();
                 buildAndRenderFlow();
@@ -668,13 +761,53 @@
             const list = allScenarioDatabase[currentActiveScenario];
             const idx = list.findIndex(c => c.id === cardId);
             if (idx < 0) return;
+            const currentZone = list[idx].zone;
             const targetIdx = idx + dir;
             if (targetIdx < 0 || targetIdx >= list.length) return;
+            if (list[targetIdx].zone !== currentZone) return; // 限制在同一分區內上下移動
+
             const temp = list[idx];
             list[idx] = list[targetIdx];
             list[targetIdx] = temp;
             renderAdminCards();
             buildAndRenderFlow();
+        }
+
+        function addCardOption(globalIdx) {
+            const card = allScenarioDatabase[currentActiveScenario][globalIdx];
+            if (!card.options) card.options = [];
+            card.options.push({ headline: "新選項", subtext: "選項說明" });
+            renderAdminCards();
+            buildAndRenderFlow();
+        }
+
+        function deleteCardOption(globalIdx, optIdx) {
+            allScenarioDatabase[currentActiveScenario][globalIdx].options.splice(optIdx, 1);
+            renderAdminCards();
+            buildAndRenderFlow();
+        }
+
+        function deleteCardImage(globalIdx) {
+            allScenarioDatabase[currentActiveScenario][globalIdx].image_url = "";
+            const input = document.getElementById(`card-img-url-${globalIdx}`);
+            if (input) input.value = "";
+            renderAdminCards();
+            buildAndRenderFlow();
+        }
+
+        function triggerCardUpload(globalIdx) {
+            const input = document.getElementById('firebase-file-input');
+            input.onchange = async () => {
+                if (!input.files || input.files.length === 0) return;
+                const file = input.files[0];
+                const fileRef = window.storageRef(window.firebaseStorage, `journey_images/${Date.now()}_${file.name}`);
+                await window.uploadBytes(fileRef, file);
+                const url = await window.getDownloadURL(fileRef);
+                allScenarioDatabase[currentActiveScenario][globalIdx].image_url = url;
+                renderAdminCards();
+                buildAndRenderFlow();
+            };
+            input.click();
         }
 
         async function syncAllToGoogleSheet() {
@@ -684,7 +817,6 @@
             GAS_API_URL = document.getElementById('admin-gas-url-input').value || GAS_API_URL;
             cloudAdminPassword = document.getElementById('admin-password-input').value || cloudAdminPassword;
             
-            // 自動累進版本號並套用至 Title 與 UI
             const newVersion = incrementVersion(currentSystemVersion);
             applyVersionToUI(newVersion);
 
@@ -724,11 +856,11 @@
                 
                 buildAndRenderFlow();
                 loadingMask.style.display = 'none';
-                alert(`✅ 雲端同步成功！系統版本已升級至 ${newVersion}`);
+                alert(`✅ 雲端同步完成！版本已自動升級為 ${newVersion}`);
                 closeAdminDashboard();
             } catch (e) {
                 loadingMask.style.display = 'none';
-                alert("❌ 上傳失敗，請檢查 GAS 連線權限。");
+                alert("❌ 上傳失敗，請檢查 GAS 權限。");
             }
         }
 
@@ -769,7 +901,7 @@
             const pwd = prompt("請輸入管理員密碼：");
             if (pwd === cloudAdminPassword) {
                 isAdminRole = true;
-                openAdminDashboardModal("🛠️ 管理員控制台 (已連接 Google Sheet)");
+                openAdminDashboardModal("🛠️ 管理者控制台 (已連接 Google Sheet 雲端)");
                 document.querySelectorAll('.admin-only-tab').forEach(el => el.style.display = 'block');
                 document.getElementById('btn-sync-gsheet').style.display = 'block';
                 document.getElementById('btn-reset-user').style.display = 'none';
@@ -834,13 +966,13 @@
 
         function saveToLocalStorageOnly() {
             localStorage.setItem('ava_scenario_database', JSON.stringify(allScenarioDatabase));
-            alert("✅ 已保存至本機！");
+            alert("✅ 已保存專屬設定至本機！");
             buildAndRenderFlow();
             closeAdminDashboard();
         }
 
         function resetToTeamDefault() {
-            if (confirm("確定清除本機資料並還原至雲端預設？")) {
+            if (confirm("確定清除本機資料並還原至雲端團隊預設？")) {
                 localStorage.clear();
                 fetchCloudDataFromGAS();
                 alert("✅ 已還原為團隊最新預設！");
