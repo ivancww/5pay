@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.8)</title>
+    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.10)</title>
     
-    <!-- PWA 與 App Icon 關聯 -->
     <link rel="manifest" href="./manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="./icon-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="./icon-512x512.png">
@@ -20,7 +19,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Firebase SDK (Modular) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
@@ -131,7 +129,6 @@
         .popup-menu-item:hover { border-color: var(--brand-accent); background: var(--brand-soft); }
         .popup-menu-subitem { padding-left: 28px; font-size: 0.85rem; color: var(--brand-primary); border-left: 3px solid var(--brand-accent); background: #fafcff; }
         
-        /* 控制台樣式 */
         .admin-dashboard-modal { background: #f8fafc; border-radius: 18px; width: 95%; max-width: 950px; height: 88vh; display: flex; flex-direction: column; overflow: hidden; }
         .admin-header { background: var(--brand-primary); color: #fff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; }
         .role-switch-bar { display: flex; gap: 6px; background: rgba(255,255,255,0.15); padding: 4px; border-radius: 8px; }
@@ -162,7 +159,7 @@
 <body>
     <header class="system-top-nav">
         <div class="brand-title-wrap">
-            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.8</span>
+            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.10</span>
             <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="選擇客群情境">!</span>
             <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="核心分頁直達">*</span>
         </div>
@@ -190,7 +187,7 @@
         </div>
     </div>
 
-    <!-- 圖 1 直達核心分頁彈窗 (已增設 3 個情境直達選項) -->
+    <!-- 直達核心分頁彈窗 -->
     <div id="jump-popup-mask" class="modal-mask">
         <div class="modal-box">
             <span class="close-btn" onclick="closeJumpPopup()">&times;</span>
@@ -208,7 +205,7 @@
         </div>
     </div>
 
-    <!-- 被動收入旁邊「!」展開的領取方案選單彈窗 -->
+    <!-- 被動收入旁邊「!」彈窗 -->
     <div id="withdraw-strategy-popup" class="modal-mask">
         <div class="modal-box">
             <span class="close-btn" onclick="closeWithdrawPopup()">&times;</span>
@@ -245,7 +242,7 @@
             </div>
             
             <div class="admin-body">
-                <!-- Tab 1: 頁面流程管理 (圖 3：完全還原頂部紅字指引、上下移、圖片上載/刪除、選項模式) -->
+                <!-- Tab 1: 頁面流程管理 -->
                 <div id="admin-sec-flow">
                     <div class="red-guide-banner">
                         <div class="red-guide-title">📌 最後濃縮成你真正可以記住嘅流程：</div>
@@ -267,6 +264,15 @@
                             </select>
                         </div>
                         <div id="user-custom-indicator" style="display:none;" class="user-priority-badge">🟢 使用者專屬本機模式</div>
+                    </div>
+
+                    <!-- 認知差距主題與副主題自訂 -->
+                    <div class="admin-card-row" style="border:1.5px solid #c084fc; background:#faf5ff;">
+                        <h4 style="margin-top:0; color:#7e22ce;">🔍 當前情境認知差距標題設定 (對應 Google Sheet 情境頁)</h4>
+                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">認知差距主題 (gap_title)：</label>
+                        <input type="text" id="admin-gap-title-input" class="pink-edit-input" oninput="updateCurrentScenarioTitles()">
+                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">副主題說明 (takeaway_summary)：</label>
+                        <input type="text" id="admin-gap-sub-input" class="pink-edit-input" oninput="updateCurrentScenarioTitles()">
                     </div>
                     
                     <div class="zone-header-box" style="border-left:4px solid #2563eb;">
@@ -360,9 +366,9 @@
                 <div id="admin-sec-blueprint" style="display:none;">
                     <div class="admin-card-row">
                         <h4 style="margin-top:0; color:var(--brand-primary);">🖼️ 藍圖右側圖解與替代方案</h4>
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">藍圖圖片網址：</label>
+                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">藍圖圖片網址 (blueprint_img_url)：</label>
                         <input type="text" id="admin-blueprint-img-url" class="pink-edit-input" value="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80">
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:10px; display:block;">替代方案總結說明：</label>
+                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:10px; display:block;">替代方案總結說明 (blueprint_summary_text)：</label>
                         <input type="text" id="admin-blueprint-summary-text" class="pink-edit-input" value="完全不影響現有生活享受：只需將每月不知不決流走的少許資金，分段注入專屬水庫，自然鎖定終身被動收入。">
                     </div>
                 </div>
@@ -410,7 +416,7 @@
 
     <script>
         const answers = {};
-        let currentSystemVersion = "v6.3.8";
+        let currentSystemVersion = "v6.3.10";
         let GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwbKrrmiS5vx0Q5TvqqUCHBhU-VrS7WwwY0hj6BaNRwuzPtXXIZZxejPwhycCZhSCr-Rg/exec';
         let cloudAdminPassword = "903";
         let currentActiveScenario = "no_savings";
@@ -419,6 +425,15 @@
         let currentStepIndex = 0;
         let selectedWithdrawOption = "withdraw7_from8";
         let selectedPayYears = 5;
+
+        let blueprintSummaryText = "完全不影響現有生活享受：只需將每月不知不決流走的少許資金，分段注入專屬水庫，自然鎖定終身被動收入。";
+        let blueprintImgUrl = "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80";
+
+        let scenariosDB = {
+            no_savings: { scenario_name: "未有儲蓄/主動查詢", gap_title: "🔍 認知差距與真相對比", takeaway_summary: "探索不同路徑在時間複利下的真實落差：" },
+            self_invest: { scenario_name: "自己投資", gap_title: "📈 目標匹配度與不確定性差距", takeaway_summary: "看清市場波動與核心防守底層的真實落差：" },
+            flexible_return: { scenario_name: "靈活性/回報", gap_title: "🔓 假靈活 vs 投資鐵三角取捨", takeaway_summary: "探索流動性、回報與安全性之間的取捨真相：" }
+        };
 
         const scenarioGapFiles = {
             no_savings: "./scenario1_gap.html",
@@ -550,10 +565,11 @@
                     `;
                 } else if (step.id === 'fixed-page-a') {
                     const targetFile = scenarioGapFiles[currentActiveScenario] || scenarioGapFiles.no_savings;
+                    const sc = scenariosDB[currentActiveScenario] || scenariosDB.no_savings;
                     stepEl.innerHTML = `
                         <div class="content-card">
-                            <h2 class="question-title">🔍 認知差距與真相對比</h2>
-                            <p class="question-hint">探索不同路徑在時間複利下的真實落差：</p>
+                            <h2 class="question-title" id="disp-gap-title">${sc.gap_title || '🔍 認知差距與真相對比'}</h2>
+                            <p class="question-hint" id="disp-gap-sub">${sc.takeaway_summary || '探索不同路徑在時間複利下的真實落差：'}</p>
                             <div class="gap-iframe-container">
                                 <iframe class="gap-iframe" src="${targetFile}"></iframe>
                             </div>
@@ -618,8 +634,11 @@
                             <h2 class="question-title">🌱 你的專屬生活藍圖筆記</h2>
                             <p class="question-hint">生活初衷彙整與專屬水庫配置：</p>
                             <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:12px; padding:18px;">
-                                <strong>💡 替代方案：無痛縮減落差</strong>
-                                <p style="font-size:0.9rem; color:#166534; margin-top:6px;">完全不影響現有生活享受：只需將每月不知不決流走的少許資金，分段注入專屬水庫，自然鎖定終身被動收入。</p>
+                                <strong style="color:#166534; font-size:1rem;">💡 替代方案：無痛縮減落差</strong>
+                                <div style="text-align:center; margin:12px 0;">
+                                    <img src="${blueprintImgUrl}" style="max-width:100%; max-height:220px; object-fit:contain; border-radius:10px;">
+                                </div>
+                                <p style="font-size:0.9rem; color:#166534; margin-top:6px; line-height:1.6;">${blueprintSummaryText}</p>
                             </div>
                             <div class="action-row">
                                 <button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 上一步</button>
@@ -810,7 +829,6 @@
             calculateAndDisplay();
         }
 
-        // 圖 3 後台頁面管理題目卡片渲染（完整還原上下移、圖片上載/刪除、選項增刪模式）
         function renderAdminCards() {
             let currentList = allScenarioDatabase[currentActiveScenario] || allScenarioDatabase['no_savings'];
             ['zone_a', 'zone_b', 'zone_c'].forEach(zKey => {
@@ -962,8 +980,20 @@
             buildAndRenderFlow();
         }
 
+        function updateCurrentScenarioTitles() {
+            if (!scenariosDB[currentActiveScenario]) scenariosDB[currentActiveScenario] = {};
+            scenariosDB[currentActiveScenario].gap_title = document.getElementById('admin-gap-title-input').value;
+            scenariosDB[currentActiveScenario].takeaway_summary = document.getElementById('admin-gap-sub-input').value;
+            buildAndRenderFlow();
+        }
+
         function loadJarTextsToEditor() {
             const jt = allJarTexts[currentActiveScenario] || allJarTexts['no_savings'];
+            const sc = scenariosDB[currentActiveScenario] || scenariosDB.no_savings;
+
+            document.getElementById('admin-gap-title-input').value = sc.gap_title || "🔍 認知差距與真相對比";
+            document.getElementById('admin-gap-sub-input').value = sc.takeaway_summary || "探索不同路徑在時間複利下的真實落差：";
+
             document.getElementById('admin-th-pay-period').value = jt.pay_label || "供款年期";
             document.getElementById('admin-opt-5yr').value = jt.opt_5yr || "5 年 (建立)";
             document.getElementById('admin-opt-10yr').value = jt.opt_10yr || "10 年 (累積期)";
@@ -977,6 +1007,9 @@
             document.getElementById('admin-th-interest').value = jt.th_interest || "年化百分比回報";
             document.getElementById('admin-jt-title-1').value = jt.tree_title_1 || "";
             document.getElementById('admin-jt-desc-1').value = jt.tree_desc_1 || "";
+
+            document.getElementById('admin-blueprint-summary-text').value = blueprintSummaryText;
+            document.getElementById('admin-blueprint-img-url').value = blueprintImgUrl;
         }
 
         function saveJarTextsFromEditor() {
@@ -994,6 +1027,11 @@
             allJarTexts[currentActiveScenario].th_interest = document.getElementById('admin-th-interest').value;
             allJarTexts[currentActiveScenario].tree_title_1 = document.getElementById('admin-jt-title-1').value;
             allJarTexts[currentActiveScenario].tree_desc_1 = document.getElementById('admin-jt-desc-1').value;
+
+            blueprintSummaryText = document.getElementById('admin-blueprint-summary-text').value;
+            blueprintImgUrl = document.getElementById('admin-blueprint-img-url').value;
+
+            updateCurrentScenarioTitles();
         }
 
         function renderMappingTable() {
@@ -1103,6 +1141,9 @@
             saveJarTextsFromEditor();
             localStorage.setItem('ava_scenario_database', JSON.stringify(allScenarioDatabase));
             localStorage.setItem('ava_jar_texts', JSON.stringify(allJarTexts));
+            localStorage.setItem('ava_scenarios_db', JSON.stringify(scenariosDB));
+            localStorage.setItem('ava_blueprint_summary', blueprintSummaryText);
+            localStorage.setItem('ava_blueprint_img', blueprintImgUrl);
             localStorage.setItem('ava_user_has_customized', 'true');
             buildAndRenderFlow();
             alert("✅ 已成功保存為使用者專屬數據！");
@@ -1115,7 +1156,10 @@
                 version: currentSystemVersion,
                 timestamp: new Date().toISOString(),
                 scenario_database: allScenarioDatabase,
-                jar_texts: allJarTexts
+                jar_texts: allJarTexts,
+                scenarios_db: scenariosDB,
+                blueprint_summary: blueprintSummaryText,
+                blueprint_img: blueprintImgUrl
             };
             const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
@@ -1134,6 +1178,9 @@
                     const data = JSON.parse(e.target.result);
                     if (data.scenario_database) allScenarioDatabase = data.scenario_database;
                     if (data.jar_texts) allJarTexts = data.jar_texts;
+                    if (data.scenarios_db) scenariosDB = data.scenarios_db;
+                    if (data.blueprint_summary) blueprintSummaryText = data.blueprint_summary;
+                    if (data.blueprint_img) blueprintImgUrl = data.blueprint_img;
                     saveToLocalStorageOnly();
                     alert("✅ 成功匯入專屬設定！");
                 } catch(err) {
@@ -1177,6 +1224,9 @@
                         action: "sync_all",
                         cards: allSheetRows,
                         jar_texts: allJarTexts,
+                        scenarios: scenariosDB,
+                        blueprint_summary_text: blueprintSummaryText,
+                        blueprint_img_url: blueprintImgUrl,
                         admin_password: cloudAdminPassword,
                         system_version: newVersion,
                         sheet_mappings: sheetMappings
@@ -1206,6 +1256,12 @@
                     if (savedDb) allScenarioDatabase = JSON.parse(savedDb);
                     const savedJt = localStorage.getItem('ava_jar_texts');
                     if (savedJt) allJarTexts = JSON.parse(savedJt);
+                    const savedScen = localStorage.getItem('ava_scenarios_db');
+                    if (savedScen) scenariosDB = JSON.parse(savedScen);
+                    const savedBp = localStorage.getItem('ava_blueprint_summary');
+                    if (savedBp) blueprintSummaryText = savedBp;
+                    const savedBpImg = localStorage.getItem('ava_blueprint_img');
+                    if (savedBpImg) blueprintImgUrl = savedBpImg;
                     buildAndRenderFlow();
                     return;
                 }
@@ -1214,7 +1270,11 @@
                 const json = await fullResp.json();
                 if (json.system_version) applyVersionToUI(json.system_version);
                 if (json.jar_texts) allJarTexts = json.jar_texts;
+                if (json.scenarios) scenariosDB = json.scenarios;
                 if (json.sheet_mappings) sheetMappings = json.sheet_mappings;
+                if (json.blueprint_summary_text) blueprintSummaryText = json.blueprint_summary_text;
+                if (json.blueprint_img_url) blueprintImgUrl = json.blueprint_img_url;
+
                 if (json.cards && json.cards.length > 0) {
                     const cloudDB = {};
                     json.cards.forEach(row => {
