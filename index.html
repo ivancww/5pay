@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AVA 專屬生活引導系統 · 探索未來選擇權</title>
+    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.2.0)</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -148,9 +148,6 @@
         .admin-card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .step-ctrl-btn { padding: 4px 10px; border: 1px solid #cbd5e1; background: #f8fafc; border-radius: 6px; font-size: 0.75rem; cursor: pointer; font-weight: bold; }
         .pink-edit-input { width: 100%; padding: 8px 12px; border: var(--pink-dashed); border-radius: 6px; font-size: 0.9rem; margin-top: 4px; background: #fff; }
-        .admin-options-container { margin-top: 10px; background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px dashed #e2e8f0; }
-        .option-row-edit { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
-        .del-opt-btn { background: #fee2e2; color: #dc2626; border: none; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-size: 0.75rem; }
         .sync-loading-overlay { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.9); z-index: 50; flex-direction: column; align-items: center; justify-content: center; font-weight: bold; color: var(--brand-primary); }
         .zone-header-box { background: #f1f5f9; padding: 10px 14px; border-radius: 8px; font-weight: 800; font-size: 0.95rem; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
     </style>
@@ -158,7 +155,7 @@
 <body>
     <header class="system-top-nav">
         <div class="brand-title-wrap">
-            <span class="brand-logo-text" onclick="promptAdminLogin()" title="管理員登入">🌱 AVA PLANNER</span>
+            <span class="brand-logo-text" id="top-logo-title" onclick="promptAdminLogin()" title="管理員登入">🌱 AVA PLANNER · v6.2.0</span>
             <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="選擇客群情境">!</span>
             <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="核心分頁直達">*</span>
         </div>
@@ -293,7 +290,7 @@
                 <div style="display:flex; gap:10px;">
                     <button class="nav-btn prev" id="btn-reset-user" style="width:auto; padding:8px 20px; background:#fff1f2; border-color:#fecdd3; color:#be123c;" onclick="resetToTeamDefault()">🔄 還原預設</button>
                     <button class="nav-btn prev" style="width:auto; padding:8px 20px; background:#f0fdf4; border-color:#86efac; color:#166534;" onclick="saveToLocalStorageOnly()">💾 本機保存</button>
-                    <button class="nav-btn next" id="btn-sync-gsheet" style="width:auto; padding:8px 20px; display:none;" onclick="syncAllToGoogleSheet()">☁️ 同步至 Google Sheet (新 Version)</button>
+                    <button class="nav-btn next" id="btn-sync-gsheet" style="width:auto; padding:8px 20px; display:none;" onclick="syncAllToGoogleSheet()">☁️ 同步至 Google Sheet (自動升級版號)</button>
                 </div>
             </div>
         </div>
@@ -310,7 +307,6 @@
         let activeFullFlowSteps = [];
         let currentStepIndex = 0;
 
-        // 3 種核心情境
         let scenariosDB = {
             no_savings: {
                 scenario_name: "未有儲蓄 / 主動查詢",
@@ -384,7 +380,19 @@
         function formatNumber(v) { return new Intl.NumberFormat('en-US', {maximumFractionDigits: 0}).format(v || 0); }
         function parseFormattedNumber(s) { return parseFloat(String(s).replace(/,/g, '')) || 0; }
 
-        // 版本號自動遞增 (如 v6.2.0 -> v6.2.1)
+        // 同步並更新 DOM 與 title 中的版本號
+        function applyVersionToUI(ver) {
+            currentSystemVersion = ver;
+            document.title = `AVA 專屬生活引導系統 · 探索未來選擇權 (${ver})`;
+            const titleDoc = document.getElementById('html-doc-title');
+            if (titleDoc) titleDoc.textContent = document.title;
+            const logoEl = document.getElementById('top-logo-title');
+            if (logoEl) logoEl.textContent = `🌱 AVA PLANNER · ${ver}`;
+            const verInput = document.getElementById('admin-version-input');
+            if (verInput) verInput.value = ver;
+        }
+
+        // 版本號自動遞增 (v6.2.0 -> v6.2.1)
         function incrementVersion(verStr) {
             const match = verStr.match(/v?(\d+)\.(\d+)\.(\d+)/);
             if (match) {
@@ -676,9 +684,9 @@
             GAS_API_URL = document.getElementById('admin-gas-url-input').value || GAS_API_URL;
             cloudAdminPassword = document.getElementById('admin-password-input').value || cloudAdminPassword;
             
-            // 自動升級版本號
-            currentSystemVersion = incrementVersion(currentSystemVersion);
-            document.getElementById('admin-version-input').value = currentSystemVersion;
+            // 自動累進版本號並套用至 Title 與 UI
+            const newVersion = incrementVersion(currentSystemVersion);
+            applyVersionToUI(newVersion);
 
             try {
                 const allSheetRows = [];
@@ -706,21 +714,21 @@
                         cards: allSheetRows,
                         jar_texts: allJarTexts,
                         admin_password: cloudAdminPassword,
-                        system_version: currentSystemVersion
+                        system_version: newVersion
                     })
                 });
 
                 localStorage.setItem('ava_scenario_database', JSON.stringify(allScenarioDatabase));
                 localStorage.setItem('ava_jar_texts', JSON.stringify(allJarTexts));
-                localStorage.setItem('ava_last_synced_version', currentSystemVersion);
+                localStorage.setItem('ava_last_synced_version', newVersion);
                 
                 buildAndRenderFlow();
                 loadingMask.style.display = 'none';
-                alert(`✅ 雲端同步完成！版本已自動升級為 ${currentSystemVersion}`);
+                alert(`✅ 雲端同步成功！系統版本已升級至 ${newVersion}`);
                 closeAdminDashboard();
             } catch (e) {
                 loadingMask.style.display = 'none';
-                alert("❌ 上傳失敗，請檢查 GAS 連線設定。");
+                alert("❌ 上傳失敗，請檢查 GAS 連線權限。");
             }
         }
 
@@ -729,7 +737,7 @@
                 const resp = await fetch(GAS_API_URL);
                 const json = await resp.json();
                 if (json.admin_password) cloudAdminPassword = String(json.admin_password);
-                if (json.system_version) currentSystemVersion = json.system_version;
+                if (json.system_version) applyVersionToUI(json.system_version);
                 if (json.multipliers) globalReturnMultipliers = json.multipliers;
                 if (json.scenarios) scenariosDB = json.scenarios;
                 if (json.cards && json.cards.length > 0) {
@@ -752,6 +760,7 @@
                 if (json.jar_texts) allJarTexts = json.jar_texts;
                 buildAndRenderFlow();
             } catch (e) {
+                applyVersionToUI(currentSystemVersion);
                 buildAndRenderFlow();
             }
         }
@@ -825,16 +834,16 @@
 
         function saveToLocalStorageOnly() {
             localStorage.setItem('ava_scenario_database', JSON.stringify(allScenarioDatabase));
-            alert("✅ 已成功保存至本機！");
+            alert("✅ 已保存至本機！");
             buildAndRenderFlow();
             closeAdminDashboard();
         }
 
         function resetToTeamDefault() {
-            if (confirm("確定清除自訂資料並還原至雲端預設？")) {
+            if (confirm("確定清除本機資料並還原至雲端預設？")) {
                 localStorage.clear();
                 fetchCloudDataFromGAS();
-                alert("✅ 已還原為團隊預設！");
+                alert("✅ 已還原為團隊最新預設！");
                 closeAdminDashboard();
             }
         }
@@ -895,6 +904,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             const savedDb = localStorage.getItem('ava_scenario_database');
             if (savedDb) { try { allScenarioDatabase = JSON.parse(savedDb); } catch(e){} }
+            const savedVer = localStorage.getItem('ava_last_synced_version');
+            if (savedVer) applyVersionToUI(savedVer);
             fetchCloudDataFromGAS();
         });
     </script>
