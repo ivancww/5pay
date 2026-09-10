@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.3)</title>
+    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.4)</title>
     
     <!-- PWA 與 App Icon 關聯 (包含 192x192 及 512x512) -->
     <link rel="manifest" href="./manifest.json">
@@ -130,7 +130,6 @@
         .promo-result-box { background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: white; padding: 1.8rem 1.4rem; border-radius: 16px; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 100%; }
         .promo-result-box .big-savings { font-size: 2.5rem; font-weight: 900; margin: 12px 0; }
         
-        /* 人生藍圖兩欄排版 & 最大化圖片自適應 */
         .blueprint-dual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; align-items: stretch; }
         @media (max-width: 768px) { .blueprint-dual-grid { grid-template-columns: 1fr; } }
         .blueprint-left-box { background: linear-gradient(135deg, #1e3a8a, #0f172a); color: #fff; border-radius: 14px; padding: 22px; display: flex; flex-direction: column; justify-content: space-between; }
@@ -154,7 +153,6 @@
         .popup-menu-item { background: #f8fafc; border: 1px solid var(--border-light); border-radius: 10px; padding: 12px 14px; font-size: 0.92rem; font-weight: bold; cursor: pointer; transition: all 0.2s; }
         .popup-menu-item:hover { border-color: var(--brand-accent); background: var(--brand-soft); }
         
-        /* 控制台樣式 */
         .admin-dashboard-modal { background: #f8fafc; border-radius: 18px; width: 95%; max-width: 950px; height: 88vh; display: flex; flex-direction: column; overflow: hidden; }
         .admin-header { background: var(--brand-primary); color: #fff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; }
         .role-switch-bar { display: flex; gap: 6px; background: rgba(255,255,255,0.15); padding: 4px; border-radius: 8px; }
@@ -186,7 +184,7 @@
 <body>
     <header class="system-top-nav">
         <div class="brand-title-wrap">
-            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.3</span>
+            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.4</span>
             <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="選擇客群情境">!</span>
             <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="核心分頁直達">*</span>
         </div>
@@ -233,7 +231,7 @@
         <div class="admin-dashboard-modal">
             <div class="admin-header">
                 <div style="display:flex; align-items:center; gap:12px;">
-                    <div id="admin-modal-title">⚙️ 控制台</div>
+                    <div id="admin-modal-title">⚙️ 控制台 (管理者專用)</div>
                     <div class="role-switch-bar">
                         <button class="role-switch-btn" id="role-btn-user" onclick="switchRoleTo('user')">👤 使用者</button>
                         <button class="role-switch-btn active" id="role-btn-admin" onclick="switchRoleTo('admin')">🛠️ 管理者</button>
@@ -409,14 +407,14 @@
             <div style="background:#ffffff; padding:12px 20px; border-top:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
                 <button class="nav-btn prev" style="width:auto; padding:8px 20px;" onclick="closeAdminDashboard()">關閉</button>
                 
-                <!-- 使用者動作按鈕 (使用者模式才顯示) -->
+                <!-- 使用者動作按鈕 -->
                 <div id="user-action-buttons" style="display:none; gap:8px;">
                     <button class="step-ctrl-btn" onclick="exportUserDataJSON()">📤 匯出設定 (備份)</button>
                     <button class="step-ctrl-btn" onclick="document.getElementById('json-import-input').click()">📥 匯入設定 (還原)</button>
                     <button class="nav-btn prev" style="width:auto; padding:8px 18px; background:#f0fdf4; border-color:#86efac; color:#166534;" onclick="saveToLocalStorageOnly()">💾 保存為使用者專屬數據</button>
                 </div>
                 
-                <!-- 管理者動作按鈕 (預設顯示) -->
+                <!-- 管理者動作按鈕 -->
                 <div id="admin-action-buttons" style="display:flex; gap:8px;">
                     <button class="nav-btn next" style="width:auto; padding:8px 20px;" onclick="syncAllToGoogleSheet()">☁️ 同步至 Google Sheet (新 Version)</button>
                 </div>
@@ -426,14 +424,15 @@
 
     <script>
         const answers = {};
-        let currentSystemVersion = "v6.3.3";
+        let currentSystemVersion = "v6.3.4";
         let GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwbKrrmiS5vx0Q5TvqqUCHBhU-VrS7WwwY0hj6BaNRwuzPtXXIZZxejPwhycCZhSCr-Rg/exec';
         let cloudAdminPassword = "903";
         let globalReturnMultipliers = {};
         let currentActiveScenario = "no_savings";
-        let currentRole = "admin"; // 預設為管理者先
+        let currentRole = localStorage.getItem('ava_device_role') || "admin"; // 自動記憶並預設為管理者
         let activeFullFlowSteps = [];
         let currentStepIndex = 0;
+        let selectedWithdrawOption = "withdraw7_from8";
 
         let scenariosDB = {
             no_savings: { scenario_name: "未有儲蓄/主動查詢", intuitive_belief: "35 歲先開始都未遲，有多先儲蓄", objective_reality: "目標會變，但時間一去不復返", gap_title: "延遲啟動的代價", gap_percentage: "71%", gap_label: "71% 複利增值代價", takeaway_summary: "差距不是錢，而是被浪費的時間複利。提早 5 年分段奠定，效果完全不同。" },
@@ -469,12 +468,12 @@
         };
 
         let sheetMappings = [
-            { code: "withdraw7_from8", sheet_name: "8年領取", display_name: "第8年開始 取7% (標準推薦)", note: "5年供款，第8年起每年領取7%" },
-            { code: "none", sheet_name: "自動滾存", display_name: "自動滾存不提取", note: "全期不提款，純滾存累積大樹" },
-            { code: "withdraw12_from15", sheet_name: "15年領取", display_name: "第15年開始 取12%", note: "第15年起每年領取12%" },
-            { code: "withdraw18_from20", sheet_name: "20年領取", display_name: "第20年開始 取18%", note: "第20年起每年領取18%" },
-            { code: "withdraw23_from25", sheet_name: "25年領取", display_name: "第25年開始 取23%", note: "第25年起每年領取23%" },
-            { code: "withdraw29_from30", sheet_name: "30年領取", display_name: "第30年開始 取29%", note: "第30年起每年領取29%" }
+            { code: "withdraw7_from8", sheet_name: "8年領取", display_name: "🌱 5 年播種：第 8 年起 每年領取 7% (標準推薦)", note: "5年供款，第8年起每年領取7%" },
+            { code: "none", sheet_name: "自動滾存", display_name: "🌳 5 年播種：自動滾存不提取 (大樹最大化)", note: "全期不提款，純滾存累積大樹" },
+            { code: "withdraw12_from15", sheet_name: "15年領取", display_name: "🌿 5 年播種：第 15 年起 每年領取 12%", note: "第15年起每年領取12%" },
+            { code: "withdraw18_from20", sheet_name: "20年領取", display_name: "🌾 5 年播種：第 20 年起 每年領取 18%", note: "第20年起每年領取18%" },
+            { code: "withdraw23_from25", sheet_name: "25年領取", display_name: "🌴 5 年播種：第 25 年起 每年領取 23%", note: "第25年起每年領取23%" },
+            { code: "withdraw29_from30", sheet_name: "30年領取", display_name: "🌲 5 年播種：第 30 年起 每年領取 29%", note: "第30年起每年領取29%" }
         ];
 
         let allScenarioDatabase = {
@@ -705,7 +704,11 @@
                                 <p style="font-size:0.9rem; color:var(--text-sub);">${sc.takeaway_summary}</p>
                                 <div class="gap-comparison-grid">
                                     <div class="gap-box">
-                                        <h4 style="color:#64748b; font-size:0.85rem; margin-bottom:4px;">客觀現實真相：</h4>
+                                        <h4 style="color:#64748b; font-size:0.85rem; margin-bottom:4px;">多數人以為：</h4>
+                                        <p style="font-size:0.95rem; font-weight:700;">${sc.intuitive_belief}</p>
+                                    </div>
+                                    <div class="gap-box" style="border-color:#bbf7d0; background:#f0fdf4;">
+                                        <h4 style="color:#059669; font-size:0.85rem; margin-bottom:4px;">客觀現實真相：</h4>
                                         <p style="font-size:0.95rem; font-weight:700; color:#166534;">${sc.objective_reality}</p>
                                     </div>
                                 </div>
@@ -718,18 +721,23 @@
                     `;
                 } else if (step.id === 'fixed-page-b') {
                     const jt = allJarTexts[currentActiveScenario] || allJarTexts['no_savings'];
+                    const mappingOptions = sheetMappings.map(m => `<option value="${m.code}" ${m.code === selectedWithdrawOption ? 'selected' : ''}>${m.display_name}</option>`).join('');
+
                     stepEl.innerHTML = `
                         <div class="content-card">
                             <h2 class="question-title">🌱 時光複利：小金額創造大效果</h2>
                             <p class="question-hint">即使今天未有特定目標，每個月只預留少少，交畀時間，就能為你創造源源不絕的被動收入：</p>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:16px;">
+                            
+                            <div style="display:grid; grid-template-columns: 1fr 1.6fr; gap:12px; margin-bottom:16px;">
                                 <div>
                                     <label style="font-size:0.75rem; font-weight:bold; color:var(--text-sub);">開始歲數</label>
                                     <input type="number" id="start-age" value="30" onchange="calculateAndDisplay()" style="width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:8px; text-align:center; font-weight:bold;">
                                 </div>
                                 <div>
-                                    <label style="font-size:0.75rem; font-weight:bold; color:var(--brand-primary);">🌱 播種期</label>
-                                    <input type="text" value="5 年播種期 (基礎奠基)" readonly style="width:100%; padding:8px; border:1.5px solid var(--brand-accent); border-radius:8px; text-align:center; font-weight:bold; background:#fff;">
+                                    <label style="font-size:0.75rem; font-weight:bold; color:var(--brand-primary);">🌱 播種期與領取選項 (可後台同步)</label>
+                                    <select id="withdraw-option-select" onchange="selectedWithdrawOption=this.value; calculateAndDisplay();" style="width:100%; padding:8px; border:1.5px solid var(--brand-accent); border-radius:8px; font-weight:bold; background:#fff; color:var(--brand-primary);">
+                                        ${mappingOptions}
+                                    </select>
                                 </div>
                             </div>
                             
@@ -763,7 +771,7 @@
                         </div>
                     `;
                 } else if (step.id === 'fixed-page-c') {
-                    const descText = localStorage.getItem('ava_blueprint_custom_desc') || "完全不影響現有生活享受：只需將每月不知不覺流走的少許資金，分段注入專屬水庫，自然鎖定終身被動收入。";
+                    const descText = localStorage.getItem('ava_blueprint_custom_desc') || "完全不影響現有生活享受：只需將每月不知不決流走的少許資金，分段注入專屬水庫，自然鎖定終身被動收入。";
                     const imgSrc = localStorage.getItem('ava_blueprint_custom_img') || "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80";
                     stepEl.innerHTML = `
                         <div class="content-card">
@@ -1091,17 +1099,20 @@
                 const pwd = prompt("請輸入管理者密碼進行身分驗證：");
                 if (pwd === cloudAdminPassword) {
                     currentRole = 'admin';
+                    localStorage.setItem('ava_device_role', 'admin');
                     document.getElementById('role-btn-admin').classList.add('active');
                     document.getElementById('role-btn-user').classList.remove('active');
                     document.getElementById('admin-action-buttons').style.display = 'flex';
                     document.getElementById('user-action-buttons').style.display = 'none';
                     document.getElementById('user-custom-indicator').style.display = 'none';
                     document.querySelectorAll('.admin-only-tab').forEach(el => el.style.display = 'block');
+                    alert("✅ 已切換為「管理者模式」，系統已鎖定此裝置為管理者身份！");
                 } else if (pwd !== null) {
                     alert("❌ 密碼錯誤，無法切換為管理者！");
                 }
             } else {
                 currentRole = 'user';
+                localStorage.setItem('ava_device_role', 'user');
                 document.getElementById('role-btn-user').classList.add('active');
                 document.getElementById('role-btn-admin').classList.remove('active');
                 document.getElementById('admin-action-buttons').style.display = 'none';
@@ -1113,8 +1124,7 @@
 
         function openDashboardWithRole(targetRole) {
             openAdminDashboardModal();
-            if (targetRole === 'admin') {
-                currentRole = 'admin';
+            if (currentRole === 'admin') {
                 document.getElementById('role-btn-admin').classList.add('active');
                 document.getElementById('role-btn-user').classList.remove('active');
                 document.getElementById('admin-action-buttons').style.display = 'flex';
@@ -1122,7 +1132,6 @@
                 document.getElementById('user-custom-indicator').style.display = 'none';
                 document.querySelectorAll('.admin-only-tab').forEach(el => el.style.display = 'block');
             } else {
-                currentRole = 'user';
                 document.getElementById('role-btn-user').classList.add('active');
                 document.getElementById('role-btn-admin').classList.remove('active');
                 document.getElementById('admin-action-buttons').style.display = 'none';
@@ -1393,22 +1402,46 @@
             `;
 
             tbody.innerHTML = '';
-            const allYears = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30];
             
+            // 精準還原：第 8 至 25 年（每年），其後每 5 年跳一次 (30, 35, 40, 45, 50)
+            const allYears = [];
+            for (let y = 8; y <= 25; y++) { allYears.push(y); }
+            for (let y = 30; y <= 50; y += 5) { allYears.push(y); }
+            
+            let withdrawRate = 0.07;
+            let startWithdrawYear = 8;
+            let isRollingOnly = false;
+
+            if (selectedWithdrawOption === "none") {
+                isRollingOnly = true;
+            } else if (selectedWithdrawOption === "withdraw12_from15") {
+                withdrawRate = 0.12; startWithdrawYear = 15;
+            } else if (selectedWithdrawOption === "withdraw18_from20") {
+                withdrawRate = 0.18; startWithdrawYear = 20;
+            } else if (selectedWithdrawOption === "withdraw23_from25") {
+                withdrawRate = 0.23; startWithdrawYear = 25;
+            } else if (selectedWithdrawOption === "withdraw29_from30") {
+                withdrawRate = 0.29; startWithdrawYear = 30;
+            }
+
             allYears.forEach(yr => {
                 const age = startAge + yr - 1;
-                const reserve = yr <= 5 ? p1Val * yr : totalSow;
-                const annuity = yr >= 8 ? totalSow * 0.07 : 0;
-                const accum = yr >= 8 ? annuity * (yr - 8 + 1) : 0;
-                const asset = yr <= 5 ? reserve * 0.95 : totalSow * (1 + (yr - 5) * 0.12);
+                const reserve = totalSow;
+                const annuity = (!isRollingOnly && yr >= startWithdrawYear) ? totalSow * withdrawRate : 0;
+                const accum = (!isRollingOnly && yr >= startWithdrawYear) ? annuity * (yr - startWithdrawYear + 1) : 0;
+                
+                let asset = 0;
+                if (isRollingOnly) {
+                    asset = totalSow * Math.pow(1.065, yr - 5);
+                } else {
+                    asset = totalSow * (1 + (yr - 5) * 0.12);
+                }
                 
                 let irr = 0;
-                if (yr >= 8) {
-                    irr = 6.2 + (yr - 8) * 0.15;
-                } else if (yr > 5) {
-                    irr = 4.5 + (yr - 5) * 0.4;
+                if (yr >= startWithdrawYear) {
+                    irr = 6.2 + (yr - startWithdrawYear) * 0.12;
                 } else {
-                    irr = 2.0;
+                    irr = 4.8 + (yr - 5) * 0.2;
                 }
 
                 const tr = document.createElement('tr');
