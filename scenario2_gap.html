@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>情境 2｜自己有投資：目標匹配度與不確定性差距</title>
+  <style>
+    /* 高對比配色系統：無漸層、純色、清晰辨識 */
+    :root {
+      --bg-page: #f8fafc;
+      --bg-card: #ffffff;
+      --border-color: #e2e8f0;
+      --border-focus: #3b82f6;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      
+      /* 強烈對比色系 */
+      --color-asset: #2563eb;    /* 起始本金：寶藍色 */
+      --color-deposit: #f59e0b;  /* 每年投放：琥珀橙色 */
+      --color-invest: #10b981;   /* 淨回報/增長：翡翠綠色 */
+      --color-gap: #ef4444;      /* 確定性差距：警示紅色 */
+      --color-track: #e2e8f0;    /* 軌道底色 */
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      padding: 20px 16px;
+      display: flex;
+      justify-content: center;
+    }
+    .calculator-wrapper {
+      width: 100%;
+      max-width: 960px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .input-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .input-grid-main {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .input-group label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+    .input-group input {
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      background: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .input-group input:focus {
+      border-color: var(--border-focus);
+    }
+    .asset-types {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .asset-tag {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      background: #fff;
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s;
+    }
+    .asset-tag.active {
+      background: #eff6ff;
+      border-color: #93c5fd;
+      color: #1d4ed8;
+      font-weight: 600;
+    }
+    .preset-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .preset-btn {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background: #f8fafc;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .preset-btn:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+    .preset-btn.active {
+      background: #0f172a;
+      color: #fff;
+      border-color: #0f172a;
+    }
+    .years-grid {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 6px;
+      max-height: 280px;
+      overflow-y: auto;
+      padding-right: 2px;
+    }
+    @media (max-width: 860px) {
+      .years-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
+    @media (max-width: 480px) {
+      .years-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .year-cell {
+      display: flex;
+      flex-direction: column;
+      background: #f8fafc;
+      padding: 5px 4px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      gap: 3px;
+    }
+    .year-cell .cell-title {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 700;
+      text-align: center;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 2px;
+    }
+    .year-cell label {
+      font-size: 9px;
+      color: var(--text-muted);
+    }
+    .year-cell input {
+      width: 100%;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      padding: 2px 0;
+      outline: none;
+      background: #fff;
+    }
+    .year-cell input.deposit-in {
+      color: var(--color-deposit);
+    }
+    .year-cell input.rate-in {
+      color: var(--text-main);
+    }
+    .chart-curve-box {
+      background: #fafafa;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 14px 6px;
+    }
+    .curve-header-stats {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #f1f5f9;
+      margin-bottom: 6px;
+    }
+    .stat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+    }
+    .curve-svg {
+      width: 100%;
+      height: 70px;
+      overflow: visible;
+    }
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 680px) {
+      .comparison-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .comp-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .badge-neutral {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: #f1f5f9;
+      color: #475569;
+    }
+    .badge-danger {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fee2e2;
+    }
+    .chart-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 10px 0 14px;
+    }
+    .donut-box {
+      position: relative;
+      width: 115px;
+      height: 115px;
+    }
+    .donut-svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+      overflow: visible;
+    }
+    .circle-track {
+      fill: none;
+      stroke: var(--color-track);
+      stroke-width: 4;
+    }
+    .circle-seg {
+      fill: none;
+      stroke-width: 4;
+      transition: stroke-dasharray 0.35s ease, stroke-dashoffset 0.35s ease, transform 0.35s ease;
+      transform-origin: center center;
+    }
+    .seg-asset { stroke: var(--color-asset); }
+    .seg-deposit { stroke: var(--color-deposit); }
+    .seg-invest { stroke: var(--color-invest); }
+    .seg-gap-separated {
+      stroke: var(--color-gap);
+      stroke-width: 4;
+      transform: scale(1.06);
+    }
+    .donut-center-info {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      pointer-events: none;
+    }
+    .center-sub {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+    .center-val {
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .chart-legend {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 8px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .dot-asset { background-color: var(--color-asset); }
+    .dot-deposit { background-color: var(--color-deposit); }
+    .dot-invest { background-color: var(--color-invest); }
+    .dot-gap { background-color: var(--color-gap); }
+    .data-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 13px;
+    }
+    .data-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 0;
+    }
+    .data-row .d-label {
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .data-row .d-val {
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    .data-row.highlight {
+      background: #f8fafc;
+      padding: 6px 8px;
+      border-radius: 6px;
+    }
+    .data-row.highlight-warning {
+      background: #fff5f5;
+      padding: 6px 8px;
+      border-radius: 6px;
+    }
+    .data-row.gap-box {
+      margin-top: 4px;
+      padding: 6px 8px;
+      background: #fff1f2;
+      border: 1px dashed #fca5a5;
+      border-radius: 6px;
+    }
+    .text-asset { color: var(--color-asset) !important; }
+    .text-deposit { color: var(--color-deposit) !important; }
+    .text-invest { color: var(--color-invest) !important; }
+    .text-gap { color: var(--color-gap) !important; }
+    .closing-card {
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-left: 4px solid #3b82f6;
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .closing-card p {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-main);
+    }
+  </style>
+</head>
+<body>
+<div class="calculator-wrapper">
+  <!-- Step A: 投資標的與年期 -->
+  <div class="input-section">
+    <div class="section-title">
+      <span>🎯 Step A｜投資標的與年期</span>
+    </div>
+    <div class="input-grid-main">
+      <div class="input-group">
+        <label>目標金額 (HK$)</label>
+        <input type="text" id="inTarget" value="2,000,000">
+      </div>
+      <div class="input-group">
+        <label>起始本金 (HK$)</label>
+        <input type="text" id="inPrincipal" value="500,000">
+      </div>
+      <div class="input-group">
+        <label>投資年期 (1-30 年)</label>
+        <input type="number" id="inYears" value="10" min="1" max="30">
+      </div>
+    </div>
+    <div>
+      <label style="font-size: 12px; font-weight: 500; color: var(--text-muted); margin-bottom: 6px; display: block;">當前配置資產類別：</label>
+      <div class="asset-types">
+        <span class="asset-tag active" data-type="stocks" onclick="toggleTag(this)">股票 (Stocks)</span>
+        <span class="asset-tag active" data-type="etf" onclick="toggleTag(this)">指數 ETF</span>
+        <span class="asset-tag active" data-type="crypto" onclick="toggleTag(this)">虛擬貨幣 (Crypto)</span>
+        <span class="asset-tag" data-type="bond" onclick="toggleTag(this)">高息債券</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step B: 動態年期市場模擬 -->
+  <div class="input-section">
+    <div class="section-title">
+      <span>📈 Step B｜逐年投放與市場回報模擬 (動態年期)</span>
+      <div class="preset-group">
+        <span style="font-size: 11px; color: var(--text-muted);">快速市況：</span>
+        <button class="preset-btn active" onclick="applyPreset('volatile', event)">⚡ 大上大落</button>
+        <button class="preset-btn" onclick="applyPreset('steady', event)">📈 平穩向上</button>
+        <button class="preset-btn" onclick="applyPreset('conservative', event)">🛡️ 保守防守</button>
+      </div>
+    </div>
+    <div class="years-grid" id="yearsContainer"></div>
+    <div class="chart-curve-box">
+      <div class="curve-header-stats">
+        <span class="stat-badge">📊 最終淨值: <strong id="statFinalVal" class="text-asset">HK$ 1,120,438</strong></span>
+        <span class="stat-badge">💰 實際淨回報: <strong id="statNetGain" class="text-invest">+HK$ 620,438</strong></span>
+        <span class="stat-badge">📈 平均每年回報率: <strong id="statSimpleRate">+12.4% / 年</strong></span>
+      </div>
+      <svg class="curve-svg" id="sparklineSvg" viewBox="0 0 500 70" preserveAspectRatio="none">
+        <polyline id="sparklinePolyline" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points=""/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Step C: 左右對比視圖 -->
+  <div class="comparison-grid">
+    <!-- 左側：預期可能情境 -->
+    <div class="comp-card">
+      <div class="card-header">
+        <h3 class="card-title">預期可能情境</h3>
+        <span class="badge-neutral">理想全額對齊</span>
+      </div>
+      <div class="chart-container">
+        <div class="donut-box">
+          <svg viewBox="0 0 36 36" class="donut-svg">
+            <path class="circle-track" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+            <path id="leftSegAsset" class="circle-seg seg-asset" stroke-dasharray="25, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+            <path id="leftSegDeposit" class="circle-seg seg-deposit" stroke-dasharray="0, 100" stroke-dashoffset="-25" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+            <path id="leftSegGrowth" class="circle-seg seg-invest" stroke-dasharray="75, 100" stroke-dashoffset="-25" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+          </svg>
+          <div class="donut-center-info">
+            <span class="center-sub">理想達成</span>
+            <span class="center-val text-invest">100%</span>
+          </div>
+        </div>
+        <div class="chart-legend">
+          <span class="legend-item"><span class="dot dot-asset"></span>起始本金</span>
+          <span class="legend-item"><span class="dot dot-deposit"></span>每年投放</span>
+          <span class="legend-item"><span class="dot dot-invest"></span>預期增長</span>
+        </div>
+      </div>
+      <div class="data-list">
+        <div class="data-row highlight">
+          <span class="d-label">目標金額</span>
+          <span class="d-val" id="outLeftTarget">HK$ 2,000,000</span>
+        </div>
+        <div class="data-row">
+          <span class="d-label"><span class="dot dot-asset"></span> 起始本金</span>
+          <span class="d-val text-asset" id="outLeftPrincipal">HK$ 500,000</span>
+        </div>
+        <div class="data-row">
+          <span class="d-label"><span class="dot dot-deposit"></span> 每年投放總額</span>
+          <span class="d-val text-deposit" id="outLeftTotalDeposit">HK$ 0</span>
+        </div>
+        <div class="data-row">
+          <span class="d-label"><span class="dot dot-invest"></span> 預期增長需求</span>
+          <span class="d-val text-invest" id="outLeftGrowth">HK$ 1,500,000</span>
+        </div>
+        <div class="data-row">
+          <span class="d-label">投資年期</span>
+          <span class="d-val" id="outLeftYears">10 年</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右側：未來可能情境 -->
+    <div class="comp-card">
+      <div class="card-header">
+        <h3 class="card-title">未來可能情境</h3>
+        <span class="badge-danger" id="outRightBadge">差距 44%</span>
+      </div>
+      <div class="chart-container">
+        <div class="donut-box">
+          <svg viewBox="0 0 36 36" class="donut-svg">
+            <path class="circle-track" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+            <path id="rightSegAsset" class="circle-seg seg-asset" stroke-dasharray="25, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+            <path id="rightSegDeposit" class="circle-seg seg-deposit" stroke-dasharray="0, 100" stroke-dashoffset="-25" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+            <path id="rightSegGrowth" class="circle-seg seg-invest" stroke-dasharray="31, 100" stroke-dashoffset="-25" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+            <path id="rightSegGap" class="circle-seg seg-gap-separated" stroke-dasharray="44, 100" stroke-dashoffset="-56" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+          </svg>
+          <div class="donut-center-info">
+            <span class="center-sub text-gap">確定性差距</span>
+            <span class="center-val text-gap" id="outRightGapPercent">44%</span>
+          </div>
+        </div>
+        <div class="chart-legend">
+          <span class="legend-item"><span class="dot dot-asset"></span>起始本金</span>
+          <span class="legend-item"><span class="dot dot-deposit"></span>每年投放</span>
+          <span class="legend-item"><span class="dot dot-invest"></span>實際淨回報</span>
+          <span class="legend-item"><span class="dot dot-gap"></span>確定性差距</span>
+        </div>
+      </div>
+      <div class="data-list">
+        <div class="data-row highlight-warning">
+          <span class="d-label">目標金額</span>
+          <span class="d-val" id="outRightTarget">HK$ 2,000,000</span>
+        </div>
+        <div class="data-row">
+          <span class="d-label"><span class="dot dot-asset"></span> 起始本金</span>
+          <span class="d-val text-asset" id="outRightPrincipal">HK$ 500,000</span>
+        </div>
+        <div class="data-row">
+          <span class="d-label"><span class="dot dot-deposit"></span> 每年投放總額</span>
+          <span class="d-val text-deposit" id="outRightTotalDeposit">HK$ 0</span>
+        </div>
+        <div class="data-row">
+          <span class="d-label"><span class="dot dot-invest"></span> 實際淨回報金額</span>
+          <span class="d-val text-invest bold" id="outRightNetReturn">HK$ 620,438</span>
+        </div>
+        <div class="data-row">
+          <span class="d-label">模擬最終淨值</span>
+          <span class="d-val text-asset bold" id="outRightFinalValue">HK$ 1,120,438</span>
+        </div>
+        <div class="data-row gap-box">
+          <span class="d-label bold text-gap"><span class="dot dot-gap"></span> 目標確定性差距</span>
+          <span class="d-val text-gap bold" id="outRightGapAmount">HK$ 879,562</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部引導收束語 -->
+  <div class="closing-card">
+    <p>💬 <strong>「投資一直在進行，但這個模擬結果，是否已經完全對應到你特定年期後最在意的具體目標？」</strong></p>
+    <p>💬 <strong>「在追求增長的同時，我們是否有一個不隨市場波動動搖的底氣基準？」</strong></p>
+  </div>
+</div>
+
+<script>
+  const PRESETS = {
+    volatile: [12, -8, 18, 5, -15, 22, -10, 15, 8, -6, 14, -12, 20, -5, 16, 7, -18, 25, 4, -8, 10, -5, 15, -12, 18, 6, -14, 20, 5, -7],
+    steady: [6, 7, 5, 8, 6, 7, 5, 8, 6, 7, 6, 7, 5, 8, 6, 7, 5, 8, 6, 7, 6, 7, 5, 8, 6, 7, 5, 8, 6, 7],
+    conservative: [3, 4, 2, 4, 3, 3.5, 2.5, 4, 3, 3.5, 3, 4, 2, 4, 3, 3.5, 2.5, 4, 3, 3.5, 3, 4, 2, 4, 3, 3.5, 2.5, 4, 3, 3.5]
+  };
+  let currentPreset = 'volatile';
+
+  function formatMoney(num) {
+    return 'HK$ ' + Math.round(num).toLocaleString('en-US');
+  }
+
+  function parseMoney(str) {
+    return parseFloat(String(str).replace(/,/g, '')) || 0;
+  }
+
+  function formatInputField(input) {
+    const rawVal = input.value.replace(/,/g, '').replace(/[^\d.]/g, '');
+    if (!rawVal) {
+      input.value = '';
+      return;
+    }
+    const parts = rawVal.split('.');
+    parts[0] = Number(parts[0]).toLocaleString('en-US');
+    input.value = parts.join('.');
+  }
+
+  function toggleTag(el) {
+    el.classList.toggle('active');
+    calculateScenario2();
+  }
+
+  function applyPreset(type, event) {
+    currentPreset = type;
+    document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+    if (event && event.target) {
+      event.target.classList.add('active');
+    }
+    const rates = PRESETS[type];
+    const rateInputs = document.querySelectorAll('.rate-in');
+    rateInputs.forEach((input, idx) => {
+      input.value = rates[idx % rates.length];
+    });
+    calculateScenario2();
+  }
+
+  function renderYearsGrid() {
+    const years = Math.min(30, Math.max(1, parseInt(document.getElementById('inYears').value) || 10));
+    const container = document.getElementById('yearsContainer');
+    container.innerHTML = '';
+    const rates = PRESETS[currentPreset];
+    for (let i = 1; i <= years; i++) {
+      const defaultDeposit = 0;
+      const defaultRate = rates[(i - 1) % rates.length];
+      const cell = document.createElement('div');
+      cell.className = 'year-cell';
+      cell.innerHTML = `
+        <span class="cell-title">Y${i}</span>
+        <label>投放(k)</label>
+        <input type="number" class="deposit-in" value="${defaultDeposit}" step="5" title="第 ${i} 年初投放金額 (千元)">
+        <label>回報(%)</label>
+        <input type="number" class="rate-in" value="${defaultRate}" step="0.5" title="第 ${i} 年市場回報率">
+      `;
+      container.appendChild(cell);
+    }
+    container.querySelectorAll('input').forEach(input => {
+      input.addEventListener('input', calculateScenario2);
+    });
+    calculateScenario2();
+  }
+
+  function calculateScenario2() {
+    const target = parseMoney(document.getElementById('inTarget').value);
+    const principal = parseMoney(document.getElementById('inPrincipal').value);
+    const years = Math.min(30, Math.max(1, parseInt(document.getElementById('inYears').value) || 10));
+    const depositInputs = document.querySelectorAll('.deposit-in');
+    const rateInputs = document.querySelectorAll('.rate-in');
+
+    // 判斷是否「只有選取債券」
+    const activeTags = document.querySelectorAll('.asset-tag.active');
+    const isOnlyBond = (activeTags.length === 1 && activeTags[0].getAttribute('data-type') === 'bond');
+
+    let currentVal = principal;
+    let totalDeposits = 0;
+    let accumulatedInterest = 0;
+    const trajectory = [principal];
+
+    for (let i = 0; i < years; i++) {
+      const depositK = parseFloat(depositInputs[i]?.value) || 0;
+      const deposit = depositK * 1000;
+      totalDeposits += deposit;
+      const rate = (parseFloat(rateInputs[i]?.value) || 0) / 100;
+
+      if (isOnlyBond) {
+        // 單息計算：以當前投入本金計算該年利息
+        const currentInvestedPrincipal = principal + totalDeposits;
+        accumulatedInterest += currentInvestedPrincipal * rate;
+        currentVal = currentInvestedPrincipal + accumulatedInterest;
+      } else {
+        // 複利計算
+        currentVal = (currentVal + deposit) * (1 + rate);
+      }
+
+      trajectory.push(Math.max(0, currentVal));
+    }
+
+    const finalVal = trajectory[trajectory.length - 1];
+    const totalPrincipalInvested = principal + totalDeposits;
+    const netGain = finalVal - totalPrincipalInvested;
+    
+    // 計算單息平均每年回報率 (總淨利息 / 總本金 / 年數)
+    let simpleAnnualRate = 0;
+    if (totalPrincipalInvested > 0 && years > 0) {
+      simpleAnnualRate = (netGain / totalPrincipalInvested / years) * 100;
+    }
+
+    // 更新頂部走勢圖與統計數據
+    updateSparkline(trajectory);
+    document.getElementById('statFinalVal').innerText = formatMoney(finalVal);
+    document.getElementById('statNetGain').innerText = (netGain >= 0 ? '+' : '') + formatMoney(netGain);
+    document.getElementById('statNetGain').className = netGain >= 0 ? 'text-invest' : 'text-gap';
+    document.getElementById('statSimpleRate').innerText = (simpleAnnualRate >= 0 ? '+' : '') + simpleAnnualRate.toFixed(1) + '% / 年';
+
+    // 1. 左側更新 (預期可能情境)
+    document.getElementById('outLeftTarget').innerText = formatMoney(target);
+    document.getElementById('outLeftPrincipal').innerText = formatMoney(principal);
+    document.getElementById('outLeftTotalDeposit').innerText = formatMoney(totalDeposits);
+    document.getElementById('outLeftGrowth').innerText = formatMoney(Math.max(0, target - totalPrincipalInvested));
+    document.getElementById('outLeftYears').innerText = years + ' 年';
+
+    let leftAssetRatio = 0, leftDepositRatio = 0, leftGrowthRatio = 0;
+    if (target > 0) {
+      leftAssetRatio = Math.min(100, (principal / target) * 100);
+      leftDepositRatio = Math.min(100 - leftAssetRatio, (totalDeposits / target) * 100);
+      leftGrowthRatio = Math.max(0, 100 - leftAssetRatio - leftDepositRatio);
+    }
+    document.getElementById('leftSegAsset').setAttribute('stroke-dasharray', `${leftAssetRatio}, 100`);
+    document.getElementById('leftSegDeposit').setAttribute('stroke-dasharray', `${leftDepositRatio}, 100`);
+    document.getElementById('leftSegDeposit').setAttribute('stroke-dashoffset', `-${leftAssetRatio}`);
+    document.getElementById('leftSegGrowth').setAttribute('stroke-dasharray', `${leftGrowthRatio}, 100`);
+    document.getElementById('leftSegGrowth').setAttribute('stroke-dashoffset', `-${leftAssetRatio + leftDepositRatio}`);
+
+    // 2. 右側更新 (未來可能情境)
+    const gapAmount = Math.max(0, target - finalVal);
+    const coveragePercent = target > 0 ? Math.round((finalVal / target) * 100) : 0;
+    const gapPercent = Math.max(0, 100 - coveragePercent);
+
+    document.getElementById('outRightTarget').innerText = formatMoney(target);
+    document.getElementById('outRightPrincipal').innerText = formatMoney(principal);
+    document.getElementById('outRightTotalDeposit').innerText = formatMoney(totalDeposits);
+    document.getElementById('outRightNetReturn').innerText = (netGain >= 0 ? '+' : '') + formatMoney(netGain);
+    document.getElementById('outRightNetReturn').className = `d-val ${netGain >= 0 ? 'text-invest' : 'text-gap'} bold`;
+    document.getElementById('outRightFinalValue').innerText = formatMoney(finalVal);
+    document.getElementById('outRightGapAmount').innerText = formatMoney(gapAmount);
+    document.getElementById('outRightGapPercent').innerText = gapPercent + '%';
+    document.getElementById('outRightBadge').innerText = `差距 ${gapPercent}%`;
+
+    let rightAssetRatio = 0, rightDepositRatio = 0, rightGainRatio = 0, rightGapRatio = 0;
+    if (target > 0) {
+      rightAssetRatio = Math.min(100, (principal / target) * 100);
+      rightDepositRatio = Math.min(100 - rightAssetRatio, (totalDeposits / target) * 100);
+      
+      const simulatedGain = Math.max(0, netGain);
+      rightGainRatio = Math.min(100 - rightAssetRatio - rightDepositRatio, (simulatedGain / target) * 100);
+      rightGapRatio = Math.max(0, 100 - rightAssetRatio - rightDepositRatio - rightGainRatio);
+    }
+    const gapOffset = rightGapRatio > 0 ? 0.8 : 0;
+    const adjustedGap = Math.max(0, rightGapRatio - gapOffset);
+
+    document.getElementById('rightSegAsset').setAttribute('stroke-dasharray', `${rightAssetRatio}, 100`);
+    document.getElementById('rightSegDeposit').setAttribute('stroke-dasharray', `${rightDepositRatio}, 100`);
+    document.getElementById('rightSegDeposit').setAttribute('stroke-dashoffset', `-${rightAssetRatio}`);
+    document.getElementById('rightSegGrowth').setAttribute('stroke-dasharray', `${rightGainRatio}, 100`);
+    document.getElementById('rightSegGrowth').setAttribute('stroke-dashoffset', `-${rightAssetRatio + rightDepositRatio}`);
+    document.getElementById('rightSegGap').setAttribute('stroke-dasharray', `${adjustedGap}, 100`);
+    document.getElementById('rightSegGap').setAttribute('stroke-dashoffset', `-${rightAssetRatio + rightDepositRatio + rightGainRatio + gapOffset}`);
+  }
+
+  function updateSparkline(data) {
+    const minVal = Math.min(...data) * 0.9;
+    const maxVal = Math.max(...data) * 1.1;
+    const svgWidth = 500;
+    const svgHeight = 70;
+    const stepX = svgWidth / (data.length - 1);
+    const points = data.map((val, idx) => {
+      const x = idx * stepX;
+      const y = svgHeight - ((val - minVal) / (maxVal - minVal || 1)) * (svgHeight - 12) - 6;
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    }).join(' ');
+    document.getElementById('sparklinePolyline').setAttribute('points', points);
+  }
+
+  ['inTarget', 'inPrincipal'].forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener('input', () => {
+      formatInputField(el);
+      calculateScenario2();
+    });
+  });
+
+  document.getElementById('inYears').addEventListener('input', () => {
+    renderYearsGrid();
+  });
+
+  renderYearsGrid();
+</script>
+</body>
+</html>
+
+
