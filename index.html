@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.13)</title>
+    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.15)</title>
     
-    <!-- PWA 與 App Icon 關聯 -->
     <link rel="manifest" href="./manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="./icon-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="./icon-512x512.png">
@@ -20,7 +19,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Firebase SDK (Modular) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
@@ -55,57 +53,67 @@
             --state-danger: #dc2626;
             --plan1-color: #2563eb;
             --plan2-color: #059669;
-            --plan3-color: #dc2626;
-            --plan4-color: #7c3aed;
+            --plan3-color: #7c3aed;
+            --plan4-color: #ea580c;
             --pink-dashed: 1.5px dashed #f8bbd0;
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
             --shadow-md: 0 4px 16px -2px rgba(15, 23, 42, 0.06);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Noto Sans TC', 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-page); color: var(--text-main); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
-        .system-top-nav { background: #ffffff; border-bottom: 1px solid var(--border-light); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
-        .brand-title-wrap { display: flex; align-items: center; gap: 8px; user-select: none; }
-        .brand-logo-text { font-size: 1.02rem; font-weight: 800; color: var(--brand-primary); cursor: pointer; }
-        .mini-quick-btn { background: #ffffff; border: 1px solid var(--border-light); border-radius: 50%; width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 900; cursor: pointer; transition: all 0.2s; box-shadow: var(--shadow-sm); }
+        .system-top-nav { background: #ffffff; border-bottom: 1px solid var(--border-light); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .brand-title-wrap { display: flex; align-items: center; gap: 10px; user-select: none; }
+        .brand-logo-text { font-size: 1.08rem; font-weight: 800; color: var(--brand-primary); cursor: pointer; }
+        .mini-quick-btn { background: #ffffff; border: 1px solid var(--border-light); border-radius: 50%; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.88rem; font-weight: 900; cursor: pointer; transition: all 0.2s; box-shadow: var(--shadow-sm); }
         .mini-quick-btn:hover { background: var(--brand-soft); border-color: var(--brand-accent); transform: scale(1.08); }
         .mini-quick-btn.scenario-btn { color: var(--brand-accent); border: var(--pink-dashed); }
         .mini-quick-btn.jump-btn { color: var(--state-purple); }
-        .user-settings-btn { cursor: pointer; font-size: 1.25rem; }
+        .user-settings-btn { cursor: pointer; font-size: 1.35rem; }
         
-        .progress-bar-container { width: 100%; height: 3px; background: #e2e8f0; position: sticky; top: 51px; z-index: 99; }
+        .progress-bar-container { width: 100%; height: 3px; background: #e2e8f0; position: sticky; top: 53px; z-index: 99; }
         .progress-bar-fill { height: 100%; background: var(--brand-accent); width: 7%; transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
         
-        .workspace-layout { max-width: 960px; width: 100%; margin: 24px auto; padding: 0 16px; flex: 1; }
+        /* Honor V5 摺疊機 / iPad 大螢幕優化 (寬度達 1020px，舒適展現左右對開) */
+        .workspace-layout { max-width: 1020px; width: 100%; margin: 24px auto; padding: 0 20px; flex: 1; }
         .step-page { display: none; }
         .step-page.active { display: block; animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         
-        .content-card { background: var(--surface-card); border: 1px solid var(--border-light); border-radius: 18px; padding: 32px 28px; box-shadow: var(--shadow-md); }
-        .question-title { font-size: 1.35rem; font-weight: 800; color: var(--text-main); margin-bottom: 8px; }
-        .question-hint { font-size: 0.95rem; color: var(--text-sub); margin-bottom: 24px; }
+        .content-card { background: var(--surface-card); border: 1px solid var(--border-light); border-radius: 20px; padding: 32px 28px; box-shadow: var(--shadow-md); }
+        .question-title { font-size: 1.4rem; font-weight: 800; color: var(--text-main); margin-bottom: 8px; }
+        .question-hint { font-size: 0.96rem; color: var(--text-sub); margin-bottom: 24px; }
         
         .options-group { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
-        .option-card-guided { background: #ffffff; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 16px 18px; text-align: left; cursor: pointer; transition: all 0.2s; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+        .option-card-guided { background: #ffffff; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 16px 20px; text-align: left; cursor: pointer; transition: all 0.2s; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
         .option-card-guided:hover { border-color: var(--brand-accent); background: #fafcff; }
         .option-card-guided.selected { border-color: var(--brand-accent); background: var(--brand-soft); box-shadow: 0 0 0 1px var(--brand-accent); }
         .option-content { flex: 1; }
-        .option-headline { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
-        .option-subtext { font-size: 0.86rem; color: var(--text-sub); }
+        .option-headline { font-size: 1.02rem; font-weight: 700; margin-bottom: 4px; }
+        .option-subtext { font-size: 0.88rem; color: var(--text-sub); }
         .option-select-radio { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid #cbd5e1; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 3px; }
         .option-card-guided.selected .option-select-radio { border-color: var(--brand-accent); background: var(--brand-accent); }
         .option-card-guided.selected .option-select-radio::after { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #fff; }
         
-        .gap-iframe-container { width: 100%; min-height: 540px; border: 1px solid var(--border-light); border-radius: 14px; overflow: hidden; background: #fff; }
-        .gap-iframe { width: 100%; height: 540px; border: none; }
+        /* 步驟清單視覺化卡片 (三步圖) */
+        .steps-visual-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 24px; }
+        .step-visual-card { background: #f8fafc; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; }
+        .step-visual-card.highlight { background: var(--brand-soft); border-color: var(--brand-accent); }
+        .step-visual-card-title { font-size: 0.98rem; font-weight: 800; color: var(--brand-primary); }
+        .step-visual-card-desc { font-size: 0.86rem; color: var(--text-sub); line-height: 1.5; }
         
-        .calc-jar-card { background: #ffffff; border: 1px solid var(--border-light); border-radius: 14px; padding: 18px; margin-bottom: 14px; }
-        .calc-grid-dynamic { display: grid; grid-template-columns: repeat(auto-fit, minmax(95px, 1fr)); gap: 8px; }
-        .calc-input-group label { display: block; font-size: 0.72rem; color: var(--text-sub); font-weight: bold; text-align: center; margin-bottom: 2px; }
-        .calc-input-group input { width: 100%; padding: 6px; border: var(--pink-dashed); border-radius: 6px; font-size: 0.9rem; font-weight: bold; text-align: center; background: #fff; }
+        .gap-iframe-container { width: 100%; min-height: 560px; border: 1px solid var(--border-light); border-radius: 16px; overflow: hidden; background: #fff; }
+        .gap-iframe { width: 100%; height: 560px; border: none; }
+        
+        /* 4 個獨立水庫卡片佈局 */
+        .calc-jar-card { background: #ffffff; border: 1px solid var(--border-light); border-radius: 16px; padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow-sm); }
+        .calc-grid-5yr { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+        @media (max-width: 640px) { .calc-grid-5yr { grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); } }
+        .calc-input-group label { display: block; font-size: 0.75rem; color: var(--text-sub); font-weight: bold; text-align: center; margin-bottom: 4px; }
+        .calc-input-group input { width: 100%; padding: 8px 6px; border: var(--pink-dashed); border-radius: 8px; font-size: 0.95rem; font-weight: bold; text-align: center; background: #fff; }
         .calc-input-group input.readonly { background: #f8fafc; border: 1px solid #e2e8f0; color: var(--text-muted); }
         
-        .dots-toggle-bar-pure { display: flex; align-items: center; gap: 10px; margin: 16px 0 10px 0; justify-content: flex-end; }
-        .pure-color-dot { width: 22px; height: 22px; border-radius: 50%; cursor: pointer; transition: all 0.2s; border: 2px solid #fff; box-shadow: var(--shadow-sm); }
+        .dots-toggle-bar-pure { display: flex; align-items: center; gap: 12px; margin: 18px 0 12px 0; justify-content: flex-end; }
+        .pure-color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; transition: all 0.2s; border: 2px solid #fff; box-shadow: var(--shadow-sm); }
         .pure-color-dot.dimmed { opacity: 0.25; filter: grayscale(100%); }
         .dot-blue-bg { background: var(--brand-accent); }
         .dot-green-bg { background: var(--state-success); }
@@ -116,18 +124,25 @@
         .mini-info-circle { width: 18px; height: 18px; border-radius: 50%; background: #eff6ff; color: var(--brand-accent); border: 1px solid var(--brand-accent); font-size: 11px; font-weight: 900; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
         .mini-info-circle:hover { background: var(--brand-accent); color: #fff; transform: scale(1.1); }
         
-        .table-responsive { overflow-x: auto; margin-top: 6px; }
-        table.clean-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; white-space: nowrap; }
-        table.clean-table th, table.clean-table td { padding: 10px 12px; text-align: right; border-bottom: 1px solid var(--border-light); }
-        table.clean-table th { font-weight: 600; color: var(--text-sub); background: #f8fafc; }
+        .table-responsive { overflow-x: auto; margin-top: 8px; }
+        table.clean-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; white-space: nowrap; }
+        table.clean-table th, table.clean-table td { padding: 11px 14px; text-align: right; border-bottom: 1px solid var(--border-light); }
+        table.clean-table th { font-weight: 700; color: var(--text-sub); background: #f8fafc; }
         
-        .action-row { display: flex; gap: 12px; margin-top: 24px; }
-        .nav-btn { flex: 1; padding: 12px 18px; border-radius: 10px; font-weight: 700; font-size: 0.95rem; cursor: pointer; border: none; transition: 0.2s; text-align: center; }
+        /* 左右對開保費優惠頁面 */
+        .promo-split-container { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; align-items: stretch; margin-top: 14px; }
+        @media (max-width: 768px) { .promo-split-container { grid-template-columns: 1fr; } }
+        .promo-card { background: #fdfdfd; border: 1.5px solid var(--border-light); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 14px; justify-content: space-between; }
+        .promo-result-box { background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: white; padding: 2rem 1.6rem; border-radius: 18px; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 100%; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25); }
+        .promo-result-box .big-savings { font-size: 2.6rem; font-weight: 900; margin: 12px 0; }
+        
+        .action-row { display: flex; gap: 12px; margin-top: 28px; }
+        .nav-btn { flex: 1; padding: 13px 20px; border-radius: 12px; font-weight: 700; font-size: 0.98rem; cursor: pointer; border: none; transition: 0.2s; text-align: center; }
         .nav-btn.prev { background: #ffffff; border: 1px solid var(--border-light); color: var(--text-sub); }
         .nav-btn.next { background: var(--brand-primary); color: #ffffff; }
         
         .modal-mask { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 2000; align-items: center; justify-content: center; }
-        .modal-box { background: #fff; padding: 24px; border-radius: 16px; max-width: 440px; width: 90%; position: relative; }
+        .modal-box { background: #fff; padding: 24px; border-radius: 18px; max-width: 460px; width: 92%; position: relative; }
         .close-btn { position: absolute; top: 12px; right: 16px; font-size: 1.4rem; cursor: pointer; color: var(--text-muted); }
         .popup-menu-list { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 14px; }
         .popup-menu-item { background: #f8fafc; border: 1px solid var(--border-light); border-radius: 10px; padding: 12px 14px; font-size: 0.92rem; font-weight: bold; cursor: pointer; transition: all 0.2s; }
@@ -135,24 +150,24 @@
         .popup-menu-subitem { padding-left: 28px; font-size: 0.85rem; color: var(--brand-primary); border-left: 3px solid var(--brand-accent); background: #fafcff; }
         
         /* 控制台樣式 */
-        .admin-dashboard-modal { background: #f8fafc; border-radius: 18px; width: 95%; max-width: 950px; height: 88vh; display: flex; flex-direction: column; overflow: hidden; }
-        .admin-header { background: var(--brand-primary); color: #fff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; }
+        .admin-dashboard-modal { background: #f8fafc; border-radius: 20px; width: 95%; max-width: 980px; height: 88vh; display: flex; flex-direction: column; overflow: hidden; }
+        .admin-header { background: var(--brand-primary); color: #fff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; }
         .role-switch-bar { display: flex; gap: 6px; background: rgba(255,255,255,0.15); padding: 4px; border-radius: 8px; }
         .role-switch-btn { padding: 4px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; cursor: pointer; border: none; color: #fff; background: transparent; }
         .role-switch-btn.active { background: #fff; color: var(--brand-primary); }
         
-        .admin-nav { display: flex; gap: 8px; background: #ffffff; padding: 10px 20px; border-bottom: 1px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; }
-        .admin-nav-btn { padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; border: 1px solid #cbd5e1; background: #f8fafc; color: #475569; white-space: nowrap; }
+        .admin-nav { display: flex; gap: 8px; background: #ffffff; padding: 10px 22px; border-bottom: 1px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; }
+        .admin-nav-btn { padding: 6px 16px; border-radius: 20px; font-size: 0.86rem; font-weight: 600; cursor: pointer; border: 1px solid #cbd5e1; background: #f8fafc; color: #475569; white-space: nowrap; }
         .admin-nav-btn.active { background: var(--brand-primary); color: white; border-color: var(--brand-primary); }
-        .admin-body { flex: 1; overflow-y: auto; padding: 20px; }
+        .admin-body { flex: 1; overflow-y: auto; padding: 22px; }
         .admin-card-row { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 18px; margin-bottom: 16px; position: relative; }
-        .step-ctrl-btn { padding: 4px 10px; border: 1px solid #cbd5e1; background: #f8fafc; border-radius: 6px; font-size: 0.75rem; cursor: pointer; font-weight: bold; }
+        .step-ctrl-btn { padding: 5px 12px; border: 1px solid #cbd5e1; background: #f8fafc; border-radius: 6px; font-size: 0.75rem; cursor: pointer; font-weight: bold; }
         .pink-edit-input { width: 100%; padding: 8px 12px; border: var(--pink-dashed); border-radius: 6px; font-size: 0.9rem; margin-top: 4px; background: #fff; }
-        .admin-options-container { margin-top: 10px; background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px dashed #e2e8f0; }
+        .admin-options-container { margin-top: 10px; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px dashed #cbd5e1; }
         .option-row-edit { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
-        .del-opt-btn { background: #fee2e2; color: #dc2626; border: none; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-size: 0.75rem; font-weight: bold; }
+        .del-opt-btn { background: #fee2e2; color: #dc2626; border: none; border-radius: 6px; padding: 5px 10px; cursor: pointer; font-size: 0.75rem; font-weight: bold; }
         .sync-loading-overlay { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.9); z-index: 50; flex-direction: column; align-items: center; justify-content: center; font-weight: bold; color: var(--brand-primary); }
-        .zone-header-box { background: #f1f5f9; padding: 10px 14px; border-radius: 8px; font-weight: 800; font-size: 0.95rem; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .zone-header-box { background: #f1f5f9; padding: 10px 16px; border-radius: 8px; font-weight: 800; font-size: 0.95rem; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
         .fixed-anchor-card { background: #faf5ff; border: 1.5px dashed #c084fc; border-radius: 12px; padding: 14px 18px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
         .user-priority-badge { background: #dcfce7; color: #15803d; padding: 3px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 800; display: inline-flex; align-items: center; gap: 4px; }
         
@@ -165,7 +180,7 @@
 <body>
     <header class="system-top-nav">
         <div class="brand-title-wrap">
-            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.13</span>
+            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.15</span>
             <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="選擇客群情境">!</span>
             <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="核心分頁直達">*</span>
         </div>
@@ -180,7 +195,7 @@
         <main id="app-main-flow"></main>
     </div>
 
-    <!-- 頂部 ! 情境選擇 (分開 4 個獨立情境) -->
+    <!-- 頂部 ! 情境選擇 -->
     <div id="scenario-popup-mask" class="modal-mask">
         <div class="modal-box">
             <span class="close-btn" onclick="closeScenarioPopup()">&times;</span>
@@ -250,7 +265,7 @@
             </div>
             
             <div class="admin-body">
-                <!-- Tab 1: 頁面流程管理 -->
+                <!-- Tab 1: 頁面流程管理 (圖 2 完全對齊圖 1 步驟清單) -->
                 <div id="admin-sec-flow">
                     <div class="red-guide-banner">
                         <div class="red-guide-title">📌 最後濃縮成你真正可以記住嘅流程：</div>
@@ -275,7 +290,7 @@
                         <div id="user-custom-indicator" style="display:none;" class="user-priority-badge">🟢 使用者專屬本機模式</div>
                     </div>
 
-                    <!-- 認知差距標題自訂 (對應 Google Sheet 情境分頁) -->
+                    <!-- 認知差距標題自訂 -->
                     <div class="admin-card-row" style="border:1.5px solid #c084fc; background:#faf5ff;">
                         <h4 style="margin-top:0; color:#7e22ce;">🔍 當前情境認知差距標題設定 (對應 Google Sheet 情境頁)</h4>
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">認知差距主題 (gap_title)：</label>
@@ -307,7 +322,7 @@
                     <div class="fixed-anchor-card">
                         <div>
                             <span style="font-weight:900; color:#7e22ce;">🔒 固定分頁 B：時光複利量化累積表 (核心 Anchor)</span>
-                            <div style="font-size:0.75rem; color:#6b21a8; margin-top:2px;">核心供款期與終身被動收入試算</div>
+                            <div style="font-size:0.75rem; color:#6b21a8; margin-top:2px;">核心 1-4 號水庫每 5 年獨立卡片與終身被動收入試算</div>
                         </div>
                         <span style="background:#ede9fe; color:#6b21a8; padding:3px 8px; border-radius:6px; font-size:0.75rem; font-weight:bold;">固定分頁</span>
                     </div>
@@ -327,7 +342,7 @@
                     </div>
                 </div>
 
-                <!-- Tab 2: 時光複利文字 (完整還原 1、2、3、4 號水庫所有欄位) -->
+                <!-- Tab 2: 時光複利文字 (圖 3：完整包含 1 至 4 號水庫標題與描述) -->
                 <div id="admin-sec-jars" style="display:none;">
                     <div class="admin-card-row" style="border:1.5px solid #93c5fd; background:#f0f7ff;">
                         <h4 style="margin-top:0; color:var(--brand-primary);">📊 標籤名稱自訂</h4>
@@ -367,8 +382,8 @@
                     <!-- 1 號水庫 -->
                     <div class="admin-card-row">
                         <h4 style="margin-top:0; color:var(--brand-primary);">🌱 一號水庫標題與描述 (tree_title_1)</h4>
-                        <input type="text" id="admin-jt-title-1" class="pink-edit-input" placeholder="一號種子水庫">
-                        <input type="text" id="admin-jt-desc-1" class="pink-edit-input" placeholder="播下一粒小種子，每天只需微小投入，完成奠基。">
+                        <input type="text" id="admin-jt-title-1" class="pink-edit-input" placeholder="一號種子水庫 (第 1-5 年)">
+                        <input type="text" id="admin-jt-desc-1" class="pink-edit-input" placeholder="播下一粒小種子，每天只需微小投入，5 年完成奠基。">
                     </div>
 
                     <!-- 2 號水庫 -->
@@ -428,7 +443,6 @@
             <input type="file" id="firebase-file-input" accept="image/*" style="display:none;">
             <input type="file" id="json-import-input" accept=".json" style="display:none;" onchange="handleJSONImport(this)">
             
-            <!-- 底部動作按鈕列 -->
             <div style="background:#ffffff; padding:12px 20px; border-top:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
                 <button class="nav-btn prev" style="width:auto; padding:8px 20px;" onclick="closeAdminDashboard()">關閉</button>
                 
@@ -448,7 +462,7 @@
 
     <script>
         const answers = {};
-        let currentSystemVersion = "v6.3.13";
+        let currentSystemVersion = "v6.3.15";
         let GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwbKrrmiS5vx0Q5TvqqUCHBhU-VrS7WwwY0hj6BaNRwuzPtXXIZZxejPwhycCZhSCr-Rg/exec';
         let cloudAdminPassword = "903";
         let currentActiveScenario = "no_savings";
@@ -457,6 +471,11 @@
         let currentStepIndex = 0;
         let selectedWithdrawOption = "withdraw7_from8";
         let selectedPayYears = 5;
+
+        // 水庫金額物件 (1-20年)
+        const jarValues = {
+            jar1: 40000, jar2: 40000, jar3: 40000, jar4: 40000
+        };
 
         let blueprintSummaryText = "完全不影響現有生活享受：只需將每月不知不決流走的少許資金，分段注入專屬水庫，自然鎖定終身被動收入。";
         let blueprintImgUrl = "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80";
@@ -479,7 +498,7 @@
             no_savings: {
                 scenario_name: "未有儲蓄",
                 pay_label: "供款年期", opt_5yr: "5 年 (建立)", opt_10yr: "10 年 (累積期)", opt_15yr: "15 年 (高階)", opt_20yr: "20 年 (頂級防護)",
-                tree_title_1: "🌱 一號種子水庫", tree_desc_1: "播下一粒小種子，每天只需微小投入，完成奠基。",
+                tree_title_1: "🌱 一號種子水庫 (第 1-5 年)", tree_desc_1: "播下一粒小種子，每天只需微小投入，5 年完成奠基。",
                 tree_title_2: "🌿 二號成長水庫 (第 6-10 年)", tree_desc_2: "種子開始成長，根基更深厚穩固。",
                 tree_title_3: "🌳 三號資產森林 (第 11-15 年)", tree_desc_3: "由一棵樹變成森林，抗風險能力大幅增強。",
                 tree_title_4: "🌾 四號未來收成 (第 16-20 年)", tree_desc_4: "前面嘅每一步，都為你產出源源不絕的流動被動收入。",
@@ -488,7 +507,7 @@
             inquiry: {
                 scenario_name: "主動查詢",
                 pay_label: "供款年期", opt_5yr: "5 年 (建立)", opt_10yr: "10 年 (累積期)", opt_15yr: "15 年 (高階)", opt_20yr: "20 年 (頂級防護)",
-                tree_title_1: "🌱 一號種子水庫", tree_desc_1: "播下一粒小種子，每天只需微小投入，完成奠基。",
+                tree_title_1: "🌱 一號種子水庫 (第 1-5 年)", tree_desc_1: "播下一粒小種子，每天只需微小投入，5 年完成奠基。",
                 tree_title_2: "🌿 二號成長水庫 (第 6-10 年)", tree_desc_2: "種子開始成長，根基更深厚穩固。",
                 tree_title_3: "🌳 三號資產森林 (第 11-15 年)", tree_desc_3: "由一棵樹變成森林，抗風險能力大幅增強。",
                 tree_title_4: "🌾 四號未來收成 (第 16-20 年)", tree_desc_4: "前面嘅每一步，都為你產出源源不絕的流動被動收入。",
@@ -497,7 +516,7 @@
             self_invest: {
                 scenario_name: "自己投資",
                 pay_label: "供款年期", opt_5yr: "5 年 (防守底)", opt_10yr: "10 年 (穩健期)", opt_15yr: "15 年 (進階)", opt_20yr: "20 年 (全方位防護)",
-                tree_title_1: "🌱 防守底氣水庫", tree_desc_1: "建立核心防守底層，抵禦市場週期波動。",
+                tree_title_1: "🌱 防守底氣水庫 (第 1-5 年)", tree_desc_1: "建立核心防守底層，抵禦市場週期波動。",
                 tree_title_2: "🌿 穩健增值水庫 (第 6-10 年)", tree_desc_2: "無懼牛熊市，穩健產出流動現金。",
                 tree_title_3: "🌳 擴張收成水庫 (第 11-15 年)", tree_desc_3: "攻守兼備，資產加速增長。",
                 tree_title_4: "🌾 傳承大樹水庫 (第 16-20 年)", tree_desc_4: "豐盛收成，穩健傳承後代。",
@@ -506,7 +525,7 @@
             flexible_return: {
                 scenario_name: "靈活性/回報",
                 pay_label: "供款年期", opt_5yr: "5 年 (靈活奠基)", opt_10yr: "10 年 (增值期)", opt_15yr: "15 年 (自由提領)", opt_20yr: "20 年 (終身被動現金)",
-                tree_title_1: "🌱 靈活奠基水庫", tree_desc_1: "完成奠基，鎖定終身提取權利。",
+                tree_title_1: "🌱 靈活奠基水庫 (第 1-5 年)", tree_desc_1: "完成奠基，鎖定終身提取權利。",
                 tree_title_2: "🌿 自由水龍頭 (第 6-10 年)", tree_desc_2: "隨時開啟水龍頭，享受源源不絕被動收入。",
                 tree_title_3: "🌳 複利加速水庫 (第 11-15 年)", tree_desc_3: "提取同時本金繼續滾存增長。",
                 tree_title_4: "🌾 終身自由水庫 (第 16-20 年)", tree_desc_4: "真正資金自由，源源長糧。",
@@ -527,13 +546,21 @@
             no_savings: [
                 { id: "step_1", zone: "zone_a", step_num: 1, title: "「如果純粹講而家嘅生活狀態，你覺得自己屬於邊一種？」", subtitle: "沒有對與錯，純粹由你目前最真實的生活節奏開始探索：", image_url: "", options: [{ headline: "🌅 先享受現在", subtext: "今天的生活同樣重要。" }, { headline: "🧭 我知道未來重要", subtext: "但市面太多複雜說法。" }] },
                 { id: "step_2", zone: "zone_a", step_num: 2, title: "「如果將來有一樣嘢值得你花更多資源，最可能會係邊方面？」", subtitle: "心目中最在意的生活重心：", image_url: "", options: [{ headline: "🏠 住屋與生活品質提升" }, { headline: "✈️ 旅行與人生體驗" }] },
-                { id: "step_3", zone: "zone_b", step_num: 3, title: "「未必每一種方法都適合你。」", subtitle: "我哋先睇一個具體例子，了解佢點樣運作，再一齊判斷。", button_text: "睇下可以點做 →", options: [] },
+                { id: "step_3", zone: "zone_b", step_num: 3, title: "「未必每一種方法都適合你。」", subtitle: "我哋先睇一個具體例子，了解佢點樣運作，再一齊判斷。", button_text: "睇下可以點做 →", visual_steps: [
+                    { title: "1. 分段建立", desc: "由現在開始，按自己能力逐步放入一部分資源。" },
+                    { title: "2. 🌱 資產逐步累積", desc: "唔需要一次過準備，隨著時間慢慢形成一筆資源。" },
+                    { title: "3. 🏥 未來多一個來源", desc: "將來需要支付醫療保障保費時，可以多一個安排。" }
+                ], options: [] },
                 { id: "step_4", zone: "zone_c", step_num: 4, title: "「適合先繼續，唔適合都完全冇問題。」", subtitle: "以你目前的步調，你覺得這種分段建立的方法適唔適合自己？", image_url: "", options: [{ headline: "🟢 我覺得概念好舒服，可以認真考慮" }, { headline: "🟡 概念明白，想再睇下適合自己的具體預算" }] }
             ],
             inquiry: [
                 { id: "step_1", zone: "zone_a", step_num: 1, title: "「平時想了解理財計劃，通常最想先睇邊方面？」", subtitle: "從你最關注的角度出發：", image_url: "", options: [{ headline: "📊 回報與現金流數字" }, { headline: "🛡️ 本金安全與靈活性" }] },
                 { id: "step_2", zone: "zone_a", step_num: 2, title: "「如果有一筆額外資金，你最想為未來實現甚麼畫面？」", subtitle: "理財是為了實現具體畫面：", image_url: "", options: [{ headline: "☕ 提早退休享受人生" }, { headline: "🏡 升級家庭生活質素" }] },
-                { id: "step_3", zone: "zone_b", step_num: 3, title: "「先了解運作原理，再決定值唔值得考慮。」", subtitle: "看清這個模式對你有沒有價值：", button_text: "睇下具體點做 →", options: [] },
+                { id: "step_3", zone: "zone_b", step_num: 3, title: "「先了解運作原理，再決定值唔值得考慮。」", subtitle: "看清這個模式對你有沒有價值：", button_text: "睇下具體點做 →", visual_steps: [
+                    { title: "1. 鎖定目標", desc: "提早鎖定被動現金流起點。" },
+                    { title: "2. 播種滾存", desc: "短年期完成投入，交由複利滾存。" },
+                    { title: "3. 自由提領", desc: "源源長糧，享受被動現金流。" }
+                ], options: [] },
                 { id: "step_4", zone: "zone_c", step_num: 4, title: "「適合先繼續，唔適合都完全冇問題。」", subtitle: "評估個人需求：", image_url: "", options: [{ headline: "🟢 好適合，想認真計算具體預算" }, { headline: "🟡 想先保留資料再考慮" }] }
             ],
             self_invest: [
@@ -609,12 +636,24 @@
                         `).join('') + `</div>`;
                     }
 
+                    // 步驟清單 (三步圖卡片渲染)
+                    let visualStepsHtml = '';
+                    if (c.visual_steps && c.visual_steps.length > 0) {
+                        visualStepsHtml = `<div class="steps-visual-grid">` + c.visual_steps.map((st, sIdx) => `
+                            <div class="step-visual-card ${sIdx === 1 ? 'highlight' : ''}">
+                                <div class="step-visual-card-title">${st.title}</div>
+                                <div class="step-visual-card-desc">${st.desc}</div>
+                            </div>
+                        `).join('') + `</div>`;
+                    }
+
                     const nextBtnText = c.button_text ? c.button_text : '下一步 →';
 
                     stepEl.innerHTML = `
                         <div class="content-card">
                             <h2 class="question-title">${c.title}</h2>
                             <p class="question-hint">${c.subtitle}</p>
+                            ${visualStepsHtml}
                             ${optionsHtml}
                             ${c.image_url ? `<div style="text-align:center; margin-top:16px;"><img src="${c.image_url}" style="max-width:90%; max-height:220px; border-radius:10px; border:1px solid var(--border-light);"></div>` : ''}
                             <div class="action-row">
@@ -646,7 +685,7 @@
                             <h2 class="question-title">🌱 時光複利：小金額創造大效果</h2>
                             <p class="question-hint">即使今天未有特定目標，每個月只預留少少，交畀時間，就能為你創造源源不絕的被動收入：</p>
                             
-                            <div style="display:grid; grid-template-columns: 1fr 1.6fr; gap:12px; margin-bottom:16px;">
+                            <div style="display:grid; grid-template-columns: 1fr 1.6fr; gap:12px; margin-bottom:18px;">
                                 <div>
                                     <label style="font-size:0.75rem; font-weight:bold; color:var(--text-sub);">開始歲數</label>
                                     <input type="number" id="start-age" value="30" onchange="renderDynamicJarGrid(); calculateAndDisplay();" style="width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:8px; text-align:center; font-weight:bold;">
@@ -662,11 +701,8 @@
                                 </div>
                             </div>
                             
-                            <div class="calc-jar-card" id="group-plan1" style="border-top:3px solid var(--plan1-color);">
-                                <h4 id="jar-title-display" style="color:var(--plan1-color); margin-bottom:4px; font-size:0.95rem;">${jt.tree_title_1} (第 1 - ${selectedPayYears} 年)</h4>
-                                <p style="font-size:0.8rem; color:var(--text-sub); margin-bottom:10px;">${jt.tree_desc_1}</p>
-                                <div class="calc-grid-dynamic" id="jar-inputs-grid"></div>
-                            </div>
+                            <!-- 4 個獨立水庫容器 (依據所選年期自動展開與連動) -->
+                            <div id="jars-multi-container"></div>
 
                             <div class="dots-toggle-bar-pure">
                                 <div class="pure-color-dot dot-blue-bg" id="dot-btn-annuity" onclick="toggleColumn('annuity')" title="被動收入"></div>
@@ -693,12 +729,12 @@
                         <div class="content-card">
                             <h2 class="question-title">🌱 你的專屬生活藍圖筆記</h2>
                             <p class="question-hint">生活初衷彙整與專屬水庫配置：</p>
-                            <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:12px; padding:18px;">
-                                <strong style="color:#166534; font-size:1rem;">💡 替代方案：無痛縮減落差</strong>
-                                <div style="text-align:center; margin:12px 0;">
+                            <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:14px; padding:20px;">
+                                <strong style="color:#166534; font-size:1.05rem;">💡 替代方案：無痛縮減落差</strong>
+                                <div style="text-align:center; margin:14px 0;">
                                     <img src="${blueprintImgUrl}" style="max-width:100%; max-height:220px; object-fit:contain; border-radius:10px;">
                                 </div>
-                                <p style="font-size:0.9rem; color:#166534; margin-top:6px; line-height:1.6;">${blueprintSummaryText}</p>
+                                <p style="font-size:0.92rem; color:#166534; margin-top:6px; line-height:1.6;">${blueprintSummaryText}</p>
                             </div>
                             <div class="action-row">
                                 <button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 上一步</button>
@@ -707,10 +743,32 @@
                         </div>
                     `;
                 } else if (step.id === 'page-promo') {
+                    // 左右對開完整保費優惠算式
                     stepEl.innerHTML = `
                         <div class="content-card">
                             <h2 class="question-title">🎁 專屬保費優惠計算</h2>
-                            <p class="question-hint">度身訂造最慳錢的投保策略：</p>
+                            <p class="question-hint">為你度身訂造最慳錢的投保策略！即時計算最新保費回贈及折扣優惠：</p>
+                            <div class="promo-split-container">
+                                <div class="promo-card">
+                                    <div>
+                                        <label style="font-size:0.8rem; font-weight:bold; color:var(--text-sub);">每年名義保費 ($)</label>
+                                        <input type="text" id="promo-annual-premium" value="100,000" style="width:100%; padding:10px; font-size:1.15rem; font-weight:bold; text-align:center; border:1.5px solid var(--brand-accent); border-radius:8px; margin-top:6px;" oninput="calculatePromo()">
+                                    </div>
+                                    <div style="background:#f8fafc; border-radius:10px; padding:12px; font-size:0.85rem; color:var(--text-sub); line-height:1.7;">
+                                        <div style="font-weight:bold; color:var(--brand-primary); margin-bottom:4px;">📊 算式拆解與優惠階梯：</div>
+                                        <div>🔹 首年折扣比例：<strong id="promo-rate-text" style="color:var(--state-success);">10%</strong> (<span id="promo-discount-amount">$10,000</span>)</div>
+                                        <div>🔹 預繳首年額外回贈：<strong id="promo-prepay-text" style="color:var(--brand-accent);">$2,000</strong></div>
+                                        <div style="border-top:1px dashed #cbd5e1; margin-top:6px; padding-top:6px;">🔹 總優惠 = 折扣 + 額外回贈</div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="promo-result-box">
+                                        <h4 style="font-size:1.05rem; opacity:0.95;">已為您慳下高達：</h4>
+                                        <div class="big-savings" id="promo-total-savings">$12,000</div>
+                                        <div style="font-size:0.9rem; opacity:0.9;">折後首年實付保費：<span id="promo-actual-pay" style="font-weight:bold; font-size:1.1rem;">$88,000</span></div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="action-row">
                                 <button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 返回藍圖</button>
                                 <button class="nav-btn next" onclick="alert('✅ 規劃全數完成！')">✅ 完成所有規劃</button>
@@ -723,48 +781,101 @@
 
             renderDynamicJarGrid();
             calculateAndDisplay();
+            calculatePromo();
             updateProgressBar();
         }
 
         function onPayYearsChange(val) {
             selectedPayYears = parseInt(val) || 5;
-            const jt = allJarTexts[currentActiveScenario] || allJarTexts['no_savings'];
-            const titleEl = document.getElementById('jar-title-display');
-            if (titleEl) titleEl.textContent = `${jt.tree_title_1} (第 1 - ${selectedPayYears} 年)`;
             renderDynamicJarGrid();
             calculateAndDisplay();
         }
 
+        // 渲染 4 個獨立水庫卡片 (圖 4：每 5 年一張獨立卡片，支援個別獨立金額輸入)
         function renderDynamicJarGrid() {
-            const grid = document.getElementById('jar-inputs-grid');
-            if (!grid) return;
-            grid.innerHTML = '';
+            const container = document.getElementById('jars-multi-container');
+            if (!container) return;
+            container.innerHTML = '';
+            
             const startAge = parseInt(document.getElementById('start-age')?.value) || 30;
-            const defaultVal = "40,000";
+            const jt = allJarTexts[currentActiveScenario] || allJarTexts['no_savings'];
+            
+            const numJars = Math.min(4, Math.ceil(selectedPayYears / 5));
 
-            for (let i = 1; i <= selectedPayYears; i++) {
-                const group = document.createElement('div');
-                group.className = 'calc-input-group';
-                const age = startAge + i - 1;
-                group.innerHTML = `
-                    <label>第${i}年 (${age}歲)</label>
-                    <input type="text" id="plan1-y${i}" value="${defaultVal}" ${i > 1 ? 'readonly class="readonly"' : ''}>
+            const jarConfigs = [
+                { id: 'jar1', color: 'var(--plan1-color)', title: jt.tree_title_1 || '🌱 一號種子水庫 (第 1-5 年)', desc: jt.tree_desc_1 || '播下一粒小種子，每天只需微小投入，5 年完成奠基。', startYr: 1, endYr: 5 },
+                { id: 'jar2', color: 'var(--plan2-color)', title: jt.tree_title_2 || '🌿 二號成長水庫 (第 6-10 年)', desc: jt.tree_desc_2 || '種子開始成長，根基更深厚穩固。', startYr: 6, endYr: 10 },
+                { id: 'jar3', color: 'var(--plan3-color)', title: jt.tree_title_3 || '🌳 三號資產森林 (第 11-15 年)', desc: jt.tree_desc_3 || '由一棵樹變成森林，抗風險能力大幅增強。', startYr: 11, endYr: 15 },
+                { id: 'jar4', color: 'var(--plan4-color)', title: jt.tree_title_4 || '🌾 四號未來收成 (第 16-20 年)', desc: jt.tree_desc_4 || '前面嘅每一步，都為你產出源源不絕的流動被動收入。', startYr: 16, endYr: 20 }
+            ];
+
+            for (let j = 0; j < numJars; j++) {
+                const cfg = jarConfigs[j];
+                const cardEl = document.createElement('div');
+                cardEl.className = 'calc-jar-card';
+                cardEl.style.borderTop = `3.5px solid ${cfg.color}`;
+
+                let inputsHtml = '';
+                for (let y = cfg.startYr; y <= Math.min(cfg.endYr, selectedPayYears); y++) {
+                    const age = startAge + y - 1;
+                    const isFirstInJar = (y === cfg.startYr);
+                    inputsHtml += `
+                        <div class="calc-input-group">
+                            <label>第${y}年 (${age}歲)</label>
+                            <input type="text" id="input-year-${y}" data-jar="${cfg.id}" value="${formatNumber(jarValues[cfg.id] || 40000)}" ${!isFirstInJar ? 'readonly class="readonly"' : ''}>
+                        </div>
+                    `;
+                }
+
+                cardEl.innerHTML = `
+                    <h4 style="color:${cfg.color}; margin-bottom:4px; font-size:0.98rem; font-weight:800;">${cfg.title}</h4>
+                    <p style="font-size:0.84rem; color:var(--text-sub); margin-bottom:12px;">${cfg.desc}</p>
+                    <div class="calc-grid-5yr">${inputsHtml}</div>
                 `;
-                grid.appendChild(group);
-            }
+                container.appendChild(cardEl);
 
-            const y1El = document.getElementById('plan1-y1');
-            if (y1El) {
-                y1El.addEventListener('input', () => {
-                    const rawVal = parseFormattedNumber(y1El.value);
-                    y1El.value = formatNumber(rawVal);
-                    for (let i = 2; i <= selectedPayYears; i++) {
-                        const yEl = document.getElementById(`plan1-y${i}`);
-                        if (yEl) yEl.value = formatNumber(rawVal);
-                    }
-                    calculateAndDisplay();
-                });
+                // 綁定該水庫首年輸入即時自動同步
+                const firstInput = cardEl.querySelector(`#input-year-${cfg.startYr}`);
+                if (firstInput) {
+                    firstInput.addEventListener('input', () => {
+                        const raw = parseFormattedNumber(firstInput.value);
+                        firstInput.value = formatNumber(raw);
+                        jarValues[cfg.id] = raw;
+                        for (let k = cfg.startYr + 1; k <= Math.min(cfg.endYr, selectedPayYears); k++) {
+                            const subIn = cardEl.querySelector(`#input-year-${k}`);
+                            if (subIn) subIn.value = formatNumber(raw);
+                        }
+                        calculateAndDisplay();
+                    });
+                }
             }
+        }
+
+        function calculatePromo() {
+            const P = parseFormattedNumber(document.getElementById('promo-annual-premium')?.value) || 100000;
+            let discountRate = 0.08;
+            let prepayBonus = 1000;
+
+            if (P >= 150000) { discountRate = 0.12; prepayBonus = 3000; }
+            else if (P >= 100000) { discountRate = 0.10; prepayBonus = 2000; }
+            else if (P >= 50000) { discountRate = 0.08; prepayBonus = 1000; }
+            else { discountRate = 0.05; prepayBonus = 500; }
+
+            const discountAmount = P * discountRate;
+            const totalSaved = discountAmount + prepayBonus;
+            const actualPay = P - totalSaved;
+
+            const rateTextEl = document.getElementById('promo-rate-text');
+            const discountAmtEl = document.getElementById('promo-discount-amount');
+            const prepayTextEl = document.getElementById('promo-prepay-text');
+            const totalSavedEl = document.getElementById('promo-total-savings');
+            const actualPayEl = document.getElementById('promo-actual-pay');
+
+            if (rateTextEl) rateTextEl.textContent = (discountRate * 100).toFixed(0) + '%';
+            if (discountAmtEl) discountAmtEl.textContent = '$' + formatNumber(discountAmount);
+            if (prepayTextEl) prepayTextEl.textContent = '$' + formatNumber(prepayBonus);
+            if (totalSavedEl) totalSavedEl.textContent = '$' + formatNumber(totalSaved);
+            if (actualPayEl) actualPayEl.textContent = '$' + formatNumber(actualPay);
         }
 
         function openWithdrawPopup() {
@@ -797,6 +908,7 @@
                 renderDynamicJarGrid();
                 calculateAndDisplay();
             }
+            if (activeFullFlowSteps[index].id === 'page-promo') calculatePromo();
         }
 
         function selectDynamicOption(stepId, headline, index) {
@@ -816,8 +928,13 @@
 
         function calculateAndDisplay() {
             const startAge = parseInt(document.getElementById('start-age')?.value) || 30;
-            const p1Val = parseFormattedNumber(document.getElementById('plan1-y1')?.value) || 40000;
-            const totalSow = p1Val * selectedPayYears;
+            
+            // 累加 1 至 4 號水庫實際設定的金額
+            let totalSow = 0;
+            for (let y = 1; y <= selectedPayYears; y++) {
+                const jarId = y <= 5 ? 'jar1' : (y <= 10 ? 'jar2' : (y <= 15 ? 'jar3' : 'jar4'));
+                totalSow += (jarValues[jarId] || 40000);
+            }
 
             const thead = document.getElementById('results-table-head');
             const tbody = document.getElementById('results-table-body');
@@ -889,7 +1006,7 @@
             calculateAndDisplay();
         }
 
-        // 後台頁面管理題目卡片渲染
+        // 後台頁面管理題目卡片渲染 (完全對齊圖 1 步驟清單與選項清單)
         function renderAdminCards() {
             let currentList = allScenarioDatabase[currentActiveScenario] || allScenarioDatabase['no_savings'];
             ['zone_a', 'zone_b', 'zone_c'].forEach(zKey => {
@@ -907,7 +1024,7 @@
                         <div class="admin-card-head" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
                             <div style="display:flex; align-items:center; gap:8px;">
                                 <span style="font-weight:bold; color:var(--brand-primary); font-size:0.95rem;">步驟 ${card.step_num || (globalIdx + 1)}</span>
-                                <select onchange="toggleCardMode(${globalIdx}, this.value)" style="padding:2px 6px; font-size:0.75rem; border-radius:4px; border:1px solid #cbd5e1; font-weight:bold;">
+                                <select onchange="toggleCardMode(${globalIdx}, this.value)" style="padding:3px 8px; font-size:0.78rem; border-radius:6px; border:1px solid #cbd5e1; font-weight:bold;">
                                     <option value="option" ${isOptionMode ? 'selected' : ''}>🔘 選項模式</option>
                                     <option value="step" ${!isOptionMode ? 'selected' : ''}>📝 純步驟模式</option>
                                 </select>
@@ -922,9 +1039,18 @@
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">副標題說明：</label>
                         <input type="text" class="pink-edit-input" value="${card.subtitle || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].subtitle = this.value">
                         
-                        <div style="${!isOptionMode ? 'display:block;' : 'display:none;'} margin-top:8px;">
+                        <!-- 純步驟模式：按鈕文字 + 步驟清單(三步圖)自訂 -->
+                        <div style="${!isOptionMode ? 'display:block;' : 'display:none;'} margin-top:10px;">
                             <label style="font-size:0.75rem; font-weight:bold; color:#059669;">按鈕文字 (例如：睇下可以點做 →)：</label>
                             <input type="text" class="pink-edit-input" placeholder="下一步 →" value="${card.button_text || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].button_text = this.value">
+                            
+                            <div class="admin-options-container" style="margin-top:10px;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                                    <span style="font-size:0.75rem; font-weight:bold; color:#065f46;">步驟清單 (三步圖)：</span>
+                                    <button class="step-ctrl-btn" onclick="addVisualStepItem(${globalIdx})">+ 新增項目</button>
+                                </div>
+                                <div id="visual-steps-edit-zone-${globalIdx}"></div>
+                            </div>
                         </div>
 
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
@@ -936,6 +1062,7 @@
                         </div>
                         <input type="text" id="card-img-url-${globalIdx}" class="pink-edit-input" value="${card.image_url || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].image_url = this.value">
                         
+                        <!-- 選項模式清單 -->
                         <div class="admin-options-container" style="${isOptionMode ? 'display:block;' : 'display:none;'}">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                                 <span style="font-size:0.75rem; font-weight:bold; color:#475569;">選項清單：</span>
@@ -946,6 +1073,7 @@
                     `;
                     zoneContainer.appendChild(el);
 
+                    // 渲染選項模式子行
                     if (isOptionMode) {
                         const optZone = el.querySelector(`#opts-edit-zone-${globalIdx}`);
                         card.options.forEach((opt, optIdx) => {
@@ -959,8 +1087,38 @@
                             optZone.appendChild(optRow);
                         });
                     }
+
+                    // 渲染純步驟視覺化清單子行
+                    if (!isOptionMode) {
+                        const vZone = el.querySelector(`#visual-steps-edit-zone-${globalIdx}`);
+                        if (!card.visual_steps) card.visual_steps = [];
+                        card.visual_steps.forEach((vItem, vIdx) => {
+                            const vRow = document.createElement('div');
+                            vRow.className = 'option-row-edit';
+                            vRow.innerHTML = `
+                                <input type="text" class="pink-edit-input" style="margin:0; flex:1;" value="${vItem.title || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].visual_steps[${vIdx}].title = this.value" placeholder="例如: 1. 分段建立">
+                                <input type="text" class="pink-edit-input" style="margin:0; flex:1.8;" value="${vItem.desc || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].visual_steps[${vIdx}].desc = this.value" placeholder="說明內容">
+                                <button class="del-opt-btn" onclick="deleteVisualStepItem(${globalIdx}, ${vIdx})">✕</button>
+                            `;
+                            vZone.appendChild(vRow);
+                        });
+                    }
                 });
             });
+        }
+
+        function addVisualStepItem(globalIdx) {
+            const card = allScenarioDatabase[currentActiveScenario][globalIdx];
+            if (!card.visual_steps) card.visual_steps = [];
+            card.visual_steps.push({ title: `${card.visual_steps.length + 1}. 新步驟`, desc: "請輸入步驟描述內容" });
+            renderAdminCards();
+            buildAndRenderFlow();
+        }
+
+        function deleteVisualStepItem(globalIdx, vIdx) {
+            allScenarioDatabase[currentActiveScenario][globalIdx].visual_steps.splice(vIdx, 1);
+            renderAdminCards();
+            buildAndRenderFlow();
         }
 
         function moveZoneCard(cardId, dir) {
@@ -1042,7 +1200,14 @@
             const card = allScenarioDatabase[currentActiveScenario][globalIdx];
             if (mode === 'step') {
                 card.options = [];
-                if (!card.button_text) card.button_text = "下一步 →";
+                if (!card.button_text) card.button_text = "睇下可以點做 →";
+                if (!card.visual_steps || card.visual_steps.length === 0) {
+                    card.visual_steps = [
+                        { title: "1. 分段建立", desc: "由現在開始逐步放入資源。" },
+                        { title: "2. 🌱 資產逐步累積", desc: "隨著時間慢慢形成一筆資源。" },
+                        { title: "3. 🏥 未來多一個來源", desc: "將來需要時可以多一個安排。" }
+                    ];
+                }
             } else {
                 card.options = [{ headline: "選項 1", subtext: "說明" }];
             }
@@ -1221,7 +1386,6 @@
             loadJarTextsToEditor();
         }
 
-        // 使用者專屬：一鍵還原為團隊預設
         async function resetToTeamDefault() {
             if (!confirm("確定要清除本機修改，還原為團隊雲端預設設定？")) return;
             
@@ -1262,6 +1426,7 @@
                             subtitle: row.subtitle,
                             image_url: row.image_url || "",
                             button_text: row.button_text || "",
+                            visual_steps: typeof row.visual_steps_json === 'string' ? JSON.parse(row.visual_steps_json || '[]') : (row.visual_steps || []),
                             options: typeof row.options_json === 'string' ? JSON.parse(row.options_json || '[]') : row.options_json
                         });
                     });
@@ -1280,7 +1445,6 @@
             }
         }
 
-        // 使用者專屬：保存至本機 (鎖定 LocalStorage 最高優先)[span_5](start_span)[span_5](end_span)[span_6](start_span)[span_6](end_span)
         function saveToLocalStorageOnly() {
             saveJarTextsFromEditor();
             localStorage.setItem('ava_scenario_database', JSON.stringify(allScenarioDatabase));
@@ -1334,7 +1498,6 @@
             reader.readAsText(file);
         }
 
-        // 管理者專屬：同步至 Google Sheet
         async function syncAllToGoogleSheet() {
             saveJarTextsFromEditor();
             const loadingMask = document.getElementById('sync-loading-mask');
@@ -1358,6 +1521,7 @@
                             subtitle: c.subtitle,
                             image_url: c.image_url || "",
                             button_text: c.button_text || "",
+                            visual_steps_json: JSON.stringify(c.visual_steps || []),
                             options_json: JSON.stringify(c.options || []),
                             order_index: idx + 1
                         });
@@ -1434,6 +1598,7 @@
                             subtitle: row.subtitle,
                             image_url: row.image_url || "",
                             button_text: row.button_text || "",
+                            visual_steps: typeof row.visual_steps_json === 'string' ? JSON.parse(row.visual_steps_json || '[]') : (row.visual_steps || []),
                             options: typeof row.options_json === 'string' ? JSON.parse(row.options_json || '[]') : row.options_json
                         });
                     });
