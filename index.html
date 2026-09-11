@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.11)</title>
+    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.12)</title>
     
     <!-- PWA 與 App Icon 關聯 -->
     <link rel="manifest" href="./manifest.json">
@@ -162,7 +162,7 @@
 <body>
     <header class="system-top-nav">
         <div class="brand-title-wrap">
-            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.11</span>
+            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.12</span>
             <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="選擇客群情境">!</span>
             <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="核心分頁直達">*</span>
         </div>
@@ -177,15 +177,16 @@
         <main id="app-main-flow"></main>
     </div>
 
-    <!-- 頂部 ! 情境選擇 -->
+    <!-- 頂部 ! 情境選擇 (分開 4 個情境) -->
     <div id="scenario-popup-mask" class="modal-mask">
         <div class="modal-box">
             <span class="close-btn" onclick="closeScenarioPopup()">&times;</span>
             <h3 style="color:var(--brand-primary); margin-top:0; font-size:1.15rem; text-align:center;">💡 選擇引導情境</h3>
             <div class="popup-menu-list">
-                <div class="popup-menu-item" onclick="applyScenarioPreset('no_savings')">1. 🌱 未有儲蓄 / 主動查詢</div>
-                <div class="popup-menu-item" onclick="applyScenarioPreset('self_invest')">2. 📈 自己投資</div>
-                <div class="popup-menu-item" onclick="applyScenarioPreset('flexible_return')">3. 🔓 靈活性 / 回報</div>
+                <div class="popup-menu-item" onclick="applyScenarioPreset('no_savings')">1. 🌱 未有儲蓄</div>
+                <div class="popup-menu-item" onclick="applyScenarioPreset('inquiry')">2. 💬 主動查詢</div>
+                <div class="popup-menu-item" onclick="applyScenarioPreset('self_invest')">3. 📈 自己投資</div>
+                <div class="popup-menu-item" onclick="applyScenarioPreset('flexible_return')">4. 🔓 靈活性 / 回報</div>
             </div>
         </div>
     </div>
@@ -197,9 +198,10 @@
             <h3 style="color:var(--brand-primary); margin-top:0; font-size:1.1rem; text-align:center;">🚀 直達核心分頁</h3>
             <div class="popup-menu-list">
                 <div class="popup-menu-item" onclick="jumpDirectStep('fixed-page-a')">🔍 固定分頁 A：認知差距 (當前情境)</div>
-                <div class="popup-menu-item popup-menu-subitem" onclick="jumpDirectScenarioGap('no_savings')">🌱 情境 1：未有儲蓄 / 主動查詢</div>
-                <div class="popup-menu-item popup-menu-subitem" onclick="jumpDirectScenarioGap('self_invest')">📈 情境 2：自己投資</div>
-                <div class="popup-menu-item popup-menu-subitem" onclick="jumpDirectScenarioGap('flexible_return')">🔓 情境 3：靈活性 / 回報</div>
+                <div class="popup-menu-item popup-menu-subitem" onclick="jumpDirectScenarioGap('no_savings')">🌱 情境 1：未有儲蓄</div>
+                <div class="popup-menu-item popup-menu-subitem" onclick="jumpDirectScenarioGap('inquiry')">💬 情境 2：主動查詢</div>
+                <div class="popup-menu-item popup-menu-subitem" onclick="jumpDirectScenarioGap('self_invest')">📈 情境 3：自己投資</div>
+                <div class="popup-menu-item popup-menu-subitem" onclick="jumpDirectScenarioGap('flexible_return')">🔓 情境 4：靈活性 / 回報</div>
                 
                 <div class="popup-menu-item" onclick="jumpDirectStep('fixed-page-b')">🌱 固定分頁 B：時光複利量化表</div>
                 <div class="popup-menu-item" onclick="jumpDirectStep('fixed-page-c')">📋 固定分頁 C：專屬生活藍圖</div>
@@ -217,7 +219,7 @@
         </div>
     </div>
 
-    <!-- 控制台 (管理者與使用者雙模式) -->
+    <!-- 控制台 -->
     <div id="admin-modal-mask" class="modal-mask">
         <div class="admin-dashboard-modal">
             <div class="admin-header">
@@ -261,15 +263,16 @@
                         <div style="display:flex; align-items:center; gap:8px;">
                             <label style="font-size:0.85rem; font-weight:bold; color:var(--brand-primary);">切換編輯情境：</label>
                             <select id="scenario-flow-selector" onchange="switchScenarioFlowEditor(this.value)" style="padding:6px 10px; font-weight:bold; border:1.5px solid var(--brand-accent); border-radius:6px; background:#fff;">
-                                <option value="no_savings">🌱 1. 未有儲蓄 / 主動查詢</option>
-                                <option value="self_invest">📈 2. 自己投資</option>
-                                <option value="flexible_return">🔓 3. 靈活性 / 回報</option>
+                                <option value="no_savings">🌱 1. 未有儲蓄</option>
+                                <option value="inquiry">💬 2. 主動查詢</option>
+                                <option value="self_invest">📈 3. 自己投資</option>
+                                <option value="flexible_return">🔓 4. 靈活性 / 回報</option>
                             </select>
                         </div>
                         <div id="user-custom-indicator" style="display:none;" class="user-priority-badge">🟢 使用者專屬本機模式</div>
                     </div>
 
-                    <!-- 認知差距主題與副主題自訂 (直接對應 Google Sheet 情境頁) -->
+                    <!-- 認知差距標題自訂 -->
                     <div class="admin-card-row" style="border:1.5px solid #c084fc; background:#faf5ff;">
                         <h4 style="margin-top:0; color:#7e22ce;">🔍 當前情境認知差距標題設定 (對應 Google Sheet 情境頁)</h4>
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">認知差距主題 (gap_title)：</label>
@@ -404,7 +407,6 @@
             <div style="background:#ffffff; padding:12px 20px; border-top:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
                 <button class="nav-btn prev" style="width:auto; padding:8px 20px;" onclick="closeAdminDashboard()">關閉</button>
                 
-                <!-- 使用者模式：還原為團隊預設、匯出/匯入、保存至本機 -->
                 <div id="user-action-buttons" style="display:none; gap:8px;">
                     <button class="nav-btn prev" style="width:auto; padding:8px 14px; background:#eff6ff; border-color:#93c5fd; color:#1d4ed8;" onclick="resetToTeamDefault()">🔄 還原為團隊預設</button>
                     <button class="step-ctrl-btn" onclick="exportUserDataJSON()">📤 匯出設定</button>
@@ -412,7 +414,6 @@
                     <button class="nav-btn prev" style="width:auto; padding:8px 18px; background:#f0fdf4; border-color:#86efac; color:#166534;" onclick="saveToLocalStorageOnly()">💾 保存至本機 (優先)</button>
                 </div>
                 
-                <!-- 管理者模式：同步至 Google Sheet -->
                 <div id="admin-action-buttons" style="display:flex; gap:8px;">
                     <button class="nav-btn next" style="width:auto; padding:8px 20px;" onclick="syncAllToGoogleSheet()">☁️ 同步至 Google Sheet (新 Version)</button>
                 </div>
@@ -422,7 +423,7 @@
 
     <script>
         const answers = {};
-        let currentSystemVersion = "v6.3.11";
+        let currentSystemVersion = "v6.3.12";
         let GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwbKrrmiS5vx0Q5TvqqUCHBhU-VrS7WwwY0hj6BaNRwuzPtXXIZZxejPwhycCZhSCr-Rg/exec';
         let cloudAdminPassword = "903";
         let currentActiveScenario = "no_savings";
@@ -436,20 +437,28 @@
         let blueprintImgUrl = "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80";
 
         let scenariosDB = {
-            no_savings: { scenario_name: "未有儲蓄/主動查詢", gap_title: "🔍 認知差距與真相對比", takeaway_summary: "探索不同路徑在時間複利下的真實落差：" },
+            no_savings: { scenario_name: "未有儲蓄", gap_title: "🔍 認知差距與真相對比", takeaway_summary: "探索不同路徑在時間複利下的真實落差：" },
+            inquiry: { scenario_name: "主動查詢", gap_title: "🔍 認知差距與真相對比", takeaway_summary: "探索不同路徑在時間複利下的真實落差：" },
             self_invest: { scenario_name: "自己投資", gap_title: "📈 目標匹配度與不確定性差距", takeaway_summary: "看清市場波動與核心防守底層的真實落差：" },
             flexible_return: { scenario_name: "靈活性/回報", gap_title: "🔓 假靈活 vs 投資鐵三角取捨", takeaway_summary: "探索流動性、回報與安全性之間的取捨真相：" }
         };
 
         const scenarioGapFiles = {
             no_savings: "./scenario1_gap.html",
+            inquiry: "./scenario1_gap.html",
             self_invest: "./scenario2_gap.html",
             flexible_return: "./scenario3_gap.html"
         };
 
         let allJarTexts = {
             no_savings: {
-                scenario_name: "未有儲蓄/主動查詢",
+                scenario_name: "未有儲蓄",
+                pay_label: "供款年期", opt_5yr: "5 年 (建立)", opt_10yr: "10 年 (累積期)", opt_15yr: "15 年 (高階)", opt_20yr: "20 年 (頂級防護)",
+                tree_title_1: "🌱 一號種子水庫", tree_desc_1: "播下一粒小種子，每天只需微小投入，完成奠基。",
+                th_year: "年份 (歲數)", th_reserve: "累計儲備", th_income: "被動收入", th_accum: "累積已領", th_asset: "大樹收成", th_interest: "年化百分比回報"
+            },
+            inquiry: {
+                scenario_name: "主動查詢",
                 pay_label: "供款年期", opt_5yr: "5 年 (建立)", opt_10yr: "10 年 (累積期)", opt_15yr: "15 年 (高階)", opt_20yr: "20 年 (頂級防護)",
                 tree_title_1: "🌱 一號種子水庫", tree_desc_1: "播下一粒小種子，每天只需微小投入，完成奠基。",
                 th_year: "年份 (歲數)", th_reserve: "累計儲備", th_income: "被動收入", th_accum: "累積已領", th_asset: "大樹收成", th_interest: "年化百分比回報"
@@ -481,8 +490,14 @@
             no_savings: [
                 { id: "step_1", zone: "zone_a", step_num: 1, title: "「如果純粹講而家嘅生活狀態，你覺得自己屬於邊一種？」", subtitle: "沒有對與錯，純粹由你目前最真實的生活節奏開始探索：", image_url: "", options: [{ headline: "🌅 先享受現在", subtext: "今天的生活同樣重要。" }, { headline: "🧭 我知道未來重要", subtext: "但市面太多複雜說法。" }] },
                 { id: "step_2", zone: "zone_a", step_num: 2, title: "「如果將來有一樣嘢值得你花更多資源，最可能會係邊方面？」", subtitle: "心目中最在意的生活重心：", image_url: "", options: [{ headline: "🏠 住屋與生活品質提升" }, { headline: "✈️ 旅行與人生體驗" }] },
-                { id: "step_3", zone: "zone_b", step_num: 3, title: "「點解呢個方向對你嚟講特別重要？」", subtitle: "探索背後真正驅動你、對你最具價值的初衷：", image_url: "", options: [{ headline: "✨ 不想被現實條件限制選擇" }, { headline: "🛡️ 想有一份踏實的掌控感" }] },
+                { id: "step_3", zone: "zone_b", step_num: 3, title: "「未必每一種方法都適合你。」", subtitle: "我哋先睇一個具體例子，了解佢點樣運作，再一齊判斷。", button_text: "睇下可以點做 →", options: [] },
                 { id: "step_4", zone: "zone_c", step_num: 4, title: "「適合先繼續，唔適合都完全冇問題。」", subtitle: "以你目前的步調，你覺得這種分段建立的方法適唔適合自己？", image_url: "", options: [{ headline: "🟢 我覺得概念好舒服，可以認真考慮" }, { headline: "🟡 概念明白，想再睇下適合自己的具體預算" }] }
+            ],
+            inquiry: [
+                { id: "step_1", zone: "zone_a", step_num: 1, title: "「平時想了解理財計劃，通常最想先睇邊方面？」", subtitle: "從你最關注的角度出發：", image_url: "", options: [{ headline: "📊 回報與現金流數字" }, { headline: "🛡️ 本金安全與靈活性" }] },
+                { id: "step_2", zone: "zone_a", step_num: 2, title: "「如果有一筆額外資金，你最想為未來實現甚麼畫面？」", subtitle: "理財是為了實現具體畫面：", image_url: "", options: [{ headline: "☕ 提早退休享受人生" }, { headline: "🏡 升級家庭生活質素" }] },
+                { id: "step_3", zone: "zone_b", step_num: 3, title: "「先了解運作原理，再決定值唔值得考慮。」", subtitle: "看清這個模式對你有沒有價值：", button_text: "睇下具體點做 →", options: [] },
+                { id: "step_4", zone: "zone_c", step_num: 4, title: "「適合先繼續，唔適合都完全冇問題。」", subtitle: "評估個人需求：", image_url: "", options: [{ headline: "🟢 好適合，想認真計算具體預算" }, { headline: "🟡 想先保留資料再考慮" }] }
             ],
             self_invest: [
                 { id: "step_1", zone: "zone_a", step_num: 1, title: "「講到投資同儲蓄，你目前最重視邊樣？」", subtitle: "探索最舒服的步調：", image_url: "", options: [{ headline: "📈 追求高增長" }, { headline: "🛡️ 穩健防守底氣" }] },
@@ -557,6 +572,8 @@
                         `).join('') + `</div>`;
                     }
 
+                    const nextBtnText = c.button_text ? c.button_text : '下一步 →';
+
                     stepEl.innerHTML = `
                         <div class="content-card">
                             <h2 class="question-title">${c.title}</h2>
@@ -565,7 +582,7 @@
                             ${c.image_url ? `<div style="text-align:center; margin-top:16px;"><img src="${c.image_url}" style="max-width:90%; max-height:220px; border-radius:10px; border:1px solid var(--border-light);"></div>` : ''}
                             <div class="action-row">
                                 ${index > 0 ? `<button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 上一步</button>` : ''}
-                                <button class="nav-btn next" id="btn-next-${index}" onclick="navigateStep(${index + 1})">下一步 →</button>
+                                <button class="nav-btn next" id="btn-next-${index}" onclick="navigateStep(${index + 1})">${nextBtnText}</button>
                             </div>
                         </div>
                     `;
@@ -835,6 +852,7 @@
             calculateAndDisplay();
         }
 
+        // 後台卡片渲染 (包含純步驟按鈕自訂欄位、選項模式增刪、上下移、圖片增刪)
         function renderAdminCards() {
             let currentList = allScenarioDatabase[currentActiveScenario] || allScenarioDatabase['no_savings'];
             ['zone_a', 'zone_b', 'zone_c'].forEach(zKey => {
@@ -861,12 +879,19 @@
                             </div>
                             <button class="del-opt-btn" onclick="deleteCard('${card.id}')">🗑️ 刪除此題</button>
                         </div>
+
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">主標題 (問題內容)：</label>
                         <input type="text" class="pink-edit-input" value="${card.title || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].title = this.value">
                         
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">副標題說明：</label>
                         <input type="text" class="pink-edit-input" value="${card.subtitle || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].subtitle = this.value">
                         
+                        <!-- 純步驟模式專屬：按鈕自訂文字 -->
+                        <div style="${!isOptionMode ? 'display:block;' : 'display:none;'} margin-top:8px;">
+                            <label style="font-size:0.75rem; font-weight:bold; color:#059669;">按鈕文字 (例如：睇下可以點做 →)：</label>
+                            <input type="text" class="pink-edit-input" placeholder="下一步 →" value="${card.button_text || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].button_text = this.value">
+                        </div>
+
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
                             <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">圖片網址 (imageUrl)：</label>
                             <div>
@@ -876,7 +901,8 @@
                         </div>
                         <input type="text" id="card-img-url-${globalIdx}" class="pink-edit-input" value="${card.image_url || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].image_url = this.value">
                         
-                        <div class="admin-options-container" style="${isOptionMode ? '' : 'display:none;'}">
+                        <!-- 選項模式專屬：選項列表清單 -->
+                        <div class="admin-options-container" style="${isOptionMode ? 'display:block;' : 'display:none;'}">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                                 <span style="font-size:0.75rem; font-weight:bold; color:#475569;">選項清單：</span>
                                 <button class="step-ctrl-btn" onclick="addCardOption(${globalIdx})">+ 新增選項</button>
@@ -980,8 +1006,12 @@
 
         function toggleCardMode(globalIdx, mode) {
             const card = allScenarioDatabase[currentActiveScenario][globalIdx];
-            if (mode === 'step') card.options = [];
-            else card.options = [{ headline: "選項 1", subtext: "說明" }];
+            if (mode === 'step') {
+                card.options = [];
+                if (!card.button_text) card.button_text = "下一步 →";
+            } else {
+                card.options = [{ headline: "選項 1", subtext: "說明" }];
+            }
             renderAdminCards();
             buildAndRenderFlow();
         }
@@ -1183,6 +1213,7 @@
                             title: row.title,
                             subtitle: row.subtitle,
                             image_url: row.image_url || "",
+                            button_text: row.button_text || "",
                             options: typeof row.options_json === 'string' ? JSON.parse(row.options_json || '[]') : row.options_json
                         });
                     });
@@ -1201,7 +1232,7 @@
             }
         }
 
-        // 使用者專屬：保存至本機 (鎖定 LocalStorage 最高優先)[span_4](start_span)[span_4](end_span)[span_5](start_span)[span_5](end_span)
+        // 使用者專屬：保存至本機 (鎖定 LocalStorage 最高優先)[span_6](start_span)[span_6](end_span)[span_7](start_span)[span_7](end_span)
         function saveToLocalStorageOnly() {
             saveJarTextsFromEditor();
             localStorage.setItem('ava_scenario_database', JSON.stringify(allScenarioDatabase));
@@ -1278,6 +1309,7 @@
                             title: c.title,
                             subtitle: c.subtitle,
                             image_url: c.image_url || "",
+                            button_text: c.button_text || "",
                             options_json: JSON.stringify(c.options || []),
                             order_index: idx + 1
                         });
@@ -1353,6 +1385,7 @@
                             title: row.title,
                             subtitle: row.subtitle,
                             image_url: row.image_url || "",
+                            button_text: row.button_text || "",
                             options: typeof row.options_json === 'string' ? JSON.parse(row.options_json || '[]') : row.options_json
                         });
                     });
