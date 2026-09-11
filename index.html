@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.12)</title>
+    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.13)</title>
     
     <!-- PWA 與 App Icon 關聯 -->
     <link rel="manifest" href="./manifest.json">
@@ -54,6 +54,9 @@
             --state-purple: #7c3aed;
             --state-danger: #dc2626;
             --plan1-color: #2563eb;
+            --plan2-color: #059669;
+            --plan3-color: #dc2626;
+            --plan4-color: #7c3aed;
             --pink-dashed: 1.5px dashed #f8bbd0;
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
             --shadow-md: 0 4px 16px -2px rgba(15, 23, 42, 0.06);
@@ -162,7 +165,7 @@
 <body>
     <header class="system-top-nav">
         <div class="brand-title-wrap">
-            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.12</span>
+            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.13</span>
             <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="選擇客群情境">!</span>
             <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="核心分頁直達">*</span>
         </div>
@@ -177,7 +180,7 @@
         <main id="app-main-flow"></main>
     </div>
 
-    <!-- 頂部 ! 情境選擇 (分開 4 個情境) -->
+    <!-- 頂部 ! 情境選擇 (分開 4 個獨立情境) -->
     <div id="scenario-popup-mask" class="modal-mask">
         <div class="modal-box">
             <span class="close-btn" onclick="closeScenarioPopup()">&times;</span>
@@ -272,7 +275,7 @@
                         <div id="user-custom-indicator" style="display:none;" class="user-priority-badge">🟢 使用者專屬本機模式</div>
                     </div>
 
-                    <!-- 認知差距標題自訂 -->
+                    <!-- 認知差距標題自訂 (對應 Google Sheet 情境分頁) -->
                     <div class="admin-card-row" style="border:1.5px solid #c084fc; background:#faf5ff;">
                         <h4 style="margin-top:0; color:#7e22ce;">🔍 當前情境認知差距標題設定 (對應 Google Sheet 情境頁)</h4>
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">認知差距主題 (gap_title)：</label>
@@ -324,7 +327,7 @@
                     </div>
                 </div>
 
-                <!-- Tab 2: 時光複利文字 -->
+                <!-- Tab 2: 時光複利文字 (完整還原 1、2、3、4 號水庫所有欄位) -->
                 <div id="admin-sec-jars" style="display:none;">
                     <div class="admin-card-row" style="border:1.5px solid #93c5fd; background:#f0f7ff;">
                         <h4 style="margin-top:0; color:var(--brand-primary);">📊 標籤名稱自訂</h4>
@@ -361,10 +364,32 @@
                         </div>
                     </div>
 
+                    <!-- 1 號水庫 -->
                     <div class="admin-card-row">
-                        <h4 style="margin-top:0; color:var(--brand-primary);">🌱 儲備金庫標題與描述自訂 (tree_title_1)</h4>
-                        <input type="text" id="admin-jt-title-1" class="pink-edit-input" placeholder="儲備金庫一 + 建立水庫">
-                        <input type="text" id="admin-jt-desc-1" class="pink-edit-input" placeholder="描述文字">
+                        <h4 style="margin-top:0; color:var(--brand-primary);">🌱 一號水庫標題與描述 (tree_title_1)</h4>
+                        <input type="text" id="admin-jt-title-1" class="pink-edit-input" placeholder="一號種子水庫">
+                        <input type="text" id="admin-jt-desc-1" class="pink-edit-input" placeholder="播下一粒小種子，每天只需微小投入，完成奠基。">
+                    </div>
+
+                    <!-- 2 號水庫 -->
+                    <div class="admin-card-row">
+                        <h4 style="margin-top:0; color:var(--plan2-color);">🌿 二號水庫標題與描述 (tree_title_2)</h4>
+                        <input type="text" id="admin-jt-title-2" class="pink-edit-input" placeholder="二號成長水庫 (第 6-10 年)">
+                        <input type="text" id="admin-jt-desc-2" class="pink-edit-input" placeholder="種子開始成長，根基更深厚穩固。">
+                    </div>
+
+                    <!-- 3 號水庫 -->
+                    <div class="admin-card-row">
+                        <h4 style="margin-top:0; color:var(--plan3-color);">🌳 三號水庫標題與描述 (tree_title_3)</h4>
+                        <input type="text" id="admin-jt-title-3" class="pink-edit-input" placeholder="三號資產森林 (第 11-15 年)">
+                        <input type="text" id="admin-jt-desc-3" class="pink-edit-input" placeholder="由一棵樹變成森林，抗風險能力大幅增強。">
+                    </div>
+
+                    <!-- 4 號水庫 -->
+                    <div class="admin-card-row">
+                        <h4 style="margin-top:0; color:var(--plan4-color);">🌾 四號水庫標題與描述 (tree_title_4)</h4>
+                        <input type="text" id="admin-jt-title-4" class="pink-edit-input" placeholder="四號未來收成 (第 16-20 年)">
+                        <input type="text" id="admin-jt-desc-4" class="pink-edit-input" placeholder="前面嘅每一步，都為你產出源源不絕的流動被動收入。">
                     </div>
                 </div>
 
@@ -423,7 +448,7 @@
 
     <script>
         const answers = {};
-        let currentSystemVersion = "v6.3.12";
+        let currentSystemVersion = "v6.3.13";
         let GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwbKrrmiS5vx0Q5TvqqUCHBhU-VrS7WwwY0hj6BaNRwuzPtXXIZZxejPwhycCZhSCr-Rg/exec';
         let cloudAdminPassword = "903";
         let currentActiveScenario = "no_savings";
@@ -455,24 +480,36 @@
                 scenario_name: "未有儲蓄",
                 pay_label: "供款年期", opt_5yr: "5 年 (建立)", opt_10yr: "10 年 (累積期)", opt_15yr: "15 年 (高階)", opt_20yr: "20 年 (頂級防護)",
                 tree_title_1: "🌱 一號種子水庫", tree_desc_1: "播下一粒小種子，每天只需微小投入，完成奠基。",
+                tree_title_2: "🌿 二號成長水庫 (第 6-10 年)", tree_desc_2: "種子開始成長，根基更深厚穩固。",
+                tree_title_3: "🌳 三號資產森林 (第 11-15 年)", tree_desc_3: "由一棵樹變成森林，抗風險能力大幅增強。",
+                tree_title_4: "🌾 四號未來收成 (第 16-20 年)", tree_desc_4: "前面嘅每一步，都為你產出源源不絕的流動被動收入。",
                 th_year: "年份 (歲數)", th_reserve: "累計儲備", th_income: "被動收入", th_accum: "累積已領", th_asset: "大樹收成", th_interest: "年化百分比回報"
             },
             inquiry: {
                 scenario_name: "主動查詢",
                 pay_label: "供款年期", opt_5yr: "5 年 (建立)", opt_10yr: "10 年 (累積期)", opt_15yr: "15 年 (高階)", opt_20yr: "20 年 (頂級防護)",
                 tree_title_1: "🌱 一號種子水庫", tree_desc_1: "播下一粒小種子，每天只需微小投入，完成奠基。",
+                tree_title_2: "🌿 二號成長水庫 (第 6-10 年)", tree_desc_2: "種子開始成長，根基更深厚穩固。",
+                tree_title_3: "🌳 三號資產森林 (第 11-15 年)", tree_desc_3: "由一棵樹變成森林，抗風險能力大幅增強。",
+                tree_title_4: "🌾 四號未來收成 (第 16-20 年)", tree_desc_4: "前面嘅每一步，都為你產出源源不絕的流動被動收入。",
                 th_year: "年份 (歲數)", th_reserve: "累計儲備", th_income: "被動收入", th_accum: "累積已領", th_asset: "大樹收成", th_interest: "年化百分比回報"
             },
             self_invest: {
                 scenario_name: "自己投資",
                 pay_label: "供款年期", opt_5yr: "5 年 (防守底)", opt_10yr: "10 年 (穩健期)", opt_15yr: "15 年 (進階)", opt_20yr: "20 年 (全方位防護)",
                 tree_title_1: "🌱 防守底氣水庫", tree_desc_1: "建立核心防守底層，抵禦市場週期波動。",
+                tree_title_2: "🌿 穩健增值水庫 (第 6-10 年)", tree_desc_2: "無懼牛熊市，穩健產出流動現金。",
+                tree_title_3: "🌳 擴張收成水庫 (第 11-15 年)", tree_desc_3: "攻守兼備，資產加速增長。",
+                tree_title_4: "🌾 傳承大樹水庫 (第 16-20 年)", tree_desc_4: "豐盛收成，穩健傳承後代。",
                 th_year: "年份 (歲數)", th_reserve: "累計儲備", th_income: "被動收入", th_accum: "累積已領", th_asset: "大樹收成", th_interest: "年化百分比回報"
             },
             flexible_return: {
                 scenario_name: "靈活性/回報",
                 pay_label: "供款年期", opt_5yr: "5 年 (靈活奠基)", opt_10yr: "10 年 (增值期)", opt_15yr: "15 年 (自由提領)", opt_20yr: "20 年 (終身被動現金)",
                 tree_title_1: "🌱 靈活奠基水庫", tree_desc_1: "完成奠基，鎖定終身提取權利。",
+                tree_title_2: "🌿 自由水龍頭 (第 6-10 年)", tree_desc_2: "隨時開啟水龍頭，享受源源不絕被動收入。",
+                tree_title_3: "🌳 複利加速水庫 (第 11-15 年)", tree_desc_3: "提取同時本金繼續滾存增長。",
+                tree_title_4: "🌾 終身自由水庫 (第 16-20 年)", tree_desc_4: "真正資金自由，源源長糧。",
                 th_year: "年份 (歲數)", th_reserve: "累計儲備", th_income: "被動收入", th_accum: "累積已領", th_asset: "大樹收成", th_interest: "年化百分比回報"
             }
         };
@@ -852,7 +889,7 @@
             calculateAndDisplay();
         }
 
-        // 後台卡片渲染 (包含純步驟按鈕自訂欄位、選項模式增刪、上下移、圖片增刪)
+        // 後台頁面管理題目卡片渲染
         function renderAdminCards() {
             let currentList = allScenarioDatabase[currentActiveScenario] || allScenarioDatabase['no_savings'];
             ['zone_a', 'zone_b', 'zone_c'].forEach(zKey => {
@@ -879,14 +916,12 @@
                             </div>
                             <button class="del-opt-btn" onclick="deleteCard('${card.id}')">🗑️ 刪除此題</button>
                         </div>
-
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">主標題 (問題內容)：</label>
                         <input type="text" class="pink-edit-input" value="${card.title || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].title = this.value">
                         
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">副標題說明：</label>
                         <input type="text" class="pink-edit-input" value="${card.subtitle || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].subtitle = this.value">
                         
-                        <!-- 純步驟模式專屬：按鈕自訂文字 -->
                         <div style="${!isOptionMode ? 'display:block;' : 'display:none;'} margin-top:8px;">
                             <label style="font-size:0.75rem; font-weight:bold; color:#059669;">按鈕文字 (例如：睇下可以點做 →)：</label>
                             <input type="text" class="pink-edit-input" placeholder="下一步 →" value="${card.button_text || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].button_text = this.value">
@@ -901,7 +936,6 @@
                         </div>
                         <input type="text" id="card-img-url-${globalIdx}" class="pink-edit-input" value="${card.image_url || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].image_url = this.value">
                         
-                        <!-- 選項模式專屬：選項列表清單 -->
                         <div class="admin-options-container" style="${isOptionMode ? 'display:block;' : 'display:none;'}">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                                 <span style="font-size:0.75rem; font-weight:bold; color:#475569;">選項清單：</span>
@@ -1041,8 +1075,15 @@
             document.getElementById('admin-th-accum').value = jt.th_accum || "累積已領";
             document.getElementById('admin-th-asset').value = jt.th_asset || "大樹收成";
             document.getElementById('admin-th-interest').value = jt.th_interest || "年化百分比回報";
+
             document.getElementById('admin-jt-title-1').value = jt.tree_title_1 || "";
             document.getElementById('admin-jt-desc-1').value = jt.tree_desc_1 || "";
+            document.getElementById('admin-jt-title-2').value = jt.tree_title_2 || "";
+            document.getElementById('admin-jt-desc-2').value = jt.tree_desc_2 || "";
+            document.getElementById('admin-jt-title-3').value = jt.tree_title_3 || "";
+            document.getElementById('admin-jt-desc-3').value = jt.tree_desc_3 || "";
+            document.getElementById('admin-jt-title-4').value = jt.tree_title_4 || "";
+            document.getElementById('admin-jt-desc-4').value = jt.tree_desc_4 || "";
 
             document.getElementById('admin-blueprint-summary-text').value = blueprintSummaryText;
             document.getElementById('admin-blueprint-img-url').value = blueprintImgUrl;
@@ -1061,8 +1102,15 @@
             allJarTexts[currentActiveScenario].th_accum = document.getElementById('admin-th-accum').value;
             allJarTexts[currentActiveScenario].th_asset = document.getElementById('admin-th-asset').value;
             allJarTexts[currentActiveScenario].th_interest = document.getElementById('admin-th-interest').value;
+
             allJarTexts[currentActiveScenario].tree_title_1 = document.getElementById('admin-jt-title-1').value;
             allJarTexts[currentActiveScenario].tree_desc_1 = document.getElementById('admin-jt-desc-1').value;
+            allJarTexts[currentActiveScenario].tree_title_2 = document.getElementById('admin-jt-title-2').value;
+            allJarTexts[currentActiveScenario].tree_desc_2 = document.getElementById('admin-jt-desc-2').value;
+            allJarTexts[currentActiveScenario].tree_title_3 = document.getElementById('admin-jt-title-3').value;
+            allJarTexts[currentActiveScenario].tree_desc_3 = document.getElementById('admin-jt-desc-3').value;
+            allJarTexts[currentActiveScenario].tree_title_4 = document.getElementById('admin-jt-title-4').value;
+            allJarTexts[currentActiveScenario].tree_desc_4 = document.getElementById('admin-jt-desc-4').value;
 
             blueprintSummaryText = document.getElementById('admin-blueprint-summary-text').value;
             blueprintImgUrl = document.getElementById('admin-blueprint-img-url').value;
@@ -1232,7 +1280,7 @@
             }
         }
 
-        // 使用者專屬：保存至本機 (鎖定 LocalStorage 最高優先)[span_6](start_span)[span_6](end_span)[span_7](start_span)[span_7](end_span)
+        // 使用者專屬：保存至本機 (鎖定 LocalStorage 最高優先)[span_5](start_span)[span_5](end_span)[span_6](start_span)[span_6](end_span)
         function saveToLocalStorageOnly() {
             saveJarTextsFromEditor();
             localStorage.setItem('ava_scenario_database', JSON.stringify(allScenarioDatabase));
