@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.16)</title>
+    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.17)</title>
     
     <link rel="manifest" href="./manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="./icon-192x192.png">
@@ -179,7 +179,7 @@
 <body>
     <header class="system-top-nav">
         <div class="brand-title-wrap">
-            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.16</span>
+            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.17</span>
             <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="選擇客群情境">!</span>
             <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="核心分頁直達">*</span>
         </div>
@@ -295,7 +295,7 @@
                     <div class="fixed-anchor-card">
                         <div>
                             <span style="font-weight:900; color:#7e22ce;">🔒 固定分頁 A：認知差距與真相對比 (核心 Anchor)</span>
-                            <div style="font-size:0.75rem; color:#6b21a8; margin-top:2px;">依據所選情境載入獨立 HTML 模組 (已鎖定不設回上一步)</div>
+                            <div style="font-size:0.75rem; color:#6b21a8; margin-top:2px;">依據所選情境載入獨立 HTML 模組</div>
                         </div>
                         <span style="background:#ede9fe; color:#6b21a8; padding:3px 8px; border-radius:6px; font-size:0.75rem; font-weight:bold;">固定分頁</span>
                     </div>
@@ -430,7 +430,7 @@
 
     <script>
         const answers = {};
-        let currentSystemVersion = "v6.3.16";
+        let currentSystemVersion = "v6.3.17";
         let GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwbKrrmiS5vx0Q5TvqqUCHBhU-VrS7WwwY0hj6BaNRwuzPtXXIZZxejPwhycCZhSCr-Rg/exec';
         let cloudAdminPassword = "903";
         let currentActiveScenario = "no_savings";
@@ -499,7 +499,7 @@
                 tree_title_2: "🌿 自由水龍頭 (第 6-10 年)", tree_desc_2: "隨時開啟水龍頭，享受源源不絕被動收入。",
                 tree_title_3: "🌳 複利加速水庫 (第 11-15 年)", tree_desc_3: "提取同時本金繼續滾存增長。",
                 tree_title_4: "🌾 終身自由水庫 (第 16-20 年)", tree_desc_4: "真正資金自由，源源長糧。",
-                th_year: "年份 (歲數)", th_reserve: "累計儲備", th_income: "被度收入", th_accum: "累積已領", th_asset: "大樹收成", th_interest: "年化百分比回報"
+                th_year: "年份 (歲數)", th_reserve: "累計儲備", th_income: "被動收入", th_accum: "累積已領", th_asset: "大樹收成", th_interest: "年化百分比回報"
             }
         };
         
@@ -641,7 +641,7 @@
                         </div>
                     `;
                 } else if (step.id === 'fixed-page-a') {
-                    // 修正 3：認知差距頁完全不設回上一步
+                    // 已按要求恢復「← 上一步」按鈕
                     const targetFile = scenarioGapFiles[currentActiveScenario] || scenarioGapFiles.no_savings;
                     const sc = scenariosDB[currentActiveScenario] || scenariosDB.no_savings;
                     stepEl.innerHTML = `
@@ -652,7 +652,8 @@
                                 <iframe class="gap-iframe" src="${targetFile}"></iframe>
                             </div>
                             <div class="action-row">
-                                <button class="nav-btn next" style="flex:1;" onclick="navigateStep(${index + 1})">進入過渡探索階段 →</button>
+                                ${index > 0 ? `<button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 上一步</button>` : ''}
+                                <button class="nav-btn next" onclick="navigateStep(${index + 1})">進入過渡探索階段 →</button>
                             </div>
                         </div>
                     `;
@@ -721,7 +722,7 @@
                         </div>
                     `;
                 } else if (step.id === 'page-promo') {
-                    // 修正 2：還原保費優惠 1, 2, 3 卡片
+                    // 保費優惠 1, 2, 3 卡片
                     stepEl.innerHTML = `
                         <div class="content-card">
                             <h2 class="question-title">🎁 專屬保費優惠計算</h2>
@@ -794,7 +795,7 @@
             calculateAndDisplay();
         }
 
-        // 修正 1：1-4 號水庫每 5 年獨立輸入金額與獨立策略選擇
+        // 1-4 號水庫每 5 年獨立輸入金額與獨立策略選擇
         function renderDynamicJarGrid() {
             const container = document.getElementById('jars-multi-container');
             if (!container) return;
@@ -875,7 +876,7 @@
             calculateAndDisplay();
         }
 
-        // 修正 2：保費優惠計算
+        // 保費優惠計算
         function calculatePromo() {
             const P = parseFormattedNumber(document.getElementById('promo-annual-premium')?.value) || 100000;
             
