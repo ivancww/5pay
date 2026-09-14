@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.18)</title>
+    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.19)</title>
     
     <link rel="manifest" href="./manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="./icon-192x192.png">
@@ -179,7 +179,7 @@
 <body>
     <header class="system-top-nav">
         <div class="brand-title-wrap">
-            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.18</span>
+            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.19</span>
             <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="選擇客群情境">!</span>
             <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="核心分頁直達">*</span>
         </div>
@@ -430,7 +430,7 @@
 
     <script>
         const answers = {};
-        let currentSystemVersion = "v6.3.18";
+        let currentSystemVersion = "v6.3.19";
         let GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwbKrrmiS5vx0Q5TvqqUCHBhU-VrS7WwwY0hj6BaNRwuzPtXXIZZxejPwhycCZhSCr-Rg/exec';
         let cloudAdminPassword = "903";
         let currentActiveScenario = "no_savings";
@@ -559,7 +559,7 @@
             ],
             flexible_return: [
                 { id: "step_1", zone: "zone_a", step_num: 1, title: "「講到理財計劃，你最關心甚麼？」", subtitle: "探索靈活性：", image_url: "", options: [{ headline: "🔓 資金靈活性" }, { headline: "📊 長期穩定回報" }] },
-                { id: "step_2", zone: "zone_b", step_num: 2, title: "「如果話你知：只需專注 5 年，第 8 年起就換取一世提取自由？」", subtitle: "解開靈活性迷思：", image_url: "", options: [{ headline: "💡 點樣做到 5 年完成、第 8 年自由攞錢？" }, { headline: "📊 想直接睇複利同提取數據" } }] },
+                { id: "step_2", zone: "zone_b", step_num: 2, title: "「如果話你知：只需專注 5 年，第 8 年起就換取一世提取自由？」", subtitle: "解開靈活性迷思：", image_url: "", options: [{ headline: "💡 點樣做到 5 年完成、第 8 年自由攞錢？" }, { headline: "📊 想直接睇複利同提取數據" }] },
                 { id: "step_3", zone: "zone_c", step_num: 3, title: "「只需 5 年就能換取終身被動現金流，你覺得適唔適合自己？」", subtitle: "評估可行性：", image_url: "", options: [{ headline: "🟢 非常適合，5 年期好有信心完成" }, { headline: "🟡 想計算一下最合適自己的每月預算" }] }
             ]
         };
@@ -625,7 +625,7 @@
                                 const subtext = typeof opt === 'object' && opt.subtext ? opt.subtext : '';
                                 const safeHeadline = String(headline).replace(/'/g, "\\'");
                                 return `
-                                    <div class="option-card-guided ${answers[c.id] === headline ? 'selected' : ''}" onclick="selectDynamicOption('${c.id}', '${safeHeadline}', ${index})">
+                                    <div class="option-card-guided ${answers[c.id] === headline ? 'selected' : ''}" onclick="selectDynamicOption('${c.id}', '${safeHeadline}', ${index}, this)">
                                         <div class="option-content">
                                             <div class="option-headline">${headline}</div>
                                             ${subtext ? `<div class="option-subtext">${subtext}</div>` : ''}
@@ -941,12 +941,12 @@
             if (activeFullFlowSteps[index].id === 'page-promo') calculatePromo();
         }
 
-        function selectDynamicOption(stepId, headline, index) {
+        function selectDynamicOption(stepId, headline, index, selectedCard) {
             answers[stepId] = headline;
             const stepEl = document.getElementById(`flow-step-${index}`);
             if (stepEl) {
                 stepEl.querySelectorAll('.option-card-guided').forEach(c => c.classList.remove('selected'));
-                if (event && event.currentTarget) event.currentTarget.classList.add('selected');
+                if (selectedCard) selectedCard.classList.add('selected');
             }
         }
 
@@ -1593,11 +1593,16 @@
                     const savedBpImg = localStorage.getItem('ava_blueprint_img');
                     if (savedBpImg) blueprintImgUrl = savedBpImg;
                     buildAndRenderFlow();
-                    return;
                 }
                 const fullResp = await fetch(GAS_API_URL);
+                if (!fullResp.ok) throw new Error(`Cloud request failed: ${fullResp.status}`);
                 const json = await fullResp.json();
                 if (json.system_version) applyVersionToUI(json.system_version);
+                // 本機專屬內容不應被雲端覆蓋，但版本號仍要跟所有裝置同步。
+                if (isUserCustom) {
+                    if (json.sheet_mappings) sheetMappings = json.sheet_mappings;
+                    return;
+                }
                 if (json.jar_texts) allJarTexts = json.jar_texts;
                 if (json.scenarios) scenariosDB = json.scenarios;
                 if (json.sheet_mappings) sheetMappings = json.sheet_mappings;
@@ -1632,6 +1637,21 @@
         document.addEventListener('DOMContentLoaded', () => {
             buildAndRenderFlow();
             fetchCloudDataWithFastCheck();
+
+            if ('serviceWorker' in navigator) {
+                let refreshingForUpdate = false;
+                navigator.serviceWorker.register('./sw.js').then(registration => {
+                    registration.update();
+                }).catch(error => {
+                    console.warn('Service worker registration failed:', error);
+                });
+
+                navigator.serviceWorker.addEventListener('controllerchange', () => {
+                    if (refreshingForUpdate) return;
+                    refreshingForUpdate = true;
+                    window.location.reload();
+                });
+            }
         });
     </script>
 </body>
