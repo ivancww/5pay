@@ -1,4 +1,4 @@
-const CACHE_NAME = 'wealth-planner-v6.3.17';
+const CACHE_NAME = 'wealth-planner-v6.3.18';
 const urlsToCache = [
   './',
   './index.html',
