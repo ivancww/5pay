@@ -1,4 +1,4 @@
-const CACHE_NAME = 'wealth-planner-v6.3.18';
+const CACHE_NAME = 'wealth-planner-v6.3.19';
 const urlsToCache = [
   './',
   './index.html',
@@ -19,9 +19,34 @@ self.addEventListener('install', event => {
 
 
 self.addEventListener('fetch', event => {
+  if (event.request.method !== 'GET') return;
+
+  const requestUrl = new URL(event.request.url);
+  const isAppDocument = event.request.mode === 'navigate' ||
+    (requestUrl.origin === self.location.origin && requestUrl.pathname.endsWith('/index.html'));
+
+  // HTML 必須優先取網絡版本，避免 iPad、手機各自長期顯示不同舊版本。
+  if (isAppDocument) {
+    event.respondWith(
+      fetch(event.request).then(response => {
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
+        return response;
+      }).catch(() => caches.match(event.request).then(response => response || caches.match('./index.html')))
+    );
+    return;
+  }
+
   event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
+    caches.match(event.request).then(cachedResponse => {
+      if (cachedResponse) return cachedResponse;
+      return fetch(event.request).then(response => {
+        if (requestUrl.origin === self.location.origin) {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
+        }
+        return response;
+      });
     })
   );
 });
