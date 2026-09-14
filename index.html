@@ -102,9 +102,10 @@
         .gap-iframe-container { width: 100%; min-height: 560px; border: 1px solid var(--border-light); border-radius: 16px; overflow: hidden; background: #fff; }
         .gap-iframe { width: 100%; height: 560px; border: none; }
         
+        /* 水庫卡片樣式 */
         .calc-jar-card { background: #ffffff; border: 1px solid var(--border-light); border-radius: 16px; padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow-sm); }
-        .calc-jar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
-        .calc-jar-strategy-select { padding: 4px 8px; font-size: 0.82rem; font-weight: 700; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #f8fafc; color: var(--text-main); outline: none; }
+        .calc-jar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+        .calc-jar-strategy-select { padding: 6px 10px; font-size: 0.82rem; font-weight: 700; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #f8fafc; color: var(--text-main); outline: none; }
         .calc-grid-5yr { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
         @media (max-width: 640px) { .calc-grid-5yr { grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); } }
         .calc-input-group label { display: block; font-size: 0.75rem; color: var(--text-sub); font-weight: bold; text-align: center; margin-bottom: 4px; }
@@ -124,16 +125,16 @@
         table.clean-table th, table.clean-table td { padding: 11px 14px; text-align: right; border-bottom: 1px solid var(--border-light); }
         table.clean-table th { font-weight: 700; color: var(--text-sub); background: #f8fafc; }
         
-        /* 保費優惠 1, 2, 3 卡片佈局 */
+        /* 優惠 1, 2, 3 卡片樣式 */
         .promo-tiers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; margin-bottom: 18px; }
         @media (max-width: 768px) { .promo-tiers-grid { grid-template-columns: 1fr; } }
-        .promo-tier-card { background: #f8fafc; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; position: relative; }
+        .promo-tier-card { background: #f8fafc; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; position: relative; }
         .promo-tier-card.highlight { background: #f0fdf4; border-color: #86efac; }
         .promo-badge { position: absolute; top: -10px; right: 12px; background: var(--state-success); color: #fff; font-size: 0.72rem; font-weight: 900; padding: 2px 8px; border-radius: 12px; }
         .promo-tier-title { font-weight: 800; font-size: 1rem; color: var(--brand-primary); margin-bottom: 6px; }
-        .promo-tier-rule { font-size: 0.8rem; color: var(--text-sub); margin-bottom: 10px; }
-        .promo-tier-saved { font-size: 1.35rem; font-weight: 900; color: var(--state-success); }
-        .promo-tier-actual { font-size: 0.84rem; color: var(--text-sub); margin-top: 4px; }
+        .promo-tier-rule { font-size: 0.82rem; color: var(--text-sub); margin-bottom: 12px; line-height: 1.5; }
+        .promo-tier-saved { font-size: 1.45rem; font-weight: 900; color: var(--state-success); margin-bottom: 4px; }
+        .promo-tier-actual { font-size: 0.86rem; color: var(--text-sub); }
         
         .action-row { display: flex; gap: 12px; margin-top: 28px; }
         .nav-btn { flex: 1; padding: 13px 20px; border-radius: 12px; font-weight: 700; font-size: 0.98rem; cursor: pointer; border: none; transition: 0.2s; text-align: center; }
@@ -498,18 +499,27 @@
                 tree_title_2: "🌿 自由水龍頭 (第 6-10 年)", tree_desc_2: "隨時開啟水龍頭，享受源源不絕被動收入。",
                 tree_title_3: "🌳 複利加速水庫 (第 11-15 年)", tree_desc_3: "提取同時本金繼續滾存增長。",
                 tree_title_4: "🌾 終身自由水庫 (第 16-20 年)", tree_desc_4: "真正資金自由，源源長糧。",
-                th_year: "年份 (歲數)", th_reserve: "累計儲備", th_income: "被動收入", th_accum: "累積已領", th_asset: "大樹收成", th_interest: "年化百分比回報"
+                th_year: "年份 (歲數)", th_reserve: "累計儲備", th_income: "被度收入", th_accum: "累積已領", th_asset: "大樹收成", th_interest: "年化百分比回報"
             }
         };
         
         let sheetMappings = [
-            { code: "withdraw7_from8", sheet_name: "8年領取", display_name: "🌱 第 8 年起 每年領取 7% (標準推薦)", rate: 0.07, startYr: 8 },
-            { code: "none", sheet_name: "自動滾存", display_name: "🌳 自動滾存不提取 (大樹收成最大化)", rate: 0, startYr: 999 },
-            { code: "withdraw12_from15", sheet_name: "15年領取", display_name: "🌿 第 15 年起 每年領取 12%", rate: 0.12, startYr: 15 },
-            { code: "withdraw18_from20", sheet_name: "20年領取", display_name: "🌾 第 20 年起 每年領取 18%", rate: 0.18, startYr: 20 },
-            { code: "withdraw23_from25", sheet_name: "25年領取", display_name: "🌴 第 25 年起 每年領取 23%", rate: 0.23, startYr: 25 },
-            { code: "withdraw29_from30", sheet_name: "30年領取", display_name: "🌲 第 30 年起 每年領取 29%", rate: 0.29, startYr: 30 }
+            { code: "withdraw7_from8", sheet_name: "8年領取", display_name: "🌱 第 8 年起 每年領取 7% (標準推薦)" },
+            { code: "none", sheet_name: "自動滾存", display_name: "🌳 自動滾存不提取 (大樹收成最大化)" },
+            { code: "withdraw12_from15", sheet_name: "15年領取", display_name: "🌿 第 15 年起 每年領取 12%" },
+            { code: "withdraw18_from20", sheet_name: "20年領取", display_name: "🌾 第 20 年起 每年領取 18%" },
+            { code: "withdraw23_from25", sheet_name: "25年領取", display_name: "🌴 第 25 年起 每年領取 23%" },
+            { code: "withdraw29_from30", sheet_name: "30年領取", display_name: "🌲 第 30 年起 每年領取 29%" }
         ];
+
+        function getStrategyDetails(code) {
+            if (code === "withdraw12_from15") return { rate: 0.12, startYr: 15, isRolling: false };
+            if (code === "withdraw18_from20") return { rate: 0.18, startYr: 20, isRolling: false };
+            if (code === "withdraw23_from25") return { rate: 0.23, startYr: 25, isRolling: false };
+            if (code === "withdraw29_from30") return { rate: 0.29, startYr: 30, isRolling: false };
+            if (code === "none") return { rate: 0, startYr: 999, isRolling: true };
+            return { rate: 0.07, startYr: 8, isRolling: false };
+        }
         
         let allScenarioDatabase = {
             no_savings: [
@@ -530,7 +540,7 @@
                     { title: "2. 播種滾存", desc: "短年期完成投入，交由複利滾存。" },
                     { title: "3. 自由提領", desc: "源源長糧，享受被動現金流。" }
                 ], options: [] },
-                { id: "step_4", zone: "zone_c", step_num: 4, title: "「適合先繼續，唔適合都完全冇問題。」", subtitle: "評估個人需求：", image_url: "", options: [{ headline: "🟢 好適合，想認真計算具體預算" }, { headline: "🟡 想先保留資料再考慮" } }]
+                { id: "step_4", zone: "zone_c", step_num: 4, title: "「適合先繼續，唔適合都完全冇問題。」", subtitle: "評估個人需求：", image_url: "", options: [{ headline: "🟢 好適合，想認真計算具體預算" }, { headline: "🟡 想先保留資料再考慮" }] }
             ],
             self_invest: [
                 { id: "step_1", zone: "zone_a", step_num: 1, title: "「講到投資同儲蓄，你目前最重視邊樣？」", subtitle: "探索最舒服的步調：", image_url: "", options: [{ headline: "📈 追求高增長" }, { headline: "🛡️ 穩健防守底氣" }] },
@@ -580,39 +590,47 @@
                 { type: 'fixed', id: 'page-promo', name: '優惠計算' }
             ];
             const mainContainer = document.getElementById('app-main-flow');
+            if (!mainContainer) return;
             mainContainer.innerHTML = '';
+            
             activeFullFlowSteps.forEach((step, index) => {
                 const stepEl = document.createElement('div');
                 stepEl.className = `step-page ${index === 0 ? 'active' : ''}`;
                 stepEl.id = `flow-step-${index}`;
+                
                 if (step.type === 'dynamic') {
-                    const c = step.data;
+                    const c = step.data || {};
                     let optionsHtml = '';
                     if (c.options && c.options.length > 0) {
-                        optionsHtml = `<div class="options-group">` + c.options.map(opt => `
-                            <div class="option-card-guided ${answers[c.id] === opt.headline ? 'selected' : ''}" onclick="selectDynamicOption('${c.id}', '${opt.headline.replace(/'/g, "\\'")}', ${index})">
-                                <div class="option-content">
-                                    <div class="option-headline">${opt.headline}</div>
-                                    <div class="option-subtext">${opt.subtext || ''}</div>
+                        optionsHtml = `<div class="options-group">` + c.options.map(opt => {
+                            const headline = typeof opt === 'string' ? opt : (opt.headline || '');
+                            const subtext = typeof opt === 'object' && opt.subtext ? opt.subtext : '';
+                            const safeHeadline = String(headline).replace(/'/g, "\\'");
+                            return `
+                                <div class="option-card-guided ${answers[c.id] === headline ? 'selected' : ''}" onclick="selectDynamicOption('${c.id}', '${safeHeadline}', ${index})">
+                                    <div class="option-content">
+                                        <div class="option-headline">${headline}</div>
+                                        ${subtext ? `<div class="option-subtext">${subtext}</div>` : ''}
+                                    </div>
+                                    <div class="option-select-radio"></div>
                                 </div>
-                                <div class="option-select-radio"></div>
-                            </div>
-                        `).join('') + `</div>`;
+                            `;
+                        }).join('') + `</div>`;
                     }
                     let visualStepsHtml = '';
                     if (c.visual_steps && c.visual_steps.length > 0) {
                         visualStepsHtml = `<div class="steps-visual-grid">` + c.visual_steps.map((st, sIdx) => `
                             <div class="step-visual-card ${sIdx === 1 ? 'highlight' : ''}">
-                                <div class="step-visual-card-title">${st.title}</div>
-                                <div class="step-visual-card-desc">${st.desc}</div>
+                                <div class="step-visual-card-title">${st.title || ''}</div>
+                                <div class="step-visual-card-desc">${st.desc || ''}</div>
                             </div>
                         `).join('') + `</div>`;
                     }
                     const nextBtnText = c.button_text ? c.button_text : '下一步 →';
                     stepEl.innerHTML = `
                         <div class="content-card">
-                            <h2 class="question-title">${c.title}</h2>
-                            <p class="question-hint">${c.subtitle}</p>
+                            <h2 class="question-title">${c.title || ''}</h2>
+                            <p class="question-hint">${c.subtitle || ''}</p>
                             ${visualStepsHtml}
                             ${optionsHtml}
                             ${c.image_url ? `<div style="text-align:center; margin-top:16px;"><img src="${c.image_url}" style="max-width:90%; max-height:220px; border-radius:10px; border:1px solid var(--border-light);"></div>` : ''}
@@ -623,7 +641,7 @@
                         </div>
                     `;
                 } else if (step.id === 'fixed-page-a') {
-                    // 修正 3：認知差距頁不能回上一步
+                    // 修正 3：認知差距頁完全不設回上一步
                     const targetFile = scenarioGapFiles[currentActiveScenario] || scenarioGapFiles.no_savings;
                     const sc = scenariosDB[currentActiveScenario] || scenariosDB.no_savings;
                     stepEl.innerHTML = `
@@ -703,7 +721,7 @@
                         </div>
                     `;
                 } else if (step.id === 'page-promo') {
-                    // 修正 2：還原保費優惠 1, 2, 3 完整對比卡片
+                    // 修正 2：還原保費優惠 1, 2, 3 卡片
                     stepEl.innerHTML = `
                         <div class="content-card">
                             <h2 class="question-title">🎁 專屬保費優惠計算</h2>
@@ -720,7 +738,7 @@
                                     <span class="promo-badge">優惠 1</span>
                                     <div>
                                         <div class="promo-tier-title">標準首年折扣</div>
-                                        <div class="promo-tier-rule">首年保費即時回贈折扣</div>
+                                        <div class="promo-tier-rule">首年保費即時回贈折扣 (固定 8%)</div>
                                     </div>
                                     <div>
                                         <div class="promo-tier-saved" id="tier1-saved">$8,000</div>
@@ -733,7 +751,7 @@
                                     <span class="promo-badge" style="background:var(--brand-accent);">優惠 2 (推薦)</span>
                                     <div>
                                         <div class="promo-tier-title">階梯保費回贈</div>
-                                        <div class="promo-tier-rule">按保費規模疊加特級回贈</div>
+                                        <div class="promo-tier-rule">按保費規模疊加特級回贈 (10% - 12%)</div>
                                     </div>
                                     <div>
                                         <div class="promo-tier-saved" id="tier2-saved" style="color:var(--brand-accent);">$10,000</div>
@@ -746,7 +764,7 @@
                                     <span class="promo-badge" style="background:var(--state-purple);">優惠 3 (尊尚)</span>
                                     <div>
                                         <div class="promo-tier-title">全期預繳＋雙重禮遇</div>
-                                        <div class="promo-tier-rule">預繳享保證利息＋首年額外加碼</div>
+                                        <div class="promo-tier-rule">預繳享保證利息＋首年額外加碼禮遇</div>
                                     </div>
                                     <div>
                                         <div class="promo-tier-saved" id="tier3-saved" style="color:var(--state-purple);">$12,000</div>
@@ -776,7 +794,7 @@
             calculateAndDisplay();
         }
 
-        // 修正 1：1-4 號水庫支援每 5 年獨立金額輸入與「獨立選擇領取策略」
+        // 修正 1：1-4 號水庫每 5 年獨立輸入金額與獨立策略選擇
         function renderDynamicJarGrid() {
             const container = document.getElementById('jars-multi-container');
             if (!container) return;
@@ -795,6 +813,7 @@
             
             for (let j = 0; j < numJars; j++) {
                 const cfg = jarConfigs[j];
+                jarConfigsData[cfg.id] = jarConfigsData[cfg.id] || { value: 40000, withdraw: "withdraw7_from8" };
                 const currentStrategy = jarConfigsData[cfg.id].withdraw || "withdraw7_from8";
                 
                 let optionsHtml = sheetMappings.map(m => `
@@ -834,7 +853,6 @@
                 `;
                 container.appendChild(cardEl);
                 
-                // 首年金額自動同步給該水庫的其餘年份
                 const firstInput = cardEl.querySelector(`#input-year-${cfg.startYr}`);
                 if (firstInput) {
                     firstInput.addEventListener('input', () => {
@@ -852,24 +870,22 @@
         }
 
         function onJarStrategyChange(jarId, val) {
+            if (!jarConfigsData[jarId]) jarConfigsData[jarId] = { value: 40000, withdraw: val };
             jarConfigsData[jarId].withdraw = val;
             calculateAndDisplay();
         }
 
-        // 修正 2：保費優惠 1, 2, 3 計算邏輯
+        // 修正 2：保費優惠計算
         function calculatePromo() {
             const P = parseFormattedNumber(document.getElementById('promo-annual-premium')?.value) || 100000;
             
-            // 優惠 1：標準折扣 (固定 8%)
             const s1 = P * 0.08;
             const a1 = P - s1;
             
-            // 優惠 2：階梯折扣 (高達 10% - 12%)
             let rate2 = P >= 150000 ? 0.12 : (P >= 100000 ? 0.10 : 0.08);
             const s2 = P * rate2;
             const a2 = P - s2;
             
-            // 優惠 3：全期預繳 + 額外加碼
             let bonus3 = P >= 150000 ? 3000 : (P >= 100000 ? 2000 : 1000);
             const s3 = s2 + bonus3;
             const a3 = P - s3;
@@ -909,17 +925,17 @@
             const stepEl = document.getElementById(`flow-step-${index}`);
             if (stepEl) {
                 stepEl.querySelectorAll('.option-card-guided').forEach(c => c.classList.remove('selected'));
-                event.currentTarget.classList.add('selected');
+                if (event && event.currentTarget) event.currentTarget.classList.add('selected');
             }
         }
 
         function updateProgressBar() {
-            const total = activeFullFlowSteps.length;
+            const total = activeFullFlowSteps.length || 1;
             const pct = Math.round(((currentStepIndex + 1) / total) * 100);
-            document.getElementById('progress-fill').style.width = `${pct}%`;
+            const pFill = document.getElementById('progress-fill');
+            if (pFill) pFill.style.width = `${pct}%`;
         }
 
-        // 複利計算：整合各個水庫獨立的金額與獨立領取策略
         function calculateAndDisplay() {
             const startAge = parseInt(document.getElementById('start-age')?.value) || 30;
             const thead = document.getElementById('results-table-head');
@@ -945,17 +961,18 @@
 
             for (let j = 1; j <= numJars; j++) {
                 const jKey = `jar${j}`;
+                jarConfigsData[jKey] = jarConfigsData[jKey] || { value: 40000, withdraw: "withdraw7_from8" };
                 const val = jarConfigsData[jKey].value || 40000;
                 const stratCode = jarConfigsData[jKey].withdraw || "withdraw7_from8";
-                const mapItem = sheetMappings.find(m => m.code === stratCode) || sheetMappings[0];
+                const stratDetails = getStrategyDetails(stratCode);
                 const jarTotalInput = val * 5;
                 totalReserve += jarTotalInput;
                 activeJars.push({
                     id: jKey,
                     totalInput: jarTotalInput,
-                    rate: mapItem.rate,
-                    startYr: mapItem.startYr,
-                    isRolling: mapItem.code === 'none'
+                    rate: stratDetails.rate,
+                    startYr: stratDetails.startYr,
+                    isRolling: stratDetails.isRolling
                 });
             }
 
@@ -1072,12 +1089,14 @@
                     
                     if (isOptionMode) {
                         const optZone = el.querySelector(`#opts-edit-zone-${globalIdx}`);
-                        card.options.forEach((opt, optIdx) => {
+                        (card.options || []).forEach((opt, optIdx) => {
+                            const headline = typeof opt === 'string' ? opt : (opt.headline || '');
+                            const subtext = typeof opt === 'object' && opt.subtext ? opt.subtext : '';
                             const optRow = document.createElement('div');
                             optRow.className = 'option-row-edit';
                             optRow.innerHTML = `
-                                <input type="text" class="pink-edit-input" style="margin:0; flex:1;" value="${opt.headline || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].options[${optIdx}].headline = this.value" placeholder="標題">
-                                <input type="text" class="pink-edit-input" style="margin:0; flex:1.5;" value="${opt.subtext || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].options[${optIdx}].subtext = this.value" placeholder="說明文字">
+                                <input type="text" class="pink-edit-input" style="margin:0; flex:1;" value="${headline}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].options[${optIdx}].headline = this.value" placeholder="標題">
+                                <input type="text" class="pink-edit-input" style="margin:0; flex:1.5;" value="${subtext}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].options[${optIdx}].subtext = this.value" placeholder="說明文字">
                                 <button class="del-opt-btn" onclick="deleteCardOption(${globalIdx}, ${optIdx})">✕</button>
                             `;
                             optZone.appendChild(optRow);
@@ -1537,10 +1556,6 @@
 
         async function fetchCloudDataWithFastCheck() {
             try {
-                const checkResp = await fetch(`${GAS_API_URL}?check_version=true`);
-                const checkJson = await checkResp.json();
-                
-                if (checkJson.admin_password) cloudAdminPassword = String(checkJson.admin_password);
                 const isUserCustom = localStorage.getItem('ava_user_has_customized') === 'true';
                 if (isUserCustom) {
                     const savedDb = localStorage.getItem('ava_scenario_database');
