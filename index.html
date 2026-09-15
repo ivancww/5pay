@@ -135,6 +135,7 @@
         table.clean-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; white-space: nowrap; }
         table.clean-table th, table.clean-table td { padding: 11px 14px; text-align: right; border-bottom: 1px solid var(--border-light); }
         table.clean-table th { font-weight: 700; color: var(--text-sub); background: #f8fafc; }
+        table.clean-table .strategy-panel-row td { padding: 0; text-align: left; border-bottom: 0; white-space: normal; }
 
         /* medsave v8.4.3 專屬保費優惠計算 */
         .promo-split-container { display: flex; gap: 20px; align-items: stretch; margin-top: 10px; }
@@ -809,10 +810,16 @@
                             <div class="table-responsive">
                                 <table class="clean-table">
                                     <thead id="results-table-head"></thead>
+                                    <tbody class="strategy-panel-row">
+                                        <tr>
+                                            <td id="term-strategy-panel-cell" colspan="6">
+                                                <div id="term-strategy-panel" class="strategy-panel" aria-hidden="true"></div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
                                     <tbody id="results-table-body"></tbody>
                                 </table>
                             </div>
-                            <div id="term-strategy-panel" class="strategy-panel" aria-hidden="true"></div>
 
                             <div class="action-row">
                                 <button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 上一步</button>
@@ -881,6 +888,11 @@
         function renderTermStrategyPanel() {
             const panel = document.getElementById('term-strategy-panel');
             if (!panel) return;
+            const panelCell = document.getElementById('term-strategy-panel-cell');
+            if (panelCell) {
+                const visibleColumnCount = 2 + ['annuity', 'accum', 'asset', 'interest'].filter(column => colVisibility[column]).length;
+                panelCell.colSpan = visibleColumnCount;
+            }
             panel.classList.toggle('open', strategiesExpanded);
             panel.setAttribute('aria-hidden', String(!strategiesExpanded));
             const groupCount = Math.min(4, Math.ceil(selectedPayYears / 5));
