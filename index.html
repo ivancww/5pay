@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.20)</title>
-    
+    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.21)</title>
+
     <link rel="manifest" href="./manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="./icon-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="./icon-512x512.png">
@@ -14,11 +14,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="AVA 引導系統">
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
-    
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
@@ -71,19 +71,19 @@
         .mini-quick-btn.scenario-btn { color: var(--brand-accent); border: var(--pink-dashed); }
         .mini-quick-btn.jump-btn { color: var(--state-purple); }
         .user-settings-btn { cursor: pointer; font-size: 1.35rem; }
-        
+
         .progress-bar-container { width: 100%; height: 3px; background: #e2e8f0; position: sticky; top: 53px; z-index: 99; }
         .progress-bar-fill { height: 100%; background: var(--brand-accent); width: 7%; transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-        
+
         .workspace-layout { max-width: 1080px; width: 100%; margin: clamp(14px, 2.4vw, 28px) auto; padding: 0 clamp(12px, 2vw, 22px); flex: 1; min-width: 0; }
         .step-page { display: none; }
         .step-page.active { display: block; animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-        
+
         .content-card { background: var(--surface-card); border: 1px solid var(--border-light); border-radius: 20px; padding: clamp(16px, 2.5vw, 28px); box-shadow: var(--shadow-md); min-width: 0; }
         .question-title { font-size: clamp(22px, 2.7vw, 30px); line-height: 1.3; font-weight: 800; color: var(--text-main); margin-bottom: 8px; overflow-wrap: anywhere; }
         .question-hint { font-size: clamp(14px, 1.65vw, 18px); line-height: 1.55; color: var(--text-sub); margin-bottom: clamp(16px, 2vw, 24px); }
-        
+
         .options-group { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
         .option-card-guided { background: #ffffff; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 16px 20px; text-align: left; cursor: pointer; transition: all 0.2s; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
         .option-card-guided:hover { border-color: var(--brand-accent); background: #fafcff; }
@@ -94,26 +94,33 @@
         .option-select-radio { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid #cbd5e1; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 3px; }
         .option-card-guided.selected .option-select-radio { border-color: var(--brand-accent); background: var(--brand-accent); }
         .option-card-guided.selected .option-select-radio::after { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #fff; }
-        
+
         .steps-visual-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 24px; }
         .step-visual-card { background: #f8fafc; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; }
         .step-visual-card.highlight { background: var(--brand-soft); border-color: var(--brand-accent); }
         .step-visual-card-title { font-size: 0.98rem; font-weight: 800; color: var(--brand-primary); }
         .step-visual-card-desc { font-size: 0.86rem; color: var(--text-sub); line-height: 1.5; }
-        
+
         .gap-iframe-container { width: 100%; min-width: 0; min-height: 600px; border: 1px solid var(--border-light); border-radius: 16px; overflow: hidden; background: #f8fafc; }
         .gap-iframe { display: block; width: 100%; height: clamp(600px, 74vh, 760px); border: none; }
-        
+
         /* 水庫卡片樣式 */
         .calc-jar-card { background: #ffffff; border: 1px solid var(--border-light); border-radius: 16px; padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow-sm); }
         .calc-jar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
-        .calc-jar-strategy-select { padding: 6px 10px; font-size: 0.82rem; font-weight: 700; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #f8fafc; color: var(--text-main); outline: none; }
+        .calc-jar-strategy-select { width: 100%; min-height: 44px; padding: 8px 34px 8px 10px; font-size: 0.82rem; font-weight: 700; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #fff; color: var(--text-main); outline: none; }
+        .passive-income-bar { display: flex; align-items: center; gap: 8px; margin: 4px 0 14px; color: var(--brand-primary); font-weight: 800; }
+        .passive-income-toggle { width: 44px; height: 44px; border: 1.5px solid #93c5fd; border-radius: 50%; background: var(--brand-soft); color: var(--brand-primary); display: inline-grid; place-items: center; font: 800 0.9rem/1 'Plus Jakarta Sans', sans-serif; cursor: pointer; box-shadow: var(--shadow-sm); }
+        .passive-income-toggle:hover, .passive-income-toggle:focus-visible { border-color: var(--brand-accent); background: #dbeafe; outline: 3px solid rgba(37,99,235,.14); }
+        .strategy-panel { display: none; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; padding: 14px; margin: -4px 0 16px; border: 1px solid var(--border-light); border-radius: 14px; background: #f8fafc; }
+        .strategy-panel.open { display: grid; }
+        .term-strategy-row { min-width: 0; padding: 10px; border-radius: 10px; background: #fff; border: 1px solid var(--border-light); }
+        .term-strategy-row label { display:block; margin-bottom: 5px; font-size: .8rem; font-weight: 800; color: var(--brand-primary); }
         .calc-grid-5yr { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
         @media (max-width: 640px) { .calc-grid-5yr { grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); } }
         .calc-input-group label { display: block; font-size: 0.75rem; color: var(--text-sub); font-weight: bold; text-align: center; margin-bottom: 4px; }
         .calc-input-group input { width: 100%; padding: 8px 6px; border: var(--pink-dashed); border-radius: 8px; font-size: 0.95rem; font-weight: bold; text-align: center; background: #fff; }
         .calc-input-group input.readonly { background: #f8fafc; border: 1px solid #e2e8f0; color: var(--text-muted); }
-        
+
         .dots-toggle-bar-pure { display: flex; align-items: center; gap: 12px; margin: 18px 0 12px 0; justify-content: flex-end; }
         .pure-color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; transition: all 0.2s; border: 2px solid #fff; box-shadow: var(--shadow-sm); }
         .pure-color-dot.dimmed { opacity: 0.25; filter: grayscale(100%); }
@@ -121,18 +128,22 @@
         .dot-green-bg { background: var(--state-success); }
         .dot-purple-bg { background: var(--state-purple); }
         .dot-red-bg { background: var(--state-danger); }
-        
+
         .table-responsive { overflow-x: auto; margin-top: 8px; }
         table.clean-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; white-space: nowrap; }
         table.clean-table th, table.clean-table td { padding: 11px 14px; text-align: right; border-bottom: 1px solid var(--border-light); }
         table.clean-table th { font-weight: 700; color: var(--text-sub); background: #f8fafc; }
-        
-        /* 原有左右對開保費優惠頁面（只加入不改變流程的流體尺寸） */
-        .promo-split-container { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(12px, 2vw, 20px); align-items: stretch; margin-top: 14px; }
-        .promo-card { background: #fdfdfd; border: 1.5px solid var(--border-light); border-radius: 16px; padding: clamp(14px, 2vw, 20px); display: flex; flex-direction: column; gap: 14px; justify-content: space-between; min-width: 0; }
-        .promo-result-box { background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: white; padding: clamp(1.4rem, 3vw, 2rem) clamp(1rem, 2.5vw, 1.6rem); border-radius: 18px; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 100%; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25); min-width: 0; }
-        .promo-result-box .big-savings { font-size: clamp(2rem, 4vw, 2.6rem); font-weight: 900; margin: 12px 0; overflow-wrap: anywhere; }
-        @media (max-width: 699px) { .promo-split-container { grid-template-columns: 1fr; } }
+
+        /* v6.3.17 保費優惠 1、2、3 卡片（局部還原） */
+        .promo-tiers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; margin-bottom: 18px; }
+        .promo-tier-card { background: #f8fafc; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; position: relative; min-width: 0; }
+        .promo-tier-card.highlight { background: #f0fdf4; border-color: #86efac; }
+        .promo-badge { position: absolute; top: -10px; right: 12px; background: var(--state-success); color: #fff; font-size: 0.72rem; font-weight: 900; padding: 2px 8px; border-radius: 12px; }
+        .promo-tier-title { font-weight: 800; font-size: 1rem; color: var(--brand-primary); margin-bottom: 6px; }
+        .promo-tier-rule { font-size: 0.82rem; color: var(--text-sub); margin-bottom: 12px; line-height: 1.5; }
+        .promo-tier-saved { font-size: 1.45rem; font-weight: 900; color: var(--state-success); margin-bottom: 4px; }
+        .promo-tier-actual { font-size: 0.86rem; color: var(--text-sub); }
+        @media (max-width: 768px) { .promo-tiers-grid { grid-template-columns: 1fr; } }
 
         @media (max-width: 699px) {
             .system-top-nav { padding: 10px 12px; gap: 8px; }
@@ -142,13 +153,15 @@
             .content-card { border-radius: 16px; }
             .gap-iframe-container { min-height: 660px; border-radius: 12px; }
             .gap-iframe { height: 78vh; min-height: 660px; }
+            .strategy-panel { grid-template-columns: 1fr; max-height: 60vh; overflow-y: auto; }
+            .brand-name { max-width: min(48vw, 260px); overflow: hidden; text-overflow: ellipsis; display: inline-block; vertical-align: bottom; }
         }
-        
+
         .action-row { display: flex; gap: 12px; margin-top: 28px; }
         .nav-btn { flex: 1; padding: 13px 20px; border-radius: 12px; font-weight: 700; font-size: 0.98rem; cursor: pointer; border: none; transition: 0.2s; text-align: center; }
         .nav-btn.prev { background: #ffffff; border: 1px solid var(--border-light); color: var(--text-sub); }
         .nav-btn.next { background: var(--brand-primary); color: #ffffff; }
-        
+
         .modal-mask { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); z-index: 2000; align-items: center; justify-content: center; }
         .modal-box { background: #fff; padding: 24px; border-radius: 18px; max-width: 460px; width: 92%; position: relative; }
         .close-btn { position: absolute; top: 12px; right: 16px; font-size: 1.4rem; cursor: pointer; color: var(--text-muted); }
@@ -156,13 +169,13 @@
         .popup-menu-item { background: #f8fafc; border: 1px solid var(--border-light); border-radius: 10px; padding: 12px 14px; font-size: 0.92rem; font-weight: bold; cursor: pointer; transition: all 0.2s; }
         .popup-menu-item:hover { border-color: var(--brand-accent); background: var(--brand-soft); }
         .popup-menu-subitem { padding-left: 28px; font-size: 0.85rem; color: var(--brand-primary); border-left: 3px solid var(--brand-accent); background: #fafcff; }
-        
+
         .admin-dashboard-modal { background: #f8fafc; border-radius: 20px; width: 95%; max-width: 980px; height: 88vh; display: flex; flex-direction: column; overflow: hidden; }
         .admin-header { background: var(--brand-primary); color: #fff; padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; font-weight: 800; }
         .role-switch-bar { display: flex; gap: 6px; background: rgba(255,255,255,0.15); padding: 4px; border-radius: 8px; }
         .role-switch-btn { padding: 4px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; cursor: pointer; border: none; color: #fff; background: transparent; }
         .role-switch-btn.active { background: #fff; color: var(--brand-primary); }
-        
+
         .admin-nav { display: flex; gap: 8px; background: #ffffff; padding: 10px 22px; border-bottom: 1px solid #e2e8f0; overflow-x: auto; flex-shrink: 0; }
         .admin-nav-btn { padding: 6px 16px; border-radius: 20px; font-size: 0.86rem; font-weight: 600; cursor: pointer; border: 1px solid #cbd5e1; background: #f8fafc; color: #475569; white-space: nowrap; }
         .admin-nav-btn.active { background: var(--brand-primary); color: white; border-color: var(--brand-primary); }
@@ -177,7 +190,7 @@
         .zone-header-box { background: #f1f5f9; padding: 10px 16px; border-radius: 8px; font-weight: 800; font-size: 0.95rem; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
         .fixed-anchor-card { background: #faf5ff; border: 1.5px dashed #c084fc; border-radius: 12px; padding: 14px 18px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
         .user-priority-badge { background: #dcfce7; color: #15803d; padding: 3px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 800; display: inline-flex; align-items: center; gap: 4px; }
-        
+
         .red-guide-banner { background: #fff1f2; border: 1.5px solid #fecdd3; border-radius: 12px; padding: 14px 18px; margin-bottom: 18px; }
         .red-guide-title { color: #e11d48; font-weight: 900; font-size: 0.92rem; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
         .red-guide-text { color: #be123c; font-size: 0.84rem; line-height: 1.6; margin-bottom: 8px; }
@@ -187,17 +200,17 @@
 <body>
     <header class="system-top-nav">
         <div class="brand-title-wrap">
-            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入"><span class="brand-name">🌱 AVA Planner</span><span class="brand-version">v6.3.20</span></span>
+            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入"><span class="brand-name">🌱 AVA Planner</span><span class="brand-version">v6.3.21</span></span>
             <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="選擇客群情境">!</span>
             <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="核心分頁直達">*</span>
         </div>
         <div class="user-settings-btn" onclick="openDashboardWithRole('user')" title="設定">⚙️</div>
     </header>
-    
+
     <div class="progress-bar-container">
         <div class="progress-bar-fill" id="progress-fill"></div>
     </div>
-    
+
     <div class="workspace-layout">
         <main id="app-main-flow"></main>
     </div>
@@ -227,7 +240,7 @@
                 <div class="popup-menu-item popup-menu-subitem" onclick="jumpDirectScenarioGap('inquiry')">💬 情境 2：主動查詢</div>
                 <div class="popup-menu-item popup-menu-subitem" onclick="jumpDirectScenarioGap('self_invest')">📈 情境 3：自己投資</div>
                 <div class="popup-menu-item popup-menu-subitem" onclick="jumpDirectScenarioGap('flexible_return')">🔓 情境 4：靈活性 / 回報</div>
-                
+
                 <div class="popup-menu-item" onclick="jumpDirectStep('fixed-page-b')">🌱 固定分頁 B：時光複利量化表</div>
                 <div class="popup-menu-item" onclick="jumpDirectStep('fixed-page-c')">📋 固定分頁 C：專屬生活藍圖</div>
                 <div class="popup-menu-item" onclick="jumpDirectStep('page-promo')">🎁 優惠計算：專屬保費折扣</div>
@@ -248,20 +261,20 @@
                 </div>
                 <div style="cursor:pointer;" onclick="closeAdminDashboard()">✕</div>
             </div>
-            
+
             <div class="admin-nav" id="admin-tabs-nav-bar">
                 <div class="admin-nav-btn active" id="tab-flow-btn" onclick="switchAdminTab('flow')">頁面流程管理</div>
                 <div class="admin-nav-btn" id="tab-jars-btn" onclick="switchAdminTab('jars')">時光複利文字</div>
                 <div class="admin-nav-btn" id="tab-blueprint-btn" onclick="switchAdminTab('blueprint')">人生藍圖設定</div>
                 <div class="admin-nav-btn admin-only-tab" id="tab-mapping-btn" onclick="switchAdminTab('mapping')">分頁命名與對應代碼</div>
-                <div class="admin-nav-btn admin-only-tab" id="tab-system-btn" onclick="switchAdminTab('system')">系統參數設定</div>
+                <div class="admin-nav-btn" id="tab-system-btn" onclick="switchAdminTab('system')">系統參數設定</div>
             </div>
-            
+
             <div class="sync-loading-overlay" id="sync-loading-mask">
                 <div style="font-size:2.5rem; margin-bottom:10px;">⏳</div>
                 <div id="sync-loading-text">正在處理中...</div>
             </div>
-            
+
             <div class="admin-body">
                 <!-- Tab 1: 頁面流程管理 -->
                 <div id="admin-sec-flow">
@@ -294,7 +307,7 @@
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">副主題說明 (takeaway_summary)：</label>
                         <input type="text" id="admin-gap-sub-input" class="pink-edit-input" oninput="updateCurrentScenarioTitles()">
                     </div>
-                    
+
                     <div class="zone-header-box" style="border-left:4px solid #2563eb;">
                         <span>📍 區域 A：引導題目 (第 1 - n 頁 → 固定分頁 A 前)</span>
                         <button class="step-ctrl-btn" style="background:#dbeafe; color:#1d4ed8;" onclick="addNewPageToZone('zone_a')">+ 新增區域 A 題目</button>
@@ -408,19 +421,23 @@
                 <!-- Tab 5: 系統參數設定 -->
                 <div id="admin-sec-system" style="display:none;">
                     <div class="admin-card-row">
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">管理員密碼：</label>
-                        <input type="text" id="admin-password-input" class="pink-edit-input" value="903">
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">系統版本號：</label>
-                        <input type="text" id="admin-version-input" class="pink-edit-input" readonly style="background:#f8fafc;">
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">GAS API 網址：</label>
-                        <input type="text" id="admin-gas-url-input" class="pink-edit-input">
+                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">Planner 名稱：</label>
+                        <input type="text" id="planner-name-input" class="pink-edit-input" value="AVA Planner" maxlength="60" placeholder="AVA Planner">
+                        <div class="admin-system-only">
+                            <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">管理員密碼：</label>
+                            <input type="text" id="admin-password-input" class="pink-edit-input" value="903">
+                            <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">系統版本號：</label>
+                            <input type="text" id="admin-version-input" class="pink-edit-input" readonly style="background:#f8fafc;">
+                            <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">GAS API 網址：</label>
+                            <input type="text" id="admin-gas-url-input" class="pink-edit-input">
+                        </div>
                     </div>
                 </div>
             </div>
-            
+
             <input type="file" id="firebase-file-input" accept="image/*" style="display:none;">
             <input type="file" id="json-import-input" accept=".json" style="display:none;" onchange="handleJSONImport(this)">
-            
+
             <div style="background:#ffffff; padding:12px 20px; border-top:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
                 <button class="nav-btn prev" style="width:auto; padding:8px 20px;" onclick="closeAdminDashboard()">關閉</button>
                 <div id="user-action-buttons" style="display:none; gap:8px;">
@@ -438,7 +455,7 @@
 
     <script>
         const answers = {};
-        let currentSystemVersion = "v6.3.20";
+        let currentSystemVersion = "v6.3.21";
         let GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwbKrrmiS5vx0Q5TvqqUCHBhU-VrS7WwwY0hj6BaNRwuzPtXXIZZxejPwhycCZhSCr-Rg/exec';
         let cloudAdminPassword = "903";
         let currentActiveScenario = "no_savings";
@@ -446,6 +463,11 @@
         let activeFullFlowSteps = [];
         let currentStepIndex = 0;
         let selectedPayYears = 5;
+        const AVAILABLE_TERMS = [5, 10, 15, 20];
+        const DEFAULT_PLANNER_NAME = "AVA Planner";
+        let plannerDisplayName = DEFAULT_PLANNER_NAME;
+        let strategiesExpanded = false;
+        const strategyByTerm = { 5: "withdraw7_from8", 10: "withdraw12_from15", 15: "none", 20: "withdraw23_from25" };
 
         // 1 至 4 號水庫之獨立設定金額與獨立領取策略
         const jarConfigsData = {
@@ -457,7 +479,7 @@
 
         let blueprintSummaryText = "完全不影響現有生活享受：只需將每月不知不決流走的少許資金，分段注入專屬水庫，自然鎖定終身被動收入。";
         let blueprintImgUrl = "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80";
-        
+
         // 沿用原有四個後台情境。Gap 標題先讀 scenariosDB，空值才使用這組顯示預設。
         const scenarioGapDefaults = {
             no_savings: { title: "原來我以為已經準備好…", subtitle: "將時間同通脹放入去，睇下真正嘅情況。" },
@@ -480,14 +502,14 @@
                 subtitle: String(configured.takeaway_summary || '').trim() || fallback.subtitle
             };
         }
-        
+
         const scenarioGapFiles = {
             no_savings: "./scenario1_gap.html",
             inquiry: "./scenario1_gap.html",
             self_invest: "./scenario2_gap.html",
             flexible_return: "./scenario3_gap.html"
         };
-        
+
         let allJarTexts = {
             no_savings: {
                 scenario_name: "未有儲蓄",
@@ -526,7 +548,7 @@
                 th_year: "年份 (歲數)", th_reserve: "累計儲備", th_income: "被動收入", th_accum: "累積已領", th_asset: "大樹收成", th_interest: "年化百分比回報"
             }
         };
-        
+
         let sheetMappings = [
             { code: "withdraw7_from8", sheet_name: "8年領取", display_name: "🌱 第 8 年起 每年領取 7% (標準推薦)" },
             { code: "none", sheet_name: "自動滾存", display_name: "🌳 自動滾存不提取 (大樹收成最大化)" },
@@ -554,7 +576,7 @@
             if (code === "none") return { rate: 0, startYr: 999, isRolling: true };
             return { rate: 0.07, startYr: 8, isRolling: false };
         }
-        
+
         const defaultScenarioDatabase = {
             no_savings: [
                 { id: "step_1", zone: "zone_a", step_num: 1, title: "「如果純粹講而家嘅生活狀態，你覺得自己屬於邊一種？」", subtitle: "沒有對與錯，純粹由你目前最真實的生活節奏開始探索：", image_url: "", options: [{ headline: "🌅 先享受現在", subtext: "今天的生活同樣重要。" }, { headline: "🧭 我知道未來重要", subtext: "但市面太多複雜說法。" }] },
@@ -592,16 +614,47 @@
 
         function formatNumber(v) { return new Intl.NumberFormat('en-US', {maximumFractionDigits: 0}).format(v || 0); }
         function parseFormattedNumber(s) { return parseFloat(String(s).replace(/,/g, '')) || 0; }
-        
+
+        function normalizePlannerName(value) {
+            return String(value || '').trim() || DEFAULT_PLANNER_NAME;
+        }
+
+        function applyPlannerNameToUI(value) {
+            plannerDisplayName = normalizePlannerName(value);
+            const logoEl = document.getElementById('top-logo-title');
+            if (logoEl) {
+                logoEl.replaceChildren();
+                const nameEl = document.createElement('span');
+                nameEl.className = 'brand-name';
+                nameEl.textContent = `🌱 ${plannerDisplayName}`;
+                const versionEl = document.createElement('span');
+                versionEl.className = 'brand-version';
+                versionEl.textContent = currentSystemVersion;
+                logoEl.append(nameEl, versionEl);
+            }
+            const input = document.getElementById('planner-name-input');
+            if (input) input.value = plannerDisplayName;
+        }
+
         function applyVersionToUI(ver) {
             currentSystemVersion = ver;
-            document.title = `AVA 專屬生活引導系統 · 探索未來選擇權 (${ver})`;
+            document.title = `${plannerDisplayName} · 探索未來選擇權 (${ver})`;
             const titleDoc = document.getElementById('html-doc-title');
             if (titleDoc) titleDoc.textContent = document.title;
-            const logoEl = document.getElementById('top-logo-title');
-            if (logoEl) logoEl.innerHTML = `<span class="brand-name">🌱 AVA Planner</span><span class="brand-version">${ver}</span>`;
+            applyPlannerNameToUI(plannerDisplayName);
             const verInput = document.getElementById('admin-version-input');
             if (verInput) verInput.value = ver;
+        }
+
+        function compareVersions(a, b) {
+            const parts = value => String(value || '').replace(/^v/, '').split('.').map(Number);
+            const left = parts(a);
+            const right = parts(b);
+            for (let i = 0; i < Math.max(left.length, right.length); i++) {
+                const difference = (left[i] || 0) - (right[i] || 0);
+                if (difference) return difference;
+            }
+            return 0;
         }
 
         function incrementVersion(verStr) {
@@ -614,11 +667,11 @@
             try {
                 let currentFlow = allScenarioDatabase[currentActiveScenario] || allScenarioDatabase['no_savings'] || defaultScenarioDatabase.no_savings;
                 if (!Array.isArray(currentFlow)) currentFlow = defaultScenarioDatabase.no_savings;
-                
+
                 const zoneA = currentFlow.filter(c => c.zone === 'zone_a' || !c.zone);
                 const zoneB = currentFlow.filter(c => c.zone === 'zone_b');
                 const zoneC = currentFlow.filter(c => c.zone === 'zone_c');
-                
+
                 activeFullFlowSteps = [
                     ...zoneA.map(c => ({ type: 'dynamic', data: c })),
                     { type: 'fixed', id: 'fixed-page-a', name: '認知差距' },
@@ -632,13 +685,13 @@
                 const mainContainer = document.getElementById('app-main-flow');
                 if (!mainContainer) return;
                 mainContainer.innerHTML = '';
-                
+
                 activeFullFlowSteps.forEach((step, index) => {
                     const stepEl = document.createElement('div');
                     stepEl.className = `step-page ${index === currentStepIndex ? 'active' : (index === 0 && currentStepIndex >= activeFullFlowSteps.length ? 'active' : '')}`;
                     if (index === 0 && !mainContainer.querySelector('.step-page.active')) stepEl.className = 'step-page active';
                     stepEl.id = `flow-step-${index}`;
-                    
+
                     if (step.type === 'dynamic') {
                         const c = step.data || {};
                         let opts = Array.isArray(c.options) ? c.options : parseSafeJSON(c.options, []);
@@ -708,7 +761,7 @@
                             <div class="content-card">
                                 <h2 class="question-title">🌱 時光複利：小金額創造大效果</h2>
                                 <p class="question-hint">即使今天未有特定目標，每個月只預留少少，交畀時間，就能為你創造源源不絕的被動收入：</p>
-                                
+
                                 <div style="display:grid; grid-template-columns: 1fr 1.6fr; gap:12px; margin-bottom:18px;">
                                 <div>
                                     <label style="font-size:0.75rem; font-weight:bold; color:var(--text-sub);">開始歲數</label>
@@ -724,23 +777,29 @@
                                     </select>
                                 </div>
                             </div>
-                            
+
+                            <div class="passive-income-bar">
+                                <span>被動收入</span>
+                                <button type="button" class="passive-income-toggle" aria-label="${strategiesExpanded ? '隱藏領取策略' : '顯示領取策略'}" aria-expanded="${strategiesExpanded}" aria-controls="term-strategy-panel" onclick="toggleStrategyPanel(this)">!</button>
+                            </div>
+                            <div id="term-strategy-panel" class="strategy-panel" aria-hidden="true"></div>
+
                             <div id="jars-multi-container"></div>
-                            
+
                             <div class="dots-toggle-bar-pure">
                                 <div class="pure-color-dot dot-blue-bg" id="dot-btn-annuity" onclick="toggleColumn('annuity')" title="被動收入"></div>
                                 <div class="pure-color-dot dot-green-bg" id="dot-btn-accum" onclick="toggleColumn('accum')" title="累積已領"></div>
                                 <div class="pure-color-dot dot-purple-bg" id="dot-btn-asset" onclick="toggleColumn('asset')" title="大樹收成"></div>
                                 <div class="pure-color-dot dot-red-bg" id="dot-btn-interest" onclick="toggleColumn('interest')" title="年化百分比回報"></div>
                             </div>
-                            
+
                             <div class="table-responsive">
                                 <table class="clean-table">
                                     <thead id="results-table-head"></thead>
                                     <tbody id="results-table-body"></tbody>
                                 </table>
                             </div>
-                            
+
                             <div class="action-row">
                                 <button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 上一步</button>
                                 <button class="nav-btn next" onclick="navigateStep(${index + 1})">進入第三階段評估 →</button>
@@ -766,32 +825,58 @@
                             </div>
                         `;
                     } else if (step.id === 'page-promo') {
-                        // 還原原有左右對開完整保費優惠算式及資訊架構。
+                        // 保費優惠 1, 2, 3 卡片
                         stepEl.innerHTML = `
                             <div class="content-card">
                                 <h2 class="question-title">🎁 專屬保費優惠計算</h2>
                                 <p class="question-hint">為你度身訂造最慳錢的投保策略！即時計算最新保費回贈及折扣優惠：</p>
-                                <div class="promo-split-container">
-                                    <div class="promo-card">
+
+                                <div style="background:#fff; border:1.5px solid var(--border-light); border-radius:14px; padding:18px; margin-bottom:16px;">
+                                    <label style="font-size:0.88rem; font-weight:bold; color:var(--text-sub);">每年名義保費 ($)</label>
+                                    <input type="text" id="promo-annual-premium" value="100,000" style="width:100%; padding:10px; font-size:1.2rem; font-weight:bold; text-align:center; border:1.5px solid var(--brand-accent); border-radius:8px; margin-top:6px;" oninput="calculatePromo()">
+                                </div>
+
+                                <div class="promo-tiers-grid">
+                                    <!-- 優惠 1 -->
+                                    <div class="promo-tier-card">
+                                        <span class="promo-badge">優惠 1</span>
                                         <div>
-                                            <label style="font-size:0.8rem; font-weight:bold; color:var(--text-sub);">每年名義保費 ($)</label>
-                                            <input type="text" id="promo-annual-premium" value="100,000" style="width:100%; min-width:0; padding:10px; font-size:1.15rem; font-weight:bold; text-align:center; border:1.5px solid var(--brand-accent); border-radius:8px; margin-top:6px;" oninput="calculatePromo()">
+                                            <div class="promo-tier-title">標準首年折扣</div>
+                                            <div class="promo-tier-rule">首年保費即時回贈折扣 (固定 8%)</div>
                                         </div>
-                                        <div style="background:#f8fafc; border-radius:10px; padding:12px; font-size:0.85rem; color:var(--text-sub); line-height:1.7;">
-                                            <div style="font-weight:bold; color:var(--brand-primary); margin-bottom:4px;">📊 算式拆解與優惠階梯：</div>
-                                            <div>🔹 首年折扣比例：<strong id="promo-rate-text" style="color:var(--state-success);">10%</strong> (<span id="promo-discount-amount">$10,000</span>)</div>
-                                            <div>🔹 預繳首年額外回贈：<strong id="promo-prepay-text" style="color:var(--brand-accent);">$2,000</strong></div>
-                                            <div style="border-top:1px dashed #cbd5e1; margin-top:6px; padding-top:6px;">🔹 總優惠 = 折扣 + 額外回贈</div>
+                                        <div>
+                                            <div class="promo-tier-saved" id="tier1-saved">$8,000</div>
+                                            <div class="promo-tier-actual">實付：<strong id="tier1-actual">$92,000</strong></div>
                                         </div>
                                     </div>
-                                    <div>
-                                        <div class="promo-result-box">
-                                            <h4 style="font-size:1.05rem; opacity:0.95;">已為您慳下高達：</h4>
-                                            <div class="big-savings" id="promo-total-savings">$12,000</div>
-                                            <div style="font-size:0.9rem; opacity:0.9;">折後首年實付保費：<span id="promo-actual-pay" style="font-weight:bold; font-size:1.1rem;">$88,000</span></div>
+
+                                    <!-- 優惠 2 -->
+                                    <div class="promo-tier-card highlight">
+                                        <span class="promo-badge" style="background:var(--brand-accent);">優惠 2 (推薦)</span>
+                                        <div>
+                                            <div class="promo-tier-title">階梯保費回贈</div>
+                                            <div class="promo-tier-rule">按保費規模疊加特級回贈 (10% - 12%)</div>
+                                        </div>
+                                        <div>
+                                            <div class="promo-tier-saved" id="tier2-saved" style="color:var(--brand-accent);">$10,000</div>
+                                            <div class="promo-tier-actual">實付：<strong id="tier2-actual">$90,000</strong></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 優惠 3 -->
+                                    <div class="promo-tier-card highlight" style="background:#f5f3ff; border-color:#c4b5fd;">
+                                        <span class="promo-badge" style="background:var(--state-purple);">優惠 3 (尊尚)</span>
+                                        <div>
+                                            <div class="promo-tier-title">全期預繳＋雙重禮遇</div>
+                                            <div class="promo-tier-rule">預繳享保證利息＋首年額外加碼禮遇</div>
+                                        </div>
+                                        <div>
+                                            <div class="promo-tier-saved" id="tier3-saved" style="color:var(--state-purple);">$12,000</div>
+                                            <div class="promo-tier-actual">首年實付：<strong id="tier3-actual">$88,000</strong></div>
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="action-row">
                                     <button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 返回藍圖</button>
                                     <button class="nav-btn next" onclick="alert('✅ 規劃全數完成！')">✅ 完成所有規劃</button>
@@ -816,15 +901,41 @@
             calculateAndDisplay();
         }
 
+        function renderTermStrategyPanel() {
+            const panel = document.getElementById('term-strategy-panel');
+            if (!panel) return;
+            panel.classList.toggle('open', strategiesExpanded);
+            panel.setAttribute('aria-hidden', String(!strategiesExpanded));
+            panel.innerHTML = AVAILABLE_TERMS.map(term => {
+                const options = sheetMappings.map(mapping => `<option value="${mapping.code}" ${mapping.code === strategyByTerm[term] ? 'selected' : ''}>${mapping.display_name}</option>`).join('');
+                return `<div class="term-strategy-row"><label for="strategy-term-${term}">${term}年期</label><select id="strategy-term-${term}" class="calc-jar-strategy-select" onchange="onTermStrategyChange(${term}, this.value)">${options}</select></div>`;
+            }).join('');
+        }
+
+        function toggleStrategyPanel(button) {
+            strategiesExpanded = !strategiesExpanded;
+            button.setAttribute('aria-expanded', String(strategiesExpanded));
+            button.setAttribute('aria-label', strategiesExpanded ? '隱藏領取策略' : '顯示領取策略');
+            renderTermStrategyPanel();
+        }
+
+        function onTermStrategyChange(term, value) {
+            if (!AVAILABLE_TERMS.includes(Number(term)) || !sheetMappings.some(mapping => mapping.code === value)) return;
+            strategyByTerm[term] = value;
+            localStorage.setItem('ava_strategy_by_term', JSON.stringify(strategyByTerm));
+            if (selectedPayYears === Number(term)) calculateAndDisplay();
+        }
+
         // 1-4 號水庫每 5 年獨立輸入金額與獨立策略選擇
         function renderDynamicJarGrid() {
             const container = document.getElementById('jars-multi-container');
             if (!container) return;
             container.innerHTML = '';
-            
+            renderTermStrategyPanel();
+
             const startAge = parseInt(document.getElementById('start-age')?.value) || 30;
             const jt = allJarTexts[currentActiveScenario] || allJarTexts['no_savings'];
-            
+
             const numJars = Math.min(4, Math.ceil(selectedPayYears / 5));
             const jarConfigs = [
                 { id: 'jar1', color: 'var(--plan1-color)', title: jt.tree_title_1 || '🌱 一號種子水庫 (第 1-5 年)', desc: jt.tree_desc_1 || '播下一粒小種子，每天只需微小投入，5 年完成奠基。', startYr: 1, endYr: 5 },
@@ -832,20 +943,14 @@
                 { id: 'jar3', color: 'var(--plan3-color)', title: jt.tree_title_3 || '🌳 三號資產森林 (第 11-15 年)', desc: jt.tree_desc_3 || '由一棵樹變成森林，抗風險能力大幅增強。', startYr: 11, endYr: 15 },
                 { id: 'jar4', color: 'var(--plan4-color)', title: jt.tree_title_4 || '🌾 四號未來收成 (第 16-20 年)', desc: jt.tree_desc_4 || '前面嘅每一步，都為你產出源源不絕的流動被動收入。', startYr: 16, endYr: 20 }
             ];
-            
+
             for (let j = 0; j < numJars; j++) {
                 const cfg = jarConfigs[j];
                 jarConfigsData[cfg.id] = jarConfigsData[cfg.id] || { value: 40000, withdraw: "withdraw7_from8" };
-                const currentStrategy = jarConfigsData[cfg.id].withdraw || "withdraw7_from8";
-                
-                let optionsHtml = sheetMappings.map(m => `
-                    <option value="${m.code}" ${m.code === currentStrategy ? 'selected' : ''}>${m.display_name}</option>
-                `).join('');
-
                 const cardEl = document.createElement('div');
                 cardEl.className = 'calc-jar-card';
                 cardEl.style.borderTop = `3.5px solid ${cfg.color}`;
-                
+
                 let inputsHtml = '';
                 for (let y = cfg.startYr; y <= Math.min(cfg.endYr, selectedPayYears); y++) {
                     const age = startAge + y - 1;
@@ -864,17 +969,12 @@
                             <h4 style="color:${cfg.color}; font-size:0.98rem; font-weight:800; margin:0;">${cfg.title}</h4>
                             <p style="font-size:0.82rem; color:var(--text-sub); margin-top:2px;">${cfg.desc}</p>
                         </div>
-                        <div style="display:flex; align-items:center; gap:6px;">
-                            <span style="font-size:0.75rem; font-weight:bold; color:var(--brand-primary);">💧 領取策略：</span>
-                            <select class="calc-jar-strategy-select" onchange="onJarStrategyChange('${cfg.id}', this.value)">
-                                ${optionsHtml}
-                            </select>
-                        </div>
+
                     </div>
                     <div class="calc-grid-5yr">${inputsHtml}</div>
                 `;
                 container.appendChild(cardEl);
-                
+
                 const firstInput = cardEl.querySelector(`#input-year-${cfg.startYr}`);
                 if (firstInput) {
                     firstInput.addEventListener('input', () => {
@@ -891,34 +991,36 @@
             }
         }
 
-        function onJarStrategyChange(jarId, val) {
-            if (!jarConfigsData[jarId]) jarConfigsData[jarId] = { value: 40000, withdraw: val };
-            jarConfigsData[jarId].withdraw = val;
-            calculateAndDisplay();
-        }
 
-        // 保費優惠計算：保留原有階梯折扣及預繳回贈公式。
+
+        // 保費優惠計算
         function calculatePromo() {
             const P = parseFormattedNumber(document.getElementById('promo-annual-premium')?.value) || 100000;
-            let discountRate = 0.08;
-            let prepayBonus = 1000;
-            if (P >= 150000) { discountRate = 0.12; prepayBonus = 3000; }
-            else if (P >= 100000) { discountRate = 0.10; prepayBonus = 2000; }
-            else if (P >= 50000) { discountRate = 0.08; prepayBonus = 1000; }
-            else { discountRate = 0.05; prepayBonus = 500; }
-            const discountAmount = P * discountRate;
-            const totalSaved = discountAmount + prepayBonus;
-            const actualPay = P - totalSaved;
-            const rateTextEl = document.getElementById('promo-rate-text');
-            const discountAmtEl = document.getElementById('promo-discount-amount');
-            const prepayTextEl = document.getElementById('promo-prepay-text');
-            const totalSavedEl = document.getElementById('promo-total-savings');
-            const actualPayEl = document.getElementById('promo-actual-pay');
-            if (rateTextEl) rateTextEl.textContent = (discountRate * 100).toFixed(0) + '%';
-            if (discountAmtEl) discountAmtEl.textContent = '$' + formatNumber(discountAmount);
-            if (prepayTextEl) prepayTextEl.textContent = '$' + formatNumber(prepayBonus);
-            if (totalSavedEl) totalSavedEl.textContent = '$' + formatNumber(totalSaved);
-            if (actualPayEl) actualPayEl.textContent = '$' + formatNumber(actualPay);
+
+            const s1 = P * 0.08;
+            const a1 = P - s1;
+
+            let rate2 = P >= 150000 ? 0.12 : (P >= 100000 ? 0.10 : 0.08);
+            const s2 = P * rate2;
+            const a2 = P - s2;
+
+            let bonus3 = P >= 150000 ? 3000 : (P >= 100000 ? 2000 : 1000);
+            const s3 = s2 + bonus3;
+            const a3 = P - s3;
+
+            const t1s = document.getElementById('tier1-saved');
+            const t1a = document.getElementById('tier1-actual');
+            const t2s = document.getElementById('tier2-saved');
+            const t2a = document.getElementById('tier2-actual');
+            const t3s = document.getElementById('tier3-saved');
+            const t3a = document.getElementById('tier3-actual');
+
+            if (t1s) t1s.textContent = '$' + formatNumber(s1);
+            if (t1a) t1a.textContent = '$' + formatNumber(a1);
+            if (t2s) t2s.textContent = '$' + formatNumber(s2);
+            if (t2a) t2a.textContent = '$' + formatNumber(a2);
+            if (t3s) t3s.textContent = '$' + formatNumber(s3);
+            if (t3a) t3a.textContent = '$' + formatNumber(a3);
         }
 
         function navigateStep(index) {
@@ -957,7 +1059,7 @@
             const thead = document.getElementById('results-table-head');
             const tbody = document.getElementById('results-table-body');
             if (!thead || !tbody) return;
-            
+
             const jt = allJarTexts[currentActiveScenario] || allJarTexts['no_savings'];
             thead.innerHTML = `
                 <tr>
@@ -979,7 +1081,7 @@
                 const jKey = `jar${j}`;
                 jarConfigsData[jKey] = jarConfigsData[jKey] || { value: 40000, withdraw: "withdraw7_from8" };
                 const val = jarConfigsData[jKey].value || 40000;
-                const stratCode = jarConfigsData[jKey].withdraw || "withdraw7_from8";
+                const stratCode = strategyByTerm[selectedPayYears] || "withdraw7_from8";
                 const stratDetails = getStrategyDetails(stratCode);
                 const jarTotalInput = val * 5;
                 totalReserve += jarTotalInput;
@@ -994,8 +1096,8 @@
 
             const allYears = [];
             const maxYear = 100 - startAge + 1;
-            const startDisplayYear = Math.max(8, selectedPayYears + 1);
-            
+            const startDisplayYear = 8;
+
             for (let y = startDisplayYear; y <= Math.min(25, maxYear); y++) { allYears.push(y); }
             for (let y = 30; y <= maxYear; y += 5) { if (y > startDisplayYear) allYears.push(y); }
 
@@ -1019,7 +1121,7 @@
                 });
 
                 let irr = yr >= startDisplayYear ? 6.2 + (yr - startDisplayYear) * 0.12 : 4.8 + (yr - selectedPayYears) * 0.2;
-                
+
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td style="text-align:left; font-weight:bold;">第 ${yr} 年 (${age} 歲)</td>
@@ -1047,13 +1149,13 @@
                 if (!zoneContainer) return;
                 zoneContainer.innerHTML = '';
                 const zoneCards = currentList.filter(c => c.zone === zKey || (!c.zone && zKey === 'zone_a'));
-                
+
                 zoneCards.forEach((card, idxInZone) => {
                     const globalIdx = currentList.findIndex(c => c.id === card.id);
                     let cardOpts = Array.isArray(card.options) ? card.options : parseSafeJSON(card.options, []);
                     let cardVSteps = Array.isArray(card.visual_steps) ? card.visual_steps : parseSafeJSON(card.visual_steps, []);
                     const isOptionMode = cardOpts && cardOpts.length > 0;
-                    
+
                     const el = document.createElement('div');
                     el.className = 'admin-card-row';
                     el.innerHTML = `
@@ -1071,14 +1173,14 @@
                         </div>
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">主標題 (問題內容)：</label>
                         <input type="text" class="pink-edit-input" value="${card.title || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].title = this.value">
-                        
+
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:8px; display:block;">副標題說明：</label>
                         <input type="text" class="pink-edit-input" value="${card.subtitle || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].subtitle = this.value">
-                        
+
                         <div style="${!isOptionMode ? 'display:block;' : 'display:none;'} margin-top:10px;">
                             <label style="font-size:0.75rem; font-weight:bold; color:#059669;">按鈕文字 (例如：睇下可以點做 →)：</label>
                             <input type="text" class="pink-edit-input" placeholder="下一步 →" value="${card.button_text || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].button_text = this.value">
-                            
+
                             <div class="admin-options-container" style="margin-top:10px;">
                                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                                     <span style="font-size:0.75rem; font-weight:bold; color:#065f46;">步驟清單 (三步圖)：</span>
@@ -1095,7 +1197,7 @@
                             </div>
                         </div>
                         <input type="text" id="card-img-url-${globalIdx}" class="pink-edit-input" value="${card.image_url || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].image_url = this.value">
-                        
+
                         <div class="admin-options-container" style="${isOptionMode ? 'display:block;' : 'display:none;'}">
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                                 <span style="font-size:0.75rem; font-weight:bold; color:#475569;">選項清單：</span>
@@ -1105,7 +1207,7 @@
                         </div>
                     `;
                     zoneContainer.appendChild(el);
-                    
+
                     if (isOptionMode) {
                         const optZone = el.querySelector(`#opts-edit-zone-${globalIdx}`);
                         cardOpts.forEach((opt, optIdx) => {
@@ -1334,6 +1436,7 @@
                     document.getElementById('user-action-buttons').style.display = 'none';
                     document.getElementById('user-custom-indicator').style.display = 'none';
                     document.querySelectorAll('.admin-only-tab').forEach(el => el.style.display = 'block');
+                    document.querySelectorAll('.admin-system-only').forEach(el => el.style.display = 'block');
                 } else if (pwd !== null) {
                     alert("❌ 密碼錯誤，無法切換為管理者！");
                 }
@@ -1345,6 +1448,8 @@
                 document.getElementById('user-action-buttons').style.display = 'flex';
                 document.getElementById('user-custom-indicator').style.display = 'inline-flex';
                 document.querySelectorAll('.admin-only-tab').forEach(el => el.style.display = 'none');
+                document.querySelectorAll('.admin-system-only').forEach(el => el.style.display = 'none');
+                switchAdminTab('system');
             }
         }
 
@@ -1358,6 +1463,7 @@
             document.getElementById('admin-password-input').value = cloudAdminPassword;
             document.getElementById('admin-version-input').value = currentSystemVersion;
             document.getElementById('admin-gas-url-input').value = GAS_API_URL;
+            document.getElementById('planner-name-input').value = plannerDisplayName;
             document.getElementById('scenario-flow-selector').value = currentActiveScenario;
             renderAdminCards();
             loadJarTextsToEditor();
@@ -1413,7 +1519,7 @@
 
         async function resetToTeamDefault() {
             if (!confirm("確定要清除本機修改，還原為團隊雲端預設設定？")) return;
-            
+
             const loadingMask = document.getElementById('sync-loading-mask');
             if (loadingMask) {
                 document.getElementById('sync-loading-text').textContent = "正在從雲端還原預設資料...";
@@ -1425,11 +1531,16 @@
             localStorage.removeItem('ava_scenarios_db');
             localStorage.removeItem('ava_blueprint_summary');
             localStorage.removeItem('ava_blueprint_img');
+            localStorage.removeItem('ava_planner_display_name');
+            localStorage.removeItem('ava_strategy_by_term');
+            plannerDisplayName = DEFAULT_PLANNER_NAME;
+            applyPlannerNameToUI(plannerDisplayName);
             try {
                 const fullResp = await fetch(GAS_API_URL);
                 const json = await fullResp.json();
-                
-                if (json.system_version) applyVersionToUI(json.system_version);
+
+                if (json.system_version && compareVersions(json.system_version, currentSystemVersion) >= 0) applyVersionToUI(json.system_version);
+                if (json.planner_display_name) applyPlannerNameToUI(json.planner_display_name);
                 if (json.jar_texts) allJarTexts = json.jar_texts;
                 if (json.scenarios) scenariosDB = json.scenarios;
                 if (json.sheet_mappings) sheetMappings = json.sheet_mappings;
@@ -1457,7 +1568,7 @@
                 renderAdminCards();
                 loadJarTextsToEditor();
                 buildAndRenderFlow();
-                
+
                 if (loadingMask) loadingMask.style.display = 'none';
                 alert("✅ 已成功還原為團隊雲端預設！");
             } catch (err) {
@@ -1473,7 +1584,11 @@
             localStorage.setItem('ava_scenarios_db', JSON.stringify(scenariosDB));
             localStorage.setItem('ava_blueprint_summary', blueprintSummaryText);
             localStorage.setItem('ava_blueprint_img', blueprintImgUrl);
+            plannerDisplayName = normalizePlannerName(document.getElementById('planner-name-input').value);
+            localStorage.setItem('ava_planner_display_name', plannerDisplayName);
+            localStorage.setItem('ava_strategy_by_term', JSON.stringify(strategyByTerm));
             localStorage.setItem('ava_user_has_customized', 'true');
+            applyPlannerNameToUI(plannerDisplayName);
             buildAndRenderFlow();
             alert("✅ 已成功保存至本機！(日後開啟均以本機設定為優先，不會被團隊雲端覆蓋)");
             closeAdminDashboard();
@@ -1488,7 +1603,9 @@
                 jar_texts: allJarTexts,
                 scenarios_db: scenariosDB,
                 blueprint_summary: blueprintSummaryText,
-                blueprint_img: blueprintImgUrl
+                blueprint_img: blueprintImgUrl,
+                planner_display_name: plannerDisplayName,
+                strategy_by_term: strategyByTerm
             };
             const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
@@ -1510,6 +1627,9 @@
                     if (data.scenarios_db) scenariosDB = data.scenarios_db;
                     if (data.blueprint_summary) blueprintSummaryText = data.blueprint_summary;
                     if (data.blueprint_img) blueprintImgUrl = data.blueprint_img;
+                    if (data.planner_display_name) plannerDisplayName = normalizePlannerName(data.planner_display_name);
+                    if (data.strategy_by_term) Object.assign(strategyByTerm, data.strategy_by_term);
+                    document.getElementById('planner-name-input').value = plannerDisplayName;
                     saveToLocalStorageOnly();
                     alert("✅ 成功匯入專屬設定！");
                 } catch(err) {
@@ -1523,10 +1643,11 @@
             saveJarTextsFromEditor();
             const loadingMask = document.getElementById('sync-loading-mask');
             loadingMask.style.display = 'flex';
-            
+
             GAS_API_URL = document.getElementById('admin-gas-url-input').value || GAS_API_URL;
+            applyPlannerNameToUI(document.getElementById('planner-name-input').value);
             cloudAdminPassword = document.getElementById('admin-password-input').value || cloudAdminPassword;
-            
+
             const newVersion = incrementVersion(currentSystemVersion);
             applyVersionToUI(newVersion);
             try {
@@ -1560,6 +1681,7 @@
                         blueprint_img_url: blueprintImgUrl,
                         admin_password: cloudAdminPassword,
                         system_version: newVersion,
+                        planner_display_name: normalizePlannerName(document.getElementById('planner-name-input').value),
                         sheet_mappings: sheetMappings
                     })
                 });
@@ -1576,6 +1698,11 @@
         async function fetchCloudDataWithFastCheck() {
             try {
                 const isUserCustom = localStorage.getItem('ava_user_has_customized') === 'true';
+                applyPlannerNameToUI(localStorage.getItem('ava_planner_display_name'));
+                const savedStrategies = parseSafeJSON(localStorage.getItem('ava_strategy_by_term'), {});
+                AVAILABLE_TERMS.forEach(term => {
+                    if (sheetMappings.some(mapping => mapping.code === savedStrategies[term])) strategyByTerm[term] = savedStrategies[term];
+                });
                 if (isUserCustom) {
                     const savedDb = localStorage.getItem('ava_scenario_database');
                     if (savedDb) allScenarioDatabase = parseSafeJSON(savedDb, defaultScenarioDatabase);
@@ -1592,12 +1719,13 @@
                 const fullResp = await fetch(GAS_API_URL);
                 if (!fullResp.ok) throw new Error(`Cloud request failed: ${fullResp.status}`);
                 const json = await fullResp.json();
-                if (json.system_version) applyVersionToUI(json.system_version);
+                if (json.system_version && compareVersions(json.system_version, currentSystemVersion) >= 0) applyVersionToUI(json.system_version);
                 // 本機專屬內容不應被雲端覆蓋，但版本號仍要跟所有裝置同步。
                 if (isUserCustom) {
                     if (json.sheet_mappings) sheetMappings = json.sheet_mappings;
                     return;
                 }
+                if (json.planner_display_name) applyPlannerNameToUI(json.planner_display_name);
                 if (json.jar_texts) allJarTexts = json.jar_texts;
                 if (json.scenarios) scenariosDB = json.scenarios;
                 if (json.sheet_mappings) sheetMappings = json.sheet_mappings;
@@ -1630,6 +1758,12 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            applyVersionToUI("v6.3.21");
+            applyPlannerNameToUI(localStorage.getItem('ava_planner_display_name'));
+            const savedStrategies = parseSafeJSON(localStorage.getItem('ava_strategy_by_term'), {});
+            AVAILABLE_TERMS.forEach(term => {
+                if (sheetMappings.some(mapping => mapping.code === savedStrategies[term])) strategyByTerm[term] = savedStrategies[term];
+            });
             buildAndRenderFlow();
             fetchCloudDataWithFastCheck();
 
