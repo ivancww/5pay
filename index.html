@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.21)</title>
+    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.23)</title>
 
     <link rel="manifest" href="./manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="./icon-192x192.png">
@@ -108,11 +108,13 @@
         .calc-jar-card { background: #ffffff; border: 1px solid var(--border-light); border-radius: 16px; padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow-sm); }
         .calc-jar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
         .calc-jar-strategy-select { width: 100%; min-height: 44px; padding: 8px 34px 8px 10px; font-size: 0.82rem; font-weight: 700; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #fff; color: var(--text-main); outline: none; }
-        .passive-income-bar { display: flex; align-items: center; gap: 8px; margin: 4px 0 14px; color: var(--brand-primary); font-weight: 800; }
-        .passive-income-toggle { width: 44px; height: 44px; border: 1.5px solid #93c5fd; border-radius: 50%; background: var(--brand-soft); color: var(--brand-primary); display: inline-grid; place-items: center; font: 800 0.9rem/1 'Plus Jakarta Sans', sans-serif; cursor: pointer; box-shadow: var(--shadow-sm); }
-        .passive-income-toggle:hover, .passive-income-toggle:focus-visible { border-color: var(--brand-accent); background: #dbeafe; outline: 3px solid rgba(37,99,235,.14); }
-        .strategy-panel { display: none; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; padding: 14px; margin: -4px 0 16px; border: 1px solid var(--border-light); border-radius: 14px; background: #f8fafc; }
+        .income-heading { display: inline-flex; align-items: center; justify-content: flex-end; gap: 2px; }
+        .passive-income-toggle { position: relative; width: 14px; height: 14px; padding: 0; border: 1px solid #64748b; border-radius: 50%; background: transparent; color: #475569; display: inline-grid; place-items: center; font: 800 8px/1 'Plus Jakarta Sans', sans-serif; cursor: pointer; vertical-align: middle; }
+        .passive-income-toggle::before { content: ""; position: absolute; inset: -15px; border-radius: 50%; }
+        .passive-income-toggle:hover, .passive-income-toggle:focus-visible { border-color: var(--brand-accent); color: var(--brand-accent); background: #eff6ff; outline: 2px solid rgba(37,99,235,.14); outline-offset: 2px; }
+        .strategy-panel { display: none; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; padding: 12px; margin: 10px 0 4px; border: 1px solid var(--border-light); border-radius: 12px; background: #f8fafc; }
         .strategy-panel.open { display: grid; }
+        .strategy-panel-title { grid-column: 1 / -1; font-size: .82rem; font-weight: 800; color: var(--brand-primary); }
         .term-strategy-row { min-width: 0; padding: 10px; border-radius: 10px; background: #fff; border: 1px solid var(--border-light); }
         .term-strategy-row label { display:block; margin-bottom: 5px; font-size: .8rem; font-weight: 800; color: var(--brand-primary); }
         .calc-grid-5yr { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
@@ -134,16 +136,18 @@
         table.clean-table th, table.clean-table td { padding: 11px 14px; text-align: right; border-bottom: 1px solid var(--border-light); }
         table.clean-table th { font-weight: 700; color: var(--text-sub); background: #f8fafc; }
 
-        /* v6.3.17 保費優惠 1、2、3 卡片（局部還原） */
-        .promo-tiers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; margin-bottom: 18px; }
-        .promo-tier-card { background: #f8fafc; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; position: relative; min-width: 0; }
-        .promo-tier-card.highlight { background: #f0fdf4; border-color: #86efac; }
-        .promo-badge { position: absolute; top: -10px; right: 12px; background: var(--state-success); color: #fff; font-size: 0.72rem; font-weight: 900; padding: 2px 8px; border-radius: 12px; }
-        .promo-tier-title { font-weight: 800; font-size: 1rem; color: var(--brand-primary); margin-bottom: 6px; }
-        .promo-tier-rule { font-size: 0.82rem; color: var(--text-sub); margin-bottom: 12px; line-height: 1.5; }
-        .promo-tier-saved { font-size: 1.45rem; font-weight: 900; color: var(--state-success); margin-bottom: 4px; }
-        .promo-tier-actual { font-size: 0.86rem; color: var(--text-sub); }
-        @media (max-width: 768px) { .promo-tiers-grid { grid-template-columns: 1fr; } }
+        /* medsave v8.4.3 專屬保費優惠計算 */
+        .promo-split-container { display: flex; gap: 20px; align-items: stretch; margin-top: 10px; }
+        .promo-left-col { flex: 1.2; width: 100%; display: flex; flex-direction: column; gap: 12px; }
+        .promo-right-col { flex: 1; width: 100%; }
+        .promo-card { background: #fdfdfd; border: 1px solid var(--border-light); border-radius: 14px; padding: 1.2rem; }
+        .promo-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px dashed #eee; }
+        .promo-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .promo-checkbox { width: 20px; height: 20px; accent-color: var(--brand-accent); margin-top: 2px; flex: 0 0 auto; }
+        .promo-tag { background: #ffecb3; color: #d84315; padding: 2px 8px; border-radius: 4px; font-size: .8rem; font-weight: bold; display: inline-block; margin-top: 5px; }
+        .promo-result-box { background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: white; padding: 1.8rem 1.4rem; border-radius: 16px; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 100%; }
+        .promo-result-box .big-savings { font-size: clamp(2rem, 5vw, 2.5rem); font-weight: 900; margin: 12px 0; }
+        @media (max-width: 768px) { .promo-split-container { flex-direction: column; } }
 
         @media (max-width: 699px) {
             .system-top-nav { padding: 10px 12px; gap: 8px; }
@@ -200,7 +204,7 @@
 <body>
     <header class="system-top-nav">
         <div class="brand-title-wrap">
-            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入"><span class="brand-name">🌱 AVA Planner</span><span class="brand-version">v6.3.21</span></span>
+            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入"><span class="brand-name">🌱 AVA Planner</span><span class="brand-version">v6.3.23</span></span>
             <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="選擇客群情境">!</span>
             <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="核心分頁直達">*</span>
         </div>
@@ -405,7 +409,13 @@
                 <div id="admin-sec-blueprint" style="display:none;">
                     <div class="admin-card-row">
                         <h4 style="margin-top:0; color:var(--brand-primary);">🖼️ 藍圖右側圖解與替代方案</h4>
-                        <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">藍圖圖片網址 (blueprint_img_url)：</label>
+                        <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap;">
+                            <label style="font-size:0.75rem; font-weight:bold; color:#64748b;">藍圖圖片網址 (blueprint_img_url)：</label>
+                            <div style="display:flex; gap:6px;">
+                                <button class="step-ctrl-btn" type="button" onclick="triggerBlueprintUpload()">📤 上載圖片</button>
+                                <button class="del-opt-btn" type="button" onclick="deleteBlueprintImage()">🗑️ 刪除圖片</button>
+                            </div>
+                        </div>
                         <input type="text" id="admin-blueprint-img-url" class="pink-edit-input" value="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80">
                         <label style="font-size:0.75rem; font-weight:bold; color:#64748b; margin-top:10px; display:block;">替代方案總結說明 (blueprint_summary_text)：</label>
                         <input type="text" id="admin-blueprint-summary-text" class="pink-edit-input" value="完全不影響現有生活享受：只需將每月不知不決流走的少許資金，分段注入專屬水庫，自然鎖定終身被動收入。">
@@ -436,6 +446,7 @@
             </div>
 
             <input type="file" id="firebase-file-input" accept="image/*" style="display:none;">
+            <input type="file" id="blueprint-file-input" accept="image/*" style="display:none;">
             <input type="file" id="json-import-input" accept=".json" style="display:none;" onchange="handleJSONImport(this)">
 
             <div style="background:#ffffff; padding:12px 20px; border-top:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
@@ -455,7 +466,7 @@
 
     <script>
         const answers = {};
-        let currentSystemVersion = "v6.3.21";
+        let currentSystemVersion = "v6.3.23";
         let GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwbKrrmiS5vx0Q5TvqqUCHBhU-VrS7WwwY0hj6BaNRwuzPtXXIZZxejPwhycCZhSCr-Rg/exec';
         let cloudAdminPassword = "903";
         let currentActiveScenario = "no_savings";
@@ -467,8 +478,6 @@
         const DEFAULT_PLANNER_NAME = "AVA Planner";
         let plannerDisplayName = DEFAULT_PLANNER_NAME;
         let strategiesExpanded = false;
-        const strategyByTerm = { 5: "withdraw7_from8", 10: "withdraw12_from15", 15: "none", 20: "withdraw23_from25" };
-
         // 1 至 4 號水庫之獨立設定金額與獨立領取策略
         const jarConfigsData = {
             jar1: { value: 40000, withdraw: "withdraw7_from8" },
@@ -575,6 +584,16 @@
             if (code === "withdraw29_from30") return { rate: 0.29, startYr: 30, isRolling: false };
             if (code === "none") return { rate: 0, startYr: 999, isRolling: true };
             return { rate: 0.07, startYr: 8, isRolling: false };
+        }
+
+        function loadSavedJarConfigs() {
+            const savedConfigs = parseSafeJSON(localStorage.getItem('ava_jar_configs'), {});
+            Object.keys(jarConfigsData).forEach(jarId => {
+                const saved = savedConfigs[jarId];
+                if (!saved) return;
+                if (Number.isFinite(Number(saved.value))) jarConfigsData[jarId].value = Number(saved.value);
+                if (sheetMappings.some(mapping => mapping.code === saved.withdraw)) jarConfigsData[jarId].withdraw = saved.withdraw;
+            });
         }
 
         const defaultScenarioDatabase = {
@@ -778,12 +797,6 @@
                                 </div>
                             </div>
 
-                            <div class="passive-income-bar">
-                                <span>被動收入</span>
-                                <button type="button" class="passive-income-toggle" aria-label="${strategiesExpanded ? '隱藏領取策略' : '顯示領取策略'}" aria-expanded="${strategiesExpanded}" aria-controls="term-strategy-panel" onclick="toggleStrategyPanel(this)">!</button>
-                            </div>
-                            <div id="term-strategy-panel" class="strategy-panel" aria-hidden="true"></div>
-
                             <div id="jars-multi-container"></div>
 
                             <div class="dots-toggle-bar-pure">
@@ -799,6 +812,7 @@
                                     <tbody id="results-table-body"></tbody>
                                 </table>
                             </div>
+                            <div id="term-strategy-panel" class="strategy-panel" aria-hidden="true"></div>
 
                             <div class="action-row">
                                 <button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 上一步</button>
@@ -813,9 +827,7 @@
                                 <p class="question-hint">生活初衷彙整與專屬水庫配置：</p>
                                 <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:14px; padding:20px;">
                                     <strong style="color:#166534; font-size:1.05rem;">💡 替代方案：無痛縮減落差</strong>
-                                    <div style="text-align:center; margin:14px 0;">
-                                        <img src="${blueprintImgUrl}" style="max-width:100%; max-height:220px; object-fit:contain; border-radius:10px;">
-                                    </div>
+                                    ${blueprintImgUrl ? `<div style="text-align:center; margin:14px 0;"><img src="${blueprintImgUrl}" alt="人生藍圖" style="max-width:100%; max-height:220px; object-fit:contain; border-radius:10px;"></div>` : ''}
                                     <p style="font-size:0.92rem; color:#166534; margin-top:6px; line-height:1.6;">${blueprintSummaryText}</p>
                                 </div>
                                 <div class="action-row">
@@ -825,64 +837,29 @@
                             </div>
                         `;
                     } else if (step.id === 'page-promo') {
-                        // 保費優惠 1, 2, 3 卡片
+                        // medsave v8.4.3「專屬保費優惠計算」指定來源版本
                         stepEl.innerHTML = `
                             <div class="content-card">
                                 <h2 class="question-title">🎁 專屬保費優惠計算</h2>
-                                <p class="question-hint">為你度身訂造最慳錢的投保策略！即時計算最新保費回贈及折扣優惠：</p>
-
-                                <div style="background:#fff; border:1.5px solid var(--border-light); border-radius:14px; padding:18px; margin-bottom:16px;">
-                                    <label style="font-size:0.88rem; font-weight:bold; color:var(--text-sub);">每年名義保費 ($)</label>
-                                    <input type="text" id="promo-annual-premium" value="100,000" style="width:100%; padding:10px; font-size:1.2rem; font-weight:bold; text-align:center; border:1.5px solid var(--brand-accent); border-radius:8px; margin-top:6px;" oninput="calculatePromo()">
-                                </div>
-
-                                <div class="promo-tiers-grid">
-                                    <!-- 優惠 1 -->
-                                    <div class="promo-tier-card">
-                                        <span class="promo-badge">優惠 1</span>
-                                        <div>
-                                            <div class="promo-tier-title">標準首年折扣</div>
-                                            <div class="promo-tier-rule">首年保費即時回贈折扣 (固定 8%)</div>
+                                <p class="question-hint">按 medsave v8.4.3 的優惠規則，即時比較保費折扣及預繳利息：</p>
+                                <div class="promo-split-container">
+                                    <div class="promo-left-col">
+                                        <div class="promo-card" style="background:#f8fafc;">
+                                            <div style="display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:10px;">
+                                                <div><label style="font-size:.75rem;font-weight:bold;color:var(--text-sub);">首年 / 每年保費 ($)</label><input type="text" id="promo-annual-premium" value="100,000" style="width:100%;padding:8px;border:1px solid #cbd5e1;border-radius:6px;font-weight:bold;text-align:center;color:var(--brand-accent);" oninput="calculatePromo()"></div>
+                                                <div><label style="font-size:.75rem;font-weight:bold;color:var(--text-sub);">供款年期 (年)</label><input type="number" id="promo-term" value="5" min="1" style="width:100%;padding:8px;border:1px solid #cbd5e1;border-radius:6px;font-weight:bold;text-align:center;" oninput="calculatePromo()"></div>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <div class="promo-tier-saved" id="tier1-saved">$8,000</div>
-                                            <div class="promo-tier-actual">實付：<strong id="tier1-actual">$92,000</strong></div>
+                                        <div class="promo-card">
+                                            <div class="promo-row"><input type="checkbox" id="promo1-check" class="promo-checkbox" checked onchange="calculatePromo()"><div style="flex:1;"><h4 style="margin:0 0 4px;color:var(--brand-accent);font-size:.95rem;">優惠 1：首年保費大減價</h4><p style="font-size:.85rem;color:var(--text-sub);margin:0;">首年保費每滿 $5,000 即減 $500。</p><div class="promo-tag">優惠節省：<span id="promo1-saved">$0</span></div></div></div>
+                                            <div class="promo-row"><input type="checkbox" id="promo2-check" class="promo-checkbox" checked onchange="calculatePromo()"><div style="flex:1;"><h4 style="margin:0 0 4px;color:var(--brand-accent);font-size:.95rem;">優惠 2：續保保費折扣</h4><div style="display:flex;align-items:center;gap:6px;margin-top:4px;font-size:.85rem;flex-wrap:wrap;"><span>第 2 年續保即減</span><input type="number" id="promo2-base-pct" value="5" step="0.1" style="width:60px;padding:3px;text-align:center;" oninput="calculatePromo()"> %</div><div class="promo-tag">優惠節省：<span id="promo2-saved">$0</span></div></div></div>
+                                            <div class="promo-row"><input type="checkbox" id="promo3-check" class="promo-checkbox" checked onchange="calculatePromo()"><div style="flex:1;"><h4 style="margin:0 0 4px;color:var(--brand-accent);font-size:.95rem;">優惠 3：預繳保費保證利率</h4><p style="font-size:.85rem;color:var(--text-sub);margin:0;">一筆過預繳享保證年利率，滿期現金退回純利息！</p><div style="margin-top:6px;font-size:.85rem;"><span>保證年利率：</span><input type="number" id="promo3-rate" value="3.8" step="0.1" style="width:65px;padding:3px;text-align:center;" oninput="calculatePromo()"> %</div><div id="promo3-desc" style="margin-top:8px;background:#eff6ff;padding:8px;border-radius:6px;font-size:.8rem;color:#1e40af;line-height:1.4;display:none;"></div><div class="promo-tag" style="background:#d4edda;color:#155724;">保證預繳純利息：<span id="promo3-saved">$0</span></div></div></div>
                                         </div>
                                     </div>
-
-                                    <!-- 優惠 2 -->
-                                    <div class="promo-tier-card highlight">
-                                        <span class="promo-badge" style="background:var(--brand-accent);">優惠 2 (推薦)</span>
-                                        <div>
-                                            <div class="promo-tier-title">階梯保費回贈</div>
-                                            <div class="promo-tier-rule">按保費規模疊加特級回贈 (10% - 12%)</div>
-                                        </div>
-                                        <div>
-                                            <div class="promo-tier-saved" id="tier2-saved" style="color:var(--brand-accent);">$10,000</div>
-                                            <div class="promo-tier-actual">實付：<strong id="tier2-actual">$90,000</strong></div>
-                                        </div>
-                                    </div>
-
-                                    <!-- 優惠 3 -->
-                                    <div class="promo-tier-card highlight" style="background:#f5f3ff; border-color:#c4b5fd;">
-                                        <span class="promo-badge" style="background:var(--state-purple);">優惠 3 (尊尚)</span>
-                                        <div>
-                                            <div class="promo-tier-title">全期預繳＋雙重禮遇</div>
-                                            <div class="promo-tier-rule">預繳享保證利息＋首年額外加碼禮遇</div>
-                                        </div>
-                                        <div>
-                                            <div class="promo-tier-saved" id="tier3-saved" style="color:var(--state-purple);">$12,000</div>
-                                            <div class="promo-tier-actual">首年實付：<strong id="tier3-actual">$88,000</strong></div>
-                                        </div>
-                                    </div>
+                                    <div class="promo-right-col"><div class="promo-result-box"><h4 style="margin:0;font-size:.95rem;opacity:.85;">原本總保費：<span id="promo-original-total" style="text-decoration:line-through;">$0</span></h4><div style="margin:12px 0;"><span style="font-size:.95rem;">💰 總共慳咗及賺取利息：</span><div class="big-savings" id="promo-total-savings">$0</div></div><div style="background:rgba(0,0,0,.15);padding:8px;border-radius:8px;"><span style="font-size:.9rem;">實際淨付出總額：<strong id="promo-actual-outlay" style="font-size:1.3rem;">$0</strong></span></div></div></div>
                                 </div>
-
-                                <div class="action-row">
-                                    <button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 返回藍圖</button>
-                                    <button class="nav-btn next" onclick="alert('✅ 規劃全數完成！')">✅ 完成所有規劃</button>
-                                </div>
-                            </div>
-                        `;
+                                <div class="action-row"><button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 返回藍圖</button><button class="nav-btn next" onclick="alert('✅ 規劃全數完成！')">✅ 完成所有規劃</button></div>
+                            </div>`;
                     }
                     mainContainer.appendChild(stepEl);
                 });
@@ -906,10 +883,14 @@
             if (!panel) return;
             panel.classList.toggle('open', strategiesExpanded);
             panel.setAttribute('aria-hidden', String(!strategiesExpanded));
-            panel.innerHTML = AVAILABLE_TERMS.map(term => {
-                const options = sheetMappings.map(mapping => `<option value="${mapping.code}" ${mapping.code === strategyByTerm[term] ? 'selected' : ''}>${mapping.display_name}</option>`).join('');
-                return `<div class="term-strategy-row"><label for="strategy-term-${term}">${term}年期</label><select id="strategy-term-${term}" class="calc-jar-strategy-select" onchange="onTermStrategyChange(${term}, this.value)">${options}</select></div>`;
+            const groupCount = Math.min(4, Math.ceil(selectedPayYears / 5));
+            const rows = Array.from({ length: groupCount }, (_, index) => {
+                const jarId = `jar${index + 1}`;
+                const selectedStrategy = jarConfigsData[jarId].withdraw;
+                const options = sheetMappings.map(mapping => `<option value="${mapping.code}" ${mapping.code === selectedStrategy ? 'selected' : ''}>${mapping.display_name}</option>`).join('');
+                return `<div class="term-strategy-row"><label for="strategy-${jarId}">第 ${index + 1} 組策略</label><select id="strategy-${jarId}" class="calc-jar-strategy-select" onchange="onJarStrategyChange('${jarId}', this.value)">${options}</select></div>`;
             }).join('');
+            panel.innerHTML = `<div class="strategy-panel-title">領取策略（每組獨立設定）</div>${rows}`;
         }
 
         function toggleStrategyPanel(button) {
@@ -919,11 +900,11 @@
             renderTermStrategyPanel();
         }
 
-        function onTermStrategyChange(term, value) {
-            if (!AVAILABLE_TERMS.includes(Number(term)) || !sheetMappings.some(mapping => mapping.code === value)) return;
-            strategyByTerm[term] = value;
-            localStorage.setItem('ava_strategy_by_term', JSON.stringify(strategyByTerm));
-            if (selectedPayYears === Number(term)) calculateAndDisplay();
+        function onJarStrategyChange(jarId, value) {
+            if (!Object.prototype.hasOwnProperty.call(jarConfigsData, jarId) || !sheetMappings.some(mapping => mapping.code === value)) return;
+            jarConfigsData[jarId].withdraw = value;
+            localStorage.setItem('ava_jar_configs', JSON.stringify(jarConfigsData));
+            calculateAndDisplay();
         }
 
         // 1-4 號水庫每 5 年獨立輸入金額與獨立策略選擇
@@ -993,34 +974,48 @@
 
 
 
-        // 保費優惠計算
+        // medsave v8.4.3 專屬保費優惠計算：逐項優惠可獨立開關。
         function calculatePromo() {
-            const P = parseFormattedNumber(document.getElementById('promo-annual-premium')?.value) || 100000;
+            const P = parseFormattedNumber(document.getElementById('promo-annual-premium')?.value) || 0;
+            const N = Math.max(1, parseInt(document.getElementById('promo-term')?.value) || 5);
+            const usePromo1 = document.getElementById('promo1-check')?.checked ?? true;
+            const usePromo2 = document.getElementById('promo2-check')?.checked ?? true;
+            const baseDiscountPct = (parseFloat(document.getElementById('promo2-base-pct')?.value) || 0) / 100;
+            const usePromo3 = document.getElementById('promo3-check')?.checked ?? true;
+            const rate = (parseFloat(document.getElementById('promo3-rate')?.value) || 3.8) / 100;
 
-            const s1 = P * 0.08;
-            const a1 = P - s1;
+            const firstYearSaving = usePromo1 ? Math.floor(P / 5000) * 500 : 0;
+            const renewalSaving = usePromo2 && N >= 2 ? P * baseDiscountPct : 0;
+            let prepayInterest = 0;
+            let prepayAmount = 0;
+            if (usePromo3 && N > 1) {
+                prepayAmount = P * (N - 1);
+                let balance = prepayAmount;
+                for (let year = 2; year <= N; year++) {
+                    const interest = balance * rate;
+                    prepayInterest += interest;
+                    balance = balance + interest - P;
+                }
+            }
 
-            let rate2 = P >= 150000 ? 0.12 : (P >= 100000 ? 0.10 : 0.08);
-            const s2 = P * rate2;
-            const a2 = P - s2;
+            const originalTotal = P * N;
+            const totalBenefit = firstYearSaving + renewalSaving + prepayInterest;
+            document.getElementById('promo-original-total').textContent = '$' + formatNumber(originalTotal);
+            document.getElementById('promo-total-savings').textContent = '$' + formatNumber(totalBenefit);
+            document.getElementById('promo-actual-outlay').textContent = '$' + formatNumber(originalTotal - totalBenefit);
+            document.getElementById('promo1-saved').textContent = '$' + formatNumber(firstYearSaving);
+            document.getElementById('promo2-saved').textContent = '$' + formatNumber(renewalSaving);
+            document.getElementById('promo3-saved').textContent = '$' + formatNumber(prepayInterest);
 
-            let bonus3 = P >= 150000 ? 3000 : (P >= 100000 ? 2000 : 1000);
-            const s3 = s2 + bonus3;
-            const a3 = P - s3;
-
-            const t1s = document.getElementById('tier1-saved');
-            const t1a = document.getElementById('tier1-actual');
-            const t2s = document.getElementById('tier2-saved');
-            const t2a = document.getElementById('tier2-actual');
-            const t3s = document.getElementById('tier3-saved');
-            const t3a = document.getElementById('tier3-actual');
-
-            if (t1s) t1s.textContent = '$' + formatNumber(s1);
-            if (t1a) t1a.textContent = '$' + formatNumber(a1);
-            if (t2s) t2s.textContent = '$' + formatNumber(s2);
-            if (t2a) t2a.textContent = '$' + formatNumber(a2);
-            if (t3s) t3s.textContent = '$' + formatNumber(s3);
-            if (t3a) t3a.textContent = '$' + formatNumber(a3);
+            const descEl = document.getElementById('promo3-desc');
+            if (usePromo3 && N > 1) {
+                const initialPayment = P + prepayAmount - firstYearSaving;
+                const maturityRefund = prepayInterest + renewalSaving;
+                descEl.innerHTML = `💡 <strong>預繳計算詳情：</strong><br>投保實繳金額：<strong>$${formatNumber(initialPayment)}</strong>。滿期退回利息：<strong>$${formatNumber(maturityRefund)}</strong>。`;
+                descEl.style.display = 'block';
+            } else {
+                descEl.style.display = 'none';
+            }
         }
 
         function navigateStep(index) {
@@ -1065,7 +1060,7 @@
                 <tr>
                     <th style="text-align:left;">${jt.th_year || '年份 (歲數)'}</th>
                     <th>${jt.th_reserve || '累計儲備'}</th>
-                    ${colVisibility.annuity ? `<th>${jt.th_income || '被動收入 (合共)'}</th>` : ''}
+                    ${colVisibility.annuity ? `<th><span class="income-heading"><span>${jt.th_income || '被動收入'}</span><button type="button" class="passive-income-toggle" aria-label="${strategiesExpanded ? '隱藏領取策略' : '顯示領取策略'}" aria-expanded="${strategiesExpanded}" aria-controls="term-strategy-panel" onclick="toggleStrategyPanel(this)">!</button></span></th>` : ''}
                     ${colVisibility.accum ? `<th>${jt.th_accum || '累積已領'}</th>` : ''}
                     ${colVisibility.asset ? `<th>${jt.th_asset || '大樹收成'}</th>` : ''}
                     ${colVisibility.interest ? `<th>${jt.th_interest || '年化百分比回報'}</th>` : ''}
@@ -1074,19 +1069,19 @@
             tbody.innerHTML = '';
 
             const numJars = Math.min(4, Math.ceil(selectedPayYears / 5));
-            let totalReserve = 0;
             const activeJars = [];
 
             for (let j = 1; j <= numJars; j++) {
                 const jKey = `jar${j}`;
                 jarConfigsData[jKey] = jarConfigsData[jKey] || { value: 40000, withdraw: "withdraw7_from8" };
                 const val = jarConfigsData[jKey].value || 40000;
-                const stratCode = strategyByTerm[selectedPayYears] || "withdraw7_from8";
+                const stratCode = jarConfigsData[jKey].withdraw || "withdraw7_from8";
                 const stratDetails = getStrategyDetails(stratCode);
                 const jarTotalInput = val * 5;
-                totalReserve += jarTotalInput;
                 activeJars.push({
                     id: jKey,
+                    startOffset: (j - 1) * 5 + 1,
+                    annualContribution: val,
                     totalInput: jarTotalInput,
                     rate: stratDetails.rate,
                     startYr: stratDetails.startYr,
@@ -1106,17 +1101,25 @@
                 let annualAnnuityTotal = 0;
                 let accumTotal = 0;
                 let assetTotal = 0;
+                let totalReserve = 0;
 
                 activeJars.forEach(jar => {
-                    if (!jar.isRolling && yr >= jar.startYr) {
+                    const jarYear = yr - jar.startOffset + 1;
+                    if (jarYear <= 0) return;
+                    const contributedYears = Math.min(jarYear, 5);
+                    const contributedAmount = contributedYears * jar.annualContribution;
+                    totalReserve += contributedAmount;
+                    if (!jar.isRolling && jarYear >= jar.startYr) {
                         const jarAnnuity = jar.totalInput * jar.rate;
                         annualAnnuityTotal += jarAnnuity;
-                        accumTotal += jarAnnuity * (yr - jar.startYr + 1);
+                        accumTotal += jarAnnuity * (jarYear - jar.startYr + 1);
                     }
-                    if (jar.isRolling) {
-                        assetTotal += jar.totalInput * Math.pow(1.065, yr - selectedPayYears);
+                    if (jarYear < 5) {
+                        assetTotal += contributedAmount;
+                    } else if (jar.isRolling) {
+                        assetTotal += jar.totalInput * Math.pow(1.065, jarYear - 5);
                     } else {
-                        assetTotal += jar.totalInput * (1 + (yr - selectedPayYears) * 0.12);
+                        assetTotal += jar.totalInput * (1 + (jarYear - 5) * 0.12);
                     }
                 });
 
@@ -1289,6 +1292,30 @@
             const input = document.getElementById(`card-img-url-${globalIdx}`);
             if (input) input.value = "";
             renderAdminCards();
+            buildAndRenderFlow();
+        }
+
+        // 還原原有 Firebase Storage 藍圖圖片上載機制，URL 繼續沿用既有本機／雲端欄位。
+        function triggerBlueprintUpload() {
+            const input = document.getElementById('blueprint-file-input');
+            input.value = '';
+            input.onchange = async () => {
+                if (!input.files || input.files.length === 0) return;
+                const file = input.files[0];
+                const fileRef = window.storageRef(window.firebaseStorage, `blueprint_images/${Date.now()}_${file.name}`);
+                await window.uploadBytes(fileRef, file);
+                blueprintImgUrl = await window.getDownloadURL(fileRef);
+                document.getElementById('admin-blueprint-img-url').value = blueprintImgUrl;
+                localStorage.setItem('ava_blueprint_img', blueprintImgUrl);
+                buildAndRenderFlow();
+            };
+            input.click();
+        }
+
+        function deleteBlueprintImage() {
+            blueprintImgUrl = '';
+            document.getElementById('admin-blueprint-img-url').value = '';
+            localStorage.setItem('ava_blueprint_img', '');
             buildAndRenderFlow();
         }
 
@@ -1533,6 +1560,7 @@
             localStorage.removeItem('ava_blueprint_img');
             localStorage.removeItem('ava_planner_display_name');
             localStorage.removeItem('ava_strategy_by_term');
+            localStorage.removeItem('ava_jar_configs');
             plannerDisplayName = DEFAULT_PLANNER_NAME;
             applyPlannerNameToUI(plannerDisplayName);
             try {
@@ -1586,7 +1614,7 @@
             localStorage.setItem('ava_blueprint_img', blueprintImgUrl);
             plannerDisplayName = normalizePlannerName(document.getElementById('planner-name-input').value);
             localStorage.setItem('ava_planner_display_name', plannerDisplayName);
-            localStorage.setItem('ava_strategy_by_term', JSON.stringify(strategyByTerm));
+            localStorage.setItem('ava_jar_configs', JSON.stringify(jarConfigsData));
             localStorage.setItem('ava_user_has_customized', 'true');
             applyPlannerNameToUI(plannerDisplayName);
             buildAndRenderFlow();
@@ -1605,7 +1633,7 @@
                 blueprint_summary: blueprintSummaryText,
                 blueprint_img: blueprintImgUrl,
                 planner_display_name: plannerDisplayName,
-                strategy_by_term: strategyByTerm
+                jar_configs: jarConfigsData
             };
             const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
@@ -1628,7 +1656,7 @@
                     if (data.blueprint_summary) blueprintSummaryText = data.blueprint_summary;
                     if (data.blueprint_img) blueprintImgUrl = data.blueprint_img;
                     if (data.planner_display_name) plannerDisplayName = normalizePlannerName(data.planner_display_name);
-                    if (data.strategy_by_term) Object.assign(strategyByTerm, data.strategy_by_term);
+                    if (data.jar_configs) Object.assign(jarConfigsData, data.jar_configs);
                     document.getElementById('planner-name-input').value = plannerDisplayName;
                     saveToLocalStorageOnly();
                     alert("✅ 成功匯入專屬設定！");
@@ -1682,7 +1710,8 @@
                         admin_password: cloudAdminPassword,
                         system_version: newVersion,
                         planner_display_name: normalizePlannerName(document.getElementById('planner-name-input').value),
-                        sheet_mappings: sheetMappings
+                        sheet_mappings: sheetMappings,
+                        jar_configs: jarConfigsData
                     })
                 });
                 loadingMask.style.display = 'none';
@@ -1699,10 +1728,7 @@
             try {
                 const isUserCustom = localStorage.getItem('ava_user_has_customized') === 'true';
                 applyPlannerNameToUI(localStorage.getItem('ava_planner_display_name'));
-                const savedStrategies = parseSafeJSON(localStorage.getItem('ava_strategy_by_term'), {});
-                AVAILABLE_TERMS.forEach(term => {
-                    if (sheetMappings.some(mapping => mapping.code === savedStrategies[term])) strategyByTerm[term] = savedStrategies[term];
-                });
+                loadSavedJarConfigs();
                 if (isUserCustom) {
                     const savedDb = localStorage.getItem('ava_scenario_database');
                     if (savedDb) allScenarioDatabase = parseSafeJSON(savedDb, defaultScenarioDatabase);
@@ -1713,7 +1739,7 @@
                     const savedBp = localStorage.getItem('ava_blueprint_summary');
                     if (savedBp) blueprintSummaryText = savedBp;
                     const savedBpImg = localStorage.getItem('ava_blueprint_img');
-                    if (savedBpImg) blueprintImgUrl = savedBpImg;
+                    if (savedBpImg !== null) blueprintImgUrl = savedBpImg;
                     buildAndRenderFlow();
                 }
                 const fullResp = await fetch(GAS_API_URL);
@@ -1731,6 +1757,7 @@
                 if (json.sheet_mappings) sheetMappings = json.sheet_mappings;
                 if (json.blueprint_summary_text) blueprintSummaryText = json.blueprint_summary_text;
                 if (json.blueprint_img_url) blueprintImgUrl = json.blueprint_img_url;
+                if (json.jar_configs) Object.assign(jarConfigsData, json.jar_configs);
                 if (json.cards && json.cards.length > 0) {
                     const cloudDB = {};
                     json.cards.forEach(row => {
@@ -1758,12 +1785,9 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            applyVersionToUI("v6.3.21");
+            applyVersionToUI("v6.3.23");
             applyPlannerNameToUI(localStorage.getItem('ava_planner_display_name'));
-            const savedStrategies = parseSafeJSON(localStorage.getItem('ava_strategy_by_term'), {});
-            AVAILABLE_TERMS.forEach(term => {
-                if (sheetMappings.some(mapping => mapping.code === savedStrategies[term])) strategyByTerm[term] = savedStrategies[term];
-            });
+            loadSavedJarConfigs();
             buildAndRenderFlow();
             fetchCloudDataWithFastCheck();
 
