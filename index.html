@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.19)</title>
+    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.20)</title>
     
     <link rel="manifest" href="./manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="./icon-192x192.png">
@@ -62,8 +62,10 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Noto Sans TC', 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-page); color: var(--text-main); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
         .system-top-nav { background: #ffffff; border-bottom: 1px solid var(--border-light); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
-        .brand-title-wrap { display: flex; align-items: center; gap: 10px; user-select: none; }
-        .brand-logo-text { font-size: 1.08rem; font-weight: 800; color: var(--brand-primary); cursor: pointer; }
+        .brand-title-wrap { display: flex; align-items: center; gap: 10px; user-select: none; min-width: 0; }
+        .brand-logo-text { display: inline-flex; align-items: baseline; gap: 7px; color: var(--brand-primary); cursor: pointer; white-space: nowrap; }
+        .brand-name { font-size: clamp(1rem, 1.5vw, 1.12rem); font-weight: 800; letter-spacing: .01em; }
+        .brand-version { font-size: .68rem; font-weight: 500; color: var(--text-muted); letter-spacing: .02em; }
         .mini-quick-btn { background: #ffffff; border: 1px solid var(--border-light); border-radius: 50%; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.88rem; font-weight: 900; cursor: pointer; transition: all 0.2s; box-shadow: var(--shadow-sm); }
         .mini-quick-btn:hover { background: var(--brand-soft); border-color: var(--brand-accent); transform: scale(1.08); }
         .mini-quick-btn.scenario-btn { color: var(--brand-accent); border: var(--pink-dashed); }
@@ -73,14 +75,14 @@
         .progress-bar-container { width: 100%; height: 3px; background: #e2e8f0; position: sticky; top: 53px; z-index: 99; }
         .progress-bar-fill { height: 100%; background: var(--brand-accent); width: 7%; transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
         
-        .workspace-layout { max-width: 1020px; width: 100%; margin: 24px auto; padding: 0 20px; flex: 1; }
+        .workspace-layout { max-width: 1080px; width: 100%; margin: clamp(14px, 2.4vw, 28px) auto; padding: 0 clamp(12px, 2vw, 22px); flex: 1; min-width: 0; }
         .step-page { display: none; }
         .step-page.active { display: block; animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         
-        .content-card { background: var(--surface-card); border: 1px solid var(--border-light); border-radius: 20px; padding: 32px 28px; box-shadow: var(--shadow-md); }
-        .question-title { font-size: 1.4rem; font-weight: 800; color: var(--text-main); margin-bottom: 8px; }
-        .question-hint { font-size: 0.96rem; color: var(--text-sub); margin-bottom: 24px; }
+        .content-card { background: var(--surface-card); border: 1px solid var(--border-light); border-radius: 20px; padding: clamp(16px, 2.5vw, 28px); box-shadow: var(--shadow-md); min-width: 0; }
+        .question-title { font-size: clamp(22px, 2.7vw, 30px); line-height: 1.3; font-weight: 800; color: var(--text-main); margin-bottom: 8px; overflow-wrap: anywhere; }
+        .question-hint { font-size: clamp(14px, 1.65vw, 18px); line-height: 1.55; color: var(--text-sub); margin-bottom: clamp(16px, 2vw, 24px); }
         
         .options-group { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
         .option-card-guided { background: #ffffff; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 16px 20px; text-align: left; cursor: pointer; transition: all 0.2s; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
@@ -99,8 +101,8 @@
         .step-visual-card-title { font-size: 0.98rem; font-weight: 800; color: var(--brand-primary); }
         .step-visual-card-desc { font-size: 0.86rem; color: var(--text-sub); line-height: 1.5; }
         
-        .gap-iframe-container { width: 100%; min-height: 560px; border: 1px solid var(--border-light); border-radius: 16px; overflow: hidden; background: #fff; }
-        .gap-iframe { width: 100%; height: 560px; border: none; }
+        .gap-iframe-container { width: 100%; min-width: 0; min-height: 600px; border: 1px solid var(--border-light); border-radius: 16px; overflow: hidden; background: #f8fafc; }
+        .gap-iframe { display: block; width: 100%; height: clamp(600px, 74vh, 760px); border: none; }
         
         /* 水庫卡片樣式 */
         .calc-jar-card { background: #ffffff; border: 1px solid var(--border-light); border-radius: 16px; padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow-sm); }
@@ -125,16 +127,22 @@
         table.clean-table th, table.clean-table td { padding: 11px 14px; text-align: right; border-bottom: 1px solid var(--border-light); }
         table.clean-table th { font-weight: 700; color: var(--text-sub); background: #f8fafc; }
         
-        /* 優惠 1, 2, 3 卡片樣式 */
-        .promo-tiers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; margin-bottom: 18px; }
-        @media (max-width: 768px) { .promo-tiers-grid { grid-template-columns: 1fr; } }
-        .promo-tier-card { background: #f8fafc; border: 1.5px solid var(--border-light); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; position: relative; }
-        .promo-tier-card.highlight { background: #f0fdf4; border-color: #86efac; }
-        .promo-badge { position: absolute; top: -10px; right: 12px; background: var(--state-success); color: #fff; font-size: 0.72rem; font-weight: 900; padding: 2px 8px; border-radius: 12px; }
-        .promo-tier-title { font-weight: 800; font-size: 1rem; color: var(--brand-primary); margin-bottom: 6px; }
-        .promo-tier-rule { font-size: 0.82rem; color: var(--text-sub); margin-bottom: 12px; line-height: 1.5; }
-        .promo-tier-saved { font-size: 1.45rem; font-weight: 900; color: var(--state-success); margin-bottom: 4px; }
-        .promo-tier-actual { font-size: 0.86rem; color: var(--text-sub); }
+        /* 原有左右對開保費優惠頁面（只加入不改變流程的流體尺寸） */
+        .promo-split-container { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(12px, 2vw, 20px); align-items: stretch; margin-top: 14px; }
+        .promo-card { background: #fdfdfd; border: 1.5px solid var(--border-light); border-radius: 16px; padding: clamp(14px, 2vw, 20px); display: flex; flex-direction: column; gap: 14px; justify-content: space-between; min-width: 0; }
+        .promo-result-box { background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: white; padding: clamp(1.4rem, 3vw, 2rem) clamp(1rem, 2.5vw, 1.6rem); border-radius: 18px; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 100%; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25); min-width: 0; }
+        .promo-result-box .big-savings { font-size: clamp(2rem, 4vw, 2.6rem); font-weight: 900; margin: 12px 0; overflow-wrap: anywhere; }
+        @media (max-width: 699px) { .promo-split-container { grid-template-columns: 1fr; } }
+
+        @media (max-width: 699px) {
+            .system-top-nav { padding: 10px 12px; gap: 8px; }
+            .brand-title-wrap { gap: 7px; }
+            .mini-quick-btn { width: 34px; height: 34px; }
+            .user-settings-btn { min-width: 40px; min-height: 40px; display: grid; place-items: center; }
+            .content-card { border-radius: 16px; }
+            .gap-iframe-container { min-height: 660px; border-radius: 12px; }
+            .gap-iframe { height: 78vh; min-height: 660px; }
+        }
         
         .action-row { display: flex; gap: 12px; margin-top: 28px; }
         .nav-btn { flex: 1; padding: 13px 20px; border-radius: 12px; font-weight: 700; font-size: 0.98rem; cursor: pointer; border: none; transition: 0.2s; text-align: center; }
@@ -179,7 +187,7 @@
 <body>
     <header class="system-top-nav">
         <div class="brand-title-wrap">
-            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入">🌱 AVA PLANNER · v6.3.19</span>
+            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入"><span class="brand-name">🌱 AVA Planner</span><span class="brand-version">v6.3.20</span></span>
             <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="選擇客群情境">!</span>
             <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="核心分頁直達">*</span>
         </div>
@@ -430,7 +438,7 @@
 
     <script>
         const answers = {};
-        let currentSystemVersion = "v6.3.19";
+        let currentSystemVersion = "v6.3.20";
         let GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwbKrrmiS5vx0Q5TvqqUCHBhU-VrS7WwwY0hj6BaNRwuzPtXXIZZxejPwhycCZhSCr-Rg/exec';
         let cloudAdminPassword = "903";
         let currentActiveScenario = "no_savings";
@@ -450,12 +458,28 @@
         let blueprintSummaryText = "完全不影響現有生活享受：只需將每月不知不決流走的少許資金，分段注入專屬水庫，自然鎖定終身被動收入。";
         let blueprintImgUrl = "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80";
         
+        // 沿用原有四個後台情境。Gap 標題先讀 scenariosDB，空值才使用這組顯示預設。
+        const scenarioGapDefaults = {
+            no_savings: { title: "原來我以為已經準備好…", subtitle: "將時間同通脹放入去，睇下真正嘅情況。" },
+            inquiry: { title: "原來我以為已經準備好…", subtitle: "將時間同通脹放入去，睇下真正嘅情況。" },
+            self_invest: { title: "一直有投資，結果同我預期有幾接近？", subtitle: "將投入、回報同時間放入去，一齊睇下而家嘅方法可以走幾遠。" },
+            flexible_return: { title: "如果三樣都想要呢？", subtitle: "安全、靈活、增長都重要，睇下不同方法各自有咩側重。" }
+        };
         let scenariosDB = {
-            no_savings: { scenario_name: "未有儲蓄", gap_title: "🔍 認知差距與真相對比", takeaway_summary: "探索不同路徑在時間複利下的真實落差：" },
-            inquiry: { scenario_name: "主動查詢", gap_title: "🔍 認知差距與真相對比", takeaway_summary: "探索不同路徑在時間複利下的真實落差：" },
-            self_invest: { scenario_name: "自己投資", gap_title: "📈 目標匹配度與不確定性差距", takeaway_summary: "看清市場波動與核心防守底層的真實落差：" },
+            no_savings: { scenario_name: "未有儲蓄", gap_title: "", takeaway_summary: "" },
+            inquiry: { scenario_name: "主動查詢", gap_title: "", takeaway_summary: "" },
+            self_invest: { scenario_name: "自己投資", gap_title: "", takeaway_summary: "" },
             flexible_return: { scenario_name: "靈活性/回報", gap_title: "🔓 假靈活 vs 投資鐵三角取捨", takeaway_summary: "探索流動性、回報與安全性之間的取捨真相：" }
         };
+
+        function getScenarioGapCopy(key) {
+            const configured = scenariosDB[key] || {};
+            const fallback = scenarioGapDefaults[key] || scenarioGapDefaults.no_savings;
+            return {
+                title: String(configured.gap_title || '').trim() || fallback.title,
+                subtitle: String(configured.takeaway_summary || '').trim() || fallback.subtitle
+            };
+        }
         
         const scenarioGapFiles = {
             no_savings: "./scenario1_gap.html",
@@ -575,7 +599,7 @@
             const titleDoc = document.getElementById('html-doc-title');
             if (titleDoc) titleDoc.textContent = document.title;
             const logoEl = document.getElementById('top-logo-title');
-            if (logoEl) logoEl.textContent = `🌱 AVA PLANNER · ${ver}`;
+            if (logoEl) logoEl.innerHTML = `<span class="brand-name">🌱 AVA Planner</span><span class="brand-version">${ver}</span>`;
             const verInput = document.getElementById('admin-version-input');
             if (verInput) verInput.value = ver;
         }
@@ -664,11 +688,11 @@
                     } else if (step.id === 'fixed-page-a') {
                         // 認知差距頁：已恢復「← 上一步」
                         const targetFile = scenarioGapFiles[currentActiveScenario] || scenarioGapFiles.no_savings;
-                        const sc = scenariosDB[currentActiveScenario] || scenariosDB.no_savings;
+                        const gapCopy = getScenarioGapCopy(currentActiveScenario);
                         stepEl.innerHTML = `
                             <div class="content-card">
-                                <h2 class="question-title" id="disp-gap-title">${sc.gap_title || '🔍 認知差距與真相對比'}</h2>
-                                <p class="question-hint" id="disp-gap-sub">${sc.takeaway_summary || '探索不同路徑在時間複利下的真實落差：'}</p>
+                                <h2 class="question-title" id="disp-gap-title">${gapCopy.title}</h2>
+                                <p class="question-hint" id="disp-gap-sub">${gapCopy.subtitle}</p>
                                 <div class="gap-iframe-container">
                                     <iframe class="gap-iframe" src="${targetFile}"></iframe>
                                 </div>
@@ -742,55 +766,32 @@
                             </div>
                         `;
                     } else if (step.id === 'page-promo') {
-                        // 保費優惠 1, 2, 3 卡片
+                        // 還原原有左右對開完整保費優惠算式及資訊架構。
                         stepEl.innerHTML = `
                             <div class="content-card">
                                 <h2 class="question-title">🎁 專屬保費優惠計算</h2>
                                 <p class="question-hint">為你度身訂造最慳錢的投保策略！即時計算最新保費回贈及折扣優惠：</p>
-                                
-                                <div style="background:#fff; border:1.5px solid var(--border-light); border-radius:14px; padding:18px; margin-bottom:16px;">
-                                    <label style="font-size:0.88rem; font-weight:bold; color:var(--text-sub);">每年名義保費 ($)</label>
-                                    <input type="text" id="promo-annual-premium" value="100,000" style="width:100%; padding:10px; font-size:1.2rem; font-weight:bold; text-align:center; border:1.5px solid var(--brand-accent); border-radius:8px; margin-top:6px;" oninput="calculatePromo()">
-                                </div>
-
-                                <div class="promo-tiers-grid">
-                                    <div class="promo-tier-card">
-                                        <span class="promo-badge">優惠 1</span>
+                                <div class="promo-split-container">
+                                    <div class="promo-card">
                                         <div>
-                                            <div class="promo-tier-title">標準首年折扣</div>
-                                            <div class="promo-tier-rule">首年保費即時回贈折扣 (固定 8%)</div>
+                                            <label style="font-size:0.8rem; font-weight:bold; color:var(--text-sub);">每年名義保費 ($)</label>
+                                            <input type="text" id="promo-annual-premium" value="100,000" style="width:100%; min-width:0; padding:10px; font-size:1.15rem; font-weight:bold; text-align:center; border:1.5px solid var(--brand-accent); border-radius:8px; margin-top:6px;" oninput="calculatePromo()">
                                         </div>
-                                        <div>
-                                            <div class="promo-tier-saved" id="tier1-saved">$8,000</div>
-                                            <div class="promo-tier-actual">實付：<strong id="tier1-actual">$92,000</strong></div>
+                                        <div style="background:#f8fafc; border-radius:10px; padding:12px; font-size:0.85rem; color:var(--text-sub); line-height:1.7;">
+                                            <div style="font-weight:bold; color:var(--brand-primary); margin-bottom:4px;">📊 算式拆解與優惠階梯：</div>
+                                            <div>🔹 首年折扣比例：<strong id="promo-rate-text" style="color:var(--state-success);">10%</strong> (<span id="promo-discount-amount">$10,000</span>)</div>
+                                            <div>🔹 預繳首年額外回贈：<strong id="promo-prepay-text" style="color:var(--brand-accent);">$2,000</strong></div>
+                                            <div style="border-top:1px dashed #cbd5e1; margin-top:6px; padding-top:6px;">🔹 總優惠 = 折扣 + 額外回贈</div>
                                         </div>
                                     </div>
-
-                                    <div class="promo-tier-card highlight">
-                                        <span class="promo-badge" style="background:var(--brand-accent);">優惠 2 (推薦)</span>
-                                        <div>
-                                            <div class="promo-tier-title">階梯保費回贈</div>
-                                            <div class="promo-tier-rule">按保費規模疊加特級回贈 (10% - 12%)</div>
-                                        </div>
-                                        <div>
-                                            <div class="promo-tier-saved" id="tier2-saved" style="color:var(--brand-accent);">$10,000</div>
-                                            <div class="promo-tier-actual">實付：<strong id="tier2-actual">$90,000</strong></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="promo-tier-card highlight" style="background:#f5f3ff; border-color:#c4b5fd;">
-                                        <span class="promo-badge" style="background:var(--state-purple);">優惠 3 (尊尚)</span>
-                                        <div>
-                                            <div class="promo-tier-title">全期預繳＋雙重禮遇</div>
-                                            <div class="promo-tier-rule">預繳享保證利息＋首年額外加碼禮遇</div>
-                                        </div>
-                                        <div>
-                                            <div class="promo-tier-saved" id="tier3-saved" style="color:var(--state-purple);">$12,000</div>
-                                            <div class="promo-tier-actual">首年實付：<strong id="tier3-actual">$88,000</strong></div>
+                                    <div>
+                                        <div class="promo-result-box">
+                                            <h4 style="font-size:1.05rem; opacity:0.95;">已為您慳下高達：</h4>
+                                            <div class="big-savings" id="promo-total-savings">$12,000</div>
+                                            <div style="font-size:0.9rem; opacity:0.9;">折後首年實付保費：<span id="promo-actual-pay" style="font-weight:bold; font-size:1.1rem;">$88,000</span></div>
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="action-row">
                                     <button class="nav-btn prev" onclick="navigateStep(${index - 1})">← 返回藍圖</button>
                                     <button class="nav-btn next" onclick="alert('✅ 規劃全數完成！')">✅ 完成所有規劃</button>
@@ -896,34 +897,28 @@
             calculateAndDisplay();
         }
 
-        // 保費優惠計算
+        // 保費優惠計算：保留原有階梯折扣及預繳回贈公式。
         function calculatePromo() {
             const P = parseFormattedNumber(document.getElementById('promo-annual-premium')?.value) || 100000;
-            
-            const s1 = P * 0.08;
-            const a1 = P - s1;
-            
-            let rate2 = P >= 150000 ? 0.12 : (P >= 100000 ? 0.10 : 0.08);
-            const s2 = P * rate2;
-            const a2 = P - s2;
-            
-            let bonus3 = P >= 150000 ? 3000 : (P >= 100000 ? 2000 : 1000);
-            const s3 = s2 + bonus3;
-            const a3 = P - s3;
-
-            const t1s = document.getElementById('tier1-saved');
-            const t1a = document.getElementById('tier1-actual');
-            const t2s = document.getElementById('tier2-saved');
-            const t2a = document.getElementById('tier2-actual');
-            const t3s = document.getElementById('tier3-saved');
-            const t3a = document.getElementById('tier3-actual');
-
-            if (t1s) t1s.textContent = '$' + formatNumber(s1);
-            if (t1a) t1a.textContent = '$' + formatNumber(a1);
-            if (t2s) t2s.textContent = '$' + formatNumber(s2);
-            if (t2a) t2a.textContent = '$' + formatNumber(a2);
-            if (t3s) t3s.textContent = '$' + formatNumber(s3);
-            if (t3a) t3a.textContent = '$' + formatNumber(a3);
+            let discountRate = 0.08;
+            let prepayBonus = 1000;
+            if (P >= 150000) { discountRate = 0.12; prepayBonus = 3000; }
+            else if (P >= 100000) { discountRate = 0.10; prepayBonus = 2000; }
+            else if (P >= 50000) { discountRate = 0.08; prepayBonus = 1000; }
+            else { discountRate = 0.05; prepayBonus = 500; }
+            const discountAmount = P * discountRate;
+            const totalSaved = discountAmount + prepayBonus;
+            const actualPay = P - totalSaved;
+            const rateTextEl = document.getElementById('promo-rate-text');
+            const discountAmtEl = document.getElementById('promo-discount-amount');
+            const prepayTextEl = document.getElementById('promo-prepay-text');
+            const totalSavedEl = document.getElementById('promo-total-savings');
+            const actualPayEl = document.getElementById('promo-actual-pay');
+            if (rateTextEl) rateTextEl.textContent = (discountRate * 100).toFixed(0) + '%';
+            if (discountAmtEl) discountAmtEl.textContent = '$' + formatNumber(discountAmount);
+            if (prepayTextEl) prepayTextEl.textContent = '$' + formatNumber(prepayBonus);
+            if (totalSavedEl) totalSavedEl.textContent = '$' + formatNumber(totalSaved);
+            if (actualPayEl) actualPayEl.textContent = '$' + formatNumber(actualPay);
         }
 
         function navigateStep(index) {
@@ -1260,9 +1255,9 @@
 
         function loadJarTextsToEditor() {
             const jt = allJarTexts[currentActiveScenario] || allJarTexts['no_savings'];
-            const sc = scenariosDB[currentActiveScenario] || scenariosDB.no_savings;
-            document.getElementById('admin-gap-title-input').value = sc.gap_title || "🔍 認知差距與真相對比";
-            document.getElementById('admin-gap-sub-input').value = sc.takeaway_summary || "探索不同路徑在時間複利下的真實落差：";
+            const gapCopy = getScenarioGapCopy(currentActiveScenario);
+            document.getElementById('admin-gap-title-input').value = gapCopy.title;
+            document.getElementById('admin-gap-sub-input').value = gapCopy.subtitle;
             document.getElementById('admin-th-pay-period').value = jt.pay_label || "供款年期";
             document.getElementById('admin-opt-5yr').value = jt.opt_5yr || "5 年 (建立)";
             document.getElementById('admin-opt-10yr').value = jt.opt_10yr || "10 年 (累積期)";
