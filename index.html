@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.23)</title>
+    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.24)</title>
 
     <link rel="manifest" href="./manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="./icon-192x192.png">
@@ -66,6 +66,10 @@
         .brand-logo-text { display: inline-flex; align-items: baseline; gap: 7px; color: var(--brand-primary); cursor: pointer; white-space: nowrap; }
         .brand-name { font-size: clamp(1rem, 1.5vw, 1.12rem); font-weight: 800; letter-spacing: .01em; }
         .brand-version { font-size: .68rem; font-weight: 500; color: var(--text-muted); letter-spacing: .02em; }
+        .home-nav-btn { min-width: 44px; min-height: 44px; padding: 0 14px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; border: 1px solid var(--border-light); border-radius: 12px; background: #ffffff; color: var(--brand-primary); font: 700 .9rem/1 'Noto Sans TC', sans-serif; cursor: pointer; transition: background-color .2s, border-color .2s, color .2s; white-space: nowrap; }
+        .home-nav-btn:hover { background: var(--brand-soft); border-color: var(--brand-accent); color: var(--brand-accent); }
+        .home-nav-btn:focus-visible { outline: 3px solid rgba(37, 99, 235, .24); outline-offset: 2px; }
+        .home-nav-icon { width: 18px; height: 18px; flex: 0 0 auto; }
         .mini-quick-btn { background: #ffffff; border: 1px solid var(--border-light); border-radius: 50%; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.88rem; font-weight: 900; cursor: pointer; transition: all 0.2s; box-shadow: var(--shadow-sm); }
         .mini-quick-btn:hover { background: var(--brand-soft); border-color: var(--brand-accent); transform: scale(1.08); }
         .mini-quick-btn.scenario-btn { color: var(--brand-accent); border: var(--pink-dashed); }
@@ -160,6 +164,14 @@
             .gap-iframe { height: 78vh; min-height: 660px; }
             .strategy-panel { grid-template-columns: 1fr; max-height: 60vh; overflow-y: auto; }
             .brand-name { max-width: min(48vw, 260px); overflow: hidden; text-overflow: ellipsis; display: inline-block; vertical-align: bottom; }
+            .home-nav-btn { padding: 0; border-radius: 50%; }
+            .home-nav-label { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+        }
+        @media (max-width: 480px) {
+            .system-top-nav { gap: 6px; }
+            .brand-title-wrap { gap: 5px; }
+            .brand-name { max-width: 26vw; }
+            .brand-version { display: none; }
         }
 
         .action-row { display: flex; gap: 12px; margin-top: 28px; }
@@ -205,11 +217,17 @@
 <body>
     <header class="system-top-nav">
         <div class="brand-title-wrap">
-            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入"><span class="brand-name">🌱 AVA Planner</span><span class="brand-version">v6.3.23</span></span>
+            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入"><span class="brand-name">🌱 AVA Planner</span><span class="brand-version">v6.3.24</span></span>
             <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="選擇客群情境">!</span>
             <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="核心分頁直達">*</span>
         </div>
-        <div class="user-settings-btn" onclick="openDashboardWithRole('user')" title="設定">⚙️</div>
+        <div style="display:flex; align-items:center; gap:8px;">
+            <button type="button" class="home-nav-btn" onclick="returnToAppHome()" aria-label="返回首頁" title="返回首頁">
+                <svg class="home-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2 2.5 11h2.2v9h5.5v-5.5h3.6V20h5.5v-9h2.2L12 3.2Z"/></svg>
+                <span class="home-nav-label">返回首頁</span>
+            </button>
+            <div class="user-settings-btn" onclick="openDashboardWithRole('user')" title="設定">⚙️</div>
+        </div>
     </header>
 
     <div class="progress-bar-container">
@@ -467,7 +485,7 @@
 
     <script>
         const answers = {};
-        let currentSystemVersion = "v6.3.23";
+        let currentSystemVersion = "v6.3.24";
         let GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwbKrrmiS5vx0Q5TvqqUCHBhU-VrS7WwwY0hj6BaNRwuzPtXXIZZxejPwhycCZhSCr-Rg/exec';
         let cloudAdminPassword = "903";
         let currentActiveScenario = "no_savings";
@@ -1043,6 +1061,14 @@
                 calculateAndDisplay();
             }
             if (activeFullFlowSteps[index].id === 'page-promo') calculatePromo();
+        }
+
+        // 返回 Independent App 的流程起點；只切換畫面，不重建流程或清除使用者狀態。
+        function returnToAppHome() {
+            closeScenarioPopup();
+            closeJumpPopup();
+            closeAdminDashboard();
+            navigateStep(0);
         }
 
         function selectDynamicOption(stepId, headline, index, selectedCard) {
@@ -1797,7 +1823,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            applyVersionToUI("v6.3.23");
+            applyVersionToUI("v6.3.24");
             applyPlannerNameToUI(localStorage.getItem('ava_planner_display_name'));
             loadSavedJarConfigs();
             buildAndRenderFlow();
