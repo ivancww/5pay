@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.26)</title>
+    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.27)</title>
     <link rel="manifest" href="./manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="./icon-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="./icon-512x512.png">
@@ -196,7 +196,7 @@
 <body>
     <header class="system-top-nav">
         <div class="brand-title-wrap">
-            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入"><span class="brand-name">🌱 AVA Planner</span><span class="brand-version">v6.3.25</span></span>
+            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入"><span class="brand-name">🌱 AVA Planner</span><span class="brand-version">v6.3.27</span></span>
             <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="選擇客群情境">!</span>
             <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="核心分頁直達">*</span>
         </div>
@@ -442,10 +442,10 @@
     </div>
     <script>
         const answers = {};
-        let currentSystemVersion = "v6.3.25";
+        let currentSystemVersion = "v6.3.27";
         let GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwbKrrmiS5vx0Q5TvqqUCHBhU-VrS7WwwY0hj6BaNRwuzPtXXIZZxejPwhycCZhSCr-Rg/exec';
         let cloudAdminPassword = "903";
-        let returnTablesDB = parseSafeJSON(localStorage.getItem('ava_return_tables'), {}); // 【核心修正 1】：載入本機與雲端對照倍數表
+        let returnTablesDB = {}; // 安全初始化為空物件，避免未定義報錯
         let currentActiveScenario = "no_savings";
         let currentRole = "admin";
         let activeFullFlowSteps = [];
@@ -475,6 +475,18 @@
             self_invest: { scenario_name: "自己投資", gap_title: "", takeaway_summary: "" },
             flexible_return: { scenario_name: "靈活性/回報", gap_title: "🔓 假靈活 vs 投資鐵三角取捨", takeaway_summary: "探索流動性、回報與安全性之間的取捨真相：" }
         };
+        function parseSafeJSON(val, fallback) {
+            if (!val) return fallback;
+            if (typeof val !== 'string') return val;
+            try {
+                return JSON.parse(val);
+            } catch (e) {
+                return fallback;
+            }
+        }
+        // parseSafeJSON 定義完成後再安全讀取 localStorage
+        returnTablesDB = parseSafeJSON(localStorage.getItem('ava_return_tables'), {});
+
         function getScenarioGapCopy(key) {
             const configured = scenariosDB[key] || {};
             const fallback = scenarioGapDefaults[key] || scenarioGapDefaults.no_savings;
@@ -535,15 +547,6 @@
             { code: "withdraw23_from25", sheet_name: "25年領取", display_name: "🌴 第 25 年起 每年領取 23%" },
             { code: "withdraw29_from30", sheet_name: "30年領取", display_name: "🌲 第 30 年起 每年領取 29%" }
         ];
-        function parseSafeJSON(val, fallback) {
-            if (!val) return fallback;
-            if (typeof val !== 'string') return val;
-            try {
-                return JSON.parse(val);
-            } catch (e) {
-                return fallback;
-            }
-        }
         function getStrategyDetails(code) {
             if (code === "withdraw12_from15") return { rate: 0.12, startYr: 15, isRolling: false };
             if (code === "withdraw18_from20") return { rate: 0.18, startYr: 20, isRolling: false };
@@ -584,7 +587,7 @@
             ],
             self_invest: [
                 { id: "step_1", zone: "zone_a", step_num: 1, title: "「講到投資同儲蓄，你目前最重視邊樣？」", subtitle: "探索最舒服的步調：", image_url: "", options: [{ headline: "📈 追求高增長" }, { headline: "🛡️ 穩健防守底氣" }] },
-                { id: "step_2", zone: "zone_b", step_num: 2, title: "「點解連專業投資者，都要分開『進攻』同『防守』？」", subtitle: "核心防守層的作用：", image_url: "", options: [{ headline: "🛡️ 想了解 50% 核心防守底的概念" }, { headline: "💧 想直接睇具體點樣提供穩定現金流" } }] },
+                { id: "step_2", zone: "zone_b", step_num: 2, title: "「點解連專業投資者，都要分開『進攻』同『防守』？」", subtitle: "核心防守層的作用：", image_url: "", options: [{ headline: "🛡️ 想了解 50% 核心防守底的概念" }, { headline: "💧 想直接睇具體點樣提供穩定現金流" }] },
                 { id: "step_3", zone: "zone_c", step_num: 3, title: "「以你目前嘅投資配置，你覺得建立呢個防守底層適唔適合自己？」", subtitle: "評估個人需求：", image_url: "", options: [{ headline: "🟢 好適合，想有一筆完全穩健的現金流底氣" }, { headline: "🟡 想再微調適合自己嘅投入比例" }] }
             ],
             flexible_return: [
@@ -987,7 +990,7 @@
             if (pFill) pFill.style.width = `${pct}%`;
         }
 
-        // 【核心修正 2】：修改 calculateAndDisplay，完全對照 Google Sheet A, B, C 欄資料
+        // 精確對照 Google Sheet A, B, C 欄資料
         function calculateAndDisplay() {
             const startAge = parseInt(document.getElementById('start-age')?.value) || 30;
             const thead = document.getElementById('results-table-head');
@@ -1043,12 +1046,11 @@
                     const contributedAmount = contributedYears * jar.annualContribution;
                     totalReserve += contributedAmount;
                     
-                    // 對照 Google Sheet 該分頁對應資料 (A欄=年度, B欄=領取率, C欄=倍數)
                     const activeSheetCode = jar.isRolling ? "none" : jar.stratCode;
                     const sheetTable = returnTablesDB[activeSheetCode] || {};
                     const rowData = sheetTable[jarYear];
 
-                    // 1. 被動收入與累積領取計算 (對照 B 欄或預設領取率)
+                    // 1. 被動收入與累積領取 (對照 B 欄或預設領取率)
                     if (!jar.isRolling && jarYear >= jar.startYr) {
                         const payoutRate = (rowData && rowData.payout_rate !== undefined && rowData.payout_rate !== "") 
                             ? Number(rowData.payout_rate) 
@@ -1058,14 +1060,12 @@
                         accumTotal += jarAnnuity * (jarYear - jar.startYr + 1);
                     }
 
-                    // 2. 大樹收成計算 (對照 C 欄倍數)
+                    // 2. 大樹收成 (對照 C 欄倍數)
                     if (jarYear < 5) {
                         assetTotal += contributedAmount;
                     } else if (rowData && Number(rowData.multiple) > 0) {
-                        // 精確套用 Google Sheet C 欄倍數
                         assetTotal += jar.totalInput * Number(rowData.multiple);
                     } else {
-                        // 後備估算公式
                         if (jar.isRolling) {
                             assetTotal += jar.totalInput * Math.pow(1.065, jarYear - 5);
                         } else {
@@ -1126,7 +1126,7 @@
                         <input type="text" class="pink-edit-input" value="${card.subtitle || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].subtitle = this.value">
                         <div style="${!isOptionMode ? 'display:block;' : 'display:none;'} margin-top:10px;">
                             <label style="font-size:0.75rem; font-weight:bold; color:#059669;">按鈕文字 (例如：睇下可以點做 →)：</label>
-                            <input type="text" class="pink-edit-input" placeholder="下一步 →" value="${card.button_text || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].button_text = this.value">
+                            <input type="text" class="pink-edit-input" placeholder="下一步 →" value="${card.button_text || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx his}].button_text = this.value">
                             <div class="admin-options-container" style="margin-top:10px;">
                                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                                     <span style="font-size:0.75rem; font-weight:bold; color:#065f46;">步驟清單 (三步圖)：</span>
@@ -1486,7 +1486,6 @@
                 if (json.sheet_mappings) sheetMappings = json.sheet_mappings;
                 if (json.blueprint_summary_text) blueprintSummaryText = json.blueprint_summary_text;
                 if (json.blueprint_img_url) blueprintImgUrl = json.blueprint_img_url;
-                // 【核心修正 3】：還原時同步更新 return_tables
                 if (json.return_tables) {
                     returnTablesDB = json.return_tables;
                     localStorage.setItem('ava_return_tables', JSON.stringify(returnTablesDB));
@@ -1633,8 +1632,6 @@
                 alert("❌ 上傳失敗，請檢查 GAS API 權限。");
             }
         }
-
-        // 【核心修正 4】：連線抓取 GAS 回傳的 return_tables (A, B, C 欄) 並存入本機
         async function fetchCloudDataWithFastCheck() {
             try {
                 const isUserCustom = localStorage.getItem('ava_user_has_customized') === 'true';
@@ -1658,7 +1655,7 @@
                 const json = await fullResp.json();
                 if (json.system_version && compareVersions(json.system_version, currentSystemVersion) >= 0) applyVersionToUI(json.system_version);
                 
-                // 無論是否為本機自訂，皆同步最新 Google Sheet 回報倍數表
+                // 雲端回傳之 return_tables (A, B, C 欄) 寫入本機
                 if (json.return_tables) {
                     returnTablesDB = json.return_tables;
                     localStorage.setItem('ava_return_tables', JSON.stringify(returnTablesDB));
@@ -1702,7 +1699,7 @@
             }
         }
         document.addEventListener('DOMContentLoaded', () => {
-            applyVersionToUI("v6.3.25");
+            applyVersionToUI("v6.3.27");
             applyPlannerNameToUI(localStorage.getItem('ava_planner_display_name'));
             loadSavedJarConfigs();
             buildAndRenderFlow();
