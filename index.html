@@ -483,11 +483,14 @@
         </div>
     </div>
 
+    <script src="./report-data.js"></script>
     <script>
         const answers = {};
-        let currentSystemVersion = "v6.3.24";
+        let currentSystemVersion = "v6.3.26";
         let GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwbKrrmiS5vx0Q5TvqqUCHBhU-VrS7WwwY0hj6BaNRwuzPtXXIZZxejPwhycCZhSCr-Rg/exec';
         let cloudAdminPassword = "903";
+        let cloudReturnTables = {};
+        const RETURN_DATA_CACHE_KEY = 'ava_return_data_cache_v2';
         let currentActiveScenario = "no_savings";
         let currentRole = "admin";
         let activeFullFlowSteps = [];
@@ -596,13 +599,23 @@
             }
         }
 
-        function getStrategyDetails(code) {
-            if (code === "withdraw12_from15") return { rate: 0.12, startYr: 15, isRolling: false };
-            if (code === "withdraw18_from20") return { rate: 0.18, startYr: 20, isRolling: false };
-            if (code === "withdraw23_from25") return { rate: 0.23, startYr: 25, isRolling: false };
-            if (code === "withdraw29_from30") return { rate: 0.29, startYr: 30, isRolling: false };
-            if (code === "none") return { rate: 0, startYr: 999, isRolling: true };
-            return { rate: 0.07, startYr: 8, isRolling: false };
+        function applyCloudReturnData(json) {
+            const normalized = AVAReportData.normalize(json, sheetMappings);
+            const missingPages = sheetMappings.filter(mapping => !normalized[mapping.code]);
+            if (missingPages.length) {
+                console.error('GAS return data is missing A/B/C rows for mapped pages:', missingPages.map(mapping => mapping.sheet_name));
+                return false;
+            }
+            cloudReturnTables = normalized;
+            localStorage.setItem(RETURN_DATA_CACHE_KEY, JSON.stringify({
+                version: json.return_data_version || json.system_version || '', tables: normalized
+            }));
+            return true;
+        }
+
+        function loadCachedReturnData() {
+            const cached = parseSafeJSON(localStorage.getItem(RETURN_DATA_CACHE_KEY), null);
+            if (cached && cached.tables) cloudReturnTables = cached.tables;
         }
 
         function loadSavedJarConfigs() {
@@ -1114,16 +1127,13 @@
                 jarConfigsData[jKey] = jarConfigsData[jKey] || { value: 40000, withdraw: "withdraw7_from8" };
                 const val = jarConfigsData[jKey].value || 40000;
                 const stratCode = jarConfigsData[jKey].withdraw || "withdraw7_from8";
-                const stratDetails = getStrategyDetails(stratCode);
                 const jarTotalInput = val * 5;
                 activeJars.push({
                     id: jKey,
                     startOffset: (j - 1) * 5 + 1,
                     annualContribution: val,
                     totalInput: jarTotalInput,
-                    rate: stratDetails.rate,
-                    startYr: stratDetails.startYr,
-                    isRolling: stratDetails.isRolling
+                    strategy: stratCode
                 });
             }
 
@@ -1136,41 +1146,19 @@
 
             allYears.forEach(yr => {
                 const age = startAge + yr - 1;
-                let annualAnnuityTotal = 0;
-                let accumTotal = 0;
-                let assetTotal = 0;
-                let totalReserve = 0;
-
-                activeJars.forEach(jar => {
-                    const jarYear = yr - jar.startOffset + 1;
-                    if (jarYear <= 0) return;
-                    const contributedYears = Math.min(jarYear, 5);
-                    const contributedAmount = contributedYears * jar.annualContribution;
-                    totalReserve += contributedAmount;
-                    if (!jar.isRolling && jarYear >= jar.startYr) {
-                        const jarAnnuity = jar.totalInput * jar.rate;
-                        annualAnnuityTotal += jarAnnuity;
-                        accumTotal += jarAnnuity * (jarYear - jar.startYr + 1);
-                    }
-                    if (jarYear < 5) {
-                        assetTotal += contributedAmount;
-                    } else if (jar.isRolling) {
-                        assetTotal += jar.totalInput * Math.pow(1.065, jarYear - 5);
-                    } else {
-                        assetTotal += jar.totalInput * (1 + (jarYear - 5) * 0.12);
-                    }
-                });
-
-                let irr = yr >= startDisplayYear ? 6.2 + (yr - startDisplayYear) * 0.12 : 4.8 + (yr - selectedPayYears) * 0.2;
+                const totals = AVAReportData.calculate(cloudReturnTables, activeJars, yr);
+                // A partial aggregate would look authoritative but be wrong. Keep the row empty
+                // until every active reservoir has an exact cloud row (no interpolation).
+                const moneyOrDash = value => totals.complete && value > 0 ? '$' + formatNumber(value) : '-';
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td style="text-align:left; font-weight:bold;">第 ${yr} 年 (${age} 歲)</td>
-                    <td>$${formatNumber(totalReserve)}</td>
-                    ${colVisibility.annuity ? `<td style="color:var(--brand-accent); font-weight:800;">${annualAnnuityTotal > 0 ? '$' + formatNumber(annualAnnuityTotal) : '-'}</td>` : ''}
-                    ${colVisibility.accum ? `<td style="color:var(--state-success); font-weight:800;">${accumTotal > 0 ? '$' + formatNumber(accumTotal) : '-'}</td>` : ''}
-                    ${colVisibility.asset ? `<td style="color:var(--state-purple); font-weight:800;">$${formatNumber(assetTotal)}</td>` : ''}
-                    ${colVisibility.interest ? `<td style="color:var(--state-danger); font-weight:800;">${irr.toFixed(1)}%</td>` : ''}
+                    <td>${moneyOrDash(totals.reserve)}</td>
+                    ${colVisibility.annuity ? `<td style="color:var(--brand-accent); font-weight:800;">${moneyOrDash(totals.income)}</td>` : ''}
+                    ${colVisibility.accum ? `<td style="color:var(--state-success); font-weight:800;">${moneyOrDash(totals.accumulated)}</td>` : ''}
+                    ${colVisibility.asset ? `<td style="color:var(--state-purple); font-weight:800;">${moneyOrDash(totals.asset)}</td>` : ''}
+                    ${colVisibility.interest ? `<td style="color:var(--state-danger); font-weight:800;">${!totals.complete || totals.returnRate == null ? '-' : totals.returnRate.toFixed(1) + '%'}</td>` : ''}
                 `;
                 tbody.appendChild(tr);
             });
@@ -1610,6 +1598,7 @@
                 if (json.jar_texts) allJarTexts = json.jar_texts;
                 if (json.scenarios) scenariosDB = json.scenarios;
                 if (json.sheet_mappings) sheetMappings = json.sheet_mappings;
+                applyCloudReturnData(json);
                 if (json.blueprint_summary_text) blueprintSummaryText = json.blueprint_summary_text;
                 if (json.blueprint_img_url) blueprintImgUrl = json.blueprint_img_url;
                 if (json.cards && json.cards.length > 0) {
@@ -1767,6 +1756,7 @@
                 const isUserCustom = localStorage.getItem('ava_user_has_customized') === 'true';
                 applyPlannerNameToUI(localStorage.getItem('ava_planner_display_name'));
                 loadSavedJarConfigs();
+                const cachedReturns = parseSafeJSON(localStorage.getItem(RETURN_DATA_CACHE_KEY), null);
                 if (isUserCustom) {
                     const savedDb = localStorage.getItem('ava_scenario_database');
                     if (savedDb) allScenarioDatabase = parseSafeJSON(savedDb, defaultScenarioDatabase);
@@ -1780,6 +1770,19 @@
                     if (savedBpImg !== null) blueprintImgUrl = savedBpImg;
                     buildAndRenderFlow();
                 }
+                // The lightweight GAS check prevents repeatedly downloading all report pages.
+                // If the endpoint has no data version, continue with the full GET for safety.
+                if (cachedReturns && cachedReturns.version) {
+                    const versionResp = await fetch(`${GAS_API_URL}?check_version=true`);
+                    if (versionResp.ok) {
+                        const versionJson = await versionResp.json();
+                        const cloudReturnVersion = versionJson.return_data_version || versionJson.system_version;
+                        if (cloudReturnVersion && cloudReturnVersion === cachedReturns.version) {
+                            if (versionJson.system_version) applyVersionToUI(versionJson.system_version);
+                            return;
+                        }
+                    }
+                }
                 const fullResp = await fetch(GAS_API_URL);
                 if (!fullResp.ok) throw new Error(`Cloud request failed: ${fullResp.status}`);
                 const json = await fullResp.json();
@@ -1787,12 +1790,15 @@
                 // 本機專屬內容不應被雲端覆蓋，但版本號仍要跟所有裝置同步。
                 if (isUserCustom) {
                     if (json.sheet_mappings) sheetMappings = json.sheet_mappings;
+                    applyCloudReturnData(json);
+                    buildAndRenderFlow();
                     return;
                 }
                 if (json.planner_display_name) applyPlannerNameToUI(json.planner_display_name);
                 if (json.jar_texts) allJarTexts = json.jar_texts;
                 if (json.scenarios) scenariosDB = json.scenarios;
                 if (json.sheet_mappings) sheetMappings = json.sheet_mappings;
+                applyCloudReturnData(json);
                 if (json.blueprint_summary_text) blueprintSummaryText = json.blueprint_summary_text;
                 if (json.blueprint_img_url) blueprintImgUrl = json.blueprint_img_url;
                 if (json.jar_configs) Object.assign(jarConfigsData, json.jar_configs);
@@ -1823,9 +1829,10 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            applyVersionToUI("v6.3.24");
+            applyVersionToUI("v6.3.26");
             applyPlannerNameToUI(localStorage.getItem('ava_planner_display_name'));
             loadSavedJarConfigs();
+            loadCachedReturnData();
             buildAndRenderFlow();
             fetchCloudDataWithFastCheck();
 
