@@ -1154,11 +1154,22 @@
                     }
                     if (jarYear < 5) {
                         assetTotal += contributedAmount;
-                    } else if (jar.isRolling) {
-                        assetTotal += jar.totalInput * Math.pow(1.065, jarYear - 5);
                     } else {
-                        assetTotal += jar.totalInput * (1 + (jarYear - 5) * 0.12);
+                        const stratCode = jar.isRolling ? "none" : (jarConfigsData[jar.id]?.withdraw || "withdraw7_from8");
+                        const sheetTable = returnTablesDB[stratCode] || {};
+                        const rowData = sheetTable[jarYear];
+
+                        if (rowData && Number(rowData.multiple) > 0) {
+                            assetTotal += jar.totalInput * Number(rowData.multiple);
+                        } else {
+                            if (jar.isRolling) {
+                                assetTotal += jar.totalInput * Math.pow(1.065, jarYear - 5);
+                            } else {
+                                assetTotal += jar.totalInput * (1 + (jarYear - 5) * 0.12);
+                            }
+                        }
                     }
+
                 });
 
                 let irr = yr >= startDisplayYear ? 6.2 + (yr - startDisplayYear) * 0.12 : 4.8 + (yr - selectedPayYears) * 0.2;
@@ -1612,7 +1623,12 @@
                 if (json.sheet_mappings) sheetMappings = json.sheet_mappings;
                 if (json.blueprint_summary_text) blueprintSummaryText = json.blueprint_summary_text;
                 if (json.blueprint_img_url) blueprintImgUrl = json.blueprint_img_url;
+                if (json.return_tables) {
+                    returnTablesDB = json.return_tables;
+                    localStorage.setItem('ava_return_tables', JSON.stringify(returnTablesDB));
+                }
                 if (json.cards && json.cards.length > 0) {
+
                     const cloudDB = {};
                     json.cards.forEach(row => {
                         const sId = row.scenario_id || "no_savings";
@@ -1796,6 +1812,10 @@
                 if (json.blueprint_summary_text) blueprintSummaryText = json.blueprint_summary_text;
                 if (json.blueprint_img_url) blueprintImgUrl = json.blueprint_img_url;
                 if (json.jar_configs) Object.assign(jarConfigsData, json.jar_configs);
+                if (json.return_tables) {
+                    returnTablesDB = json.return_tables;
+                    localStorage.setItem('ava_return_tables', JSON.stringify(returnTablesDB));
+                }
                 if (json.cards && json.cards.length > 0) {
                     const cloudDB = {};
                     json.cards.forEach(row => {
