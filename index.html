@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.27)</title>
+    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.28)</title>
     <link rel="manifest" href="./manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="./icon-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="./icon-512x512.png">
@@ -196,7 +196,7 @@
 <body>
     <header class="system-top-nav">
         <div class="brand-title-wrap">
-            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入"><span class="brand-name">🌱 AVA Planner</span><span class="brand-version">v6.3.27</span></span>
+            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入"><span class="brand-name">🌱 AVA Planner</span><span class="brand-version">v6.3.28</span></span>
             <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="選擇客群情境">!</span>
             <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="核心分頁直達">*</span>
         </div>
@@ -442,10 +442,10 @@
     </div>
     <script>
         const answers = {};
-        let currentSystemVersion = "v6.3.27";
+        let currentSystemVersion = "v6.3.28";
         let GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwbKrrmiS5vx0Q5TvqqUCHBhU-VrS7WwwY0hj6BaNRwuzPtXXIZZxejPwhycCZhSCr-Rg/exec';
         let cloudAdminPassword = "903";
-        let returnTablesDB = {}; // 安全初始化為空物件，避免未定義報錯
+        let returnTablesDB = {};
         let currentActiveScenario = "no_savings";
         let currentRole = "admin";
         let activeFullFlowSteps = [];
@@ -484,7 +484,6 @@
                 return fallback;
             }
         }
-        // parseSafeJSON 定義完成後再安全讀取 localStorage
         returnTablesDB = parseSafeJSON(localStorage.getItem('ava_return_tables'), {});
 
         function getScenarioGapCopy(key) {
@@ -1126,7 +1125,7 @@
                         <input type="text" class="pink-edit-input" value="${card.subtitle || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].subtitle = this.value">
                         <div style="${!isOptionMode ? 'display:block;' : 'display:none;'} margin-top:10px;">
                             <label style="font-size:0.75rem; font-weight:bold; color:#059669;">按鈕文字 (例如：睇下可以點做 →)：</label>
-                            <input type="text" class="pink-edit-input" placeholder="下一步 →" value="${card.button_text || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx his}].button_text = this.value">
+                            <input type="text" class="pink-edit-input" placeholder="下一步 →" value="${card.button_text || ''}" oninput="allScenarioDatabase['${currentActiveScenario}'][${globalIdx}].button_text = this.value">
                             <div class="admin-options-container" style="margin-top:10px;">
                                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                                     <span style="font-size:0.75rem; font-weight:bold; color:#065f46;">步驟清單 (三步圖)：</span>
@@ -1655,7 +1654,6 @@
                 const json = await fullResp.json();
                 if (json.system_version && compareVersions(json.system_version, currentSystemVersion) >= 0) applyVersionToUI(json.system_version);
                 
-                // 雲端回傳之 return_tables (A, B, C 欄) 寫入本機
                 if (json.return_tables) {
                     returnTablesDB = json.return_tables;
                     localStorage.setItem('ava_return_tables', JSON.stringify(returnTablesDB));
@@ -1699,7 +1697,7 @@
             }
         }
         document.addEventListener('DOMContentLoaded', () => {
-            applyVersionToUI("v6.3.27");
+            applyVersionToUI("v6.3.28");
             applyPlannerNameToUI(localStorage.getItem('ava_planner_display_name'));
             loadSavedJarConfigs();
             buildAndRenderFlow();
