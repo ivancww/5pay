@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.28)</title>
+    <title id="html-doc-title">AVA 專屬生活引導系統 · 探索未來選擇權 (v6.3.29)</title>
     <link rel="manifest" href="./manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="./icon-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="./icon-512x512.png">
@@ -196,7 +196,7 @@
 <body>
     <header class="system-top-nav">
         <div class="brand-title-wrap">
-            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入"><span class="brand-name">🌱 AVA Planner</span><span class="brand-version">v6.3.28</span></span>
+            <span class="brand-logo-text" id="top-logo-title" onclick="openDashboardWithRole('admin')" title="管理員登入"><span class="brand-name">🌱 AVA Planner</span><span class="brand-version">v6.3.29</span></span>
             <span class="mini-quick-btn scenario-btn" onclick="openScenarioPopup()" title="選擇客群情境">!</span>
             <span class="mini-quick-btn jump-btn" onclick="openJumpPopup()" title="核心分頁直達">*</span>
         </div>
@@ -442,8 +442,8 @@
     </div>
     <script>
         const answers = {};
-        let currentSystemVersion = "v6.3.28";
-        let GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwbKrrmiS5vx0Q5TvqqUCHBhU-VrS7WwwY0hj6BaNRwuzPtXXIZZxejPwhycCZhSCr-Rg/exec';
+        let currentSystemVersion = "v6.3.29";
+        let GAS_API_URL = 'https://script.google.com/macros/s/AKfycby6GcARMrxViRlKIPgt3JFN-L0n1bOfaGDGOok2D6miZkQN4MBQg2z0fp85T920gQi6xw/exec';
         let cloudAdminPassword = "903";
         let returnTablesDB = {};
         let currentActiveScenario = "no_savings";
@@ -1697,7 +1697,7 @@
             }
         }
         document.addEventListener('DOMContentLoaded', () => {
-            applyVersionToUI("v6.3.28");
+            applyVersionToUI("v6.3.29");
             applyPlannerNameToUI(localStorage.getItem('ava_planner_display_name'));
             loadSavedJarConfigs();
             buildAndRenderFlow();
